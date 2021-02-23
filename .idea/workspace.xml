@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="" />
+    <list default="true" id="66a77f85-1bec-4a3c-9c59-6f97abb5ae11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/TextBook_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/TextBook_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/PathConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/api_controller/HomeApiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/controller/web_controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/repository/DataAccessDummy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/sharedFiles/SessionUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/TextBook/sharedFiles/SharedData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/additional-spring-configuration-metadata.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/indexTest.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_18_16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TextBook.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TextBook.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1oLUomvw7WBafQFNvT88CStA7gZ" />
   <component name="ProjectViewState">
@@ -13,16 +51,44 @@
     <option name="autoscrollToSource" value="true" />
     <option name="flattenPackages" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/WEB-INF/jsp" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\spring\TextBookServices\src\main\WEB-INF\jsp" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.webapp.TextBook" />
+      <recent name="com.webapp.TextBook.repository" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Maven.TextBook [spring-boot:run]">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TextBook [spring-boot:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -48,6 +114,13 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <configuration name="TextBookApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="TextBook" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.webapp.TextBook.TextBookApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -61,6 +134,7 @@
       </list>
     </option>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -71,29 +145,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1613065541394</updated>
+      <workItem from="1614105395432" duration="3091000" />
+      <workItem from="1614122507189" duration="326000" />
     </task>
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="1503" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1613065584202">
-      <screen x="1366" y="0" width="1366" height="728" />
-    </state>
-    <state x="1503" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/1366.0.1366.728/0.0.1366.728@1366.0.1366.728" timestamp="1613065584202" />
-    <state width="1306" height="174" key="GridCell.Tab.0.bottom" timestamp="1613074256225">
-      <screen x="1366" y="0" width="1366" height="728" />
-    </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.bottom/1366.0.1366.728/0.0.1366.728@1366.0.1366.728" timestamp="1613074256225" />
-    <state width="1306" height="174" key="GridCell.Tab.0.center" timestamp="1613074256225">
-      <screen x="1366" y="0" width="1366" height="728" />
-    </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.center/1366.0.1366.728/0.0.1366.728@1366.0.1366.728" timestamp="1613074256225" />
-    <state width="1306" height="174" key="GridCell.Tab.0.left" timestamp="1613074256224">
-      <screen x="1366" y="0" width="1366" height="728" />
-    </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.left/1366.0.1366.728/0.0.1366.728@1366.0.1366.728" timestamp="1613074256224" />
-    <state width="1306" height="174" key="GridCell.Tab.0.right" timestamp="1613074256225">
-      <screen x="1366" y="0" width="1366" height="728" />
-    </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.right/1366.0.1366.728/0.0.1366.728@1366.0.1366.728" timestamp="1613074256225" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
