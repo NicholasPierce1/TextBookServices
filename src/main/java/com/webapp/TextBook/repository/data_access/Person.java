@@ -10,7 +10,7 @@ import com.webapp.TextBook.repository.DataAccessConversion;
 
 import java.util.UUID;
 
-@Entity
+
 public abstract class Person implements DataAccessConversion {
 
 
