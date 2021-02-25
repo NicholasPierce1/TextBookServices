@@ -118,6 +118,10 @@ public class BookCopy implements DataAccessConversion {
         return termCode;
     }
 
+    public UUID get_ID() {
+        return _ID;
+    }
+
     public void setActivityDate(Date activityDate) {
         this.activityDate = activityDate;
     }
@@ -172,6 +176,10 @@ public class BookCopy implements DataAccessConversion {
 
     public void setTermCode(String termCode) {
         this.termCode = termCode;
+    }
+
+    public void set_ID(UUID _ID) {
+        this._ID = _ID;
     }
 
     @Override
