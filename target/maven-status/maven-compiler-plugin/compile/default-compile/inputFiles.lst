@@ -9,6 +9,7 @@ C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\co
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Person\PersonRepository.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Repository.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\TextBookApplication.java
+C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\adapter\Adapter.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\validation\dummyValidation.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\controller\web_controller\HomeController.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\ServletInitializer.java
@@ -25,10 +26,14 @@ C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\co
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\data_access\Student.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\data_access\Term.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\DataAccessConversion.java
+C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\data_access\Bag.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\sharedFiles\SessionUser.java
+C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Bag\BagRepositoryCustom.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Term\TermRepositoryImpl.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\data_access\User.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\StatusCode.java
+C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Bag\BagRepository.java
+C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Bag\BagRepositoryImpl.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\shared_respository_helper\DataAccessConversionHelper.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\data_access\dummyDataAccess.java
 C:\Users\s529827\Downloads\SpringProjectsStuff\TextBookServices\src\main\java\com\webapp\TextBook\repository\Person\PersonRepositoryImpl.java
