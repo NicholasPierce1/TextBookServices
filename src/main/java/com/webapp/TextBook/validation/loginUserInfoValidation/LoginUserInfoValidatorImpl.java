@@ -27,10 +27,21 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
 
         // initialize error binding list
 
+        // holds if any inputs are null
+        boolean userInputsNull = false;
+
         // initial check -- any fields are null (faulty form data)
-        if(user.get_password() == null || user.get_username() == null){
+        if(user.get_password() == null){
+            userInputsNull = true;
             // add to error binding list
-            // create json response here & set its string to validator context
+        }
+        else if(user.get_username() == null){
+            userInputsNull = true;
+            // add to error binding list
+        }
+
+        if(userInputsNull){
+            // configure faulty response and set error text to constraint validator
             return false;
         }
 
