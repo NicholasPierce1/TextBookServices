@@ -21,28 +21,51 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
     public boolean isValid(LoginUserInfo user, ConstraintValidatorContext constraintContext){
 
 
-        if(LoginUserInfo.username.matches(STUDENT_ID_PATTERN.toString())){
-            //add to list
-        }
-        if(LoginUserInfo.password.matches((S_NUMBER_PREFIX).toString())){
-            //add to list
-        }
-       else{
-           boolean suffixFalied = !LoginUserInfo.password.matches(S_NUMBER_SUFFIX.toString());
-           //If it dosen't match then it should be true, because it failed
-           if(suffixFalied && haveSuffix){
-               //add to list
-           }
-           else if(!suffixFalied && !haveSuffix){
-               //Splices out @nwmissouri.edu
-               //TODO Nick check this logic. It dosen't make much sense to splice out if it dosen't have a suffix
-               LoginUserInfo.password = LoginUserInfo.password.substring(0,LoginUserInfo.password.indexOf('@'));
+        /* NICK: logic and structure is wrong -- missing multiple dependency classes
+            // missing: ErrorBinding, ErrorBindingException
+         */
+        try {
+            // commence bi-if logic -- failure of prerequisite condition does not
+            // bar second input (password) from being validated
+            if (!user.get_username().matches(STUDENT_ID_PATTERN.pattern())) {
+                // add to error binding list
+            }
 
-           }
+            // second input validation (password)
+            // tests prefix of password
+            // two variations exist: password w/ or w/o domain
+            if (!user.get_password().matches(S_NUMBER_PREFIX.pattern())) {
+                // add error to binding list
+            } else {
 
+                // captures if their is a suffix attach to password input
+                // applied to see if
+                //     !haveSuffix: suffix (domain) needs to be spliced if present
+                //     haveSuffix: binding error generated if suffix not present
+                // given: prefix handles if injection or nonsensical additions appended
+                final boolean inputHasSuffix = user.get_password().matches(S_NUMBER_SUFFIX.pattern());
+
+                // wants: suffix at end
+                // got: no suffix
+                if (this.haveSuffix && !inputHasSuffix) {
+                    // add error to binding list
+                }
+                // wants: no suffix at end
+                // got: suffix at end
+                else if (!this.haveSuffix && inputHasSuffix)
+                    user.set_password(
+                            user.get_password().replaceFirst("@.*", "")
+                    );
+
+            }
         }
+        catch(RuntimeException exception){
+            // for when conversion of binding list fails upon
+            // error event json generation
+        }
+
         //Check binding error list is empty and do some stuff
-        return false; //stub method to make everyhing happy for now
+        return false; //stub method to make everything happy for now
     }
 
 

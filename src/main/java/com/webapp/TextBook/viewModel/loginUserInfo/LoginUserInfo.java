@@ -4,50 +4,37 @@ import com.webapp.TextBook.validation.loginUserInfoValidation.LogInUserInfoValid
 
 @LogInUserInfoValidationInterface
 public class LoginUserInfo {
-    public static String Nominal_Username, Nominal_Password, username,password;
+
+        // enumerates static members
+        public final static String NOMINAL_USERNAME = "username";
+        public final static String NONMINAL_PASSWORD = "password";
+
+
+        private String _username;
+        private String _password;
+
     public LoginUserInfo(){
 
     }
     public  LoginUserInfo(String Nominal_Username, String Nominal_Password, String username, String password){
-        this.Nominal_Username = Nominal_Username;
-        this.Nominal_Password = Nominal_Password;
-        this.username = username;
-        this.password = password;
-
-
+        this._username = username;
+        this._password = password;
 
     }
 
-    public static String getNominal_Username() {
-        return Nominal_Username;
+    public String get_password() {
+        return _password;
     }
 
-    public static void setNominal_Username(String nominal_Username) {
-        Nominal_Username = nominal_Username;
+    public String get_username() {
+        return _username;
     }
 
-    public static String getNominal_Password() {
-        return Nominal_Password;
+    public void set_password(String _password) {
+        this._password = _password;
     }
 
-    public static void setNominal_Password(String nominal_Password) {
-        Nominal_Password = nominal_Password;
+    public void set_username(String _username) {
+        this._username = _username;
     }
-
-    public static String getUsername() {
-        return username;
-    }
-
-    public static void setUsername(String username) {
-        LoginUserInfo.username = username;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public static void setPassword(String password) {
-        LoginUserInfo.password = password;
-    }
-
 }
