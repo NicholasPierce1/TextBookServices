@@ -24,6 +24,17 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
         /* NICK: logic and structure is wrong -- missing multiple dependency classes
             // missing: ErrorBinding, ErrorBindingException
          */
+
+        // initialize error binding list
+
+        // initial check -- any fields are null (faulty form data)
+        if(user.get_password() == null || user.get_username() == null){
+            // add to error binding list
+            // create json response here & set its string to validator context
+            return false;
+        }
+
+
         try {
             // commence bi-if logic -- failure of prerequisite condition does not
             // bar second input (password) from being validated
