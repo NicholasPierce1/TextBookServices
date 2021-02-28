@@ -26,7 +26,7 @@ public final class ErrorBinding <T> {
 
         }
         JSONObject errorBindingJsonObject = new JSONObject();
-        try {
+        try { //Attempt to create error message. if successus retunr if not see catch
             errorBindingJsonObject.put(FIELD_ERROR_NAME_KEY, _fieldErrorName);
             errorBindingJsonObject.put(FIELD_ERROR_MESSAGE_KEY, _fieldErrorMessage);
             errorBindingJsonObject.put(ERROR_DATA_KEY, _errorData);
@@ -34,7 +34,7 @@ public final class ErrorBinding <T> {
 
 
         }
-        catch (Exception e){
+        catch (Exception e){ //something went wrong. Abort mission.
             return new Pair<Optional<JSONObject>, Boolean>(Optional.empty(), false);
         }
 
