@@ -1,8 +1,11 @@
 package com.webapp.TextBook.validation.FormVallidation.Shared;
 import org.javatuples.Pair;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 public final class ErrorBinding <T> {
@@ -43,7 +46,33 @@ public final class ErrorBinding <T> {
     }
 
 
+    public static class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
 
+        public static <T> @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding<T>> errors) throws ErrorBindingException, Exception{
+            ErrorBinding<T> faultyBinding = null;
+            JSONArray jsnArr = new JSONArray();
+            try{
+
+                //getting each ErrorBinding in the array
+                for (ErrorBinding<T> eb : errors){
+                    //And adding it to the JSON array
+                    faultyBinding = eb;
+                    Pair<Optional<JSONObject>, Boolean> boolCheck = eb.toJsonString();
+                    if(!boolCheck.getValue1() || boolCheck.getValue0().isEmpty()){ //Check if the boolean is false
+                        throw new ErrorBindingException(faultyBinding);
+                    }
+                    jsnArr.put(boolCheck.getValue0().get().toString()); //Pulls out JSON object
+
+                }
+                return  jsnArr.toString();
+            }
+            catch(ErrorBindingException e){
+                System.out.println("error binding json helper layer: error in converting json into string counterpart");
+                throw e;
+            }
+
+        }
+    }
 
 
 

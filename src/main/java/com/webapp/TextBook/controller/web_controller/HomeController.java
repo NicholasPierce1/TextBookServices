@@ -35,13 +35,15 @@ import java.util.List;
 @RequestMapping(path = "/home/")
 public class HomeController {
 
+    private  LoginUserInfo _LoginUserInfo;
     //login page
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login(){ return "login"; }
 
     //login confirmation
     @RequestMapping(value = "/loginConfirmed", method = RequestMethod.GET)
-    public String loginConfirmation(@Valid @ModelAttribute("LoginUserInfo")LoginUserInfo u){
+    public String loginConfirmation(@Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person, BindingResult result){
+        this._LoginUserInfo = person;
 
 
 
