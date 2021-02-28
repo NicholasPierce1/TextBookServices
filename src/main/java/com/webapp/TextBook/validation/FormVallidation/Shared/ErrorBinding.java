@@ -12,7 +12,7 @@ public final class ErrorBinding <T> {
     private final static String FIELD_ERROR_MESSAGE_KEY = "message";
     private final static String ERROR_DATA_KEY ="faultyData";
 
-    public  ErrorBinding(String fieldErrorMessage, String fieldErrorName, @Nullable T errorData){
+    public  ErrorBinding(String fieldErrorName, String fieldErrorMessage, @Nullable T errorData){
         this._fieldErrorMessage = fieldErrorMessage;
         this._fieldErrorName = fieldErrorName;
         this._errorData = errorData;
