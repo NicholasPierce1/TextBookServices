@@ -15,7 +15,7 @@ public class SharedSessionData {
 
     // returns the optional value retaining the desired, upcasted type of the shared object
     // enclosed within the shared session state
-    public @NotNull  Optional<?> getSessionState(@NotNull String sessionKey)
+    public static @NotNull Optional<?> getSessionState(@NotNull String sessionKey)
     throws RuntimeException{
 
         // validation check on session key -- if not within list of accepted keys then throw exception
@@ -26,13 +26,19 @@ public class SharedSessionData {
         if(!SharedSessionData.SHARED_SESSION_DATA_MAP.containsKey(sessionKey))
             return Optional.empty();
 
-        return Optional.ofNullable(sessionKey);
+        // guaranteed to not be null -- checked when set
+        return Optional.of(SharedSessionData.SHARED_SESSION_DATA_MAP.get(sessionKey));
     }
 
     // sets a value pair for a session state provided that the key is one of the
     // session state that is targeted within such scope
     // CURRENTLY: once a pair is sec it cannot be reset or unset
+    // CURRENTLY: value cannot be null
     public static <T> void setSessionValueWithKey(@NotNull String sessionKey, T value){
+
+        // validation check on value -- if null then exception
+        if(value == null)
+            throw new RuntimeException("Value attempted to be set is null");
 
         // validation check on session key -- if not within list of accepted keys then throw exception
         if(Arrays.binarySearch(SharedSessionData.SESSION_STATE_KEYS, sessionKey) == -1)
