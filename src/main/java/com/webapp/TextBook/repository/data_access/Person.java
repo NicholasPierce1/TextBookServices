@@ -72,8 +72,9 @@ public abstract class Person implements DataAccessConversion {
         this.pidm = pidm;
     }
 
-    public static void dboSetterHelper(@NotNull final Object[] dbo){
-
+    @Override
+    public void updateDataAccessObject(@NotNull Object[] values) {
+        // set person attributes here in order of spriden table
+        // order: todo -- enumerate column order here for documentation & set them
     }
-
 }
