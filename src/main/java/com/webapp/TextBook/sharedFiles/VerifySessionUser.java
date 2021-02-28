@@ -15,11 +15,15 @@ public  class VerifySessionUser {
         if(user == null){
             return  new Pair<Boolean, String>(false, ERROR_SESSION_USER_MESSAGE);
         }
-        else if(1==1){ //place holder for If any of the values in session user & user don’t match then false & static error message
+        else if(
+                    !user.getPassword().equals(user.getPassword())
+                ||
+                    !user.getId().equals(user.getId())
+        ){ //place holder for If any of the values in session user & user don’t match then false & static error message
             return  new Pair<Boolean, String>(false, ERROR_SESSION_USER_MESSAGE);
 
         }
-        else return new Pair<Boolean, String>(true, "Success");
+        else return new Pair<Boolean, String>(true, "");
 
     }
 }

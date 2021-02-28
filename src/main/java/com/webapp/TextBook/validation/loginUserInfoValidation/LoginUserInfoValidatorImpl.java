@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBinding;
 import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBindingException;
-import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBindingJsonHelper;
 import com.webapp.TextBook.viewModel.loginUserInfo.LoginUserInfo;
 import org.springframework.web.servlet.tags.BindErrorsTag;
 
@@ -27,11 +26,7 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
     public boolean isValid(LoginUserInfo user, ConstraintValidatorContext constraintContext){
 
 
-        /* NICK: logic and structure is wrong -- missing multiple dependency classes
-            // missing: ErrorBinding, ErrorBindingException
-         */
-
-        ArrayList<ErrorBinding> errorList = new ArrayList<ErrorBinding>();
+        ArrayList<ErrorBinding<String>> errorList = new ArrayList<ErrorBinding<String>>();
 
         // holds if any inputs are null
         boolean userInputsNull = false;
@@ -39,35 +34,45 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
         // initial check -- any fields are null (faulty form data)
         if(user.get_password() == null){
             userInputsNull = true;
-            errorList.add(new ErrorBinding(INVALID_FIELD, "Password field is empty", null));
+            errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Password field is empty", null));
         }
         else if(user.get_username() == null){
             userInputsNull = true;
-            errorList.add(new ErrorBinding(INVALID_FIELD, "Username field is empty", null));
-        }
-
-        if(userInputsNull){
-            // configure faulty response and set error text to constraint validator
-
-            return false;
+            errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Username field is empty", null));
         }
 
 
         try {
+
+            if(userInputsNull){
+
+                //if binding error list is not empty then set constraint validator’s message
+                // to the abstract method’s json creator helper.
+                constraintContext.disableDefaultConstraintViolation();
+
+                constraintContext.buildConstraintViolationWithTemplate(
+                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
+
+
+                return false;
+            }
+
+
             // commence bi-if logic -- failure of prerequisite condition does not
             // bar second input (password) from being validated
             if (!user.get_username().matches(STUDENT_ID_PATTERN.pattern())) {
                 // add to error binding list
-                errorList.add(new ErrorBinding(INVALID_FIELD, "Invalid 919 number", null));
+                errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Invalid 919 number", user.get_username()));
             }
 
             // second input validation (password)
             // tests prefix of password
             // two variations exist: password w/ or w/o domain
             if (!user.get_password().matches(S_NUMBER_PREFIX.pattern())) {
-                errorList.add(new ErrorBinding(INVALID_FIELD, "Invalid s number", null));
+                errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Invalid s number", null));
 
-            } else {
+            }
+            else {
 
                 // captures if their is a suffix attach to password input
                 // applied to see if
@@ -80,7 +85,7 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
                 // got: no suffix
                 if (this.haveSuffix && !inputHasSuffix) {
                     // add error to binding list
-                    errorList.add(new ErrorBinding(INVALID_FIELD, "Invalid s number", null));
+                    errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Invalid s number", null));
 
                 }
                 // wants: no suffix at end
@@ -96,19 +101,19 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
                 // to the abstract method’s json creator helper.
                 constraintContext.disableDefaultConstraintViolation();
 
-                constraintContext.buildConstraintViolationWithTemplate(ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
-
+                constraintContext.buildConstraintViolationWithTemplate(ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
 
             }
         }
         catch (ErrorBindingException e){
-            System.out.printf("Error binding failed\n" + e.getStackTrace());
+            System.out.println("Error binding failed\n" + e.getStackTrace());
 
         }
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
             System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
+
         }
 
         //Check binding error list is empty and do some stuff
