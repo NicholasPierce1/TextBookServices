@@ -30,15 +30,30 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/")
+@RequestMapping(path = "/home/")
 public class HomeController {
 
+    //login page
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(ModelMap modelMap){
-        modelMap.addAttribute("test", "value test here");
-        System.out.println("called");
-        return "index";
+    public String login(){ return "login"; }
+
+    //login confirmation
+    @RequestMapping(value = "/loginConfirmed", method = RequestMethod.GET)
+    public String loginConfirmation(String username, String password){
+
+
+
+
     }
+
+
+
+//    @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public String index(ModelMap modelMap){
+//        modelMap.addAttribute("test", "value test here");
+//        System.out.println("called");
+//        return "index";
+//    }
 
 
 }
