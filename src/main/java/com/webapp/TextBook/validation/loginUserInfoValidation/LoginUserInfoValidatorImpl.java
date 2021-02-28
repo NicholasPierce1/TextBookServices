@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBinding;
 import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBindingException;
+import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBindingJsonHelper;
 import com.webapp.TextBook.viewModel.loginUserInfo.LoginUserInfo;
 import org.springframework.web.servlet.tags.BindErrorsTag;
 
@@ -93,7 +94,9 @@ public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUser
             if(errorList.isEmpty()){ //Error list is not empty
                 //if binding error list is not empty then set constraint validator’s message
                 // to the abstract method’s json creator helper.
-                //TODO Nick what is this supposed to do lol
+                constraintContext.disableDefaultConstraintViolation();
+
+                constraintContext.buildConstraintViolationWithTemplate(ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
 
 
             }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public abstract class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
 
-    public @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding> errors) throws ErrorBindingException, Exception{
+    public static @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding> errors) throws ErrorBindingException, Exception{
         ErrorBinding faultyBinding = null;
         JSONArray jsnArr = new JSONArray();
         try{
