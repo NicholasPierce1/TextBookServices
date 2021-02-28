@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
+public  class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
 
     public static @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding> errors) throws ErrorBindingException, Exception{
         ErrorBinding faultyBinding = null;
