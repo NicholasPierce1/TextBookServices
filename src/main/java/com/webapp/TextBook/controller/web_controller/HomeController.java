@@ -1,6 +1,7 @@
 package com.webapp.TextBook.controller.web_controller;
 
 
+import com.webapp.TextBook.viewModel.loginUserInfo.LoginUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Controller
@@ -39,7 +41,7 @@ public class HomeController {
 
     //login confirmation
     @RequestMapping(value = "/loginConfirmed", method = RequestMethod.GET)
-    public String loginConfirmation(String username, String password){
+    public String loginConfirmation(@Valid @ModelAttribute("LoginUserInfo")LoginUserInfo u){
 
 
 
