@@ -3,7 +3,7 @@ package com.webapp.TextBook.repository.adapter;
 import com.webapp.TextBook.repository.Bag.BagRepository;
 import com.webapp.TextBook.repository.BookCopy.BookCopyRepository;
 import com.webapp.TextBook.repository.Person.PersonRepository;
-import com.webapp.TextBook.repository.StatusCode;
+import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.repository.Term.TermRepository;
 import com.webapp.TextBook.repository.User.UserRepository;
 import com.webapp.TextBook.repository.data_access.*;
