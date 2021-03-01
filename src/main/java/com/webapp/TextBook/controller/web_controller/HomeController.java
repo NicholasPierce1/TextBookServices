@@ -44,8 +44,9 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/home/")
 public class HomeController {
-
+    // fetching shared adapter to test User input
     private static final Adapter sharedAdapter = Adapter.adapter;
+
     //login page
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login(){ return "login"; }
@@ -56,48 +57,65 @@ public class HomeController {
             @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
             BindingResult result,
             ModelMap map)  {
-        // handle exceptions
+
+        // handling all exceptions with try catch block
         try {
-            // format validation/ dealing with binding errors
+
+            // format validation/dealing with binding errors
             final String failedValidationStatusMessage = "User input missing or invalid";
             if (result.hasErrors()) {
+                //binding errors present, load in Status/Error messages and return to login
+
                 assert (result.getErrorCount() != 0);
                 ObjectError loginUserInfoError = result.getAllErrors().get(0);
                 map.addAttribute("Error", new JSONArray(loginUserInfoError.getDefaultMessage()));
                 map.addAttribute("StatusMessage", failedValidationStatusMessage);
                 map.addAttribute("User", null);
+
                 return "login";
             }
 
-            // checking user data with database
+            // checking user data validity with database
             Pair<Optional<User>, StatusCode> user = sharedAdapter.userLogin(person.get_username(), person.get_password());
 
             //interpreting data
             if (user.getValue1() == StatusCode.OK) {
+                // User login was valid and will be further processed
+
                 map.addAttribute("Error", null);
                 map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
                 map.addAttribute("User", user.getValue0());
+
                 //setting user session data
                 SharedSessionData.setSessionValueWithKey(SharedSessionData.USER_KEY, user.getValue0().orElseThrow());
 
+                //checking user Role
                 if (user.getValue0().get().userRole == UserRole.Supervisor) {
+                    // User Role is Supervisor and will continue as such
                     return "supervisorDropdown";
                 } else {
+                    // User Role is Student Employee and will continue as such
                     return "studentDropdown";
                 }
             } else {
+                // User login was invalid for reason stated in status message
+                // return to login
                 map.addAttribute("Error", null);
                 map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
                 map.addAttribute("User", null);
+
                 return "login";
             }
         }
         catch (Exception e){
+            //Catching Exceptions and printing StackTrace of the error
+            //Loading in custom status message and returning to login page
             System.out.println(e.getStackTrace());
             map.addAttribute("Error", null);
             map.addAttribute("StatusMessage", "Internal error has occurred. " +
                     "If this continues please contact your IT support.");
             map.addAttribute("User", null);
+
             return "login";
         }
     }
