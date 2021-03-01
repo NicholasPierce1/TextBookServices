@@ -1,9 +1,11 @@
 package com.webapp.TextBook.controller.web_controller;
 
 
-import com.webapp.TextBook.repository.StatusCode;
 import com.webapp.TextBook.repository.adapter.Adapter;
 import com.webapp.TextBook.repository.data_access.User;
+import com.webapp.TextBook.repository.data_access.UserRole;
+import com.webapp.TextBook.sharedFiles.SharedSessionData;
+import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.viewModel.loginUserInfo.LoginUserInfo;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,22 +55,51 @@ public class HomeController {
     public String loginConfirmation (
             @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
             BindingResult result,
-            ModelMap map) throws JSONException {
+            ModelMap map)  {
+        // handle exceptions
+        try {
+            // format validation/ dealing with binding errors
+            final String failedValidationStatusMessage = "User input missing or invalid";
+            if (result.hasErrors()) {
+                assert (result.getErrorCount() != 0);
+                ObjectError loginUserInfoError = result.getAllErrors().get(0);
+                map.addAttribute("Error", new JSONArray(loginUserInfoError.getDefaultMessage()));
+                map.addAttribute("StatusMessage", failedValidationStatusMessage);
+                map.addAttribute("User", null);
+                return "login";
+            }
 
-        final String failedValidationStatusMessage = "User input missing or invalid";
-        if(result.hasErrors()){
-            assert(result.getErrorCount() != 0);
-            ObjectError loginUserInfoError = result.getAllErrors().get(0);
-            map.addAttribute("Error", new JSONArray(loginUserInfoError.getDefaultMessage()));
-            map.addAttribute("StatusMessage", failedValidationStatusMessage);
+            // checking user data with database
+            Pair<Optional<User>, StatusCode> user = sharedAdapter.userLogin(person.get_username(), person.get_password());
+
+            //interpreting data
+            if (user.getValue1() == StatusCode.OK) {
+                map.addAttribute("Error", null);
+                map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
+                map.addAttribute("User", user.getValue0());
+                //setting user session data
+                SharedSessionData.setSessionValueWithKey(SharedSessionData.USER_KEY, user.getValue0().orElseThrow());
+
+                if (user.getValue0().get().userRole == UserRole.Supervisor) {
+                    return "supervisorDropdown";
+                } else {
+                    return "studentDropdown";
+                }
+            } else {
+                map.addAttribute("Error", null);
+                map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
+                map.addAttribute("User", null);
+                return "login";
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+            map.addAttribute("Error", null);
+            map.addAttribute("StatusMessage", "Internal error has occurred. " +
+                    "If this continues please contact your IT support.");
             map.addAttribute("User", null);
             return "login";
         }
-
-        Pair<Optional<User>, StatusCode> user = sharedAdapter.userLogin(person.get_username(), person.get_password());
-
-
-
     }
 
 
