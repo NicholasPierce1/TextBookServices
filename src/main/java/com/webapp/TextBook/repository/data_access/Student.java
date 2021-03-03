@@ -34,7 +34,7 @@ public class Student extends Person {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
-
+        super.updateDataAccessObject(values);
     }
 
 }
