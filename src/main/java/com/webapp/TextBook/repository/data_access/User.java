@@ -93,8 +93,9 @@ public class User extends Person{
         super.updateDataAccessObject(values);
 
 
-        // set user attributes here in order of user table
-        // order: todo -- enumerate column order here for documentation & set them
+        // given: order of values goes pkey (username, password), userRole
+        this.password = (String)values[1];
+        this.userRole = UserRole.createUserRoleByNominalValue((String)values[2]).orElseThrow();
 
     }
 }

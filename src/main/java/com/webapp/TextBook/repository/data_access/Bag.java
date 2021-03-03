@@ -54,6 +54,8 @@ public class Bag implements DataAccessConversion {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
+
+        // given: pkey, bagNumber
         this.pidm = (String)values[0];
         this.bagNumber = ((BigDecimal)values[1]).doubleValue();
     }
