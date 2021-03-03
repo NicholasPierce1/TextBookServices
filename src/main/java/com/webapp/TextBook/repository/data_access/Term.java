@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -53,6 +54,7 @@ public class Term implements DataAccessConversion {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
-
+        this.termCode = (String)values[0];
+        this.termDescription = (String)values[1];
     }
 }
