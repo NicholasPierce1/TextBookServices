@@ -76,7 +76,8 @@ public abstract class Person implements DataAccessConversion {
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
         // set person attributes here in order of spriden table
-        // order: todo -- enumerate column order here for documentation & set them
+
+        // order: pkey, id, lastName, firstName, middleName
         this.pidm = String.valueOf(((BigDecimal)values[0]).doubleValue());
         this.id = (String)values[1];
         this.lastName = (String)values[2];

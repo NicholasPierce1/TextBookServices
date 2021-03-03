@@ -1,6 +1,8 @@
 package com.webapp.TextBook.repository.data_access;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -179,7 +181,20 @@ public class BookCopy implements DataAccessConversion {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
-
+        // order: pkey (bookCode, editionYear, seqNr), strikeBarcode, dateCheckedOut, disposition,
+        //bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag
+        this.bookCode = (String)values[0];
+        this.editionYear = ((BigDecimal)values[1]).intValue();
+        this.seqNr = ((BigDecimal)values[2]).intValue();
+        this.strikeBarcode = (String)values[3];
+        this.dateCheckedOut =(Date)values[4];
+        this.disposition = ((String)values[5]).charAt(0);
+        this.bookSalePrice = ((BigDecimal)values[6]).doubleValue();
+        this.prevPidm = ((BigDecimal)values[7]).doubleValue();
+        this.prevTermCode = (String)values[8];
+        this.prevDateCheckedIn = (Date)values[9];
+        this.activityDate = (Date)values[10];
+        this.billFlag = ((String)values[11]).charAt(0);
     }
 
 }

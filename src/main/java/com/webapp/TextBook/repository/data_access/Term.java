@@ -53,6 +53,8 @@ public class Term implements DataAccessConversion {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
+        // order: pkey, termDescription
+
         this.termCode = (String)values[0];
         this.termDescription = (String)values[1];
     }
