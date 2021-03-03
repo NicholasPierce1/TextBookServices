@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 
@@ -76,7 +77,7 @@ public abstract class Person implements DataAccessConversion {
     public void updateDataAccessObject(@NotNull Object[] values) {
         // set person attributes here in order of spriden table
         // order: todo -- enumerate column order here for documentation & set them
-        this.pidm = (String)values[0];
+        this.pidm = String.valueOf(((BigDecimal)values[0]).doubleValue());
         this.id = (String)values[1];
         this.lastName = (String)values[2];
         this.firstName = (String)values[3];
