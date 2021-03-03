@@ -1,8 +1,7 @@
 package com.webapp.TextBook.repository.Bag;
 
-import com.webapp.TextBook.repository.BookCopy.BookCopyRepository;
-import com.webapp.TextBook.repository.StatusCode;
 import com.webapp.TextBook.repository.data_access.Bag;
+import com.webapp.TextBook.sharedFiles.StatusCode;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 

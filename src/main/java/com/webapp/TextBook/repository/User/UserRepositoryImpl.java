@@ -1,10 +1,8 @@
 package com.webapp.TextBook.repository.User;
 
-import com.webapp.TextBook.repository.Person.PersonRepository;
-import com.webapp.TextBook.repository.StatusCode;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import com.webapp.TextBook.sharedFiles.StatusCode;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 

@@ -7,12 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
-import com.webapp.TextBook.repository.StatusCode;
-import org.javatuples.Pair;
 
 @Entity
 public class BookCopy implements DataAccessConversion {

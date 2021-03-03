@@ -1,9 +1,8 @@
 package com.webapp.TextBook.repository.User;
 
 import com.webapp.TextBook.repository.Repository;
-import com.webapp.TextBook.repository.StatusCode;
 import org.javatuples.Pair;
-
+import com.webapp.TextBook.sharedFiles.StatusCode;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
