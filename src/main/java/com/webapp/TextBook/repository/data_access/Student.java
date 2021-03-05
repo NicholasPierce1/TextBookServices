@@ -34,7 +34,8 @@ public class Student extends Person {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
-
+        // given: pkey, id, lastName, firstName, middleName
+        super.updateDataAccessObject(values);
     }
 
 }

@@ -1,16 +1,18 @@
-package com.webapp.TextBook.validation.loginUserInfoValidation;
+package com.webapp.TextBook.validation.FormVallidation.loginUserInfoValidation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
-import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBinding;
-import com.webapp.TextBook.validation.FormVallidation.Shared.ErrorBindingException;
-import com.webapp.TextBook.viewModel.loginUserInfo.LoginUserInfo;
-import org.springframework.web.servlet.tags.BindErrorsTag;
+import com.webapp.TextBook.validation.Shared.ErrorBinding;
+import com.webapp.TextBook.validation.Shared.ErrorBindingException;
+import com.webapp.TextBook.validation.Shared.SharedValidationState;
+import com.webapp.TextBook.viewModel.formViewModel.loginUserInfo.LoginUserInfo;
 
-public class LoginUserInfoValidatorImpl implements ConstraintValidator<LogInUserInfoValidationInterface, LoginUserInfo>{
+public class LoginUserInfoValidatorImpl implements
+        ConstraintValidator<LogInUserInfoValidationInterface, LoginUserInfo>,
+        SharedValidationState {
+
     private static final Pattern STUDENT_ID_PATTERN= Pattern.compile("^919[0-9]{6}$");
     private static final Pattern S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
     private static final Pattern S_NUMBER_SUFFIX= Pattern.compile("^.{7}@.*$");

@@ -1,4 +1,4 @@
-package com.webapp.TextBook.validation.FormVallidation.Shared;
+package com.webapp.TextBook.validation.Shared;
 import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;

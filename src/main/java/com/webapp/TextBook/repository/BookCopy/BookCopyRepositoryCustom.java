@@ -1,10 +1,9 @@
 package com.webapp.TextBook.repository.BookCopy;
 
 import com.webapp.TextBook.repository.Repository;
-import com.webapp.TextBook.repository.StatusCode;
 import com.webapp.TextBook.repository.data_access.BookCopy;
 import org.javatuples.Pair;
-
+import com.webapp.TextBook.sharedFiles.StatusCode;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;

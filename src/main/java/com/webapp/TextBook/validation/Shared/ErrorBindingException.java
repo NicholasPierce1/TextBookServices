@@ -1,4 +1,4 @@
-package com.webapp.TextBook.validation.FormVallidation.Shared;
+package com.webapp.TextBook.validation.Shared;
 
 import javax.validation.constraints.NotNull;
 

@@ -1,12 +1,12 @@
 package com.webapp.TextBook.repository.data_access;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -53,6 +53,9 @@ public class Term implements DataAccessConversion {
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
+        // order: pkey, termDescription
 
+        this.termCode = (String)values[0];
+        this.termDescription = (String)values[1];
     }
 }

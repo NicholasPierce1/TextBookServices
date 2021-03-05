@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -54,5 +55,8 @@ public class Bag implements DataAccessConversion {
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
 
+        // given: pkey, bagNumber
+        this.pidm = (String)values[0];
+        this.bagNumber = ((BigDecimal)values[1]).doubleValue();
     }
 }
