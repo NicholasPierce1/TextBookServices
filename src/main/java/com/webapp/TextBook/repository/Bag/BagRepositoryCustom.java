@@ -6,8 +6,11 @@ import org.javatuples.Pair;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 public interface BagRepositoryCustom extends Repository {
     @NotNull Pair<Optional<Bag>, StatusCode> getStudentBagWithStudentId(@NotNull final String studentId);
+
+    public List<Bag> getAll();
 }
