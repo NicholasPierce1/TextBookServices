@@ -12,6 +12,7 @@ import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.swing.text.html.Option;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,29 @@ public final class Adapter {
     @Autowired
     private BagRepository bagRepository;
 
-    public @NotNull Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode> getAllCheckedOutBooks(@NotNull final String termCode, @NotNull final String studentID){
+    public @NotNull Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode> getAllCheckedOutBooks(@NotNull final User user, @NotNull final String termCode, @NotNull final String studentID){
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            return new Quintet<
+                    Optional<List<BookCopy>>,
+                    Optional<Student>,
+                    Optional<Bag>,
+                    Optional<Term>,
+                    StatusCode>(
+                        Optional.empty(),
+                        Optional.empty(),
+                        Optional.empty(),
+                        Optional.empty(),
+                        USER_PERMISSION_AUTHORIZATION_RESULT.get()
+            );
+
         return null;
     }
 
@@ -67,5 +90,17 @@ public final class Adapter {
 
     private @NotNull Pair<Optional<Term>,  StatusCode> getTermByTermCode(@NotNull final String termCode){
         return null;
+    }
+
+    // verifies that user access role is apt for invoked operation
+    // note: this should be the user from shared session state ONLY
+    private static @NotNull Optional<StatusCode> isUserPrivilegeValid(
+            @NotNull final UserRole userRole,
+            @NotNull final UserRole permissionLevelRequired){
+
+        // if permission level required needed is student employee
+        // OR if roles are same then valid credential authorization
+        return permissionLevelRequired == UserRole.StudentEmployee ||
+                userRole == permissionLevelRequired ? Optional.empty() : Optional.of(StatusCode.UserPermissionLevelInsufficient);
     }
 }
