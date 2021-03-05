@@ -1,9 +1,10 @@
-package com.webapp.TextBook.viewModel.loginUserInfo;
+package com.webapp.TextBook.viewModel.formViewModel.loginUserInfo;
 
-import com.webapp.TextBook.validation.loginUserInfoValidation.LogInUserInfoValidationInterface;
+import com.webapp.TextBook.validation.FormVallidation.loginUserInfoValidation.LogInUserInfoValidationInterface;
+import com.webapp.TextBook.viewModel.shared.FormViewModel;
 
 @LogInUserInfoValidationInterface
-public class LoginUserInfo {
+public class LoginUserInfo implements FormViewModel {
 
         // enumerates static members
         public final static String NOMINAL_USERNAME = "username";
