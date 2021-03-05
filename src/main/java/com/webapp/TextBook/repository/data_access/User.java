@@ -1,11 +1,15 @@
 package com.webapp.TextBook.repository.data_access;
 
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +37,11 @@ public class User extends Person{
     // NOTE: the username (919 number, or id in Person, or spriden_id in Spriden)
     // is defined in Person
     public String password;
+
+    // enumerates static members for JSON parsing
+    private static final String NOMINAL_PASSWORD = "password";
+
+    private static final String NOMINAL_USERNAME = "username";
 
     public User() {this._ID = UUID.randomUUID(); }
 
@@ -83,6 +92,30 @@ public class User extends Person{
             congolmerateDataAccess[spridenDbo.length + i] = textbookServiceLoginDbo[i + 1];
 
         return congolmerateDataAccess;
+    }
+
+    public static @NotNull Optional<User> createPartialUserFromJSONObject(@NotNull final JSONObject jsonObject){
+
+
+        // instantiates empty user for partial construction
+        final User user = new User();
+
+        // try-catch for JSON key errors in parsing partial user definition
+        try{
+
+            user.setPassword(jsonObject.getString(User.NOMINAL_PASSWORD));
+
+            user.setId(jsonObject.getString(User.NOMINAL_USERNAME));
+
+            return Optional.of(user);
+
+        }
+        catch(JSONException jsonException){
+            // logs (prints now) exception
+            System.out.println(jsonException.getMessage());
+
+            return Optional.empty();
+        }
     }
 
     @Override

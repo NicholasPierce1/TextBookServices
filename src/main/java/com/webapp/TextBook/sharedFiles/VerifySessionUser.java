@@ -2,6 +2,7 @@ package com.webapp.TextBook.sharedFiles;
 
 import com.webapp.TextBook.repository.data_access.User;
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -15,27 +16,55 @@ public class VerifySessionUser {
 
     private static final String ERROR_SESSION_USER_UNSET = "Session User has not been set";
 
-    public Pair<Boolean, String> isSessionUserValid(@NotNull final User user){
+    public Triplet<Boolean, String, Optional<User>> isSessionUserValid(@NotNull final User user){
 
         if(user == null){
-            return  new Pair<Boolean, String>(false, ERROR_SESSION_USER_MESSAGE);
+            return  new Triplet<Boolean, String, Optional<User>>(
+                    false,
+                    ERROR_SESSION_USER_MESSAGE,
+                    Optional.empty());
         }
 
-        // wild card capture not needed -- guaranteed type parameter will be User
-        final Optional<User> userOptional = (Optional<User>)SharedSessionData.getSessionState(SharedSessionData.USER_KEY);
+        // wild card capture guaranteed -- type parameter will be User
+        final Optional<User> userOptional = VerifySessionUser.captureWildCardUser(
+                SharedSessionData.getSessionState(SharedSessionData.USER_KEY));
 
         if(userOptional.isEmpty())
-            return new Pair<Boolean, String>(false, ERROR_SESSION_USER_UNSET);
+            return new Triplet<Boolean, String, Optional<User>>(
+                    false,
+                    ERROR_SESSION_USER_UNSET,
+                    Optional.empty());
 
         if(
                     !userOptional.get().getPassword().equals(user.getPassword())
                 ||
                     !userOptional.get().getId().equals(user.getId())
         ){ //place holder for If any of the values in session user & user don’t match then false & static error message
-            return  new Pair<Boolean, String>(false, ERROR_SESSION_USER_MESSAGE);
+            return  new Triplet<Boolean, String, Optional<User>>(
+                    false,
+                    ERROR_SESSION_USER_MESSAGE,
+                    Optional.empty());
 
         }
-        else return new Pair<Boolean, String>(true, "");
+        else
+            return new Triplet<Boolean, String, Optional<User>>(
+                true,
+                "",
+                userOptional);
 
+    }
+
+    // capture wild card for optional user
+    @SuppressWarnings("unchecked")
+    private static <T extends Optional<?>> @NotNull Optional<User> captureWildCardUser(@NotNull final T userOptional){
+        try {
+
+            return (Optional<User>)userOptional;
+        }
+        catch(Exception ex){
+            System.out.println("Error in capturing User Optional." +
+                    " Please check if Session State under User Key was properly set: " + ex);
+            return Optional.empty();
+        }
     }
 }

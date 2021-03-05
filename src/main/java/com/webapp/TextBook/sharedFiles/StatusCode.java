@@ -20,6 +20,7 @@ public enum StatusCode {
     UserNotFound(""),
     PersonCandidateKeyNotFound(""),
     DatabaseError(""),
+    UserPermissionLevelInsufficient(""),
     OK("OK");
 
     // retains the content message that'll be given to the user as response feedback
