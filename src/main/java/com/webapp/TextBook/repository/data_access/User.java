@@ -38,11 +38,6 @@ public class User extends Person{
     // is defined in Person
     public String password;
 
-    // enumerates static members for JSON parsing
-    private static final String NOMINAL_PASSWORD = "password";
-
-    private static final String NOMINAL_USERNAME = "username";
-
     public User() {this._ID = UUID.randomUUID(); }
 
     public User(String pidm, String id, String firstName, String lastName,
@@ -94,29 +89,6 @@ public class User extends Person{
         return congolmerateDataAccess;
     }
 
-    public static @NotNull Optional<User> createPartialUserFromJSONObject(@NotNull final JSONObject jsonObject){
-
-
-        // instantiates empty user for partial construction
-        final User user = new User();
-
-        // try-catch for JSON key errors in parsing partial user definition
-        try{
-
-            user.setPassword(jsonObject.getString(User.NOMINAL_PASSWORD));
-
-            user.setId(jsonObject.getString(User.NOMINAL_USERNAME));
-
-            return Optional.of(user);
-
-        }
-        catch(JSONException jsonException){
-            // logs (prints now) exception
-            System.out.println(jsonException.getMessage());
-
-            return Optional.empty();
-        }
-    }
 
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {

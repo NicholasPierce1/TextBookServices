@@ -1,7 +1,7 @@
 package com.webapp.TextBook.sharedFiles;
 
 import com.webapp.TextBook.repository.data_access.User;
-import org.javatuples.Pair;
+import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 import org.javatuples.Triplet;
 
 import javax.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ public class VerifySessionUser {
 
     private static final String ERROR_SESSION_USER_UNSET = "Session User has not been set";
 
-    public Triplet<Boolean, String, Optional<User>> isSessionUserValid(@NotNull final User user){
+    public static Triplet<Boolean, String, Optional<User>> isSessionUserValid(@NotNull final LoginUserInfo user){
 
         if(user == null){
             return  new Triplet<Boolean, String, Optional<User>>(
@@ -36,9 +36,9 @@ public class VerifySessionUser {
                     Optional.empty());
 
         if(
-                    !userOptional.get().getPassword().equals(user.getPassword())
+                    !userOptional.get().getPassword().equals(user.get_password())
                 ||
-                    !userOptional.get().getId().equals(user.getId())
+                    !userOptional.get().getId().equals(user.get_username())
         ){ //place holder for If any of the values in session user & user don’t match then false & static error message
             return  new Triplet<Boolean, String, Optional<User>>(
                     false,

@@ -6,40 +6,20 @@ import com.webapp.TextBook.repository.data_access.User;
 import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
-import com.webapp.TextBook.viewModel.loginUserInfo.LoginUserInfo;
 import org.javatuples.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-import org.springframework.http.MediaType;
-
-import javax.sound.midi.SysexMessage;
 import javax.validation.Valid;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import java.util.List;
+import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 
 @Controller
 @RequestMapping(path = "/home/")
@@ -84,7 +64,7 @@ public class HomeController {
 
                 map.addAttribute("Error", null);
                 map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
-                map.addAttribute("User", user.getValue0());
+                map.addAttribute("User", person);
 
                 //setting user session data
                 SharedSessionData.setSessionValueWithKey(SharedSessionData.USER_KEY, user.getValue0().orElseThrow());

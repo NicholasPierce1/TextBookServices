@@ -1,4 +1,4 @@
-package com.webapp.TextBook.validation.FormVallidation.loginUserInfoValidation;
+package com.webapp.TextBook.validation.SharedValidation.loginUserInfoValidation;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;

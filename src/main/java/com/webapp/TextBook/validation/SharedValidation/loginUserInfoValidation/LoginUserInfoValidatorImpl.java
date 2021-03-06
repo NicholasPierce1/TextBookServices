@@ -1,22 +1,20 @@
-package com.webapp.TextBook.validation.FormVallidation.loginUserInfoValidation;
+package com.webapp.TextBook.validation.SharedValidation.loginUserInfoValidation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
+
+import com.webapp.TextBook.validation.Shared.RegexPatternContainer;
 
 import com.webapp.TextBook.validation.Shared.ErrorBinding;
 import com.webapp.TextBook.validation.Shared.ErrorBindingException;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
-import com.webapp.TextBook.viewModel.formViewModel.loginUserInfo.LoginUserInfo;
+import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 
 public class LoginUserInfoValidatorImpl implements
         ConstraintValidator<LogInUserInfoValidationInterface, LoginUserInfo>,
         SharedValidationState {
 
-    private static final Pattern STUDENT_ID_PATTERN= Pattern.compile("^919[0-9]{6}$");
-    private static final Pattern S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    private static final Pattern S_NUMBER_SUFFIX= Pattern.compile("^.{7}@.*$");
-    private static final String INVALID_FIELD = "Invalid Field";
+
     private boolean haveSuffix;
 
     @Override
@@ -24,6 +22,7 @@ public class LoginUserInfoValidatorImpl implements
             this.haveSuffix = info.haveSuffix();
 
     }
+
     @Override
     public boolean isValid(LoginUserInfo user, ConstraintValidatorContext constraintContext){
 
@@ -36,11 +35,11 @@ public class LoginUserInfoValidatorImpl implements
         // initial check -- any fields are null (faulty form data)
         if(user.get_password() == null){
             userInputsNull = true;
-            errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Password field is empty", null));
+            errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_PASSWORD, "Password field is empty", null));
         }
         else if(user.get_username() == null){
             userInputsNull = true;
-            errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Username field is empty", null));
+            errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_USERNAME, "Username field is empty", null));
         }
 
 
@@ -62,16 +61,16 @@ public class LoginUserInfoValidatorImpl implements
 
             // commence bi-if logic -- failure of prerequisite condition does not
             // bar second input (password) from being validated
-            if (!user.get_username().matches(STUDENT_ID_PATTERN.pattern())) {
+            if (!user.get_username().matches(RegexPatternContainer.STUDENT_ID_PATTERN.pattern())) {
                 // add to error binding list
-                errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Invalid 919 number", user.get_username()));
+                errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_USERNAME, "Invalid 919 number. Please follow format (919######).", user.get_username()));
             }
 
             // second input validation (password)
             // tests prefix of password
             // two variations exist: password w/ or w/o domain
-            if (!user.get_password().matches(S_NUMBER_PREFIX.pattern())) {
-                errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Invalid s number", null));
+            if (!user.get_password().matches(RegexPatternContainer.S_NUMBER_PREFIX.pattern())) {
+                errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_PASSWORD, "Password does not follow S-Number form (S######). Please revise", null));
 
             }
             else {
@@ -81,13 +80,13 @@ public class LoginUserInfoValidatorImpl implements
                 //     !haveSuffix: suffix (domain) needs to be spliced if present
                 //     haveSuffix: binding error generated if suffix not present
                 // given: prefix handles if injection or nonsensical additions appended
-                final boolean inputHasSuffix = user.get_password().matches(S_NUMBER_SUFFIX.pattern());
+                final boolean inputHasSuffix = user.get_password().matches(RegexPatternContainer.S_NUMBER_SUFFIX.pattern());
 
                 // wants: suffix at end
                 // got: no suffix
                 if (this.haveSuffix && !inputHasSuffix) {
                     // add error to binding list
-                    errorList.add(new ErrorBinding<String>(INVALID_FIELD, "Invalid s number", null));
+                    errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_PASSWORD, "Your S-Number should does not retain a domain. Please revise.", null));
 
                 }
                 // wants: no suffix at end
