@@ -1,6 +1,8 @@
 package com.webapp.TextBook.validation.Shared;
 
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <h1>SharedValidationState</h1>
  *
@@ -21,4 +23,17 @@ public interface SharedValidationState {
      *
      */
     public static final String GENERIC_ERROR_MESSAGE = "Error in validating viewmodels. Please check logs for more info.";
+
+    /**
+     * <p>Indicates if a generic error message has been given -- informs controller that
+     * some error occurred within program. NOTE this only occurs IF the program's configuration is
+     * awry.</p>
+     * @param errorMessage: error message given from validation that may be generic or a json array string
+     * @return a boolean if the error message is a generic error message (not json array string -- normal
+     * response from validation on binding/validation errors).
+     */
+    public static boolean isGenericErrorMessage(@NotNull final String errorMessage){
+        return GENERIC_JSON_ERROR_MESSAGE.equals(errorMessage) ||
+                GENERIC_ERROR_MESSAGE.equals(errorMessage);
+    }
 }
