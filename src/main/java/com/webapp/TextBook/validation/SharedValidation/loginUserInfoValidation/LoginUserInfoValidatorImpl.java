@@ -108,13 +108,13 @@ public class LoginUserInfoValidatorImpl implements
         }
         catch (ErrorBindingException e){
             System.out.println("Error binding failed\n" + e.getStackTrace());
-
+            constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
         }
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
             System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
-
+            constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
         }
 
         //Check binding error list is empty and do some stuff
