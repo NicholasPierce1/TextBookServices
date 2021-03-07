@@ -59,10 +59,9 @@ public class ApiValidationHandler {
      * @return Optional (type parameter: String) retaining a JSONArray or generic error message -
      * varying on the state/success of accessing JSONArray String for ErrorBinding conversions.
      * IF no error uncovered then the optional will be empty.
-     * @throws JSONException: to be removed in production
      */
-    public  <T extends ApiVieweModel> @NotNull Optional<String>
-    getApiBindingError(@NotNull final T viewModel) throws JSONException {
+    public <T extends ApiVieweModel> @NotNull Optional<String>
+    getApiBindingError(@NotNull final T viewModel){
 
         Set<ConstraintViolation<T>> violationSet = this._VALIDATOR.validate(viewModel);
 
