@@ -11,32 +11,37 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public final class Adapter {
 
-    public static Adapter adapter = new Adapter();
+    private final BookCopyRepository _bookCopyRepository;
 
-    private Adapter(){}
+    private final PersonRepository _personRepository;
 
-    @Autowired
-    private BookCopyRepository bookCopyRepository;
+    private final UserRepository _userRepository;
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final TermRepository _termRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public final BagRepository _bagRepository;
 
     @Autowired
-    private TermRepository termRepository;
-
-    @Autowired
-    private BagRepository bagRepository;
+    Adapter(BookCopyRepository bookCopyRepository,
+            PersonRepository personRepository,
+            UserRepository userRepository,
+            TermRepository termRepository,
+            BagRepository bagRepository){
+        this._bookCopyRepository = bookCopyRepository;
+        this._personRepository = personRepository;
+        this._userRepository = userRepository;
+        this._termRepository = termRepository;
+        this._bagRepository = bagRepository;
+    }
 
     public @NotNull Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode> getAllCheckedOutBooks(@NotNull final User user, @NotNull final String termCode, @NotNull final String studentID){
 

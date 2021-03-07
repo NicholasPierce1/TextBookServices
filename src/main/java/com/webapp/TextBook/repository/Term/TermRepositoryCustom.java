@@ -7,6 +7,7 @@ import com.webapp.TextBook.sharedFiles.StatusCode;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+@org.springframework.stereotype.Repository
 public interface TermRepositoryCustom extends Repository {
 
     @NotNull Pair<Optional<Term>, StatusCode> getTermWithTermCode(@NotNull final String termCode);

@@ -7,6 +7,7 @@ import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import org.javatuples.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,8 +25,10 @@ import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo
 @Controller
 @RequestMapping(path = "/home/")
 public class HomeController {
-    // fetching shared adapter to test User input
-    private static final Adapter sharedAdapter = Adapter.adapter;
+
+
+    // fetching shared adapter for encapsulated, database interaction
+    @Autowired Adapter adapter;
 
     //login page
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -56,7 +59,7 @@ public class HomeController {
             }
 
             // checking user data validity with database
-            Pair<Optional<User>, StatusCode> user = sharedAdapter.userLogin(person.get_username(), person.get_password());
+            Pair<Optional<User>, StatusCode> user = adapter.userLogin(person.get_username(), person.get_password());
 
             //interpreting data
             if (user.getValue1() == StatusCode.OK) {
@@ -102,12 +105,16 @@ public class HomeController {
 
 
 
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public String index(ModelMap modelMap){
-//        modelMap.addAttribute("test", "value test here");
-//        System.out.println("called");
-//        return "index";
-//    }
+    // DUMMY method: use to test adapters for certain state
+    // current test: autowired injections are not null & JPA partials rendered within Spring App
+    // Context
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String index(ModelMap modelMap){
+        modelMap.addAttribute("test", "value test here");
+        System.out.println(adapter._bagRepository.getAll() == null);
+
+        return "index";
+    }
 
 
 }

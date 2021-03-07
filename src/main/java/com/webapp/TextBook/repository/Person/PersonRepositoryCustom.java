@@ -7,6 +7,7 @@ import com.webapp.TextBook.sharedFiles.StatusCode;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+@org.springframework.stereotype.Repository
 public interface PersonRepositoryCustom extends Repository {
     @NotNull Pair<Optional<Student>,  StatusCode> getStudentWithCandidateKey(@NotNull final String studentCandidateKey);
     @NotNull Pair< Optional<Student>,  StatusCode> getStudentWithId(@NotNull final String studentId);

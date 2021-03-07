@@ -12,20 +12,27 @@ import java.util.Optional;
 
 public class BagRepositoryImpl implements BagRepositoryCustom{
 
-    @Autowired
-    private BagRepository bagRepository;
+
+    private final EntityManagerFactory _entityManagerFactory;
 
     @Autowired
-    EntityManagerFactory entityManagerFactory;
+    BagRepositoryImpl(EntityManagerFactory factory){
+        this._entityManagerFactory = factory;
+    }
 
     @Override
     public List<Bag> getAll() {
         try {
-            EntityManager em = entityManagerFactory.createEntityManager();
+            EntityManager em = _entityManagerFactory.createEntityManager();
             EntityTransaction transaction = null;
 
             transaction = em.getTransaction();
             transaction.begin();
+
+            System.out.print("test: ");
+            System.out.println(this._entityManagerFactory != null);
+
+            if(true) return null;
 
             Query query1 = em.createNativeQuery(
                     "SELECT * from NWTXBN WHERE SPRIDEN_PIDM == NWTXBN_PIDM;"

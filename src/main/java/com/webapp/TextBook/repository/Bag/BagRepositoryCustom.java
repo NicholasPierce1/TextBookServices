@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
+@org.springframework.stereotype.Repository
 public interface BagRepositoryCustom extends Repository {
     @NotNull Pair<Optional<Bag>, StatusCode> getStudentBagWithStudentId(@NotNull final String studentId);
 
