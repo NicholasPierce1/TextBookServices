@@ -36,18 +36,18 @@ public class BagRepositoryImpl implements BagRepositoryCustom{
 
             query1.setParameter(1, "'" + studentId + "'");
 
-            List<Object[]> records = query1.getResultList();
+            Object[] record = (Object[])query1.getSingleResult();
 
-            if(records.size() != 1) {
-                return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.StudentNotVerified);
-            }
-
-            List<Bag> recordsBagList = new ArrayList<Bag>();
-            DataAccessConversionHelper.createDataAccessObjects(records,recordsBagList,Bag::new);
+            Bag returnType = DataAccessConversionHelper.createDataAccessObject(record,Bag::new);
             
-            return new Pair<Optional<Bag>, StatusCode>(Optional.of(recordsBagList.get(0)), StatusCode.OK);
+            return new Pair<Optional<Bag>, StatusCode>(Optional.of(returnType), StatusCode.OK);
         }
-        catch(RuntimeException ex) {
+        catch(NoResultException ex) {
+            System.out.println("soft error in get bag by student ID\n" + ex.getMessage());
+            return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.StudentNotVerified);
+
+        }
+        catch(Exception ex) {
             return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
     }

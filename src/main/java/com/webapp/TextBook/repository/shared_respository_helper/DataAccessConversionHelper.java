@@ -30,7 +30,7 @@ public class DataAccessConversionHelper {
 
     }
 
-    public static <T extends DataAccessConversion> T createDataAccessObject(
+    public static <T extends DataAccessConversion> @NotNull T createDataAccessObject(
             @NotNull final Object[] data,
             @NotNull final Supplier<T> typeConstructor)
             throws DataAccessConversionException, IllegalArgumentException {
