@@ -1,6 +1,8 @@
 package com.webapp.TextBook.repository.Bag;
 
 import com.webapp.TextBook.repository.data_access.Bag;
+import com.webapp.TextBook.repository.shared_respository_helper.DataAccessConversionHelper;
+import com.webapp.TextBook.repository.shared_respository_helper.QueryTableNameModifier;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,31 +30,26 @@ public class BagRepositoryImpl implements BagRepositoryCustom{
 
         try {
             EntityManager em = _entityManagerFactory.createEntityManager();
-            Query query1 = em.createNativeQuery( "SELECT  ?.* FROM ? WHERE ?.\"NWTXBN_PIDM\" = ?");
+            String originalQuery = "SELECT  tableName.* FROM tableName WHERE tableName.\"NWTXBN_PIDM\" = ?";
 
-            for(int i = 1; i < 4; i++)
-                query1.setParameter(i, GetTableName());
+            Query query1 = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
 
-            query1.setParameter(4, "'" + studentId + "'");
+            query1.setParameter(1, "'" + studentId + "'");
 
             List<Object[]> records = query1.getResultList();
 
-//            if() {
-//
-//            }
-
-            List<Bag> recordsArray = new ArrayList<Bag>();
-            for(int i = 0; i< records.size(); i++){
-                recordsArray.add(new Bag());
-                recordsArray.get(i).updateDataAccessObject(records.get(i));
+            if(records.size() != 1) {
+                return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.StudentNotVerified);
             }
 
+            List<Bag> recordsBagList = new ArrayList<Bag>();
+            DataAccessConversionHelper.createDataAccessObjects(records,recordsBagList,Bag::new);
+            
+            return new Pair<Optional<Bag>, StatusCode>(Optional.of(recordsBagList.get(0)), StatusCode.OK);
         }
         catch(RuntimeException ex) {
-
+            return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
-
-        return null;
     }
 
     @Override
