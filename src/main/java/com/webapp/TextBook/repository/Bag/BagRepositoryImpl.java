@@ -47,7 +47,7 @@ public class BagRepositoryImpl implements BagRepositoryCustom{
             return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.StudentNotVerified);
         }
         catch(Exception ex) {
-            System.out.println("soft error in get bag by student ID\n" + ex.getMessage());
+            System.out.println("db error --\n" + ex.getMessage());
             return new Pair<Optional<Bag>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
     }
