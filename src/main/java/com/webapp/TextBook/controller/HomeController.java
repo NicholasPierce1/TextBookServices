@@ -14,4 +14,11 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping("/view")
+    public String view(boolean supervisor){
+        if(!supervisor)
+            return "employeeView";
+        else
+            return "supervisorView";
+    }
 }

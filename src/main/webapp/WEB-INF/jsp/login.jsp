@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <style>
-        form{
+        .form{
+            margin: auto;
+            width: 10%
             display: flex;
             flex-wrap: wrap;}
     </style>
@@ -20,6 +22,7 @@
         <p><label>Password:</label></p>
         <p><input type = "text" id = "uPwd" /></p>
     </fieldset>
+    <p><button type="button">Login</button></p>
 </form>
 </body>
 </html>
