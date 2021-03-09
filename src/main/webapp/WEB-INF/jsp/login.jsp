@@ -6,23 +6,39 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <style>
-        .form{
+        h1{
+            display: block;
             margin: auto;
-            width: 10%
-            display: flex;
-            flex-wrap: wrap;}
+            margin-bottom: 30px;
+            width: 17%;
+            color: ForestGreen;
+            text-shadow: 1px 1px 3px grey}
+        form{
+            display: block;
+            margin: auto;
+            width: 15%;
+            background-color: rgba(34,139,34,.2);
+            border-style: ridge;
+            border-width: thick;
+            border-color: ForestGreen}
+        label, input[type="text"]{
+            display: block;
+            margin: 2px 5px 2px 5px;}
+        #loginBtn{
+            color: ForestGreen;
+            display: block;
+            margin: 7px 5px;}
+        #loginBtn:hover #loginBtn{background-color: Grey;}
     </style>
 </head>
 <body>
-<h1>Please Log In</h1>
-<form>
-    <fieldset>
-        <p><label>Username:</label></p>
-        <p><input type = "text" id = "uName" /></p>
-        <p><label>Password:</label></p>
-        <p><input type = "text" id = "uPwd" /></p>
-    </fieldset>
-    <p><button type="button">Login</button></p>
+<h1>Log In:</h1>
+<form action="/submitLogin">
+    <label for="uName">Username:</label>
+    <input type="text" id="uName" name="uName"/>
+    <label for="uPass">Password:</label>
+    <input type="text" id="uPass" name="uPass"/>
+    <input type="submit" value="Submit" id="loginBtn">
 </form>
 </body>
 </html>

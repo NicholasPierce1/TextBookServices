@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>addBook.jsp</title>
+    <title>Add a Book</title>
     <style>
         .column {float: left;}
         .left {width: 60%;}
