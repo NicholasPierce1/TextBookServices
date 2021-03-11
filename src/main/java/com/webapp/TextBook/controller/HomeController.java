@@ -15,12 +15,5 @@ public class HomeController {
         return "login";
     }
 
-    @RequestMapping("/submitLogin")
-    public String assignView(Model model){
-        //to-do
-        if(user.isSupervisor)
-            return "supervisorView";
-        else
-            return "employeeView";
-    }
+
 }
