@@ -19,7 +19,10 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar dark bg-dark">
-            <a href="#" class="navbar-brand">Student View</a>
+            <a class="navbar-brand" href="#">
+                <img src="/img/NorthwestLogo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Student View
+            </a>
 
             <!-- For Small Windows -->
             <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">

@@ -56,7 +56,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-ofset-7 px-5 pt-5">
-                <img src="/src/main/webapp/WEB-INF/images/loginbackground.jpg" class="img-fluid" alt="">
+                <img src="/src/main/webapp/WEB-INF/img/loginbackground.jpg" class="img-fluid" alt="">
                 <h4 class="text-center">Sign in to your account</h4>
                 <form>
                     <div class="form-group">
