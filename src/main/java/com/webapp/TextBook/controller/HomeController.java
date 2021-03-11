@@ -40,4 +40,9 @@ public class HomeController {
         return "bookDisposition";
     }
 
+    @RequestMapping("/replaceBarcode")
+    public String replaceBarcode(){
+        return "replaceBarcode";
+    }
+
 }
