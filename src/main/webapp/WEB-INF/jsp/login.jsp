@@ -33,7 +33,7 @@
 </head>
 <body>
 <h1>Log In:</h1>
-<form action>
+<form method="get" action="/supervisorView">
     <label for="uName">Username:</label>
     <input type="text" id="uName" name="uName"/>
     <label for="uPass">Password:</label>

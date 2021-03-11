@@ -12,13 +12,32 @@ public class HomeController {
 
     @RequestMapping("/")
     public String login(){
+        return "login";
+    }
+
+    @RequestMapping("/supervisorView")
+    public String supervisor(){
         return "supervisorView";
     }
 
-    @RequestMapping("/maintenanceFormView.jsp")
-    public String maintenance(){ return "maintenanceFormView";}
+    @RequestMapping("/maintenanceFormView")
+    public String maintenance(){
+        return "maintenanceFormView";
+    }
 
-    @RequestMapping("/addBook.jsp")
-    public String addBook(){ return "addBook";}
+    @RequestMapping("/addBook")
+    public String addBook(){
+        return "addBook";
+    }
+
+    @RequestMapping("/bookQuery")
+    public String bookQuery(){
+        return "bookQuery";
+    }
+
+    @RequestMapping("/bookDisposition")
+    public String bookDisposition(){
+        return "bookDisposition";
+    }
 
 }
