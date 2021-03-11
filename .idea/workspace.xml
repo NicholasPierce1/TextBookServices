@@ -116,6 +116,13 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <configuration name="TextBookApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="TextBook" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.webapp.TextBook.TextBookApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -140,8 +147,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1613065541394</updated>
+      <workItem from="1615478223818" duration="3650000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
