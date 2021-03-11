@@ -10,4 +10,13 @@ public class TextBookApplication {
 		SpringApplication.run(TextBookApplication.class, args);
 	}
 
+	/*@Bean
+	public DataSource getDataSource(){
+		return DataSourceBuilder.create()
+				.url("jdbc:oracle:thin@localhost:1521/orcl")
+				.username("textbookservices")
+				.password("Textbookpassword2021")
+				.build();
+	}*/
+
 }
