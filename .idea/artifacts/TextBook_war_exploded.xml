@@ -42,6 +42,10 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.30" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:5.3.3" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.3.3" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.4.2" />
+          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:3.4.5" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.3.3" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">
