@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bookQuery.jsp</title>
+    <title>Query a Book</title>
     <style>
         .column {float: left;}
         .left {width: 60%;}
@@ -49,7 +49,7 @@
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
-        <a href="maintenenceFormView.jsp">Maintenance</a>
+        <a href="maintenanceFormView.jsp">Maintenance</a>
         <a href="addBook.jsp">Add Books</a>
         <a href="bookQuery">Query Books</a>
         <a href="bookDisposition.jsp">Change Book Disposition</a>

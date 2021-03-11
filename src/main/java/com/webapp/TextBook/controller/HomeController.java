@@ -12,8 +12,13 @@ public class HomeController {
 
     @RequestMapping("/")
     public String login(){
-        return "login";
+        return "supervisorView";
     }
 
+    @RequestMapping("/maintenanceFormView.jsp")
+    public String maintenance(){ return "maintenanceFormView";}
+
+    @RequestMapping("/addBook.jsp")
+    public String addBook(){ return "addBook";}
 
 }
