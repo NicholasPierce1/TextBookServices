@@ -45,7 +45,7 @@
     </style>
 </head>
 <body>
-<h1>Textbook Services: Maintenance</h1>
+<h1>Textbook Services: Change Book Disposition</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
