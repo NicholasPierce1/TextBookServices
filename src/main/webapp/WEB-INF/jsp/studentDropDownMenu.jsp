@@ -31,21 +31,27 @@
              -->
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <li onclick="createManualFromForm();" class="nav-item">
                         <!--Links to Checked In/Out View -->
-                        <a href="#" class="nav-link">Check In/ Check Out</a>
+                        <form action="/checkIncheckOut" method="get">
+                            <a class="nav-link">Check In/ Check Out</a>
+                        </form>
                     </li>
-                    <li class="nav-item">
+                    <li onclick="createManualFromForm();" class="nav-item">
                         <!--Links to Patron Views
                             - Patron Schedule
                             - Sold Books
                             - Previous Books
                          -->
-                        <a href="#" class="nav-link">Patron Views</a>
+                        <form action="/patronViews" method="get">
+                            <a class="nav-link">Patron Views</a>
+                        </form>
                     </li>
-                    <li class="nav-item">
+                    <li onclick="createManualFromForm();" class="nav-item">
                         <!--Links to Login View -->
-                        <a href="#" class="nav-link">Exit</a>
+                        <form action="/loginPage" method="get">
+                            <a class="nav-link">Exit</a>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -56,5 +62,11 @@
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
             crossorigin="anonymous">
     </script>
+    <script type="text/javascript"
+            src = "JS/ShardHandler.js"></script>
+    <script type="text/javascript"
+            src = "JS/StudentDropDownMenuHandler.js"></script>
+    <script type="text/javascript"
+            src = "JS/StudentDropDownMenuAjax.js"></script>
 
 </html>
