@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>addBook.jsp</title>
+    <title>Add a Book</title>
     <style>
         .column {float: left;}
         .left {width: 60%;}
@@ -49,13 +49,13 @@
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
         <a href="maintenenceFormView.jsp">Maintenance</a>
-        <a href="addBook.jsp">Add Books</a>
-        <a href="bookQuery.jsp">Query Books</a>
-        <a href="bookDisposition.jsp">Change Book Disposition</a>
+        <a href="navigationBar.jsp">Add Books</a>
+        <a href="navigationBar.jsp">Query Books</a>
+        <a href="navigationBar.jsp">Change Book Disposition</a>
         <a href="navigationBar.jsp">Replace Barcode</a>
         <a href="navigationBar.jsp">Query Course</a>
         <a href="navigationBar.jsp">Course Message</a>
-        <a href="navigationBar.jsp">Change Book Code/Year</a>s
+        <a href="navigationBar.jsp">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">

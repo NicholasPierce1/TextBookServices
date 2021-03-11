@@ -5,8 +5,7 @@
 </head>
 <body>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+<h1>Please Log In</h1>
 
 </body>
 </html>
