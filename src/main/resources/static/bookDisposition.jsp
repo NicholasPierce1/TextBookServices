@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>addBook.jsp</title>
+    <title>bookDisposition.jsp</title>
     <style>
         .column {float: left;}
         .left {width: 60%;}
         .middle {width: 30%;}
         .right {width: 10%;}
+
         .row:after {
             content: "";
             display: table;
@@ -44,18 +45,18 @@
     </style>
 </head>
 <body>
-<h1>Textbook Services: Add Book</h1>
+<h1>Textbook Services: Change Book Disposition</h1>
 <div class="dropdown">
     <button class="dropbtn">Inventory</button>
     <div class="dropdown-content">
         <a href="maintenenceFormView.jsp">Maintenance</a>
         <a href="addBook.jsp">Add Books</a>
-        <a href="bookQuery.jsp">Query Books</a>
+        <a href="bookQuery">Query Books</a>
         <a href="bookDisposition.jsp">Change Book Disposition</a>
         <a href="navigationBar.jsp">Replace Barcode</a>
         <a href="navigationBar.jsp">Query Course</a>
         <a href="navigationBar.jsp">Course Message</a>
-        <a href="navigationBar.jsp">Change Book Code/Year</a>s
+        <a href="navigationBar.jsp">Change Book Code/Year</a>
     </div>
 </div>
 <div class="dropdown">
@@ -79,32 +80,51 @@
             <label>Book Year:</label>
             <input type = "text"
                    id = "bookYear" />
-        </p>
-    </fieldset>
-</form>
-<form>
-    <fieldset>
-        <p>
-            <label>Title:</label>
-            <input type = "text"
-                   id = "bookTitle" />
-        </p>
-        <p>
-            <label>Seq Nr:</label>
-            <input type = "text"
-                   id = "seqNr" />
-        </p>
-        <p>
             <label>Strike Bar Code:</label>
             <input type = "text"
-                   id = "barCode" />
+                    id = "barCode" />
         </p>
     </fieldset>
 </form>
-<div class="column right">
-    <p>
-        <button type="button">Save</button>
-        <button type="button">Clear</button>
-    </p>
+<div class="container">
+    <div class="row">
+        <div class="column left">
+            <form>
+                <fieldset>
+                    <legend>Book Info</legend>
+                    <p>
+                        <label>Title:</label>
+                        <input type = "text"
+                               id = "bookTitle" />
+                    </p>
+                    <p>
+                        <label>Seq Nr:</label>
+                        <input type = "text"
+                               id = "seqNr" />
+                    </p>
+                    <p>
+                        <label>Current Disposition:</label>
+                        <input type = "text"
+                               id = "bookDisposition" />
+                    </p>
+                    <p>
+                        <label for="bookDisposition">Change Disposition To:</label>
+                        <select name="bookDisposition" id="bookDisposition">
+                            <option value="bookDisposition">(No Change)</option>
+                        </select>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+        <div class="column right">
+            <p>
+                <button type="button">Save</button>
+            </p>
+            <p>
+                <button type="button">Clear</button>
+            </p>
+        </div>
+    </div>
 </div>
 </body>
+</html>
