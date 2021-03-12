@@ -1,2 +1,4 @@
+com\webapp\TextBook\ServletInitializer.class
 com\webapp\TextBook\controller\HomeController.class
+com\webapp\TextBook\TextBookApplication.class
 com\webapp\TextBook\model\UserModel.class

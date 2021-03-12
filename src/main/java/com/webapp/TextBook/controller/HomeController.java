@@ -45,4 +45,8 @@ public class HomeController {
         return "replaceBarcode";
     }
 
+    @RequestMapping("/queryCourse")
+    public String queryCourse(){
+        return "queryCourse";
+    }
 }
