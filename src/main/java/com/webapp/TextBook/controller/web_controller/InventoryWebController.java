@@ -4,6 +4,7 @@ import com.webapp.TextBook.sharedFiles.VerifySessionUser;
 import org.javatuples.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryWebController {
 
     // Check in and out View
+
     /*
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String checkInOut(@ModelAttribute("User") User user,
+                             BindingResult result,
                              ModelMap map){
 
         //verifying session user is still valid
-        Pair<Boolean, String> userValidation = verifier.isSessionUserValid(user);
+
+        Pair<Boolean, String> userValidation = VerifySessionUser.isSessionUserValid(user);
 
         //testing verification results
         if(userValidation.getValue0()){
@@ -39,8 +43,10 @@ public class InventoryWebController {
             return "login";
         }
 
-    }
 
-     */
+
+    }
+    */
+
 }
 

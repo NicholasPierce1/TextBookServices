@@ -68,11 +68,7 @@ public class HomeController {
 
                 }
                 map.addAttribute("Data", data);
-                /*
-                map.addAttribute("Error", new JSONArray(loginUserInfoError.getDefaultMessage()));
-                map.addAttribute("StatusMessage", failedValidationStatusMessage);
-                map.addAttribute("User", null);
-                */
+
                 return "login";
             }
 
@@ -88,11 +84,7 @@ public class HomeController {
                 data.put("Errors", null);
 
                 map.addAttribute("Data", data);
-                /*
-                map.addAttribute("Error", null);
-                map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
-                map.addAttribute("User", person);
-                */
+
                 //setting user session data
                 SharedSessionData.setSessionValueWithKey(SharedSessionData.USER_KEY, user.getValue0().orElseThrow());
 
@@ -113,11 +105,7 @@ public class HomeController {
                 data.put("Errors", null);
 
                 map.addAttribute("Data", data);
-                /*
-                map.addAttribute("Error", null);
-                map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
-                map.addAttribute("User", null);
-                */
+
                 return "login";
             }
         }
@@ -132,12 +120,7 @@ public class HomeController {
             data.put("Errors", null);
 
             map.addAttribute("Data", data);
-            /*
-            map.addAttribute("Error", null);
-            map.addAttribute("StatusMessage", "Internal error has occurred. " +
-                    "If this continues please contact your IT support.");
-            map.addAttribute("User", null);
-            */
+
             return "login";
         }
     }
