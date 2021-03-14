@@ -41,7 +41,7 @@ public class InventoryWebController {
             validationResult.getValue1().put("LoginUserInfo", null);
             return "login";
         }
-        
+
 
         Triplet<Boolean, String, Optional<User>> userValidation = VerifySessionUser.isSessionUserValid(user);
         //testing verification results
