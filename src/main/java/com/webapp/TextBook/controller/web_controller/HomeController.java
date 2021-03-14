@@ -6,6 +6,7 @@ import com.webapp.TextBook.repository.data_access.User;
 import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
+import com.webapp.TextBook.sharedFiles.WebControllerValidationBindingHelper;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class HomeController {
     public String login(){ return "login"; }
 
     //login confirmation
-    @RequestMapping(value = "/loginConfirmed", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String loginConfirmation (
             @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
             BindingResult result,
@@ -48,27 +49,9 @@ public class HomeController {
         try {
 
             // format validation/dealing with binding errors
-            final String failedValidationStatusMessage = "User input missing or invalid";
-            if (result.hasErrors()) {
-                //binding errors present, load in Status/Error messages and return to login
-
-                assert (result.getErrorCount() != 0);
-                ObjectError loginUserInfoError = result.getAllErrors().get(0);
-
-                data.put("LoginUserInfo", null);
-                data.put("StatusMessage", failedValidationStatusMessage);
-
-                if(SharedValidationState.isGenericErrorMessage(loginUserInfoError.getDefaultMessage())){
-                    data.put("GeneralError",loginUserInfoError.getDefaultMessage() );
-                    data.put("Errors", null);
-                }
-                else{
-                    data.put("GeneralError", null);
-                    data.put("Errors", new JSONArray(loginUserInfoError.getDefaultMessage()).toString());
-
-                }
-                map.addAttribute("Data", data);
-
+            Pair<Boolean,JSONObject> validationResult = WebControllerValidationBindingHelper.validationBindingHandler(result,map);
+            if(!validationResult.getValue0()){
+                validationResult.getValue1().put("LoginUserInfo", null);
                 return "login";
             }
 

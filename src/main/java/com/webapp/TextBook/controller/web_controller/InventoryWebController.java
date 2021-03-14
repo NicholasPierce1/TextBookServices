@@ -2,6 +2,7 @@ package com.webapp.TextBook.controller.web_controller;
 import com.sun.istack.Nullable;
 import com.webapp.TextBook.repository.data_access.User;
 import com.webapp.TextBook.sharedFiles.VerifySessionUser;
+import com.webapp.TextBook.sharedFiles.WebControllerValidationBindingHelper;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 import org.javatuples.Pair;
@@ -32,31 +33,17 @@ public class InventoryWebController {
 
         //verifying session user is still valid
 
-        Triplet<Boolean, String, Optional<User>> userValidation = VerifySessionUser.isSessionUserValid(user);
+
         JSONObject data = new JSONObject();
 
-        final String ThereWasABindingErrorStatusMessage = "There was a Binding Error in initial WebController";
-
-        if (result.hasErrors()){
-            //binding errors present, load in Status/Error messages and return to login
-            assert (result.getErrorCount() != 0);
-            ObjectError loginUserInfoError = result.getAllErrors().get(0);
-
-            data.put("LoginUserInfo", null);
-            data.put("StatusMessage", ThereWasABindingErrorStatusMessage);
-            if(SharedValidationState.isGenericErrorMessage(loginUserInfoError.getDefaultMessage())){
-                data.put("GeneralError",loginUserInfoError.getDefaultMessage() );
-                data.put("Errors", null);
-            }
-            else{
-                data.put("GeneralError", null);
-                data.put("Errors", new JSONArray(loginUserInfoError.getDefaultMessage()).toString());
-
-            }
-            map.addAttribute("Data", data);
-
+        Pair<Boolean,JSONObject> validationResult = WebControllerValidationBindingHelper.validationBindingHandler(result,map);
+        if(!validationResult.getValue0()){
+            validationResult.getValue1().put("LoginUserInfo", null);
             return "login";
         }
+        
+
+        Triplet<Boolean, String, Optional<User>> userValidation = VerifySessionUser.isSessionUserValid(user);
         //testing verification results
         if(userValidation.getValue0()){
             // User is valid and may continue to CheckBookCopy
