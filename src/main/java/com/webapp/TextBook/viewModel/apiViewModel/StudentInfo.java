@@ -10,21 +10,31 @@ import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-/*
+/***
 Handles viewmodel duties for the StudentInfo page
  */
 public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentInfo> {
-    //Place holder for the word "ID"
+    /***
+     * Place holder for the word "ID"
+     */
+
     public static final String NOMINAL_ID = "id";
-    //place holder for the word "termCode"
+    /***
+     * place holder for the word "termCode"
+     */
     public static final String NOMINAL_TERM_CODE = "termCode";
-    //Studnet 919 number
+    /***
+     * Studnet 919 number
+     */
     public String id;
-    //the term code
+    /***
+     * the term code
+     */
     public String termCode;
-    /*Constructors
-        1. Blank
-        2. Takes all inputs
+    /***
+     * Constructors
+     *         1. Blank
+     *         2. Takes all inputs
      */
     public StudentInfo(){}
     public StudentInfo(String id, String termCode){
@@ -33,8 +43,8 @@ public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentI
 
     }
 
-    /*
-    All neccessary getters and setters for non-final values
+    /***
+     * All neccessary getters and setters for non-final values
      */
 
     public String getId() {
@@ -52,8 +62,8 @@ public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentI
     public void setTermCode(String termCode) {
         this.termCode = termCode;
     }
-    /*
-        Implements the needed method. Refer to LoginUserInfo for context.
+    /***
+     *  Implements the needed method. Refer to LoginUserInfo for context.
      */
     @Override
     public @NotNull Optional<StudentInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentInfo> initialInstantiation) {
