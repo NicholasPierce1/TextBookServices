@@ -18,52 +18,65 @@
               crossorigin="anonymous">
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar dark bg-dark">
-            <a class="navbar-brand" href="#">
-                <img src="/img/NorthwestLogo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                Student View
-            </a>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #18523c;">
+                    <img src="NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
+                    <a class="navbar-brand" href="#"></a>
+                        <span class="navbar-brand mb-0 h1">Student View</span>
+                    </a>
+                    <!-- For Small Windows -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Shows collapsed navbar to the screen
+                                    - Links will be in js with form submissions
+                    -->
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                      <ul class="navbar-nav">
 
-            <!-- For Small Windows -->
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-                <span class="navbar-toggle-icon"></span>
-            </button>
-
-            <!-- Shows collapsed navbar to the screen
-                - Links will be in js with form submissions
-             -->
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav">
-                    <li onclick="createManualFromForm();" class="nav-item">
                         <!--Links to Checked In/Out View -->
-                        <form action="/checkIncheckOut" method="get">
-                            <a class="nav-link">Check In/ Check Out</a>
-                        </form>
-                    </li>
-                    <li onclick="createManualFromForm();" class="nav-item">
+
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Check In / Check Out<span class="sr-only"></span></a>
+                        </li>
+
                         <!--Links to Patron Views
-                            - Patron Schedule
-                            - Sold Books
-                            - Previous Books
-                         -->
-                        <form action="/patronViews" method="get">
-                            <a class="nav-link">Patron Views</a>
-                        </form>
-                    </li>
-                    <li onclick="createManualFromForm();" class="nav-item">
+                                                    - Patron Schedule
+                                                    - Sold Books
+                                                    - Previous Books
+                        -->
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Patron Info</a>
+                        </li>
+
                         <!--Links to Login View -->
-                        <form action="/loginPage" method="get">
-                            <a class="nav-link">Exit</a>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Exit</a>
+
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+
+                <script
+                        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                        crossorigin="anonymous">
+                </script>
+
+                <script
+                        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                        crossorigin="anonymous">
+                </script>
+
+                <script
+                        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                        crossorigin="anonymous">
+                </script>
 
     </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-            crossorigin="anonymous">
     </script>
     <script type="text/javascript"
             src = "JS/ShardHandler.js"></script>
