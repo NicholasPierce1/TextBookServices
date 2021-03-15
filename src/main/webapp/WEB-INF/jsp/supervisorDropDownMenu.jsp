@@ -19,7 +19,7 @@
 </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #18523c;">
-            <img src="NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
+            <img src="/img/NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
                 <a class="navbar-brand" href="#"></a>
                     <span class="navbar-brand mb-0 h1">Supervisor View</span>
                 </a>
