@@ -56,7 +56,7 @@
         <a href="bookQuery">Query Books</a>
         <a href="bookDisposition">Change Book Disposition</a>
         <a href="replaceBarcode">Replace Barcode</a>
-        <a href="navigationBar">Query Course</a>
+        <a href="queryCourse">Query Course</a>
         <a href="navigationBar">Course Message</a>
         <a href="navigationBar">Change Book Code/Year</a>
     </div>

@@ -42,14 +42,34 @@
         .dropdown:hover .dropdown-content {display: block;}
         .dropdown:hover .dropbtn {background-color: grey;}
 
-        table{
-            height: 1000px;
+        #tableDiv{
+            height: 500px;
             width: 100%;
 
             border-style: ridge;
             border-width: thick;
             border-color: ForestGreen;
+        }
+        table{
+            border_collapse:collapse;
             }
+        tr{
+            width: 100px;
+            padding: 50px;
+        }
+        th{
+            text-align: left;
+            width: 100px;
+            padding: 0px 15px;
+        }
+        td{
+            width: 100px;
+            padding: 0px 15px;
+        }
+        #tdTitle{
+            width: 100%;
+            padding: 0px 15px;
+        }
     </style>
     <script>
         let bookData = [
@@ -60,7 +80,7 @@
         ];
 
         window.onload = () => {
-            loadTabelData(bookData);
+            loadTableData(bookData);
         };
 
         function loadTableData(bookData) {
@@ -68,7 +88,7 @@
             let dataHtml = '';
 
         for(let book of bookData) {
-            dataHtml += '<tr><td>${book.code}</td><td>${book.year}</td><td>${book.title}</td></tr>';
+            dataHtml += '<tr><td>'+book.code+'</td><td>'+book.year+'</td><td id = "tdTitle">'+book.title+'</td></tr>';
             }
             console.log(dataHtml)
             tableBody.innerHTML = dataHtml;
@@ -112,6 +132,7 @@
         </p>
     </fieldset>
 </form>
+<div id = 'tableDiv'>
 <table>
     <thead>
         <tr>
@@ -122,5 +143,6 @@
     </thead>
     <tbody id="tableData"></tbody>
 </table>
+</div>
 </body>
 </html>
