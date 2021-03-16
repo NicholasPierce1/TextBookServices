@@ -9,12 +9,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(path = "/rest/api/inventory")
 public class HomeApiController {
-
+    final static String generalJsonStringErrorMessage = "(HomeAPIController) - Invalid JsonString passed into controller";
     @RequestMapping(value = "/getCheckedOutBooks", method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public String checkedoutBooks(@RequestBody String jsonString){
 
-        return "";
+        try{
+
+
+
+            return "";
+
+        }catch(Exception e){
+
+            return "";
+        }
+
+
+
+
     }
 }
