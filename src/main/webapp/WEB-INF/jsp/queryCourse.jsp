@@ -57,6 +57,9 @@
             width: 100px;
             padding: 50px;
         }
+        tr:nth-child(even){
+            background-color: lightgrey;
+        }
         th{
             text-align: left;
             width: 100px;
