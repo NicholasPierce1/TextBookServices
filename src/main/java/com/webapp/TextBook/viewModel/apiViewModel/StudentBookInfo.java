@@ -2,7 +2,7 @@ package com.webapp.TextBook.viewModel.apiViewModel;
 
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
-import com.webapp.TextBook.viewModel.shared.ApiVieweModel;
+import com.webapp.TextBook.viewModel.shared.ApiViewModel;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 /***
  * Viewmodel duties for StudnetBookInfo page
  */
-public class StudentBookInfo implements ApiVieweModel, ApiViewModelCreation<StudentBookInfo> {
+public class StudentBookInfo implements ApiViewModel, ApiViewModelCreation{
     /***
      * placeholder for the word "id" and "barcode"
      */
@@ -59,7 +59,7 @@ public class StudentBookInfo implements ApiVieweModel, ApiViewModelCreation<Stud
     /***
      *  Implements the needed method. Refer to LoginUserInfo for context.
      */
-    @Override
+    /*
     public @NotNull Optional<StudentBookInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentBookInfo> initialInstantiation) {
         final StudentBookInfo bookInfo = new StudentBookInfo();
 
@@ -80,4 +80,6 @@ public class StudentBookInfo implements ApiVieweModel, ApiViewModelCreation<Stud
             return Optional.empty();
         }
     }
+
+     */
 }

@@ -1,19 +1,21 @@
 package com.webapp.TextBook.viewModel.apiViewModel;
 
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
-import com.webapp.TextBook.viewModel.shared.ApiVieweModel;
+import com.webapp.TextBook.viewModel.shared.ApiViewModel;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
+import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /***
 Handles viewmodel duties for the StudentInfo page
  */
-public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentInfo> {
+public class StudentInfo implements ApiViewModel, ApiViewModelCreation {
     /***
      * Place holder for the word "ID"
      */
@@ -26,6 +28,13 @@ public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentI
     /***
      * Studnet 919 number
      */
+
+    // todo: doc here
+    private static Function<Pair<StudentInfo, JSONObject>, Void> valueStateSetter = ( studentInfoPair -> {
+        // todo: implement (parse data from json and set into student info)
+        return null;
+    });
+
     public String id;
     /***
      * the term code
@@ -65,7 +74,7 @@ public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentI
     /***
      *  Implements the needed method. Refer to LoginUserInfo for context.
      */
-    @Override
+    /*
     public @NotNull Optional<StudentInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentInfo> initialInstantiation) {
         final StudentInfo student = new StudentInfo();
 
@@ -86,4 +95,24 @@ public class StudentInfo implements ApiVieweModel, ApiViewModelCreation<StudentI
             return Optional.empty();
         }
     }
+
+     */
+
+    // todo: doc and comment set here
+    public static @NotNull Optional<StudentInfo> createApiFromJson(
+            @NotNull JSONObject jsonObject,
+            @NotNull Supplier<StudentInfo> studentInfoSupplier){
+        try{
+            return ApiViewModelCreation.createApiViewModelFromJson(
+                    jsonObject,
+                    studentInfoSupplier,
+                    StudentInfo.valueStateSetter
+                    );
+        }
+        catch(RuntimeException ex){
+            // todo: log w/ internal error
+            return Optional.empty();
+        }
+    }
+
 }
