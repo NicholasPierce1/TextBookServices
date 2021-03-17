@@ -47,6 +47,12 @@
         .btn-text {
             color: white;
         }
+        .Form{
+            background-color: rgb(216, 221, 214);
+            padding: 1em;
+            margin: 0 -1em;
+            border-radius: 0.5em;
+        }
 
     </style>
 </head>
