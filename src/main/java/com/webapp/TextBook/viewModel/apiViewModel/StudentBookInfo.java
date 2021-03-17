@@ -3,17 +3,19 @@ package com.webapp.TextBook.viewModel.apiViewModel;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
 import com.webapp.TextBook.viewModel.shared.ApiViewModel;
+import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /***
  * Viewmodel duties for StudnetBookInfo page
  */
-public class StudentBookInfo implements ApiViewModel, ApiViewModelCreation{
+public class StudentBookInfo extends ApiViewModelCreation{
     /***
      * placeholder for the word "id" and "barcode"
      */
@@ -27,6 +29,13 @@ public class StudentBookInfo implements ApiViewModel, ApiViewModelCreation{
     /***
      * Strike Barcdoe
      */
+
+    // todo: doc here
+    private static Consumer<Pair<StudentInfo, JSONObject>> valueStateSetter = (studentInfoPair -> {
+        // todo: implement (parse data from json and set into student info)
+
+    });
+
     public String barCode;
     /***
      * Two Constuctors
@@ -82,4 +91,22 @@ public class StudentBookInfo implements ApiViewModel, ApiViewModelCreation{
     }
 
      */
+
+
+    // todo: doc and comment set here
+    public static @NotNull Optional<StudentInfo> createApiFromJson(
+            @NotNull JSONObject jsonObject,
+            @NotNull Supplier<StudentInfo> studentInfoSupplier){
+        try{
+            return ApiViewModelCreation.createApiViewModelFromJson(
+                    jsonObject,
+                    studentInfoSupplier,
+                    StudentBookInfo.valueStateSetter
+            );
+        }
+        catch(RuntimeException ex){
+            // todo: log w/ internal error
+            return Optional.empty();
+        }
+    }
 }

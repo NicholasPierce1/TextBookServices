@@ -1,11 +1,12 @@
 package com.webapp.TextBook.viewModel.shared;
 
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -17,7 +18,8 @@ import java.util.function.Supplier;
  *     targeting API ViewModels for JSON sub-parseable creation.
  * </p>
  */
-public interface ApiViewModelCreation {
+
+public abstract class ApiViewModelCreation implements ApiViewModel{
 
     /**
      * <p>Creates an instance of
@@ -36,8 +38,10 @@ public interface ApiViewModelCreation {
     public static <T extends ApiViewModel> @NotNull Optional<T> createApiViewModelFromJson(
             @NotNull JSONObject jsonObject,
             @NotNull Supplier<T> initialInstantiation,
-            @NotNull Function<Pair<T, JSONObject>, Void> valueStateUpdater){
-        return null;
+            @NotNull Consumer<Pair<T, JSONObject>> valueStateUpdater){
+        return Optional.empty();
     };
+
+
 
 }

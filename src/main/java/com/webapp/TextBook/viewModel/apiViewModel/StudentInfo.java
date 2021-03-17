@@ -9,13 +9,14 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 /***
 Handles viewmodel duties for the StudentInfo page
  */
-public class StudentInfo implements ApiViewModel, ApiViewModelCreation {
+public class StudentInfo extends ApiViewModelCreation {
     /***
      * Place holder for the word "ID"
      */
@@ -30,9 +31,9 @@ public class StudentInfo implements ApiViewModel, ApiViewModelCreation {
      */
 
     // todo: doc here
-    private static Function<Pair<StudentInfo, JSONObject>, Void> valueStateSetter = ( studentInfoPair -> {
+    private static Consumer<Pair<StudentInfo, JSONObject>> valueStateSetter = (studentInfoPair -> {
         // todo: implement (parse data from json and set into student info)
-        return null;
+
     });
 
     public String id;
