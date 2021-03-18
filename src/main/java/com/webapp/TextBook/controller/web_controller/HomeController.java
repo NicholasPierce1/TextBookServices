@@ -37,7 +37,7 @@ public class HomeController {
     public String index(ModelMap modelMap){
         modelMap.addAttribute("test", "value test here");
         System.out.println("called");
-        return "index";
+        return "changebook";
     }
 
 
