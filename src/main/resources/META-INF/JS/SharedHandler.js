@@ -48,7 +48,7 @@ class ErrorBindings{
     constructor(fieldErrorName, fieldErrorMessage, errorData){
 
             this.fieldErrorName = fieldErrorName;
-            this.fieldrrorMessage = fieldErrorMessage;
+            this.fieldErrorMessage = fieldErrorMessage;
             this.errorData = errorData;
             console.log(fieldErrorName +  fieldErrorMessage + errorData)
     }
