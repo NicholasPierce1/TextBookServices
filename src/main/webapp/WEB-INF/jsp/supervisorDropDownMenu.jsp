@@ -41,9 +41,14 @@
                       Inventory
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Maintenance</a>
-                      <a class="dropdown-item" href="#">Add Books</a>
-                      <a class="dropdown-item" href="#">Query Book</a>
+                      <li><a class="dropdown-item" href="#">Maintenance</a></li>
+                          <li><a class="dropdown-item" href="#">Add Books</a></li>
+                          <li><a class="dropdown-item" href="#">Query Book</a></li>
+                          <li><a class="dropdown-item" href="#">Change Book Disposition</a></li>
+                          <li><a class="dropdown-item" href="#">Replace Barcode</a></li>
+                          <li><a class="dropdown-item" href="#">Query Course</a></li>
+                          <li><a class="dropdown-item" href="#">Course Message</a></li>
+                          <li><a class="dropdown-item" href="#">Change Book Code/Year</a></li>
 
                       <!--
                            Link to Change Book Info
@@ -51,8 +56,6 @@
                               - Replace Barcode
                               - Change Book Code Year
                       -->
-                      <a class="dropdown-item" href="#">Query Course</a>
-                      <a class="dropdown-item" href="#">Change Book Info</a>
                     </div>
                 </li>
 

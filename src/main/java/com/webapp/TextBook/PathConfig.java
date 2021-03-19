@@ -22,6 +22,11 @@ public class PathConfig implements WebMvcConfigurer {
             "classpath:/static/", "classpath:/public/"
     };
 
+    private static final String CLASSPATH_IMG_RESOURCE_LOCATION = "classpath:/static/img/";
+    private static final String CLASSPATH_JS_RESOURCE_LOCATION = "classpath:/static/JS/";
+
+    private static final String CLASSPATH_CSS_RESOURCE_LOCATION = "classpath:/static/CSS/";
+
     @Bean
     public ViewResolver viewResolver(){
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
