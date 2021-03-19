@@ -34,7 +34,7 @@ class ErrorBindings{
     static errorDataKey = "faultyData";
 
     /**
-     * @constuctor
+     * @constructor
      *  creates new ErrorBindings object for new errors
      *  logs error to console
      * @param {1} fieldErrorName

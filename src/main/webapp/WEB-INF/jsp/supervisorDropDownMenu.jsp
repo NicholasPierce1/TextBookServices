@@ -11,145 +11,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Student View</title>
+    <title>Supervisor View</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-          crossorigin="anonymous">
+              rel="stylesheet"
+              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+              crossorigin="anonymous">
+
 </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #18523c;">
-            <img src="/img/NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
-                <a class="navbar-brand" href="#"></a>
-                    <span class="navbar-brand mb-0 h1">Supervisor View</span>
-                </a>
+<style>
+    /* Hide input number arrows for Firefox */
+    input[type=number]{
+        -moz-appearance: textfield;
+    }
+    /* Hide input number arrows for Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button{
+        -webkit-appearance:none;
+        margin: 0;
+    }
+    /* Remove arrow from navbar dropdown */
+    .dropdown-toggle::after {
+        content: none;
+    }
+    @media all and (min-width: 992px) {
+        .navbar .nav-item .dropdown-menu{ display: none; }
+        .navbar .nav-item:hover .nav-link{ color: #fff;  }
+        .navbar .nav-item:hover .dropdown-menu{ display: block; }
+        .navbar .nav-item .dropdown-menu{ margin-top:0; }
+    }
+    .navbar-custom {
+        background-color: rgb(0,103,76);
+    }
+    .navbar-text {
+        color: white;
+        font-size: 23px ;
+    }
+    .btn-custom {
+        background-color: rgb(0,103,76);
+    }
+    .btn-text{
+        color: white;
+    }
+    .toggler-custom{
+        border-color: white;
+    }
+    .buttonsOpt {
+        align-items: center;
+    }
+    .btn{
+        float: left;
+        border: 1px;
+        border-radius: 10px;
+    }
+    .Form{
+        background-color: rgb(216, 221, 214);
+        padding: 1em;
+        margin: 0 -1em;
+        border-radius: 0.5em;
+    }
+    .btn-logout-custom{
+        background-color: rgb(216, 221, 214);
+        font-size: 23px;
+    }
+    .input-group-text{
+        border-radius: 10px;
+    }
 
-            <!-- For Small Windows -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+
+
+
+
+
+</style>
+</head>
+<body>
+<section>
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
+        <div class="container-fluid">
+            <img src="NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
+            <a class="navbar-brand" href="#"></a>
+                <span class="navbar-brand mb-0 h1">Supervisor View</span>
+            </a>
+            <button class="navbar-toggler toggler-custom" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-
-            <!-- Shows collapsed navbar to the screen
-                            - Links will be in js with form submissions
-            -->
-
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav">
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Inventory
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav pb-1 pt-1">
+                    <a class="nav-link active navbar-text" aria-current="page" href="#">Home</a>
+                </ul>
+                <div class="nav-item dropdown pb-1 pt-1">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Inventory
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Maintenance</a></li>
-                          <li><a class="dropdown-item" href="#">Add Books</a></li>
-                          <li><a class="dropdown-item" href="#">Query Book</a></li>
-                          <li><a class="dropdown-item" href="#">Change Book Disposition</a></li>
-                          <li><a class="dropdown-item" href="#">Replace Barcode</a></li>
-                          <li><a class="dropdown-item" href="#">Query Course</a></li>
-                          <li><a class="dropdown-item" href="#">Course Message</a></li>
-                          <li><a class="dropdown-item" href="#">Change Book Code/Year</a></li>
-
-                      <!--
-                           Link to Change Book Info
-                              - Change Book Disposition
-                              - Replace Barcode
-                              - Change Book Code Year
-                      -->
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Patron
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Check In / Check Out</a>
-
-                      <!--
-                             Link to Patron Info
-                                  - Patron Schedule
-                                  - Previous Books
-                                  - Sold Books
-                      -->
-
-                      <a class="dropdown-item" href="#">Patron Info</a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Reports</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Exit</a>
-                </li>
-
-              </ul>
-            </div>
-          </nav>
-
-        <div class="container my-container "
-              style="background-color: #bebebe; border: 2px solid black; height: 100%;">
-
-              <div class="row my-row"
-                   style="padding: 25px;
-                          padding: 25px;">
-                  <div class="col-md-20 my-col">
-                        <h1>
-                            Instructions
-                        </h1>
-
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                        qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                        aliquam voluptatem veniam, est atque cumque eum delectus sint!
-                        </p>
-
-
-                  </div>
-              </div>
-              <div class="row my-row"
-                   style="padding: 25px; padding: 25px;">
-                <div class="col-md-20 my-col">
-                        <h1>
-                            Resources
-                        </h1>
-
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                        qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                        aliquam voluptatem veniam, est atque cumque eum delectus sint!
-                        </p>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Add Books</a></li>
+                        <li><a class="dropdown-item" href="#">Change Book</a></li>
+                        <li><a class="dropdown-item" href="#">Query Book</a></li>
+                        <li><a class="dropdown-item" href="#">Query Course</a></li>
+                        <li><a class="dropdown-item" href="#">Course Message</a></li>
+                        <li><a class="dropdown-item" href="#">Maintenance</a></li>
+                    </ul>
                 </div>
+                <div class="nav-item dropdown pb-1 pt-1">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Patrons
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Check In/Out</a></li>
+                        <li><a class="dropdown-item" href="#">Patrons</a></li>
+                    </ul>
+                </div>
+                <div class="nav-item dropdown pb-1 pt-1">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Reports
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                </div>
+
             </div>
+            <div class="navbar-item justify-content-end">
+                <button class="btn btn-logout-custom" type="button">Log Out</button>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div class="container my-container "
+           style="background-color: #bebebe;
+                  border: 2px solid black;
+                  height: 100%;">
+
+          <div class="row my-row"
+               style="padding: 25px;
+                      padding: 25px;">
+              <div class="col-md-20 my-col">
+                    <h1>
+                        Instructions
+                    </h1>
+
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                    qui officia deserunt mollit anim id est laborum.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                    </p>
+
+
+              </div>
           </div>
+          <div class="row my-row"
+               style="padding: 25px;
+                      padding: 25px;">
+            <div class="col-md-20 my-col">
+                    <h1>
+                        Resources
+                    </h1>
 
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                    qui officia deserunt mollit anim id est laborum.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                    </p>
+            </div>
+        </div>
+      </div>
 
         <script
-                src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous">
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous">
         </script>
 
         <script
-                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous">
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous">
         </script>
 
         <script
-                src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous">
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous">
         </script>
 
     </body>
