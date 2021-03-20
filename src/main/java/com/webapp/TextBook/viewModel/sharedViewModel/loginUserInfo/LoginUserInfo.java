@@ -1,18 +1,22 @@
 package com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo;
 
+import com.sun.istack.Nullable;
 import com.webapp.TextBook.validation.SharedValidation.loginUserInfoValidation.LogInUserInfoValidationInterface;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentBookInfo;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
-import com.webapp.TextBook.viewModel.shared.ApiVieweModel;
 import com.webapp.TextBook.viewModel.shared.FormViewModel;
+import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @LogInUserInfoValidationInterface
-public class LoginUserInfo implements FormViewModel, ApiVieweModel, ApiViewModelCreation<LoginUserInfo> {
+public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel{
 
         // enumerates static members
         public final static String NOMINAL_USERNAME = "username";
@@ -21,6 +25,12 @@ public class LoginUserInfo implements FormViewModel, ApiVieweModel, ApiViewModel
 
         private String _username;
         private String _password;
+
+    // todo: doc here
+    private static Consumer<Pair<LoginUserInfo, JSONObject>> valueStateSetter = (studentInfoPair -> {
+        // todo: implement (parse data from json and set into student info)
+
+    });
 
     public LoginUserInfo(){
 
@@ -48,6 +58,7 @@ public class LoginUserInfo implements FormViewModel, ApiVieweModel, ApiViewModel
         this._username = _username;
     }
 
+    /*
     @Override
     public @NotNull Optional<LoginUserInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<LoginUserInfo> initialInstantiation) {
         // instantiates empty user for partial construction
@@ -69,5 +80,35 @@ public class LoginUserInfo implements FormViewModel, ApiVieweModel, ApiViewModel
 
             return Optional.empty();
         }
+    }
+     */
+
+    // todo: doc and comment set here
+    public static @NotNull Optional<LoginUserInfo> createApiFromJson(
+            @NotNull JSONObject jsonObject,
+            @Nullable Supplier<LoginUserInfo> loginUserInfoSupplier){
+        try{
+            final Supplier<LoginUserInfo> localLoginUserInfoSupplier = loginUserInfoSupplier == null ?
+                    LoginUserInfo::new :
+                    loginUserInfoSupplier;
+
+            return ApiViewModelCreation.createApiViewModelFromJson(
+                    jsonObject,
+                    localLoginUserInfoSupplier,
+                    LoginUserInfo.valueStateSetter
+            );
+        }
+        catch(RuntimeException ex){
+            // todo: log w/ internal error
+            return Optional.empty();
+        }
+    }
+
+    public static @NotNull Optional<LoginUserInfo> createApiFromJson(
+            @NotNull JSONObject jsonObject) {
+
+
+        return createApiFromJson(jsonObject, null);
+
     }
 }

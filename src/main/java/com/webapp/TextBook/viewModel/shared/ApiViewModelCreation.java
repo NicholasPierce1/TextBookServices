@@ -1,23 +1,25 @@
 package com.webapp.TextBook.viewModel.shared;
 
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
+import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
  * <h1>ApiViewModel</h1>
- *
- * @param <T>: A type reference of an ApiViewModel
  *
  * <p>
  *     Retains requirements and classification for Api ViewModels; important for manual constraint validators
  *     targeting API ViewModels for JSON sub-parseable creation.
  * </p>
  */
-public interface ApiViewModelCreation<T extends ApiVieweModel> {
+
+public abstract class ApiViewModelCreation implements ApiViewModel{
 
     /**
      * <p>Creates an instance of
@@ -33,8 +35,13 @@ public interface ApiViewModelCreation<T extends ApiVieweModel> {
      * @return an Optional (type param: A type reference of itself in class header) of the fully consturcted
      * view model. If the data source (JSONObject) retains null fields then an empty optional is given.
      */
-    public @NotNull Optional<T> createApiViewModelFromJson(
+    public static <T extends ApiViewModel> @NotNull Optional<T> createApiViewModelFromJson(
             @NotNull JSONObject jsonObject,
-            @Nullable Supplier<T> initialInstantiation);
+            @NotNull Supplier<T> initialInstantiation,
+            @NotNull Consumer<Pair<T, JSONObject>> valueStateUpdater){
+        return Optional.empty();
+    };
+
+
 
 }

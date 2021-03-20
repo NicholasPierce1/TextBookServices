@@ -1,7 +1,7 @@
 package com.webapp.TextBook.validation.ApiValidation.ApiValidationHandler;
 
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
-import com.webapp.TextBook.viewModel.shared.ApiVieweModel;
+import com.webapp.TextBook.viewModel.shared.ApiViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
@@ -60,7 +60,8 @@ public class ApiValidationHandler {
      * varying on the state/success of accessing JSONArray String for ErrorBinding conversions.
      * IF no error uncovered then the optional will be empty.
      */
-    public <T extends ApiVieweModel> @NotNull Optional<String>
+
+    public <T extends ApiViewModel> @NotNull Optional<String>
     getApiBindingError(@NotNull final T viewModel){
 
         Set<ConstraintViolation<T>> violationSet = this._VALIDATOR.validate(viewModel);
