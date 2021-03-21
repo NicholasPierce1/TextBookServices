@@ -532,8 +532,9 @@ public class BookCopy implements DataAccessConversion {
      */
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
+        // The int index value for values[] represents the corresponding column in the table and follows in order.
         // order: pkey (bookCode, editionYear, seqNr), strikeBarcode, dateCheckedOut, disposition,
-        //bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag
+        // bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag
         this.bookCode = (String)values[0];
         this.editionYear = ((BigDecimal)values[1]).intValue();
         this.seqNr = ((BigDecimal)values[2]).intValue();
