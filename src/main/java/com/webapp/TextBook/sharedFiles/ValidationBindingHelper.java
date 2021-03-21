@@ -117,8 +117,11 @@ public class ValidationBindingHelper {
             );
 
             // if json array is empty (all optionals empty --> no errors then return true)
-            if(jsonArray.length() == 0)
+            if(jsonArray.length() == 0){
+                handleSuccessValidationErrorMessage(jsonObject);
                 return true;
+            }
+
 
             // set error message type
             ValidationBindingHelper.handleErrorMessageType(
