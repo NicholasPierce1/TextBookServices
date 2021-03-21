@@ -1,22 +1,17 @@
 package com.webapp.TextBook.controller.web_controller;
-import com.sun.istack.Nullable;
 import com.webapp.TextBook.repository.data_access.User;
 import com.webapp.TextBook.sharedFiles.VerifySessionUser;
-import com.webapp.TextBook.sharedFiles.WebControllerValidationBindingHelper;
-import com.webapp.TextBook.validation.Shared.SharedValidationState;
+import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.net.ssl.SSLEngineResult;
 import java.util.Optional;
 
 @Controller
@@ -36,7 +31,7 @@ public class InventoryWebController {
 
         JSONObject data = new JSONObject();
 
-        Pair<Boolean,JSONObject> validationResult = WebControllerValidationBindingHelper.validationBindingHandler(result,map);
+        Pair<Boolean,JSONObject> validationResult = ValidationBindingHelper.validationBindingHandler(result,map);
         if(!validationResult.getValue0()){
             validationResult.getValue1().put("LoginUserInfo", null);
             return "login";

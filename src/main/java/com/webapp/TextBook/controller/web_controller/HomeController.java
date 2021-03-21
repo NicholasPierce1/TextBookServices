@@ -6,17 +6,14 @@ import com.webapp.TextBook.repository.data_access.User;
 import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
-import com.webapp.TextBook.sharedFiles.WebControllerValidationBindingHelper;
-import com.webapp.TextBook.validation.Shared.SharedValidationState;
+import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -49,7 +46,7 @@ public class HomeController {
         try {
 
             // format validation/dealing with binding errors
-            Pair<Boolean,JSONObject> validationResult = WebControllerValidationBindingHelper.validationBindingHandler(result,map);
+            Pair<Boolean,JSONObject> validationResult = ValidationBindingHelper.validationBindingHandler(result,map);
             if(!validationResult.getValue0()){
                 validationResult.getValue1().put("LoginUserInfo", null);
                 return "login";
