@@ -27,16 +27,16 @@ public class StudentInfo extends ApiViewModelCreation {
      * place holder for the word "termCode"
      */
     public static final String NOMINAL_TERM_CODE = "termCode";
-    /***
-     * Studnet 919 number
-     */
+
 
     // todo: doc here
     private static Consumer<Pair<StudentInfo, JSONObject>> valueStateSetter = (studentInfoPair -> {
         // todo: implement (parse data from json and set into student info)
 
     });
-
+    /***
+     * Student 919 number
+     */
     public String id;
     /***
      * the term code

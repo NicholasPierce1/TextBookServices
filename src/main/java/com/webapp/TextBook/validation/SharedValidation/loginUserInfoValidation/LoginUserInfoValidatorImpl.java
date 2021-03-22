@@ -97,7 +97,7 @@ public class LoginUserInfoValidatorImpl implements
                     );
 
             }
-            if(errorList.isEmpty()){ //Error list is not empty
+            if(!errorList.isEmpty()){ //Error list is not empty
                 //if binding error list is not empty then set constraint validator’s message
                 // to the abstract method’s json creator helper.
                 constraintContext.disableDefaultConstraintViolation();

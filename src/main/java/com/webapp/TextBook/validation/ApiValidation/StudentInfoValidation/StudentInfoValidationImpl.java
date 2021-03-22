@@ -2,6 +2,8 @@ package com.webapp.TextBook.validation.ApiValidation.StudentInfoValidation;
 
 import com.webapp.TextBook.validation.ApiValidation.StudentInfoValidation.StudentInfoValidationInterface;
 import com.webapp.TextBook.validation.Shared.ErrorBinding;
+import com.webapp.TextBook.validation.Shared.ErrorBindingException;
+import com.webapp.TextBook.validation.Shared.RegexPatternContainer;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 
@@ -21,13 +23,7 @@ public class StudentInfoValidationImpl
      */
     @Override
     public void initialize(StudentInfoValidationInterface constraintAnnotation) {
-        // todo @Nick what is this supposed to do. The example I'm basing this off of had a suffix
-        /*
-        todo @Matthew
-         what is this method suppose to do?
-         if there are not unique attributes defined in the type validation tag "@<viewModelName>Interface"
-         then this will be blank. You need to understand how these layers work- don't "copy", learn.
-         */
+
     }
 
     /***
@@ -41,7 +37,42 @@ public class StudentInfoValidationImpl
     public boolean isValid(StudentInfo studentInfo, ConstraintValidatorContext constraintValidatorContext) {
         ArrayList<ErrorBinding<String>> errorList = new ArrayList<ErrorBinding<String>>();
 
-        return false;
+        try{
+        //for invlaid 919 numbers
+        if(!studentInfo.getId().matches(RegexPatternContainer.STUDENT_ID_PATTERN.pattern())){
+            errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_ID, "Invalid 919 format", null));
+            }
+        //for invalid term code
+        if(!studentInfo.getTermCode().matches(RegexPatternContainer.TERM_PATTERN.pattern())){
+            errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_TERM_CODE, "Invalid term code format", null));
+
+        }
+        if(!errorList.isEmpty()){
+            constraintValidatorContext.disableDefaultConstraintViolation();
+
+            constraintValidatorContext.buildConstraintViolationWithTemplate(
+                    ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
+
+        }
+        }
+        catch (ErrorBindingException e){
+            System.out.println("Error binding failed\n" + e.getStackTrace());
+            constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
+        }
+        catch(Exception exception){
+            // for when conversion of binding list fails upon
+            // error event json generation
+            System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
+            constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
+        }
+
+
+
+
+
+
+
+        return errorList.isEmpty();
 
     }
 
