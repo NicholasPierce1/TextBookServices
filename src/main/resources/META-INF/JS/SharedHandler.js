@@ -40,7 +40,7 @@ class ErrorBindings{
     errorData = errorDataKey;
 
     /**
-     * @constuctor
+     * @constructor
      *  creates new ErrorBindings object for new errors
      *  logs error to console
      * @param {1} fieldErrorName
@@ -108,4 +108,42 @@ class ErrorBindings{
     }
 
 
+}
+
+class UserInfo{
+
+    static STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
+    static S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
+    static S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
+
+    haveSuffix;
+
+    constructor(){
+        this.STUDENT_ID_PATTERN = this.STUDENT_ID_PATTERN;
+        this.S_NUMBER_PREFIX = this.S_NUMBER_PREFIX;
+        this.S_NUMBER_SUFFIX = this.S_NUMBER_SUFFIX;
+    }
+
+    static parseInput(jsonObj){
+        try{
+            return JSON.parse(jsonObj);
+
+        }
+        catch{
+            throw("Error parsing json object");
+            console.log("Error parsing json object");
+        }
+    }
+
+    getSTUDENT_ID_PATTERN(){
+        return this.STUDENT_ID_PATTERN;
+    }
+
+    getS_NUMBER_PREFIX(){
+        return this.S_NUMBER_PREFIX;
+    }
+
+    getS_NUMBER_SUFFIX(){
+        return this.S_NUMBER_SUFFIX;
+    }
 }
