@@ -87,14 +87,26 @@ public class HomeApiController {
                         new HttpHeaders(),
                         HttpStatus.BAD_REQUEST
                 );
-            else {
+
+
 
                 LoginUserInfo loginUserInfo = loginUserInfoOptional.get();
                 StudentInfo studentInfo = studentInfoOptional.get();
                 Triplet<Boolean, String, Optional<User>> userValidation =
                         VerifySessionUser.isSessionUserValid(loginUserInfo);
 
-                if (userValidation.getValue0()) {
+                if(!userValidation.getValue0()){
+
+                    // verify session user is general error not status message
+                    outputData.put("GeneralError", userValidation.getValue1());
+
+                    // Might not be necessary if we want this to be bad_request status
+                    return new ResponseEntity<String>(
+                            outputData.toString(),
+                            headers,
+                            HttpStatus.BAD_REQUEST
+                    );
+                }
 
                     Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode>
                             allCheckedOutBooks = adapter.getAllCheckedOutBooks(
@@ -118,22 +130,6 @@ public class HomeApiController {
                             HttpStatus.OK
                     );
 
-                } else {
-
-
-                    // verify session user is general error not status message
-                    outputData.put("GeneralError", userValidation.getValue1());
-
-                    // Might not be necessary if we want this to be bad_request status
-                    return new ResponseEntity<String>(
-                            outputData.toString(),
-                            headers,
-                            HttpStatus.BAD_REQUEST
-                    );
-
-                }
-
-            }
 
         }catch(JSONException e){
 
