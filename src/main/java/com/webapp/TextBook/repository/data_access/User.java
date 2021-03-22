@@ -15,31 +15,64 @@ import java.util.UUID;
 @Entity
 public class User extends Person{
 
-    /*
-    This is the DA for the User table, however, a user is partially comprised of the
-    User table and the Spriden table.  The definitions in here are distinct to the User
-    table, but will rely on the Person (Spriden) for partial DA construction and definition.
+    /**
+     * <p>
+     * This is the DA for the User table, however, a user is partially comprised of the
+     * User table and the Spriden table.  The definitions in here are distinct to the User
+     * table, but will rely on the Person (Spriden) for partial DA construction and definition.
+     * </p>
      */
 
 
-    // enumerates the instance members that are distinct to User (not Student)
+    /**
+     * <p>
+     * enumerates the instance members that are distinct to User (not Student)
+     *
+     * the local id value that uniquely identifies a user with the POJO/DA class
+     * required by JPA repository and Hibernate (though Hibernate is not utilized)
+     * </p>
+     */
 
-    // the local id value that uniquely identifies a user with the POJO/DA class
-    // required by JPA repository and Hibernate (though Hibernate is not utilized)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID _ID;
 
-    // denotes the hierarchical role of the user (either Supervisor or StudentEmployee)
+    /**
+     * <p>
+     *  denotes the hierarchical role of the user (either Supervisor or StudentEmployee)
+     *</p>
+     */
     public UserRole userRole;
 
-    // holds the password of the logged in user
-    // NOTE: the username (919 number, or id in Person, or spriden_id in Spriden)
-    // is defined in Person
+    /**
+     * <p>
+     * holds the password of the logged in user
+     * NOTE: the username (919 number, or id in Person, or spriden_id in Spriden)
+     * is defined in Person
+     *</p>
+     */
     public String password;
 
+    /**
+     * <p>
+     *  Creates a User -- Empty constructor.
+     *</p>
+     */
     public User() {this._ID = UUID.randomUUID(); }
 
+    /**
+     * <p>
+     *  Creates a User -- Full constructor with all variables.
+     *</p>
+     *
+     * @param pidm: String pidm variable
+     * @param id: String id variable
+     * @param firstName: String firstName variable
+     * @param lastName: String lastName variable
+     * @param middleName: String middleName variable
+     * @param userRole: UserRole userRole variable
+     * @param password: String password variable
+     */
     public User(String pidm, String id, String firstName, String lastName,
                 String middleName, UserRole userRole, String password) {
         super(pidm, id, firstName, lastName, middleName);
@@ -48,33 +81,80 @@ public class User extends Person{
         this.password = password;
     }
 
+    /**
+     *<p>
+     *     Returns the _ID.
+     *</p>
+     *
+     * @return UUID _ID information.
+     */
     public UUID get_ID() {
         return _ID;
     }
 
+    /**
+     *<p>
+     *     Sets the _ID to a new UUID.
+     *</p>
+     *
+     * @param _ID: UUID _ID variable
+     */
     public void set_ID(UUID _ID) {
         this._ID = _ID;
     }
 
+    /**
+     *<p>
+     *     Returns the userRole.
+     *</p>
+     *
+     * @return UserRole userRole information.
+     */
     public UserRole getUserRole() {
         return userRole;
     }
 
+    /**
+     *<p>
+     *     Sets the userRole to a new UserRole.
+     *</p>
+     *
+     * @param userRole: UserRole userRole variable
+     */
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
 
+    /**
+     *<p>
+     *     Returns the password.
+     *</p>
+     *
+     * @return String password information.
+     */
     public String getPassword(){
         return this.password;
     }
 
+    /**
+     *<p>
+     *     Sets the password to a new String.
+     *</p>
+     *
+     * @param password: String password variable
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * conglomerates the two partials into a contiguous array for DA construction
+     * @param spridenDbo: Object[] spridenDbo variable
+     * @param textbookServiceLoginDbo: Object textbookServiceLoginDbo variable
+     * @return Object[] conglomerateDataAccess variable
+     */
     public static @NotNull Object[] conglomerateDboArrays(@NotNull final Object[] spridenDbo, @NotNull final Object[] textbookServiceLoginDbo){
 
-        // conglomerates the two partials into a contiguous array for DA construction
         // creates object array and set it to the copy
         Object[] congolmerateDataAccess = Arrays.copyOf(
                 spridenDbo,
@@ -82,14 +162,20 @@ public class User extends Person{
         // -1 (username of textbook service dbo being omitted)
 
         // sets latter partial values to conglomerate -- username being omitted
-        // given: password is the first column in the dbo
+        // given: username is the first column in the dbo
         for(int i = 0; i < textbookServiceLoginDbo.length - 1; i++)
             congolmerateDataAccess[spridenDbo.length + i] = textbookServiceLoginDbo[i + 1];
 
         return congolmerateDataAccess;
     }
 
-
+    /**
+     *<p>
+     * Updates a Java User object with the values given from the DBO object information.
+     *</p>
+     *
+     * @param values: Generic object holding the DBO information of a User
+     */
     @Override
     public void updateDataAccessObject(@NotNull Object[] values) {
 
