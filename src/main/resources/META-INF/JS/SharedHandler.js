@@ -2,8 +2,7 @@
  * @Authors Chase Staples and Spyridon Kaperonis
  * @DateCreated 03/09/21
  *
- * @Purpose
- *  To create error bindings for view composition
+ *
  */
 
 /**
@@ -28,13 +27,20 @@ function printError(errorMsg){
  */
 class ErrorBindings{
 
-
+    /**
+     * Class Variables
+     * Names describe their values
+     */
     static fieldErrorNameKey = "fieldName";
     static fieldErrorMessageKey = "message";
     static errorDataKey = "faultyData";
 
+    fieldErrorName = fieldErrorNameKey;
+    fieldErrorMessage = fieldErrorMessageKey;
+    errorData = errorDataKey;
+
     /**
-     * @constructor
+     * @constuctor
      *  creates new ErrorBindings object for new errors
      *  logs error to console
      * @param {1} fieldErrorName
@@ -45,12 +51,13 @@ class ErrorBindings{
      *  error data
      */
 
-    constructor(fieldErrorName, fieldErrorMessage, errorData){
+
+    constructor(){
 
             this.fieldErrorName = fieldErrorName;
             this.fieldErrorMessage = fieldErrorMessage;
             this.errorData = errorData;
-            console.log(fieldErrorName +  fieldErrorMessage + errorData)
+            console.log(fieldErrorName +  fieldErrorMessage + errorData);
     }
 
     /**
@@ -62,11 +69,12 @@ class ErrorBindings{
      */
     static parseInput(jsonObj){
         try{
-            let text = JSON.parse(jsonObj);
+            return JSON.parse(jsonObj);
+
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object")
+            console.log("Error parsing json object");
         }
     }
 
@@ -77,7 +85,7 @@ class ErrorBindings{
      *  Getter to return name of the error
      *
      */
-    static getFieldErrorName(){
+    getFieldErrorName(){
         return this.fieldErrorName;
     }
 
@@ -86,7 +94,7 @@ class ErrorBindings{
      * @return
      *  Getter to return error message
      */
-    static getFieldErrorMessage(){
+    getFieldErrorMessage(){
         return this.fieldErrorMessage;
     }
 
@@ -95,7 +103,7 @@ class ErrorBindings{
      * @return
      *  Getter to return error data
      */
-    static getErrorData(){
+    getErrorData(){
         return this.errorData;
     }
 
