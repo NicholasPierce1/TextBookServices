@@ -47,6 +47,7 @@ public class StudentInfoValidationImpl
             errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_TERM_CODE, "Invalid term code format", null));
 
         }
+        //Done with validation, now we can see if we need to add things to a JSON string
         if(!errorList.isEmpty()){
             constraintValidatorContext.disableDefaultConstraintViolation();
 

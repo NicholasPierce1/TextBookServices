@@ -69,15 +69,15 @@ public class StudentBookInfo extends ApiViewModelCreation{
      *  Implements the needed method. Refer to LoginUserInfo for context.
      */
     /*
-    public @NotNull Optional<StudentBookInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentBookInfo> initialInstantiation) {
-        final StudentBookInfo bookInfo = new StudentBookInfo();
+    public @NotNull Optional<StudentBookInfoValidationInterface> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentBookInfoValidationInterface> initialInstantiation) {
+        final StudentBookInfoValidationInterface bookInfo = new StudentBookInfoValidationInterface();
 
         // try-catch for JSON key errors in parsing partial user definition
         try{
 
-            bookInfo.setId(jsonObject.getString(StudentBookInfo.NOMINAL_ID));
+            bookInfo.setId(jsonObject.getString(StudentBookInfoValidationInterface.NOMINAL_ID));
 
-            bookInfo.setBarCode(jsonObject.getString(StudentBookInfo.NOMINAL_BARCODE));
+            bookInfo.setBarCode(jsonObject.getString(StudentBookInfoValidationInterface.NOMINAL_BARCODE));
 
             return Optional.of(bookInfo);
 
