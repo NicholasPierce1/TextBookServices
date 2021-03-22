@@ -1,6 +1,4 @@
-package com.webapp.TextBook.validation.ApiValidation;
-
-import com.webapp.TextBook.validation.SharedValidation.loginUserInfoValidation.LoginUserInfoValidatorImpl;
+package com.webapp.TextBook.validation.ApiValidation.StudentInfoValidation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

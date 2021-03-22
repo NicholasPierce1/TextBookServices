@@ -39,7 +39,29 @@ public abstract class ApiViewModelCreation implements ApiViewModel{
             @NotNull JSONObject jsonObject,
             @NotNull Supplier<T> initialInstantiation,
             @NotNull Consumer<Pair<T, JSONObject>> valueStateUpdater){
-        return Optional.empty();
+
+        try{
+
+            // renders api view model generic (to be used in value state setting in sub-parseable)
+            final T apiViewModel = initialInstantiation.get();
+
+            // invokes consumer with given json object (JSON version of ApiViewModel's state)
+            // to set/update ApiViewModel
+            valueStateUpdater.accept(new Pair<T, JSONObject>(apiViewModel, jsonObject));
+
+            return Optional.of(apiViewModel);
+
+        }
+        catch(RuntimeException ex){
+
+            // logs internal error
+            System.out.println("Internal Error (ApiViewModelCreation -- createApiViewModelFromJson):\n" +
+                    "Could not create or set the value state comprised in the JSON request body. Check stack trace to see which field/s" +
+                    "threw the error." + ex.getMessage());
+
+            return Optional.empty();
+
+        }
     };
 
 
