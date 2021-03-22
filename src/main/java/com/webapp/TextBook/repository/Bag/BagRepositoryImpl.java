@@ -67,7 +67,7 @@ public class BagRepositoryImpl implements BagRepositoryCustom{
 
             // Adds the studentId from the method call to the query.
             getBagQuery.setParameter(1, "'" + studentId + "'");
-            
+
             // Saving the result from the query
             Object[] record = (Object[])getBagQuery.getSingleResult();
 
