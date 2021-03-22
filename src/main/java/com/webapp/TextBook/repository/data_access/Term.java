@@ -23,8 +23,8 @@ public class Term implements DataAccessConversion {
 
     /**
      * <p>
-     * GeneratedValue creates a unique id for each bag created
-     * Usage: Hold primary key value for a unique bag instance
+     * GeneratedValue creates a unique id for each Term created
+     * Usage: Hold primary key value for a unique Term instance
      * </p>
      */
     @Id
