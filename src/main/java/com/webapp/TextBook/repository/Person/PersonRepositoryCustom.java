@@ -13,7 +13,7 @@ import java.util.Optional;
  * <h1>PersonRepositoryCustom</h1>
  * <h2>Type: Interface</h2>
  *
- * Interface to create stubs for custom procedures for multiple entities and extends generic
+ * Interface to create stubs for custom procedures for the Person entity and extends the generic
  * repository that holds the getTableName method to use for all entities.
  */
 public interface PersonRepositoryCustom extends Repository {

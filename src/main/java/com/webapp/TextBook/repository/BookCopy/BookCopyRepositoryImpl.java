@@ -10,7 +10,13 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * <h1>BookCopyRepositoryImpl</h1>
+ * <h2>Type: Class</h2>
+ *
+ * Actual implementation of methods to access the database for functional requirement data
+ * pulled from the BookCopy entity.
+ */
 public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
 
     private final EntityManagerFactory _entityManagerFactory;

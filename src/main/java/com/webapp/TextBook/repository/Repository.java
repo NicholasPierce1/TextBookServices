@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
  * <h1>Repository</h1>
  * <h2>Type: Interface</h2>
  *
- * Interface to create stub method to use for all data access repositories
+ * Interface to create stub method to use for other repositories accessing the database.
  */
 public interface Repository {
 
