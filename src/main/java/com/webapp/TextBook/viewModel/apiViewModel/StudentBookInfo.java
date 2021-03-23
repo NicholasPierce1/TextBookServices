@@ -31,7 +31,7 @@ public class StudentBookInfo extends ApiViewModelCreation{
      */
 
     // todo: doc here
-    private static Consumer<Pair<StudentInfo, JSONObject>> valueStateSetter = (studentInfoPair -> {
+    private static Consumer<Pair<StudentBookInfo, JSONObject>> valueStateSetter = (studentBookInfoPair -> {
         // todo: implement (parse data from json and set into student info)
 
     });
@@ -94,9 +94,9 @@ public class StudentBookInfo extends ApiViewModelCreation{
 
 
     // todo: doc and comment set here
-    public static @NotNull Optional<StudentInfo> createApiFromJson(
+    public static @NotNull Optional<StudentBookInfo> createApiFromJson(
             @NotNull JSONObject jsonObject,
-            @NotNull Supplier<StudentInfo> studentInfoSupplier){
+            @NotNull Supplier<StudentBookInfo> studentInfoSupplier){
         try{
             return ApiViewModelCreation.createApiViewModelFromJson(
                     jsonObject,
