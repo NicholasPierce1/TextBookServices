@@ -75,8 +75,10 @@ public class ValidationBindingHelper {
     public static boolean handleApiValidationBindingForJsonOutput(@NotNull final Optional<String> apiValidationResult, @NotNull final JSONObject jsonObject) throws JSONException{
 
         // if optional is empty then return success result, else invoke helper to set error state
-        if(apiValidationResult.isEmpty())
-            return true;
+        if(apiValidationResult.isEmpty()) {
+           ValidationBindingHelper.handleSuccessValidationErrorMessage(jsonObject);
+           return true;
+        }
 
         ValidationBindingHelper.handleErrorMessageType(apiValidationResult.get(), jsonObject);
         return false;
@@ -106,6 +108,8 @@ public class ValidationBindingHelper {
 
                             // will work always
                             final JSONArray singleErrorStringArray = new JSONArray(errorString);
+
+                            // todo: if array size != 1, throw json exception
 
                             // extracts single member ([JSONObject] -> JSONObject) and places into return JsonArray
                             jsonArray.put(singleErrorStringArray.get(0));
