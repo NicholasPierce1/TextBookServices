@@ -153,7 +153,7 @@ public class HomeApiController {
     @RequestMapping(value = "/checkoutBook/", method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> checkOutBook(@RequestBody String jsonString) throws JSONException{
+    public ResponseEntity<String> checkOutBookForStudentAndTerm(@RequestBody String jsonString) throws JSONException{
         HttpHeaders headers = new HttpHeaders();
         JSONObject outputData = new JSONObject();
         outputData.put("bookCopy",null);
