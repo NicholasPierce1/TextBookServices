@@ -1,11 +1,13 @@
 package com.webapp.TextBook.viewModel.apiViewModel;
 
+import com.sun.istack.Nullable;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
 import com.webapp.TextBook.viewModel.shared.ApiViewModel;
 import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.data.relational.core.mapping.Embedded;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -96,11 +98,11 @@ public class StudentBookInfo extends ApiViewModelCreation{
     // todo: doc and comment set here
     public static @NotNull Optional<StudentBookInfo> createApiFromJson(
             @NotNull JSONObject jsonObject,
-            @NotNull Supplier<StudentBookInfo> studentInfoSupplier){
+            @Nullable Supplier<StudentBookInfo> studentBookInfoSupplier){
         try{
             return ApiViewModelCreation.createApiViewModelFromJson(
                     jsonObject,
-                    studentInfoSupplier,
+                    studentBookInfoSupplier,
                     StudentBookInfo.valueStateSetter
             );
         }
@@ -108,5 +110,10 @@ public class StudentBookInfo extends ApiViewModelCreation{
             // todo: log w/ internal error
             return Optional.empty();
         }
+    }
+
+    public static @NotNull Optional<StudentBookInfo> createApiFromJson(
+            @NotNull JSONObject jsonObject){
+        return createApiFromJson(jsonObject,null);
     }
 }

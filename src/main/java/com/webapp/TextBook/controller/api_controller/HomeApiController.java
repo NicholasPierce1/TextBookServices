@@ -67,7 +67,6 @@ public class HomeApiController {
             if(loginUserInfoOptional.isEmpty() || studentInfoOptional.isEmpty()){
 
 
-                outputData.put("statusMessage", null);
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
                 outputData.put("Errors", null);
                 return new ResponseEntity<String>(outputData.toString(),new HttpHeaders(),
@@ -133,8 +132,6 @@ public class HomeApiController {
 
         }catch(JSONException e){
 
-
-            outputData.put("statusMessage", null);
             outputData.put("GeneralError", generalJsonStringErrorMessage);
             outputData.put("Errors", null);
 
@@ -142,8 +139,7 @@ public class HomeApiController {
                     HttpStatus.BAD_REQUEST);
         }catch(Exception e){
 
-            outputData.put("statusMessage", null);
-            outputData.put("GeneralError", "Internal Error: (HomeApiController)");
+            outputData.put("GeneralError", "Internal Error: (HomeApiController: getCheckedOutBooks)");
             outputData.put("Errors", null);
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
@@ -161,10 +157,26 @@ public class HomeApiController {
         outputData.put("statusMessage", null);
 
 
-        
 
-        return new ResponseEntity<String>(outputData.toString(), headers,
-                HttpStatus.BAD_REQUEST);
+        try{
+
+
+
+
+        }catch (JSONException e){
+
+            outputData.put("GeneralError", generalJsonStringErrorMessage);
+            outputData.put("Errors", null);
+
+            return  new ResponseEntity<String>(outputData.toString(), headers,
+                    HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+
+            outputData.put("GeneralError", "Internal Error: (HomeApiController: checkOutBook)");
+            outputData.put("Errors", null);
+            return new ResponseEntity<String>(outputData.toString(), headers,
+                    HttpStatus.BAD_REQUEST);
+        }
 
 
     }
