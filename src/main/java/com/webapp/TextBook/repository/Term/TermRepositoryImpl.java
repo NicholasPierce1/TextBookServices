@@ -78,7 +78,7 @@ public class TermRepositoryImpl implements TermRepositoryCustom{
             Query getTermQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
 
             // Adds the termCode from the method call to the query.
-            getTermQuery.setParameter(1, "'" + termCode + "'");
+            getTermQuery.setParameter(1, termCode);
 
             // Saving the result from the query
             Object[] record = (Object[])getTermQuery.getSingleResult();
