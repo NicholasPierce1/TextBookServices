@@ -15,6 +15,7 @@ import com.webapp.TextBook.viewModel.apiViewModel.StudentBookInfo;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 import org.apache.tomcat.util.json.JSONParser;
+import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,60 +77,60 @@ public class HomeApiController {
 
             }
 
-            ArrayList<Optional<String>> apiValidationResultList = new ArrayList<Optional<String>>();
+            ArrayList<Optional<String>> apiValidationResultList = new ArrayList<Optional<String>>(
+                    Arrays.asList(apiValidationHandler.getApiBindingError(loginUserInfoOptional.get()),
+                            apiValidationHandler.getApiBindingError(studentInfoOptional.get())));
 
-            apiValidationResultList.add(apiValidationHandler.getApiBindingError(loginUserInfoOptional.get()));
-            apiValidationResultList.add(apiValidationHandler.getApiBindingError(studentInfoOptional.get()));
 
-            if(!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(apiValidationResultList, outputData))
+            if(!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(apiValidationResultList, outputData)) {
                 // error or errors found and incorporated into json object output
                 return new ResponseEntity<String>(
                         outputData.toString(),
                         new HttpHeaders(),
                         HttpStatus.BAD_REQUEST
                 );
+            }
 
 
+            LoginUserInfo loginUserInfo = loginUserInfoOptional.get();
+            StudentInfo studentInfo = studentInfoOptional.get();
+            Triplet<Boolean, String, Optional<User>> userValidation =
+                    VerifySessionUser.isSessionUserValid(loginUserInfo);
 
-                LoginUserInfo loginUserInfo = loginUserInfoOptional.get();
-                StudentInfo studentInfo = studentInfoOptional.get();
-                Triplet<Boolean, String, Optional<User>> userValidation =
-                        VerifySessionUser.isSessionUserValid(loginUserInfo);
+            if(!userValidation.getValue0()){
 
-                if(!userValidation.getValue0()){
+                // verify session user is general error not status message
+                outputData.put("GeneralError", userValidation.getValue1());
 
-                    // verify session user is general error not status message
-                    outputData.put("GeneralError", userValidation.getValue1());
+                // Might not be necessary if we want this to be bad_request status
+                return new ResponseEntity<String>(
+                        outputData.toString(),
+                        headers,
+                        HttpStatus.BAD_REQUEST
+                );
+            }
 
-                    // Might not be necessary if we want this to be bad_request status
-                    return new ResponseEntity<String>(
-                            outputData.toString(),
-                            headers,
-                            HttpStatus.BAD_REQUEST
-                    );
-                }
-
-                    Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode>
-                            allCheckedOutBooks = adapter.getAllCheckedOutBooks(
-                            userValidation.getValue2().orElseThrow(),
+            Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode>
+                    allCheckedOutBooks = adapter.getAllCheckedOutBooks(userValidation.getValue2().orElseThrow(),
                             studentInfo.getTermCode(),
                             studentInfo.getId());
 
-                    if(allCheckedOutBooks == null) // should never happen
-                        throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
+            if(allCheckedOutBooks == null) { // should never happen
+                throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
+            }
 
-                    // invokes clobber, or mask behavior in Map types, on overlapping key values
-                    outputData.put("books", allCheckedOutBooks.getValue0().orElseGet(() -> null));
-                    outputData.put("student",  allCheckedOutBooks.getValue1().orElseGet(() -> null));
-                    outputData.put("bag",  allCheckedOutBooks.getValue2().orElseGet(() -> null));
-                    outputData.put("term",  allCheckedOutBooks.getValue3().orElseGet(() -> null));
-                    outputData.put("statusMessage",  allCheckedOutBooks.getValue4());
+            // invokes clobber, or mask behavior in Map types, on overlapping key values
+            outputData.put("books", allCheckedOutBooks.getValue0().orElseGet(() -> null));
+            outputData.put("student",  allCheckedOutBooks.getValue1().orElseGet(() -> null));
+            outputData.put("bag",  allCheckedOutBooks.getValue2().orElseGet(() -> null));
+            outputData.put("term",  allCheckedOutBooks.getValue3().orElseGet(() -> null));
+            outputData.put("statusMessage",  allCheckedOutBooks.getValue4());
 
-                    return new ResponseEntity<String>(
-                            outputData.toString(),
-                            headers,
-                            HttpStatus.OK
-                    );
+            return new ResponseEntity<String>(
+                    outputData.toString(),
+                    headers,
+                    HttpStatus.OK
+            );
 
 
         }catch(JSONException e){
@@ -159,7 +161,7 @@ public class HomeApiController {
 
 
 
-        try{
+        try {
 
             JSONObject temp = new JSONObject(jsonString);
 
@@ -168,18 +170,72 @@ public class HomeApiController {
             Optional<StudentInfo> studentInfoOptional = StudentInfo.createApiFromJson(temp.getJSONObject("studentInfo"));
             Optional<StudentBookInfo> studentBookInfoOptional = StudentBookInfo.createApiFromJson(temp.getJSONObject("studentBookInfo"));
 
-            if(loginUserInfoOptional.isEmpty() || studentInfoOptional.isEmpty() || studentBookInfoOptional.isEmpty()){
+            //JSON string validity check
+            if (loginUserInfoOptional.isEmpty() || studentInfoOptional.isEmpty() || studentBookInfoOptional.isEmpty()) {
 
 
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
                 outputData.put("Errors", null);
-                return new ResponseEntity<String>(outputData.toString(),new HttpHeaders(),
+                return new ResponseEntity<String>(outputData.toString(), new HttpHeaders(),
                         HttpStatus.BAD_REQUEST);
 
             }
 
+            ArrayList<Optional<String>> apiValidationResultList = new ArrayList<Optional<String>>(
+                    Arrays.asList(apiValidationHandler.getApiBindingError(loginUserInfoOptional.get()),
+                            apiValidationHandler.getApiBindingError(studentInfoOptional.get()), apiValidationHandler.getApiBindingError(studentBookInfoOptional.get())));
 
 
+            if (!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(apiValidationResultList, outputData)){
+                // error or errors found and incorporated into json object output
+                return new ResponseEntity<String>(
+                        outputData.toString(),
+                        new HttpHeaders(),
+                        HttpStatus.BAD_REQUEST
+                );
+
+            }
+
+            LoginUserInfo loginUserInfo = loginUserInfoOptional.get();
+            StudentInfo studentInfo = studentInfoOptional.get();
+            StudentBookInfo studentBookInfo = studentBookInfoOptional.get();
+
+            Triplet<Boolean, String, Optional<User>> userValidation =
+                    VerifySessionUser.isSessionUserValid(loginUserInfo);
+
+            if(!userValidation.getValue0()){
+
+                // verify session user is general error not status message
+                outputData.put("GeneralError", userValidation.getValue1());
+
+                // Might not be necessary if we want this to be bad_request status
+                return new ResponseEntity<String>(
+                        outputData.toString(),
+                        headers,
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+            Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> checkOutBook =
+                    adapter.checkOutBookForStudent(
+                            studentBookInfo.getBarCode(),
+                            studentInfo.getId(),
+                            studentInfo.getTermCode());
+
+
+            if(checkOutBook == null) { // should never happen
+                throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
+            }
+
+            // invokes clobber, or mask behavior in Map types, on overlapping key values
+            outputData.put("bookCopy", checkOutBook.getValue0().orElseGet(() -> null));
+            outputData.put("statusMessage",  checkOutBook.getValue3());
+
+            return new ResponseEntity<String>(
+                    outputData.toString(),
+                    headers,
+                    HttpStatus.OK
+            );
 
         }catch (JSONException e){
 
