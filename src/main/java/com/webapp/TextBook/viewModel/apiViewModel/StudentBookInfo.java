@@ -32,12 +32,46 @@ public class StudentBookInfo extends ApiViewModelCreation{
      * Strike Barcdoe
      */
 
-    // todo: doc here
+    /**
+     * <h1>valueStateSetter</h1>
+     * <h3>type: Consumer( type params: Pair (type params: StudentInfo & JSONObject)</h3>
+     *
+     * <p>
+     *     Description: From a StudentInfo object & its corresponding JSONObject (should be a
+     *    StudentBookInfo reflection/composition in JSON form), attempts to set and update state within
+     *     StudentBookInfo from the JSON form.
+     * </p>
+     *
+     * throws: RuntimeException -- if the JSON object does not retain the necessary keys to holistically
+     * update a StudentInfo
+     */
     private static Consumer<Pair<StudentBookInfo, JSONObject>> valueStateSetter = (studentBookInfoPair -> {
-        // todo: implement (parse data from json and set into student info)
+        // parses data from json and set into login user info
+
+        // holds local copy of json object & login user info
+        final StudentBookInfo STUDENT_BOOK_INFO = studentBookInfoPair.getValue0();
+        final JSONObject DATA = studentBookInfoPair.getValue1();
+
+        // integrity checks that key values required by LoginUserInfo are present
+        // throws exception if not
+        if(!DATA.has(StudentBookInfo.NOMINAL_ID) || !DATA.has(StudentBookInfo.NOMINAL_BARCODE))
+            throw new RuntimeException("StudentBookInfo's ValueStateSetter: nominal key values required for" +
+                    "StudentBookInfo updating are not present. Please refer to data contract and data definition in controller" +
+                    " for clarification of data state expectations.");
+
+        // sets parse state (try - catch BUT will never occur -- runtime check above handles)
+        try {
+            STUDENT_BOOK_INFO.setId(DATA.getString(StudentBookInfo.NOMINAL_ID));
+            STUDENT_BOOK_INFO.setBarCode(DATA.getString(StudentBookInfo.NOMINAL_BARCODE));
+        }
+        catch(JSONException ex){
+            // will never occur
+            System.out.println("Internal Error (StudentBookInfo -- StudentBookInfo's ValueStateSetter):\n" +
+                    "an error occurred that should be caught, thrown and handled internally. Please check stack trace " +
+                    "for more info." + ex.getLocalizedMessage());
+        }
 
     });
-
     public String barCode;
     /***
      * Two Constuctors
@@ -95,10 +129,27 @@ public class StudentBookInfo extends ApiViewModelCreation{
      */
 
 
-    // todo: doc and comment set here
+    /**
+     * <p>
+     *     From the JSONObject (should be JSON composition/reflection of StudentInfo's state)
+     *     and an optional Supplier, render and sets a StudentBookInfo object to the reflective/corresponding
+     *     state within the JSONObject.
+     * </p>
+     * @param jsonObject JSONObject which is the composition of the state that defines a StudentBookInfo
+     * @param studentBookInfoSupplier Supplier(type param: StudentBookInfo) optional function to invoke to supplement
+     *                              a StudentInfo to use in creation and state setting.
+     * @return Optional(type param: StudentBookInfo) holding the ApiViewModel object. Will be empty if
+     * a) JSONObject does not hold the necessary state for a full state setting
+     * b) Supplier(type param: StudentBookInfo) throws an internal error
+     */
     public static @NotNull Optional<StudentBookInfo> createApiFromJson(
             @NotNull JSONObject jsonObject,
-            @Nullable Supplier<StudentBookInfo> studentBookInfoSupplier){
+            @NotNull Supplier<StudentBookInfo> studentBookInfoSupplier){
+        // creates a local supplier based on the predicate if the given supplier is null or not
+        // use the blank constructor as a default
+        final Supplier<StudentBookInfo> localLoginUserInfoSupplier = studentBookInfoSupplier == null ?
+                StudentBookInfo::new :
+                studentBookInfoSupplier;
         try{
             return ApiViewModelCreation.createApiViewModelFromJson(
                     jsonObject,
@@ -111,7 +162,6 @@ public class StudentBookInfo extends ApiViewModelCreation{
             return Optional.empty();
         }
     }
-
     public static @NotNull Optional<StudentBookInfo> createApiFromJson(
             @NotNull JSONObject jsonObject){
         return createApiFromJson(jsonObject,null);
