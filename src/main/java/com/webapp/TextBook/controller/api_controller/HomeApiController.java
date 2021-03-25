@@ -11,6 +11,7 @@ import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
 import com.webapp.TextBook.sharedFiles.VerifySessionUser;
 import com.webapp.TextBook.validation.ApiValidation.ApiValidationHandler.ApiValidationHandler;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentBookInfo;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 import org.apache.tomcat.util.json.JSONParser;
@@ -159,6 +160,23 @@ public class HomeApiController {
 
 
         try{
+
+            JSONObject temp = new JSONObject(jsonString);
+
+
+            Optional<LoginUserInfo> loginUserInfoOptional = LoginUserInfo.createApiFromJson(temp.getJSONObject("loginUserInfo"));
+            Optional<StudentInfo> studentInfoOptional = StudentInfo.createApiFromJson(temp.getJSONObject("studentInfo"));
+            Optional<StudentBookInfo> studentBookInfoOptional = StudentBookInfo.createApiFromJson(temp.getJSONObject("studentBookInfo"));
+
+            if(loginUserInfoOptional.isEmpty() || studentInfoOptional.isEmpty() || studentBookInfoOptional.isEmpty()){
+
+
+                outputData.put("GeneralError", generalJsonStringErrorMessage);
+                outputData.put("Errors", null);
+                return new ResponseEntity<String>(outputData.toString(),new HttpHeaders(),
+                        HttpStatus.BAD_REQUEST);
+
+            }
 
 
 
