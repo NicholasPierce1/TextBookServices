@@ -58,11 +58,7 @@ public class StudentBookInfoValidationImpl
         }
 
         @Override
-        /**
-         * todo: this is horrid documentation, commenting, and coding practices
-         * To see if info provided is valid, namily 919 and barcode are ok
-         * @Returns if an error list is empty.
-         */
+        // todo: this is not good documentation, commenting, and coding practices
         public boolean isValid(StudentBookInfo studentBookInfo, ConstraintValidatorContext constraintValidatorContext) {
 
             // holds a list of error bindings pertaining to the composite fields that failed their

@@ -27,7 +27,7 @@ public class LoginUserInfoValidatorImpl implements
     public boolean isValid(LoginUserInfo user, ConstraintValidatorContext constraintContext){
 
 
-        ArrayList<ErrorBinding<String>> errorList = new ArrayList<ErrorBinding<String>>();
+        ArrayList<ErrorBinding<?>> errorList = new ArrayList<ErrorBinding<?>>();
 
         // holds if any inputs are null
         boolean userInputsNull = false;

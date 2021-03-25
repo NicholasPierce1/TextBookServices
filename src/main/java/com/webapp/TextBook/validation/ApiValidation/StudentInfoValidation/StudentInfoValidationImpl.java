@@ -25,7 +25,7 @@ public class StudentInfoValidationImpl
     public void initialize(StudentInfoValidationInterface constraintAnnotation) {
 
     }
-
+    // todo: yikes. doc missing, comments missing, code structure... yikes
     /***
      *
      * @param studentInfo
@@ -35,7 +35,7 @@ public class StudentInfoValidationImpl
      */
     @Override
     public boolean isValid(StudentInfo studentInfo, ConstraintValidatorContext constraintValidatorContext) {
-        ArrayList<ErrorBinding<String>> errorList = new ArrayList<ErrorBinding<String>>();
+        ArrayList<ErrorBinding<?>> errorList = new ArrayList<ErrorBinding<?>>();
 
         try{
         //for invlaid 919 numbers
@@ -66,12 +66,6 @@ public class StudentInfoValidationImpl
             System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
             constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
         }
-
-
-
-
-
-
 
         return errorList.isEmpty();
 
