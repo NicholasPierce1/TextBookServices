@@ -73,15 +73,17 @@ public class StudentBookInfo extends ApiViewModelCreation{
 
     });
     public String barCode;
+    public String termCode;
     /***
      * Two Constuctors
      * 1. Blank
      * 2. Takes in both non-static inputs
      */
     public StudentBookInfo(){}
-    public StudentBookInfo(String id, String barCode){
+    public StudentBookInfo(String id, String barCode,String termCode){
         this.id = id;
         this.barCode = barCode;
+        this.termCode = termCode;
     }
     /***
      * All relevant getters and setters
@@ -100,6 +102,12 @@ public class StudentBookInfo extends ApiViewModelCreation{
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
+    }
+    public String getTermCode(){
+        return  termCode;
+    }
+    public void setTermCode(String termCode){
+        this.termCode = termCode;
     }
     /***
      *  Implements the needed method. Refer to LoginUserInfo for context.
