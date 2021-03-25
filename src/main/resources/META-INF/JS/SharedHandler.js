@@ -228,3 +228,44 @@ class BookCopy{
 
 }
 
+/**
+ * @class Bag
+ * 
+ * @Purpose
+ */
+
+ class Bag{
+
+    static STUDENT_ID = Pattern.compile("^919[0-9]{6}$");
+    static BAG_NUMBER = Pattern.compile("^#[0-9]{5}$");
+    
+
+
+    constructor(){
+        this.STUDENT_ID = this.STUDENT_ID;
+        this.BAG_NUMBER = this.BAG_NUMBER;
+       
+    }
+
+
+    static parseInput(jsonObj){
+        try{
+            return JSON.parse(jsonObj);
+
+        }
+        catch{
+            throw("Error parsing json object");
+            console.log("Error parsing json object");
+        }
+    }
+
+    getSTUDENT_ID(){
+        return this.STUDENT_ID;
+    }
+
+    getBAG_NUMBER(){
+        return this.BAG_NUMBER;
+    }
+
+}
+
