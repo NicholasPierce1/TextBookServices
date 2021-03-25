@@ -269,3 +269,39 @@ class BookCopy{
 
 }
 
+/**
+ * @class
+ * 
+ * @Purpose
+ */
+
+ class Term{
+
+    static TERM = Pattern.compile("");
+    static YEAR = Pattern.compile("");
+
+    constructor(){
+        this.TERM = this.TERM;
+        this.YEAR = this.YEAR;
+    }
+
+    static parseInput(jsonObj){
+        try{
+            return JSON.parse(jsonObj);
+
+        }
+        catch{
+            throw("Error parsing json object");
+            console.log("Error parsing json object");
+        }
+    }
+
+
+    getTERM(){
+        return this.TERM;
+    }
+    getYEAR(){
+        return this.YEAR;
+    }
+}
+
