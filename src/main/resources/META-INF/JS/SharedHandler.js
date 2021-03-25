@@ -184,3 +184,47 @@ class StudentInfo{
         return this.S_NUMBER_SUFFIX;
     }
 }
+
+
+
+/**
+ * @class BookCopy
+ *
+ * @Purpose
+ *  
+ */
+
+class BookCopy{
+
+    static BOOK_TITLE = Pattern.compile("");
+    static BOOK_ISBN = Pattern.compile("^[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]{1}$");
+    
+
+
+    constructor(){
+        this.BOOK_TITLE = this.BOOK_TITLE;
+        this.BOOK_ISBN = this.BOOK_ISBN;
+    }
+
+    static parseInput(jsonObj){
+        try{
+            return JSON.parse(jsonObj);
+
+        }
+        catch{
+            throw("Error parsing json object");
+            console.log("Error parsing json object");
+        }
+    }
+
+    geBOOK_TITLE(){
+        return this.BOOK_TITLE;
+    }
+    
+    getBOOK_ISBN(){
+        return this.BOOK_ISBN;
+    }
+
+
+}
+
