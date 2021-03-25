@@ -57,12 +57,12 @@ public class HomeApiController {
         outputData.put("statusMessage", null);
 
         try{
-            JSONObject temp = new JSONObject(jsonString);
-            JSONObject loginUserInfoJSON = temp.getJSONObject("loginUserInfo");
-            JSONObject studentInfoJSON =temp.getJSONObject("studentInfo");
 
-            Optional<LoginUserInfo> loginUserInfoOptional = LoginUserInfo.createApiFromJson(loginUserInfoJSON);
-            Optional<StudentInfo> studentInfoOptional = StudentInfo.createApiFromJson(studentInfoJSON);
+            JSONObject temp = new JSONObject(jsonString);
+
+
+            Optional<LoginUserInfo> loginUserInfoOptional = LoginUserInfo.createApiFromJson(temp.getJSONObject("loginUserInfo"));
+            Optional<StudentInfo> studentInfoOptional = StudentInfo.createApiFromJson(temp.getJSONObject("studentInfo"));
 
             if(loginUserInfoOptional.isEmpty() || studentInfoOptional.isEmpty()){
 
@@ -151,5 +151,22 @@ public class HomeApiController {
     }
 
 
+    @RequestMapping(value = "/checkoutBook/", method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> checkOutBook(@RequestBody String jsonString) throws JSONException{
+        HttpHeaders headers = new HttpHeaders();
+        JSONObject outputData = new JSONObject();
+        outputData.put("bookCopy",null);
+        outputData.put("statusMessage", null);
+
+
+        
+
+        return new ResponseEntity<String>(outputData.toString(), headers,
+                HttpStatus.BAD_REQUEST);
+
+
+    }
     // private helper to handler api error state
 }

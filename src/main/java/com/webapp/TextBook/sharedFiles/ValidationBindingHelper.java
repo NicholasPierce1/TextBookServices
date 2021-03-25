@@ -110,7 +110,9 @@ public class ValidationBindingHelper {
                             final JSONArray singleErrorStringArray = new JSONArray(errorString);
 
                             // todo: if array size != 1, throw json exception
-
+                            if(singleErrorStringArray.length() != 1){
+                                throw new JSONException("(ValidationBindingHelper): Internal Error: More than one String present in ErrorStringArray");
+                            }
                             // extracts single member ([JSONObject] -> JSONObject) and places into return JsonArray
                             jsonArray.put(singleErrorStringArray.get(0));
                         }
