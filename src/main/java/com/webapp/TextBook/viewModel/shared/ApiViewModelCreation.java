@@ -36,13 +36,13 @@ public abstract class ApiViewModelCreation implements ApiViewModel{
      * view model. If the data source (JSONObject) retains null fields then an empty optional is given.
      */
     public static <T extends ApiViewModel> @NotNull Optional<T> createApiViewModelFromJson(
-            @NotNull JSONObject jsonObject,
-            @NotNull Supplier<T> initialInstantiation,
-            @NotNull Consumer<Pair<T, JSONObject>> valueStateUpdater){
+            @NotNull final JSONObject jsonObject,
+            @NotNull final Supplier<T> initialInstantiation,
+            @NotNull final Consumer<Pair<T, JSONObject>> valueStateUpdater){
 
         try{
 
-            // renders api view model generic (to be used in value state setting in sub-parseable)
+            // renders api view model generic (to be used in value state setting in sub-parsable)
             final T apiViewModel = initialInstantiation.get();
 
             // invokes consumer with given json object (JSON version of ApiViewModel's state)
@@ -52,15 +52,14 @@ public abstract class ApiViewModelCreation implements ApiViewModel{
             return Optional.of(apiViewModel);
 
         }
-        catch(RuntimeException ex){
+        catch(Exception ex){
 
-            // logs internal error
+            // logs internal error for errors that occurred in consumer-json parsing
             System.out.println("Internal Error (ApiViewModelCreation -- createApiViewModelFromJson):\n" +
                     "Could not create or set the value state comprised in the JSON request body. Check stack trace to see which field/s" +
                     "threw the error." + ex.getMessage());
 
             return Optional.empty();
-
         }
     };
 

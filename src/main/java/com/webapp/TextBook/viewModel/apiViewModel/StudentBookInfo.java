@@ -10,27 +10,40 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.relational.core.mapping.Embedded;
 
 import javax.validation.constraints.NotNull;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/***
+/**
  * Viewmodel duties for StudnetBookInfo page
  */
-public class StudentBookInfo extends ApiViewModelCreation{
-    /***
-     * placeholder for the word "id" and "barcode"
-     */
+public final class StudentBookInfo extends ApiViewModelCreation{
 
-    public static final String NOMINAL_ID = "id";
-    public  static final String NOMINAL_BARCODE = "barCode";
-    /***
-     * 919 number
+
+    /**
+     * <p>Nominal key value of StudentBookInfo's barcode for parsing JSON objects
+     * of API requests, Form maps, and ErrorBindings</p>
      */
-    public  String id;
-    /***
-     * Strike Barcdoe
+    public static final String NOMINAL_BARCODE = "barcode";
+
+    /**
+     * <p>Nominal key value of StudentBookInfo's student info for parsing JSON objects
+     * of API requests, Form maps, and ErrorBindings</p>
      */
+    public static final String NOMINAL_STUDENT_INFO = "studentInfo";
+
+    /**
+     * <p>StudentBookInfo is comprised of a student info, ergo, this field holds state related to a
+     * StudentInfo. This class is not subclassed for that StudentBookInfo isn't created from but is defined
+     * as a conglomerate of StudentInfo + other input/view models.</p>
+     */
+    public StudentInfo studentInfo;
+
+    /**
+     * Strike Barcode
+     */
+    public String barCode;
 
     /**
      * <h1>valueStateSetter</h1>
@@ -46,22 +59,31 @@ public class StudentBookInfo extends ApiViewModelCreation{
      * update a StudentInfo
      */
     private static Consumer<Pair<StudentBookInfo, JSONObject>> valueStateSetter = (studentBookInfoPair -> {
-        // parses data from json and set into login user info
+        // parses data from json and set into student book info
 
-        // holds local copy of json object & login user info
+        // holds local copy of json object & student book info
         final StudentBookInfo STUDENT_BOOK_INFO = studentBookInfoPair.getValue0();
         final JSONObject DATA = studentBookInfoPair.getValue1();
 
-        // integrity checks that key values required by LoginUserInfo are present
+        // integrity checks that key values required by StudentBookInfo are present
         // throws exception if not
-        if(!DATA.has(StudentBookInfo.NOMINAL_ID) || !DATA.has(StudentBookInfo.NOMINAL_BARCODE))
+        if(!DATA.has(StudentBookInfo.NOMINAL_STUDENT_INFO)|| !DATA.has(StudentBookInfo.NOMINAL_BARCODE))
             throw new RuntimeException("StudentBookInfo's ValueStateSetter: nominal key values required for" +
                     "StudentBookInfo updating are not present. Please refer to data contract and data definition in controller" +
                     " for clarification of data state expectations.");
 
         // sets parse state (try - catch BUT will never occur -- runtime check above handles)
         try {
-            STUDENT_BOOK_INFO.setId(DATA.getString(StudentBookInfo.NOMINAL_ID));
+
+            // sets StudentInfo by utilizing the subparse helper created in StudentInfo -- default supplier palatable
+            // parses student info's composite subparse JSON object for API ViewModel creation
+            STUDENT_BOOK_INFO.setStudentInfo(StudentInfo.createApiFromJson(
+                    DATA.getJSONObject(
+                            StudentBookInfo.NOMINAL_STUDENT_INFO
+                    )
+            ).orElseThrow());
+
+            // sets barcode
             STUDENT_BOOK_INFO.setBarCode(DATA.getString(StudentBookInfo.NOMINAL_BARCODE));
         }
         catch(JSONException ex){
@@ -72,30 +94,22 @@ public class StudentBookInfo extends ApiViewModelCreation{
         }
 
     });
-    public String barCode;
-    public String termCode;
-    /***
+
+    /**
      * Two Constuctors
      * 1. Blank
      * 2. Takes in both non-static inputs
      */
     public StudentBookInfo(){}
-    public StudentBookInfo(String id, String barCode,String termCode){
-        this.id = id;
+
+    public StudentBookInfo(String barCode, StudentInfo studentInfo){
         this.barCode = barCode;
-        this.termCode = termCode;
+        this.studentInfo = studentInfo;
     }
-    /***
+
+    /**
      * All relevant getters and setters
      */
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getBarCode() {
         return barCode;
     }
@@ -103,39 +117,14 @@ public class StudentBookInfo extends ApiViewModelCreation{
     public void setBarCode(String barCode) {
         this.barCode = barCode;
     }
-    public String getTermCode(){
-        return  termCode;
-    }
-    public void setTermCode(String termCode){
-        this.termCode = termCode;
-    }
-    /***
-     *  Implements the needed method. Refer to LoginUserInfo for context.
-     */
-    /*
-    public @NotNull Optional<StudentBookInfoValidationInterface> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentBookInfoValidationInterface> initialInstantiation) {
-        final StudentBookInfoValidationInterface bookInfo = new StudentBookInfoValidationInterface();
 
-        // try-catch for JSON key errors in parsing partial user definition
-        try{
-
-            bookInfo.setId(jsonObject.getString(StudentBookInfoValidationInterface.NOMINAL_ID));
-
-            bookInfo.setBarCode(jsonObject.getString(StudentBookInfoValidationInterface.NOMINAL_BARCODE));
-
-            return Optional.of(bookInfo);
-
-        }
-        catch(JSONException jsonException){
-            // logs (prints now) exception
-            System.out.println(jsonException.getMessage());
-
-            return Optional.empty();
-        }
+    public StudentInfo getStudentInfo() {
+        return studentInfo;
     }
 
-     */
-
+    public void setStudentInfo(StudentInfo studentInfo) {
+        this.studentInfo = studentInfo;
+    }
 
     /**
      * <p>
@@ -151,27 +140,25 @@ public class StudentBookInfo extends ApiViewModelCreation{
      * b) Supplier(type param: StudentBookInfo) throws an internal error
      */
     public static @NotNull Optional<StudentBookInfo> createApiFromJson(
-            @NotNull JSONObject jsonObject,
-            @NotNull Supplier<StudentBookInfo> studentBookInfoSupplier){
+            @NotNull final JSONObject jsonObject,
+            @Nullable final Supplier<StudentBookInfo> studentBookInfoSupplier){
+
         // creates a local supplier based on the predicate if the given supplier is null or not
         // use the blank constructor as a default
-        final Supplier<StudentBookInfo> localLoginUserInfoSupplier = studentBookInfoSupplier == null ?
+        final Supplier<StudentBookInfo> localStudentBookInfoSupplier = studentBookInfoSupplier == null ?
                 StudentBookInfo::new :
                 studentBookInfoSupplier;
-        try{
-            return ApiViewModelCreation.createApiViewModelFromJson(
-                    jsonObject,
-                    studentBookInfoSupplier,
-                    StudentBookInfo.valueStateSetter
-            );
-        }
-        catch(RuntimeException ex){
-            // todo: log w/ internal error
-            return Optional.empty();
-        }
+
+        // invokes parent's static helper to set the state for a LoginUserInfo
+        return ApiViewModelCreation.createApiViewModelFromJson(
+                jsonObject,
+                localStudentBookInfoSupplier,
+                StudentBookInfo.valueStateSetter
+        );
+
     }
     public static @NotNull Optional<StudentBookInfo> createApiFromJson(
-            @NotNull JSONObject jsonObject){
-        return createApiFromJson(jsonObject,null);
+            @NotNull final JSONObject jsonObject){
+        return createApiFromJson(jsonObject, null);
     }
 }

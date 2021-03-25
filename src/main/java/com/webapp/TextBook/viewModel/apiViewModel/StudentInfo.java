@@ -71,8 +71,9 @@ public class StudentInfo extends ApiViewModelCreation {
      * Student 919 number
      */
     public String id;
-    /***
-     * the term code
+    /**
+     * <p>Refers to a term code input. Term code is classified as string-input that denotes a specific
+     * term within a give year (ie: 202010 --> Fall 2020). Refer to design documents for more info.</p>
      */
     public String termCode;
     /***
@@ -147,30 +148,27 @@ public class StudentInfo extends ApiViewModelCreation {
      * b) Supplier(type param: StudentInfo) throws an internal error
      */
     public static @NotNull Optional<StudentInfo> createApiFromJson(
-            @NotNull JSONObject jsonObject,
-            @Nullable Supplier<StudentInfo> studentInfoSupplier){
+            @NotNull final JSONObject jsonObject,
+            @Nullable final Supplier<StudentInfo> studentInfoSupplier){
+
         // creates a local supplier based on the predicate if the given supplier is null or not
         // use the blank constructor as a default
         final Supplier<StudentInfo> localLoginUserInfoSupplier = studentInfoSupplier == null ?
                 StudentInfo::new :
                 studentInfoSupplier;
 
-        try{
-            return ApiViewModelCreation.createApiViewModelFromJson(
-                    jsonObject,
-                    studentInfoSupplier,
-                    StudentInfo.valueStateSetter
-                    );
-        }
-        catch(RuntimeException ex){
-            // todo: log w/ internal error
-            return Optional.empty();
-        }
+        // invokes parent's static helper to set the state for a LoginUserInfo
+        return ApiViewModelCreation.createApiViewModelFromJson(
+                jsonObject,
+                studentInfoSupplier,
+                StudentInfo.valueStateSetter
+                );
+
     }
 
 
     public static @NotNull Optional<StudentInfo> createApiFromJson(
-            @NotNull JSONObject jsonObject){
+            @NotNull final JSONObject jsonObject){
 
         return createApiFromJson(jsonObject,null);
     }
