@@ -78,8 +78,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
             Query getPartialUserQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
 
             // Adds the username and password from the method call to the query.
-            getPartialUserQuery.setParameter(1, "'" + username + "'");
-            getPartialUserQuery.setParameter(2, "'" + password + "'");
+            getPartialUserQuery.setParameter(1, username);
+            getPartialUserQuery.setParameter(2, password);
 
             // Saving the result from the query
             Object[] record = (Object[])getPartialUserQuery.getSingleResult();
