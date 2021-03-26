@@ -5,6 +5,7 @@ package com.webapp.TextBook.repository;
  * <h2>Type: Exception Class</h2>
  *
  * Exception Class made to add a custom exception for error calls.
+ * This custom call's purpose is to alert an error in the process of data access conversion.
  */
 public class DataAccessConversionException extends RuntimeException{
 
