@@ -124,7 +124,7 @@ public class HomeApiController {
             outputData.put("student", allCheckedOutBooks.getValue1().orElseGet(() -> null));
             outputData.put("bag", allCheckedOutBooks.getValue2().orElseGet(() -> null));
             outputData.put("term", allCheckedOutBooks.getValue3().orElseGet(() -> null));
-            outputData.put("statusMessage", allCheckedOutBooks.getValue4());
+            outputData.put("statusMessage", allCheckedOutBooks.getValue4().getContentMessage());
 
             return new ResponseEntity<String>(
                     outputData.toString(),
@@ -228,7 +228,7 @@ public class HomeApiController {
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
             outputData.put("bookCopy", checkOutBook.getValue0().orElseGet(() -> null));
-            outputData.put("statusMessage", checkOutBook.getValue3());
+            outputData.put("statusMessage", checkOutBook.getValue3().getContentMessage());
 
             return new ResponseEntity<String>(
                     outputData.toString(),
@@ -271,11 +271,10 @@ public class HomeApiController {
 
 
             Optional<LoginUserInfo> loginUserInfoOptional = LoginUserInfo.createApiFromJson(temp.getJSONObject("loginUserInfo"));
-            Optional<StudentInfo> studentInfoOptional = StudentInfo.createApiFromJson(temp.getJSONObject("studentInfo"));
             Optional<StudentBookInfo> studentBookInfoOptional = StudentBookInfo.createApiFromJson(temp.getJSONObject("studentBookInfo"));
 
             //JSON string validity check
-            if (loginUserInfoOptional.isEmpty() || studentInfoOptional.isEmpty() || studentBookInfoOptional.isEmpty()) {
+            if (loginUserInfoOptional.isEmpty() || studentBookInfoOptional.isEmpty()) {
 
 
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
@@ -286,8 +285,7 @@ public class HomeApiController {
             }
 
             ArrayList<Optional<String>> apiValidationResultList = new ArrayList<Optional<String>>(
-                    Arrays.asList(apiValidationHandler.getApiBindingError(loginUserInfoOptional.get()),
-                            apiValidationHandler.getApiBindingError(studentInfoOptional.get()), apiValidationHandler.getApiBindingError(studentBookInfoOptional.get())));
+                    Arrays.asList(apiValidationHandler.getApiBindingError(loginUserInfoOptional.get()), apiValidationHandler.getApiBindingError(studentBookInfoOptional.get())));
 
 
             if (!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(apiValidationResultList, outputData)) {
@@ -301,7 +299,6 @@ public class HomeApiController {
             }
 
             LoginUserInfo loginUserInfo = loginUserInfoOptional.get();
-            StudentInfo studentInfo = studentInfoOptional.get();
             StudentBookInfo studentBookInfo = studentBookInfoOptional.get();
 
             Triplet<Boolean, String, Optional<User>> userValidation =
@@ -323,8 +320,8 @@ public class HomeApiController {
             Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> checkOutBook =
                     adapter.checkOutBookForStudent(
                             studentBookInfo.getBarCode(),
-                            studentInfo.getId(),
-                            studentInfo.getTermCode());
+                            studentBookInfo.getStudentInfo().getId(),
+                            studentBookInfo.getStudentInfo().getTermCode());
 
 
             if (checkOutBook == null) { // should never happen
@@ -333,7 +330,7 @@ public class HomeApiController {
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
             outputData.put("bookCopy", checkOutBook.getValue0().orElseGet(() -> null));
-            outputData.put("statusMessage", checkOutBook.getValue3());
+            outputData.put("statusMessage", checkOutBook.getValue3().getContentMessage());
 
             return new ResponseEntity<String>(
                     outputData.toString(),
