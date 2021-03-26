@@ -109,7 +109,7 @@ public class ValidationBindingHelper {
                             // will work always
                             final JSONArray singleErrorStringArray = new JSONArray(errorString);
 
-                            // todo: if array size != 1, throw json exception
+                            //checking to insure only one error string is present
                             if(singleErrorStringArray.length() != 1){
                                 throw new JSONException("(ValidationBindingHelper): Internal Error: More than one String present in ErrorStringArray");
                             }
