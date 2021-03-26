@@ -66,7 +66,7 @@ public class BagRepositoryImpl implements BagRepositoryCustom{
             Query getBagQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
 
             // Adds the studentId from the method call to the query.
-            getBagQuery.setParameter(1, "'" + studentId + "'");
+            getBagQuery.setParameter(1, studentId);
 
             // Saving the result from the query
             Object[] record = (Object[])getBagQuery.getSingleResult();
