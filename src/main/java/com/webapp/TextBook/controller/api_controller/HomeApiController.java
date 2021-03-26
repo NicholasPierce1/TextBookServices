@@ -46,6 +46,8 @@ public class HomeApiController {
     @Autowired
     Adapter adapter;
 
+
+    
     @RequestMapping(value = "/getCheckedOutBooks", method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -148,6 +150,9 @@ public class HomeApiController {
                     HttpStatus.BAD_REQUEST);
         }
     }
+
+
+
 
 
     @RequestMapping(value = "/checkoutBook/", method = RequestMethod.PUT,
@@ -255,13 +260,17 @@ public class HomeApiController {
     }
 
 
+
+
+
+
     @RequestMapping(value = "/checkinBook/", method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> checkInBookForStudentAndTerm(@RequestBody String jsonString) throws JSONException {
         HttpHeaders headers = new HttpHeaders();
         JSONObject outputData = new JSONObject();
-        outputData.put("bookCopy", null);
+        outputData.put("barcode", null);
         outputData.put("statusMessage", null);
 
 
@@ -317,20 +326,20 @@ public class HomeApiController {
                 );
             }
 
-            Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> checkOutBook =
-                    adapter.checkOutBookForStudent(
-                            studentBookInfo.getBarCode(),
+            StatusCode checkInBook =
+                    adapter.checkInBookForStudent(
                             studentBookInfo.getStudentInfo().getId(),
-                            studentBookInfo.getStudentInfo().getTermCode());
+                            studentBookInfo.getBarCode()
+                            );
 
 
-            if (checkOutBook == null) { // should never happen
+            if (checkInBook == null) { // should never happen
                 throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
             }
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
-            outputData.put("bookCopy", checkOutBook.getValue0().orElseGet(() -> null));
-            outputData.put("statusMessage", checkOutBook.getValue3().getContentMessage());
+            outputData.put("barcode", studentBookInfo.getBarCode());
+            outputData.put("statusMessage", checkInBook.getContentMessage());
 
             return new ResponseEntity<String>(
                     outputData.toString(),
@@ -352,5 +361,119 @@ public class HomeApiController {
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         }
+
+
+
+
+
     }
+
+
+
+
+
+    @RequestMapping(value = "/sellBook/", method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> sellBookForStudent(@RequestBody String jsonString) throws JSONException {
+        HttpHeaders headers = new HttpHeaders();
+        JSONObject outputData = new JSONObject();
+        outputData.put("barcode", null);
+        outputData.put("statusMessage", null);
+
+
+        try {
+
+            JSONObject temp = new JSONObject(jsonString);
+
+
+            Optional<LoginUserInfo> loginUserInfoOptional = LoginUserInfo.createApiFromJson(temp.getJSONObject("loginUserInfo"));
+            Optional<StudentBookInfo> studentBookInfoOptional = StudentBookInfo.createApiFromJson(temp.getJSONObject("studentBookInfo"));
+
+            //JSON string validity check
+            if (loginUserInfoOptional.isEmpty() || studentBookInfoOptional.isEmpty()) {
+
+
+                outputData.put("GeneralError", generalJsonStringErrorMessage);
+                outputData.put("Errors", null);
+                return new ResponseEntity<String>(outputData.toString(), new HttpHeaders(),
+                        HttpStatus.BAD_REQUEST);
+
+            }
+
+            ArrayList<Optional<String>> apiValidationResultList = new ArrayList<Optional<String>>(
+                    Arrays.asList(apiValidationHandler.getApiBindingError(loginUserInfoOptional.get()), apiValidationHandler.getApiBindingError(studentBookInfoOptional.get())));
+
+
+            if (!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(apiValidationResultList, outputData)) {
+                // error or errors found and incorporated into json object output
+                return new ResponseEntity<String>(
+                        outputData.toString(),
+                        new HttpHeaders(),
+                        HttpStatus.BAD_REQUEST
+                );
+
+            }
+
+            LoginUserInfo loginUserInfo = loginUserInfoOptional.get();
+            StudentBookInfo studentBookInfo = studentBookInfoOptional.get();
+
+            Triplet<Boolean, String, Optional<User>> userValidation =
+                    VerifySessionUser.isSessionUserValid(loginUserInfo);
+
+            if (!userValidation.getValue0()) {
+
+                // verify session user is general error not status message
+                outputData.put("GeneralError", userValidation.getValue1());
+
+                // Might not be necessary if we want this to be bad_request status
+                return new ResponseEntity<String>(
+                        outputData.toString(),
+                        headers,
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+             StatusCode sellBook =
+                    adapter.sellBookForStudent(
+                            studentBookInfo.getStudentInfo().getId(),
+                            studentBookInfo.getBarCode());
+
+
+            if (sellBook == null) { // should never happen
+                throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
+            }
+
+            // invokes clobber, or mask behavior in Map types, on overlapping key values
+            outputData.put("bookCopy", studentBookInfo.getBarCode());
+            outputData.put("statusMessage", sellBook.getContentMessage());
+
+            return new ResponseEntity<String>(
+                    outputData.toString(),
+                    headers,
+                    HttpStatus.OK
+            );
+
+
+        } catch (JSONException e) {
+
+            outputData.put("GeneralError", generalJsonStringErrorMessage);
+            outputData.put("Errors", null);
+
+            return new ResponseEntity<String>(outputData.toString(), headers,
+                    HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+
+            outputData.put("GeneralError", "Internal Error: (HomeApiController: checkOutBook)");
+            outputData.put("Errors", null);
+            return new ResponseEntity<String>(outputData.toString(), headers,
+                    HttpStatus.BAD_REQUEST);
+        }
+
+
+
+
+
+    }
+
 }
