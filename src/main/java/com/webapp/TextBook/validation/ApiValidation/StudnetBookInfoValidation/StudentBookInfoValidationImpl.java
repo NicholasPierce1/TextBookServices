@@ -58,7 +58,16 @@ public class StudentBookInfoValidationImpl
         }
 
         @Override
+
         // todo: this is not good documentation, commenting, and coding practices
+        /****
+         * Enforces business logic/rules for student book info.
+         * @Params Studnetbookinfo, contstraintValidatorContext
+         * Code will check various conditions, if conditons are not meant the infraction will be added
+         * to a list.
+         * @Returns if list is empty or not. Empty list = no problems
+         *
+         */
         public boolean isValid(StudentBookInfo studentBookInfo, ConstraintValidatorContext constraintValidatorContext) {
 
             // holds a list of error bindings pertaining to the composite fields that failed their
