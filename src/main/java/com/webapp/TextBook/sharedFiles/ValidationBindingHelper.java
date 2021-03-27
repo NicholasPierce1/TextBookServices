@@ -148,6 +148,7 @@ public class ValidationBindingHelper {
         }
         catch(RuntimeException runTimeException){
             // todo log
+
             ValidationBindingHelper.handleErrorMessageType(
                     runTimeException.getLocalizedMessage(),
                     jsonObject

@@ -100,7 +100,7 @@ public class StudentBookInfoValidationImpl
                     student_info_error_bindings = STUDENT_INFO_VALIDATION_RESULT.getValue2().orElseThrow();
                 }
 
-                // todo: comments
+                //If if dosen't match the barcode pattern, add to list.
                 if (studentBookInfo.getBarCode().matches(RegexPatternContainer.BARCODE_PATTERN.pattern())) {
                     ERROR_LIST.add(new ErrorBinding<String>(StudentBookInfo.NOMINAL_BARCODE, "Invlid Barcide", null));
 
@@ -169,9 +169,9 @@ public class StudentBookInfoValidationImpl
             }
         }
 
-        //todo: add documentation
-        /*
-        < return type:  Triplet<Boolean, Optional<String>, Optional<JSONArray>> >
+
+        /**(
+        @Returns:  Triplet<Boolean, Optional<String>, Optional<JSONArray>> >
         creates private helper to check and convert potential error string into a Triplet
         comprised of:
          a boolean denoting if an error is present,

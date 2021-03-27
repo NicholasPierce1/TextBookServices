@@ -25,7 +25,6 @@ public class StudentInfoValidationImpl
     public void initialize(StudentInfoValidationInterface constraintAnnotation) {
 
     }
-    // todo: yikes. doc missing, comments missing, code structure... yikes
     /***
      *
      * @param studentInfo
