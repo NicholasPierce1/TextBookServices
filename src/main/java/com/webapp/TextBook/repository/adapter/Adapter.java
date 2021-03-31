@@ -10,6 +10,7 @@ import com.webapp.TextBook.repository.data_access.*;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
+import org.javatuples.Unit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -160,10 +161,97 @@ public final class Adapter {
     }
 
     public @NotNull Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> checkOutBookForStudent(@NotNull final User user, @NotNull final String strikeBarcode, @NotNull final String studentId, @NotNull final String termCode){
-        return null;
+
+        // creates default error response for streamline error response interpretation/manipulation
+        Quartet<
+                Optional<BookCopy>,
+                Optional<Student>,
+                Optional<Term>,
+                StatusCode> returnValue =
+                new Quartet<
+                        Optional<BookCopy>,
+                        Optional<Student>,
+                        Optional<Term>,
+                        StatusCode>(
+                        Optional.empty(),
+                        Optional.empty(),
+                        Optional.empty(),
+                        StatusCode.DatabaseError
+                );
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt3(USER_PERMISSION_AUTHORIZATION_RESULT.get());
+
+        // invoke student repository to acquire a student given a student id
+        final Pair<Optional<Student>, StatusCode> optionalStudentCodePair =
+                this._personRepository.getStudentWithCandidateKey(studentId);
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalStudentCodePair.getValue1() != StatusCode.OK)
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt3(optionalStudentCodePair.getValue1());
+
+        // sets the acquired student within the return value (will always exist at this point)
+        returnValue = returnValue.setAt1(optionalStudentCodePair.getValue0());
+
+        // invokes term repository to get the term via the term code (should be in helper later)
+        // todo: satisfy term helper method here
+        final Pair<Optional<Term>, StatusCode> optionalTermCodePair = this._termRepository.getTermWithTermCode(termCode);
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalTermCodePair.getValue1() != StatusCode.OK)
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt3(optionalTermCodePair.getValue1());
+
+        // sets the acquired term within the return value (will always exist at this point)
+        returnValue = returnValue.setAt2(optionalTermCodePair.getValue0());
+
+        // invokes book copy repository to acquire all checked out books for a given student id and term
+        final Pair<Optional<BookCopy>, StatusCode> optionalBookCopyCodePair =
+                this._bookCopyRepository.checkOutBook(
+                        returnValue.getValue0().orElseThrow().getStrikeBarcode(),
+                        returnValue.getValue1().orElseThrow().getId(),
+                        returnValue.getValue2().orElseThrow().getTermCode()
+                ); // will never throw (always exist in code execution above)
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalTermCodePair.getValue1() != StatusCode.OK)
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt3(optionalTermCodePair.getValue1());
+
+        // sets the acquired book within the return value (will always exist at this point)
+        returnValue = returnValue.setAt0(optionalBookCopyCodePair.getValue0());
+
+        // resets status code to OK and return
+        return returnValue.setAt3(StatusCode.OK);
     }
 
     public @NotNull StatusCode checkInBookForStudent(@NotNull final User user, @NotNull final String studentId, @NotNull final String barcode){
+
+        Unit<StatusCode> returnValue =
+                new Unit<
+                        StatusCode>(
+                        StatusCode.DatabaseError
+                );
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            // sets error status code in return value (return new tuple of type match)
+         //   return returnValue.setAt0(USER_PERMISSION_AUTHORIZATION_RESULT.get());
         return null;
     }
 
@@ -176,14 +264,97 @@ public final class Adapter {
     }
 
     public @NotNull Pair<Optional<Student>, StatusCode> getStudentWithStudentCandidateKey(@NotNull final User user,@NotNull final String studentCandidateKey){
-        return null;
+        // creates default error response for streamline error response interpretation/manipulation
+        Pair<
+                Optional<Student>,
+                StatusCode> returnValue =
+                new Pair<
+                        Optional<Student>,
+                        StatusCode>(
+                        Optional.empty(),
+                        StatusCode.DatabaseError
+                );
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt1(USER_PERMISSION_AUTHORIZATION_RESULT.get());
+
+        // invoke person repository to acquire a student given their 919 number
+        final Pair<Optional<Student>, StatusCode> optionalStudentCodePair =
+                this._personRepository.getStudentWithCandidateKey(studentCandidateKey);
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalStudentCodePair.getValue1() != StatusCode.OK)
+            // todo: Change this to empty optional
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt1(optionalStudentCodePair.getValue1());
+
+        // sets the acquired student within the return value (will always exist at this point)
+        returnValue = returnValue.setAt0(optionalStudentCodePair.getValue0());
+
+        // resets status code to OK and return
+        return returnValue.setAt1(StatusCode.OK);
     }
 
     private @NotNull Pair<Optional<Student>,  StatusCode> getStudentById(@NotNull final User user, @NotNull final String studentId){
+
+        // creates default error response for streamline error response interpretation/manipulation
+        Pair<
+                Optional<Student>,
+                StatusCode> returnValue =
+                new Pair<
+                        Optional<Student>,
+                        StatusCode>(
+                        Optional.empty(),
+                        StatusCode.DatabaseError
+                );
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt1(USER_PERMISSION_AUTHORIZATION_RESULT.get());
+
         return null;
     }
 
+
     private @NotNull Pair<Optional<Term>,  StatusCode> getTermByTermCode(@NotNull final User user, @NotNull final String termCode){
+
+        // creates default error response for streamline error response interpretation/manipulation
+        Pair<
+                Optional<Term>,
+                StatusCode> returnValue =
+                new Pair<
+                        Optional<Term>,
+                        StatusCode>(
+                        Optional.empty(),
+                        StatusCode.DatabaseError
+                );
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            // sets error status code in return value (return new tuple of type match)
+            return returnValue.setAt1(USER_PERMISSION_AUTHORIZATION_RESULT.get());
+
         return null;
     }
 
