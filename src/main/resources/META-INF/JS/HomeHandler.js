@@ -20,30 +20,49 @@ function get_list_items(){
 
     ulList = document.getElementsByTagName('ul');
 
-    for(let i = 0; i < liList.length; i++){
+    for(let i = 0; i < ulList.length; i++){
+
+        let menu = ulList[i].id;
+
+        if(menu == undefined && menu.length == 0){
+            console.log(`Menu: ${menu}`);
+        }
 
         liList = ulList[i].getElementsByTagName('li');
 
         for(let j = 0; j < liList.length; j++){
 
-            console.log('Menu: ${ulList[i] \n Submenu: ${liList[j].innerHTML} ');
+            let menu = window.sessionStorage.getItem('nav');;
+            //console.log(menu);
+            let submenu = liList[j].id;
+            //console.log(submenu);
 
-            myMap.set('${ulList[i].class} ${lilist[i].innerhtml}', {url: 'urlhere', postType: 'GET'});
+            let key = liList[j].id;
+            let value = "/" + liList[j].id;
+
+            //console.log(`Menu: ${menu} \n Submenu: ${submenu}`);
+
+            liMap.set(`${menu}${key}`, `${value}`);
         }
     }
 
-    console.log(myMap);
+    console.log(liMap);
 }
 
 function getURL(url){
 
-    console.log(url.srcElement.innerHTML);
-    console.log(url.srcElement.parentElement.class);
+    const name = url.srcElement.innerHTML;
+    const submenu = url.srcElement.parentElement.id;
+    const navbar = window.sessionStorage.getItem('nav');
 
-    const key = '${url.srcElement.parentElement.class}${url.srcElement.innerHTML}';
+    console.log(`Name: ${name}`);
+    console.log(`Navbar: ${navbar}`)
+    console.log(`Submenu: ${submenu}`);
 
-    console.log(key);
-    console.log(myMap.get(key));
+    const key = `${navbar}${submenu}`;
+
+    console.log(`key: ${key}`);
+    console.log('Value:', liMap.get(key));
 
 }
 
@@ -51,53 +70,59 @@ function getURL(url){
  * 1
  */
 
-windows.onload = () => {
+window.onload = () => {
+    console.log("Navbar:", document.getElementsByTagName('nav')[0].id);
+    if((document.getElementsByTagName('nav')[0].id) == 'Student'){
+        window.sessionStorage.setItem('nav', (document.getElementsByTagName('nav')[0].id));
+        console.log("Student Menu");
+    }
+    if((document.getElementsByTagName('nav')[0].id) == 'Supervisor'){
+        window.sessionStorage.setItem('nav', (document.getElementsByTagName('nav')[0].id));
+        console.log("Supervisor Menu");
+    }
 
     get_list_items();
-
-    let user = new UserInfo();
-
-    let userID = user.getSTUDENT_ID_PATTERN();
-    let userPrefix = user.getS_NUMBER_PREFIX();
-    let userSuffix = user.getS_NUMBER_SUFFIX();
-
-    userInfoMap.set(parseJson(userID));
-    userInfoMap.set(parseJson(userPrefix));
-    userInfoMap.set(parseJson(userSuffix));
 
     liList = document.getElementsByTagName('li');
 
     for(let i = 0; i < liList.length; i++){
-        liList[i].onclick = getURL;
+        //liList[i].onclick = createManualForm(`${liList[i].innerHTML.id}`);
+        liList[i].onclick = getURL
+        //submitManualForm();
+        /**
+        * 1.D
+        */
+
     }
 
     /**
      * 1.B
      */
-    document.getElementsByIdName("data").innerHTML = userInfoMap;
+    // document.getElementById("data").innerHTML = userInfoMap;
 
-
-    /**
-     * 1.D
-     */
-    createManualFromForm();
-
-
-
-}
 
 /**
  * 2
  */
 
-function createManualFromForm(){
+function createManualForm(url){
     let form = document.createElement('form');
+
+    form.method = "GET";
+
+    /* URL = page name */
+
+    form.action = `/${url}`;
+    form.name = `${url}`
+    form.id = `${url}`
+
+    return form;
 
 }
 
 /**
  * 3
  */
-function submitManualForm(){
-
+function submitManualForm(form){
+    form.submit();
 }

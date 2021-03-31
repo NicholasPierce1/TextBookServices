@@ -20,12 +20,12 @@ function printError(errorMsg){
 
 
 /**
- * @Author Chase Staples
  * @class ErrorBindings
  *
  * @Purpose
  *  Create error bindings and parse json object
  */
+
 class ErrorBindings{
 
     /**
@@ -36,12 +36,12 @@ class ErrorBindings{
     static #fieldErrorMessageKey = "message";
     static #errorDataKey = "faultyData";
 
-    fieldErrorName = fieldErrorNameKey;
-    fieldErrorMessage = fieldErrorMessageKey;
-    errorData = errorDataKey;
+    #fieldErrorName;
+    #fieldErrorMessage;
+    #errorData;
 
     /**
-     * @constructor
+     * @constuctor
      *  creates new ErrorBindings object for new errors
      *  logs error to console
      * @param {1} fieldErrorName
@@ -55,9 +55,9 @@ class ErrorBindings{
 
     constructor(){
 
-            this.#fieldErrorName = fieldErrorName;
-            this.#fieldErrorMessage = fieldErrorMessage;
-            this.#errorData = errorData;
+            this.fieldErrorName = fieldErrorNameKey;
+            this.fieldErrorMessage = fieldErrorMessageKey;
+            this.errorData = errorDataKey;
             console.log(fieldErrorName +  fieldErrorMessage + errorData);
     }
 
@@ -87,7 +87,7 @@ class ErrorBindings{
      *
      */
     getFieldErrorName(){
-        return this.fieldErrorName;
+        return this.#fieldErrorName;
     }
 
     /**
@@ -96,7 +96,7 @@ class ErrorBindings{
      *  Getter to return error message
      */
     getFieldErrorMessage(){
-        return this.fieldErrorMessage;
+        return this.#fieldErrorMessage;
     }
 
     /**
@@ -105,24 +105,27 @@ class ErrorBindings{
      *  Getter to return error data
      */
     getErrorData(){
-        return this.errorData;
+        return this.#errorData;
     }
 
 
+}
+
+function parseJson(jsonObj){
+    try{
+        return (JSON.parse(jsonObj)).toString();
+
+    }
+    catch{
+        throw("Error parsing json object");
+        console.log("Error parsing json object");
+    }
 }
 
 class UserInfo{
 
-    static #STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
-    static #S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    static #S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
-
-    #haveSuffix;
-
     constructor(){
-        this.#STUDENT_ID_PATTERN = STUDENT_ID_PATTERN;
-        this.#S_NUMBER_PREFIX = S_NUMBER_PREFIX;
-        this.#S_NUMBER_SUFFIX = S_NUMBER_SUFFIX;
+
     }
 
     static parseJson(jsonObj){
@@ -136,30 +139,15 @@ class UserInfo{
         }
     }
 
-    getSTUDENT_ID_PATTERN(){
-        return this.STUDENT_ID_PATTERN;
-    }
-
-    getS_NUMBER_PREFIX(){
-        return this.S_NUMBER_PREFIX;
-    }
-
-    getS_NUMBER_SUFFIX(){
-        return this.S_NUMBER_SUFFIX;
-    }
 }
+
+
 
 class StudentInfo{
 
-    static #STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
-    static #S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    static #S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
-
 
     constructor(){
-        this.#STUDENT_ID_PATTERN = STUDENT_ID_PATTERN;
-        this.#S_NUMBER_PREFIX = S_NUMBER_PREFIX;
-        this.#S_NUMBER_SUFFIX = S_NUMBER_SUFFIX;
+
     }
 
     static parseJson(jsonObj){
@@ -173,19 +161,106 @@ class StudentInfo{
         }
     }
 
-    getSTUDENT_ID_PATTERN(){
-        return this.#STUDENT_ID_PATTERN;
-    }
-
-    getS_NUMBER_PREFIX(){
-        return this.#S_NUMBER_PREFIX;
-    }
-
-    getS_NUMBER_SUFFIX(){
-        return this.#S_NUMBER_SUFFIX;
-    }
 }
 
+/**
+ * 1.A
+ */
+liMap = new Map();
+userInfoMap = new Map();
+
+/**
+* 1.C
+*/
+
+function get_list_items(){
+
+    ulList = document.getElementsByTagName('ul');
+
+    for(let i = 0; i < ulList.length; i++){
+
+        let menu = ulList[i].id;
+
+        if(menu == undefined && menu.length == 0){
+            console.log(`Menu: ${menu}`);
+        }
+
+        liList = ulList[i].getElementsByTagName('li');
+
+        for(let j = 0; j < liList.length; j++){
+
+            let menu = window.sessionStorage.getItem('nav');;
+            //console.log(menu);
+            let submenu = liList[j].id;
+            //console.log(submenu);
+
+            let key = liList[j].id;
+            let value = "/" + liList[j].id;
+
+            //console.log(`Menu: ${menu} \n Submenu: ${submenu}`);
+
+            liMap.set(`${menu}${key}`, `${value}`);
+        }
+    }
+
+    console.log(liMap);
+}
+
+function getURL(url){
+
+    const name = url.srcElement.innerHTML;
+    const submenu = url.srcElement.parentElement.id;
+    const navbar = window.sessionStorage.getItem('nav');
+
+    console.log(`Name: ${name}`);
+    console.log(`Navbar: ${navbar}`)
+    console.log(`Submenu: ${submenu}`);
+
+    const key = `${navbar}${submenu}`;
+
+    console.log(`key: ${key}`);
+    console.log('Value:', liMap.get(key));
+
+}
+
+/**
+ * 1
+ */
+
+window.onload = () => {
+    console.log("Navbar:", document.getElementsByTagName('nav')[0].id);
+    if((document.getElementsByTagName('nav')[0].id) == 'Student'){
+        window.sessionStorage.setItem('nav', (document.getElementsByTagName('nav')[0].id));
+        console.log("Student Menu");
+    }
+    if((document.getElementsByTagName('nav')[0].id) == 'Supervisor'){
+        window.sessionStorage.setItem('nav', (document.getElementsByTagName('nav')[0].id));
+        console.log("Supervisor Menu");
+    }
+
+    get_list_items();
+
+    liList = document.getElementsByTagName('li');
+
+    for(let i = 0; i < liList.length; i++){
+        //liList[i].onclick = createManualForm(`${liList[i].innerHTML.id}`);
+        liList[i].onclick = getURL
+        //submitManualForm();
+        /**
+        * 1.D
+        */
+
+    }
+
+    /**
+     * 1.B
+     */
+    // document.getElementById("data").innerHTML = userInfoMap;
+
+
+
+
+}
 
 
 /**

@@ -20,6 +20,7 @@ function printError(errorMsg){
 
 
 /**
+ * @Author Chase Staples
  * @class ErrorBindings
  *
  * @Purpose
@@ -31,9 +32,9 @@ class ErrorBindings{
      * Class Variables
      * Names describe their values
      */
-    static fieldErrorNameKey = "fieldName";
-    static fieldErrorMessageKey = "message";
-    static errorDataKey = "faultyData";
+    static #fieldErrorNameKey = "fieldName";
+    static #fieldErrorMessageKey = "message";
+    static #errorDataKey = "faultyData";
 
     fieldErrorName = fieldErrorNameKey;
     fieldErrorMessage = fieldErrorMessageKey;
@@ -54,9 +55,9 @@ class ErrorBindings{
 
     constructor(){
 
-            this.fieldErrorName = fieldErrorName;
-            this.fieldErrorMessage = fieldErrorMessage;
-            this.errorData = errorData;
+            this.#fieldErrorName = fieldErrorName;
+            this.#fieldErrorMessage = fieldErrorMessage;
+            this.#errorData = errorData;
             console.log(fieldErrorName +  fieldErrorMessage + errorData);
     }
 
@@ -69,7 +70,7 @@ class ErrorBindings{
      */
     static parseInput(jsonObj){
         try{
-            return JSON.parse(jsonObj);
+            return (JSON.parse(jsonObj)).toString();
 
         }
         catch{
@@ -112,21 +113,21 @@ class ErrorBindings{
 
 class UserInfo{
 
-    static STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
-    static S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    static S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
+    static #STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
+    static #S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
+    static #S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
 
-    haveSuffix;
+    #haveSuffix;
 
     constructor(){
-        this.STUDENT_ID_PATTERN = this.STUDENT_ID_PATTERN;
-        this.S_NUMBER_PREFIX = this.S_NUMBER_PREFIX;
-        this.S_NUMBER_SUFFIX = this.S_NUMBER_SUFFIX;
+        this.#STUDENT_ID_PATTERN = STUDENT_ID_PATTERN;
+        this.#S_NUMBER_PREFIX = S_NUMBER_PREFIX;
+        this.#S_NUMBER_SUFFIX = S_NUMBER_SUFFIX;
     }
 
-    static parseInput(jsonObj){
+    static parseJson(jsonObj){
         try{
-            return JSON.parse(jsonObj);
+            return (JSON.parse(jsonObj)).toString();
 
         }
         catch{
@@ -150,20 +151,20 @@ class UserInfo{
 
 class StudentInfo{
 
-    static STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
-    static S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    static S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
+    static #STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
+    static #S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
+    static #S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
 
 
     constructor(){
-        this.STUDENT_ID_PATTERN = this.STUDENT_ID_PATTERN;
-        this.S_NUMBER_PREFIX = this.S_NUMBER_PREFIX;
-        this.S_NUMBER_SUFFIX = this.S_NUMBER_SUFFIX;
+        this.#STUDENT_ID_PATTERN = STUDENT_ID_PATTERN;
+        this.#S_NUMBER_PREFIX = S_NUMBER_PREFIX;
+        this.#S_NUMBER_SUFFIX = S_NUMBER_SUFFIX;
     }
 
-    static parseInput(jsonObj){
+    static parseJson(jsonObj){
         try{
-            return JSON.parse(jsonObj);
+            return (JSON.parse(jsonObj)).toString();
 
         }
         catch{
@@ -173,15 +174,15 @@ class StudentInfo{
     }
 
     getSTUDENT_ID_PATTERN(){
-        return this.STUDENT_ID_PATTERN;
+        return this.#STUDENT_ID_PATTERN;
     }
 
     getS_NUMBER_PREFIX(){
-        return this.S_NUMBER_PREFIX;
+        return this.#S_NUMBER_PREFIX;
     }
 
     getS_NUMBER_SUFFIX(){
-        return this.S_NUMBER_SUFFIX;
+        return this.#S_NUMBER_SUFFIX;
     }
 }
 
@@ -208,7 +209,7 @@ class BookCopy{
 
     static parseInput(jsonObj){
         try{
-            return JSON.parse(jsonObj);
+            return (JSON.parse(jsonObj)).toString();
 
         }
         catch{
@@ -250,7 +251,7 @@ class BookCopy{
 
     static parseInput(jsonObj){
         try{
-            return JSON.parse(jsonObj);
+            return (JSON.parse(jsonObj)).toString();
 
         }
         catch{
@@ -287,7 +288,7 @@ class BookCopy{
 
     static parseInput(jsonObj){
         try{
-            return JSON.parse(jsonObj);
+            return (JSON.parse(jsonObj)).toString();
 
         }
         catch{
