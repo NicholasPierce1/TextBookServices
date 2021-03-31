@@ -60,40 +60,22 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     public @NotNull Pair<Optional<Student>, StatusCode> getStudentWithCandidateKey(@NotNull final String studentCandidateKey){
         // Try block to catch errors in the process of converting a Person record into a Student.
         try{
-            Pair<Optional<Object[]>, StatusCode> student = getPersonWithCandidateKey(studentCandidateKey);
+
+            // invoke helper to acquire a student's dbo representation via a given student id (919)
+            Pair<Optional<Object[]>, StatusCode> optionalStudentPair = getPersonWithCandidateKey(studentCandidateKey);
+
+            // asserts that the status code is OK -- else a runtime exception is thrown
+            if(optionalStudentPair.getValue1() != StatusCode.OK)
+                throw new RuntimeException("Helper method gave an internal error. Please check logs.");
+
 
             // Creates a new Student object using the Person object retrieved.
-            Student returnStudent = DataAccessConversionHelper.createDataAccessObject(student.getValue0().get(), Student::new);
+            Student returnStudent = DataAccessConversionHelper.createDataAccessObject(optionalStudentPair.getValue0().get(), Student::new);
 
             return new Pair<Optional<Student>, StatusCode>(Optional.of(returnStudent), StatusCode.OK);
         }
         catch(RuntimeException ex){
             System.out.println("Internal Error: PersonRepositoryImpl--getStudentWithCandidateKey--\n" + ex.getMessage());
-            return new Pair<Optional<Student>, StatusCode>(Optional.empty(), StatusCode.DataAccessConversionException);
-        }
-    }
-
-    /**
-     *<p>
-     * This method calls a generic query request for a person using the unique string of a 919 number
-     * and then transitions that person into a student.
-     *</p>
-     *
-     * @param studentId: String studentId representing the unique string for a 919 number.
-     * @return Optional Student object with Status Code
-     */
-    public @NotNull Pair< Optional<Student>,  StatusCode> getStudentWithId(@NotNull final String studentId){
-        // Try block to catch errors in the process of converting a Person record into a Student.
-        try{
-            Pair<Optional<Object[]>, StatusCode> student = getPersonWithId(studentId);
-
-            // Creates a new Student object using the Person object retrieved.
-            Student returnStudent = DataAccessConversionHelper.createDataAccessObject(student.getValue0().get(), Student::new);
-
-            return new Pair<Optional<Student>, StatusCode>(Optional.of(returnStudent), StatusCode.OK);
-        }
-        catch(RuntimeException ex){
-            System.out.println("Internal Error: PersonRepositoryImpl--getStudentWithId--\n" + ex.getMessage());
             return new Pair<Optional<Student>, StatusCode>(Optional.empty(), StatusCode.DataAccessConversionException);
         }
     }
@@ -108,61 +90,8 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
      * @param userId: String userId representing the unique string for a 919 number.
      * @return Optional Object with Status Code
      */
-    public @NotNull Pair< Optional<Object[]>, StatusCode > getPartialUserWithId(@NotNull final String userId){
-        return getPersonWithId(userId);
-    }
-
-    /**
-     *<p>
-     * This method calls a generic query request for a person using a 919 number
-     * and then returns that record as an Object that has not been converted to a User yet, but
-     * reduces the need to search for a User when a User is also a Person.
-     *</p>
-     *
-     * @param studentCandidateKey: String studentCandidateKey representing a 919 number.
-     * @return Optional Object with Status Code
-     */
-    public @NotNull Pair< Optional<Object[]>,  StatusCode> getPartialUserWithCandidateKey(@NotNull final String studentCandidateKey){
-        return getPersonWithCandidateKey(studentCandidateKey);
-    }
-
-    /**
-     *<p>
-     * This is a procedure for a generic query request for a Person using a unique string for a 919 number.
-     *</p>
-     *
-     * @param personId: String personId representing the unique string for a 919 number.
-     * @return Optional Object with Status Code
-     */
-    private @NotNull Pair< Optional<Object[]>, StatusCode> getPersonWithId(@NotNull final String personId){
-        final String TABLE_NAME = GetTableName();
-
-        // Try block to catch errors in the process of accessing the database.
-        try{
-
-            // Create the EntityManager and writing the query to access a Person record that matches the personId
-            EntityManager em = _entityManagerFactory.createEntityManager();
-            String originalQuery = "SELECT  tableName.* FROM tableName WHERE tableName.\"SPRIDEN_PIDM\" = ?";
-
-            // Calling the query for the specific table specified in TABLE_NAME.
-            Query getPersonQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
-
-            // Adds the personId from the method call to the query.
-            getPersonQuery.setParameter(1, personId);
-
-            // Saving the result from the query
-            Object[] record = (Object[])getPersonQuery.getSingleResult();
-
-            return new Pair<Optional<Object[]>,StatusCode>((Optional.of(record)), StatusCode.OK);
-        }
-        catch(NoResultException ex){
-            System.out.println("Internal Error: PersonRepositoryImpl--getPersonWithId--\n" + ex.getMessage());
-            return new Pair<Optional<Object[]>, StatusCode>(Optional.empty(), StatusCode.UndefinedPerson);
-        }
-        catch(RuntimeException ex){
-            System.out.println("db error --\n" + ex.getMessage());
-            return new Pair<Optional<Object[]>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
-        }
+    public @NotNull Pair< Optional<Object[]>, StatusCode > getPartialUserWithCandidateKey(@NotNull final String userId){
+        return getPersonWithCandidateKey(userId);
     }
 
     /**

@@ -78,7 +78,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
      * @param termCode: String termCode representing the name of the term code.
      * @return Optional List of BookCopy objects with Status Code
      */
-    public @NotNull final Pair<Optional<List<BookCopy>>, StatusCode> getAllCheckedOutBooks(@NotNull final String studentId, @NotNull final String termCode){
+    public @NotNull Pair<Optional<List<BookCopy>>, StatusCode> getAllCheckedOutBooks(@NotNull final String studentId, @NotNull final String termCode){
         final String TABLE_NAME = GetTableName();
 
         try {
