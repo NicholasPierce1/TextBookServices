@@ -30,7 +30,7 @@ async function fetchAPI(url) {
 }
 
 function postData(){
-    fetch("/rest/api/frontEnd", {
+    fetch("", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
