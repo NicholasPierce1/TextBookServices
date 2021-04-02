@@ -57,7 +57,7 @@ function postData(url){
             }
         },
             errorReason => {
-            console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+            console.log(`An error occurred in the fetch api\n reason: ${errorReason}`);
             })
         .then(data => {
             console.log(data)
