@@ -5,7 +5,8 @@
  *
  */
 
-async function fetchAPI(url) {
+async function fetchAPI(li) {
+    let url = "/" + li.srcElement.parentElement.id;
     fetch(url)
         .then(response => {
             if(response.ok){
@@ -26,18 +27,24 @@ async function fetchAPI(url) {
         .catch(error =>{
             console.log(error);
         })
-
+    postData(url);
 }
 
-function postData(){
-    fetch("", {
+function postData(url){
+    const name = url.srcElement.innerHTML;
+    const submenu = url.srcElement.parentElement.id;
+    const navbar = window.sessionStorage.getItem('nav');
+
+    fetch(url, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
         body: ({
-
+            name: name;
+            submenu: submenu;
+            navbar: navbar;
         })
     })
         .then(response => {

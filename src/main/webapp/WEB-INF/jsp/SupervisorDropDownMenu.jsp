@@ -97,19 +97,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav pb-1 pt-1">
-                    <a class="nav-link active navbar-text" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="fetchAPI();">Home</a>
                 </ul>
                 <div class="nav-item dropdown pb-1 pt-1" id="Inventory">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Inventory" name="ulInv">
-                        <li id="AddBooks"><a class="dropdown-item" href="#">Add Books</a></li>
-                        <li id="ChangeBooks"><a class="dropdown-item" href="#">Change Book</a></li>
-                        <li id="QueryBooks"><a class="dropdown-item" href="#">Query Book</a></li>
-                        <li id="QueryCourse"><a class="dropdown-item" href="#">Query Course</a></li>
-                        <li id="CourseMessage"><a class="dropdown-item" href="#">Course Message</a></li>
-                        <li id="Maintenance"><a class="dropdown-item" href="#">Maintenance</a></li>
+                        <li id="AddBooks"><a class="dropdown-item" href="#" onclick="fetchAPI();">Add Books</a></li>
+                        <li id="ChangeBook"><a class="dropdown-item" href="#" onclick="fetchAPI();">Change Book</a></li>
+                        <li id="QueryBooks"><a class="dropdown-item" href="#" onclick="fetchAPI();">Query Book</a></li>
+                        <li id="QueryCourse"><a class="dropdown-item" href="#" onclick="fetchAPI();">Query Course</a></li>
+                        <li id="CourseMessage"><a class="dropdown-item" href="#" onclick="fetchAPI();">Course Message</a></li>
+                        <li id="Maintenance"><a class="dropdown-item" href="#" onclick="fetchAPI();">Maintenance</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Patrons" name="ulPatrons">
@@ -117,8 +117,8 @@
                         Patrons
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Patrons">
-                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" id="Check-In-Check-Out">Check In/Out</a></li>
-                        <li id="Patrons"><a class="dropdown-item" href="#" id="Patrons">Patrons</a></li>
+                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="fetchAPI();">Check In/Out</a></li>
+                        <li id="Patrons"><a class="dropdown-item" href="#" onclick="fetchAPI();">Patrons</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Reports">
@@ -126,8 +126,8 @@
                         Reports
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Reports" name="ulReports">
-                        <li id="Action"><a class="dropdown-item" href="#">Action</a></li>
-                        <li id="AnotherAction"><a class="dropdown-item" href="#">Another action</a></li>
+                        <li id="Action"><a class="dropdown-item" href="#" onclick="fetchAPI();">Action</a></li>
+                        <li id="AnotherAction"><a class="dropdown-item" href="#" onclick="fetchAPI();">Another action</a></li>
                     </ul>
                 </div>
 
@@ -208,8 +208,11 @@
 
     </body>
     <script type="text/javascript"
-            src = "myscript.js"></script>
-
+            src = "JS/SharedHandler.js"></script>
+    <script type="text/javascript"
+            src = "/HomeHandler.js"></script>
+    <script type="text/javascript"
+            src = "/HomeAjax.js"></script>
 
     <footer class="bg-dark text-center text-white fixed-bottom"
             style="bottom: 0;">

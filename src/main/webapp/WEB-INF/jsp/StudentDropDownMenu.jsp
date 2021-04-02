@@ -187,8 +187,12 @@
    </script>
 
 </body>
-<script type="text/javascript"
-        src = "myscript.js"></script>
+    <script type="text/javascript"
+            src = "JS/SharedHandler.js"></script>
+    <script type="text/javascript"
+            src = "/HomeHandler.js"></script>
+    <script type="text/javascript"
+            src = "/HomeAjax.js"></script>
 
 <footer class="bg-dark text-center text-white sticky-bottom"
        style="bottom: 0;">
