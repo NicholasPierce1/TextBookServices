@@ -15,7 +15,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
               rel="stylesheet"
               integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-              cross origin="anonymous">
+              crossorigin="anonymous">
     </head>
     <style>
         /* Hide input number arrows for Firefox */
@@ -76,11 +76,16 @@
             border-radius: 10px;
         }
 
+
+
+
+
+
     </style>
 </head>
 <body>
     <section>
-        <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
+        <nav id="Student"  class="navbar navbar-expand-lg navbar-custom navbar-dark">
             <div class="container-fluid">
                 <img src="NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
                 <a class="navbar-brand" href="#"></a>
@@ -90,29 +95,20 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav pb-1 pt-1">
+                    <ul class="navbar-nav pb-1 pt-1" id="Home" >
                         <a class="nav-link active navbar-text" aria-current="page" href="#">Home</a>
                     </ul>
-                    <ul class="navbar-nav pb-1 pt-1">
-                        <a class="nav-link active navbar-text" aria-current="page" href="#">Check In / Check Out</a>
+                    <ul class="navbar-nav pb-1 pt-1" id="CheckInCheckOut" >
+                        <a class="nav-link navbar-text" aria-current="page" href="#">Check In / Check Out</a>
                     </ul>
-                    <div class="nav-item dropdown pb-1 pt-1">
-                        <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Patrons
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Check In/Out</a></li>
-                            <li><a class="dropdown-item" href="#">Patrons</a></li>
-                        </ul>
-                    </div>
                     <div class="nav-item dropdown pb-1 pt-1">
                         <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Patron Info
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Patron Schedule</a></li>
-                            <li><a class="dropdown-item" href="#">Patron Previous Books</a></li>
-                            li><a class="dropdown-item" href="#">Patron Sold Books</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Patrons">
+                            <li id="PatronSchedule"><a class="dropdown-item" href="#">Patron Schedule</a></li>
+                            <li id="PatronPreviousBooks"><a class="dropdown-item" href="#">Patron Previous Books</a></li>
+                            <li id="PatronSoldBooks"><a class="dropdown-item" href="#">Patron Sold Books</a></li>
                         </ul>
                     </div>
 
@@ -121,7 +117,6 @@
                     <button class="btn btn-logout-custom" type="button">Log Out</button>
                 </div>
             </div>
-            <input type="hidden" type="text" id="data" name="data" value="">
         </nav>
     </section>
 
@@ -193,11 +188,7 @@
 
 </body>
 <script type="text/javascript"
-       src = "JS/SharedHandler.js"></script>
-<script type="text/javascript"
-       src = "JS/HomeHandler.js"></script>
-<script type="text/javascript"
-       src = "JS/HomeAjax.js"></script>
+        src = "myscript.js"></script>
 
 <footer class="bg-dark text-center text-white sticky-bottom"
        style="bottom: 0;">
