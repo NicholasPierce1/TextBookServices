@@ -1,3 +1,10 @@
+/**
+ * @Author Chase Staples
+ * @DateCreated 03/31/21
+ *
+ *
+ */
+
 async function fetchAPI(url) {
     fetch(url)
         .then(response => {

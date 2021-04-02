@@ -86,7 +86,7 @@
 </head>
 <body>
 <section>
-    <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
+    <nav id="Supervisor" class="navbar navbar-expand-lg navbar-custom navbar-dark">
         <div class="container-fluid">
             <img src="NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
             <a class="navbar-brand" href="#"></a>
@@ -99,35 +99,35 @@
                 <ul class="navbar-nav pb-1 pt-1">
                     <a class="nav-link active navbar-text" aria-current="page" href="#">Home</a>
                 </ul>
-                <div class="nav-item dropdown pb-1 pt-1">
+                <div class="nav-item dropdown pb-1 pt-1" id="Inventory">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Add Books</a></li>
-                        <li><a class="dropdown-item" href="#">Change Book</a></li>
-                        <li><a class="dropdown-item" href="#">Query Book</a></li>
-                        <li><a class="dropdown-item" href="#">Query Course</a></li>
-                        <li><a class="dropdown-item" href="#">Course Message</a></li>
-                        <li><a class="dropdown-item" href="#">Maintenance</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Inventory" name="ulInv">
+                        <li id="AddBooks"><a class="dropdown-item" href="#">Add Books</a></li>
+                        <li id="ChangeBooks"><a class="dropdown-item" href="#">Change Book</a></li>
+                        <li id="QueryBooks"><a class="dropdown-item" href="#">Query Book</a></li>
+                        <li id="QueryCourse"><a class="dropdown-item" href="#">Query Course</a></li>
+                        <li id="CourseMessage"><a class="dropdown-item" href="#">Course Message</a></li>
+                        <li id="Maintenance"><a class="dropdown-item" href="#">Maintenance</a></li>
                     </ul>
                 </div>
-                <div class="nav-item dropdown pb-1 pt-1">
+                <div class="nav-item dropdown pb-1 pt-1" id="Patrons" name="ulPatrons">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Patrons
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Check In/Out</a></li>
-                        <li><a class="dropdown-item" href="#">Patrons</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Patrons">
+                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" id="Check-In-Check-Out">Check In/Out</a></li>
+                        <li id="Patrons"><a class="dropdown-item" href="#" id="Patrons">Patrons</a></li>
                     </ul>
                 </div>
-                <div class="nav-item dropdown pb-1 pt-1">
-                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="nav-item dropdown pb-1 pt-1" id="Reports">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="Reports">
                         Reports
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Reports" name="ulReports">
+                        <li id="Action"><a class="dropdown-item" href="#">Action</a></li>
+                        <li id="AnotherAction"><a class="dropdown-item" href="#">Another action</a></li>
                     </ul>
                 </div>
 
@@ -136,6 +136,7 @@
                 <button class="btn btn-logout-custom" type="button">Log Out</button>
             </div>
         </div>
+
         <input type="hidden" type="text" id="data" name="data" value="">
     </nav>
 </section>
@@ -190,30 +191,27 @@
         <script
             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            cross origin="anonymous">
+            crossorigin="anonymous">
         </script>
 
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            cross origin="anonymous">
+            crossorigin="anonymous">
         </script>
 
         <script
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            cross origin="anonymous">
+            crossorigin="anonymous">
         </script>
 
     </body>
     <script type="text/javascript"
-            src = "JS/SharedHandler.js"></script>
-    <script type="text/javascript"
-            src = "JS/HomeHandler.js"></script>
-    <script type="text/javascript"
-            src = "JS/HomeAjax.js"></script>
+            src = "myscript.js"></script>
 
-    <footer class="bg-dark text-center text-white sticky-bottom"
+
+    <footer class="bg-dark text-center text-white fixed-bottom"
             style="bottom: 0;">
 
         <!-- Grid container -->

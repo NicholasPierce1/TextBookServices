@@ -66,16 +66,6 @@ window.onload = () => {
 
     }
 
-
-
-
-
-}
-
-/**
- * 2
- */
-
 function createManualForm(url){
 
 
@@ -103,7 +93,6 @@ function createManualForm(url){
 
 
 }
-
 
 function submitManualForm(form){
     form.submit();
