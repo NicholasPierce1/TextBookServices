@@ -6,15 +6,9 @@
  */
 
 
-/**
- * 1.A
- */
 liMap = new Map();
 userInfoMap = new Map();
 
-/**
-* 1.C
-*/
 
 function get_list_items(){
 
@@ -49,26 +43,7 @@ function get_list_items(){
     console.log(liMap);
 }
 
-function getURL(url){
 
-    const name = url.srcElement.innerHTML;
-    const submenu = url.srcElement.parentElement.id;
-    const navbar = window.sessionStorage.getItem('nav');
-
-    console.log(`Name: ${name}`);
-    console.log(`Navbar: ${navbar}`)
-    console.log(`Submenu: ${submenu}`);
-
-    const key = `${navbar}${submenu}`;
-
-    console.log(`key: ${key}`);
-    console.log('Value:', liMap.get(key));
-
-}
-
-/**
- * 1
- */
 
 window.onload = () => {
     console.log("Navbar:", document.getElementsByTagName('nav')[0].id);
@@ -86,43 +61,50 @@ window.onload = () => {
     liList = document.getElementsByTagName('li');
 
     for(let i = 0; i < liList.length; i++){
-        //liList[i].onclick = createManualForm(`${liList[i].innerHTML.id}`);
-        liList[i].onclick = getURL
-        //submitManualForm();
-        /**
-        * 1.D
-        */
+        liList[i].onclick = createManualForm;
+
 
     }
 
-    /**
-     * 1.B
-     */
-    // document.getElementById("data").innerHTML = userInfoMap;
 
+
+
+
+}
 
 /**
  * 2
  */
 
 function createManualForm(url){
+
+
+    const name = url.srcElement.innerHTML;
+    const submenu = url.srcElement.parentElement.id;
+    const navbar = window.sessionStorage.getItem('nav');
+    const key = `${navbar}${submenu}`;
+
+    console.log(`Name: ${name}`);
+    console.log(`Navbar: ${navbar}`)
+    console.log(`Submenu: ${submenu}`);
+    console.log(`key: ${key}`);
+    console.log('Value:', liMap.get(key));
+
+    let toForm = liMap.get(key);
+
     let form = document.createElement('form');
 
     form.method = "GET";
+    form.action = `${toForm}`;
+    form.name = `${submenu}`
+    form.id = `${submenu}`
 
-    /* URL = page name */
+    submitManualForm(form);
 
-    form.action = `/${url}`;
-    form.name = `${url}`
-    form.id = `${url}`
-
-    return form;
 
 }
 
-/**
- * 3
- */
+
 function submitManualForm(form){
     form.submit();
-}
+}}
