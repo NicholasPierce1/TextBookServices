@@ -27,7 +27,7 @@ async function fetchAPI(li) {
         .catch(error =>{
             console.log(error);
         })
-    postData(url);
+    postData();
 }
 
 function postData(url){
