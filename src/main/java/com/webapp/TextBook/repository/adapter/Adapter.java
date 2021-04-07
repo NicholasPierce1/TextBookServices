@@ -3,6 +3,7 @@ package com.webapp.TextBook.repository.adapter;
 import com.webapp.TextBook.repository.Bag.BagRepository;
 import com.webapp.TextBook.repository.BookCopy.BookCopyRepository;
 import com.webapp.TextBook.repository.Person.PersonRepository;
+import com.webapp.TextBook.repository.shared_respository_helper.DataAccessConversionHelper;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.repository.Term.TermRepository;
 import com.webapp.TextBook.repository.User.UserRepository;
@@ -290,13 +291,68 @@ public final class Adapter {
             @NotNull final User user,
             @NotNull final String studentId,
             @NotNull final String barcode){
-        return null;
+
+        // verifies session user, whom instigated this request, meets desired permissions to
+        // perform this operation
+        final Optional<StatusCode> USER_PERMISSION_AUTHORIZATION_RESULT =
+                Adapter.isUserPrivilegeValid(
+                        user.userRole,
+                        UserRole.StudentEmployee
+                );
+
+        // verify that permissions supplied are authorized -- return otherwise
+        if(USER_PERMISSION_AUTHORIZATION_RESULT.isPresent())
+            return USER_PERMISSION_AUTHORIZATION_RESULT.get();
+
+        // invoke student repository to acquire a student given a student id
+        final Pair<Optional<Student>, StatusCode> optionalStudentCodePair =
+                this._personRepository.getStudentWithCandidateKey(studentId);
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalStudentCodePair.getValue1() != StatusCode.OK)
+            // returns error status code
+            return optionalStudentCodePair.getValue1();
+
+        return this._bookCopyRepository.sellBook(barcode, studentId);
     }
 
     public @NotNull Pair<Optional<User>, StatusCode> userLogin(
             @NotNull final String username,
             @NotNull final String password){
-        return null;
+        final Pair<
+                Optional<User>,
+                StatusCode> returnValue =
+                new Pair<
+                        Optional<User>,
+                        StatusCode>(
+                        Optional.empty(),
+                        StatusCode.DatabaseError
+                );
+
+        //
+        final Pair<Optional<Object[]>, StatusCode> optionalSpridenCodePair =
+                this._personRepository.getPartialUserWithCandidateKey(username);
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalSpridenCodePair.getValue1() != StatusCode.OK)
+            // returns error status code
+            return returnValue.setAt1(optionalSpridenCodePair.getValue1());
+
+        final Pair<Optional<Object[]>, StatusCode> optionalUserCodePair =
+                this._userRepository.getPartialUserWithUsernameAndPassword(username,password);
+
+        // evaluates if status code is ok (else return in guard block)
+        if(optionalUserCodePair.getValue1() != StatusCode.OK)
+            // returns error status code
+            return returnValue.setAt1(optionalUserCodePair.getValue1());
+
+        User loginUser = DataAccessConversionHelper.createDataAccessObject(
+                User.conglomerateDboArrays(
+                        optionalSpridenCodePair.getValue0().orElseThrow(),
+                        optionalUserCodePair.getValue0().orElseThrow()),
+                User::new);
+
+        return returnValue.setAt0(Optional.of(loginUser)).setAt1(StatusCode.OK);
     }
 
 
