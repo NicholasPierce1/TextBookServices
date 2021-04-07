@@ -256,7 +256,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.DatabaseError;
         }
     }
-
+    // todo: add doc here :)
     public @NotNull StatusCode sellBook(@NotNull final String barcode, @NotNull final String studentId){
         final String TABLE_NAME = GetTableName();
 
@@ -314,7 +314,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.DatabaseError;
         }
     }
-
+    // todo: add doc here :)
     private @NotNull StatusCode changeBookDisposition(@NotNull final String pidm, @NotNull final String termCode, @NotNull final char disposition, @NotNull final char newDisposition){
         final String TABLE_NAME = GetTableName();
         Date date = new Date();
@@ -373,7 +373,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.DatabaseError;
         }
     }
-
+    // todo: add doc here :)
     private @NotNull Pair<Optional<BookCopy>, StatusCode> findBookCopyByStrikeBarcode(@NotNull final String strikeBarcode) {
         final String TABLE_NAME = GetTableName();
 

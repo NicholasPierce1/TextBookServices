@@ -18,7 +18,14 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
-// todo: doc everywhere
+
+/**
+ * <h1>Adapter</h1>
+ * <h2>Type: Class</h2>
+ *
+ * Actual implementation of methods required by the event listener
+ */
+
 @Service
 public final class Adapter {
 
@@ -118,7 +125,6 @@ public final class Adapter {
         returnValue = returnValue.setAt1(optionalStudentCodePair.getValue0());
 
         // invokes term repository to get the term via the term code (should be in helper later)
-        // todo: satisfy term helper method here
         final Pair<Optional<Term>, StatusCode> optionalTermCodePair = this._termRepository.getTermWithTermCode(termCode);
 
         // evaluates if status code is ok (else return in guard block)
@@ -161,7 +167,24 @@ public final class Adapter {
         return returnValue.setAt4(StatusCode.OK);
     }
 
-    // todo: doc : )
+    /**
+     * <p>
+     *     From a given strike barcode, student id (919 number), and a term code, attempts to check out specified book
+     *     for that student.
+     * </p>
+     * @param user (type User) represents the session user that's currently interacting with the system (should already be logged in)
+     * @param strikeBarcode (type String) representing the strike barcode, NW's specific barcode for books.
+     * @param studentId (type String) represents a student id.
+     *      Note: student id is not the database's informal primary key (PIDM), but rather
+     *      the 919 number (candidate key)
+     * @param termCode (type String) represents a term code denoting a specific term for a given year (ie: 202010 -- Fall 2020)
+     *
+     * @return Quartet(
+     *  Optional (type parameter: BookCopy)
+     *  Optional (type parameter: Bag),
+     *  Optional (type parameter: Term),
+     *  StatusCode ) representing the specific checked out book for a given strike barcode, student id, and term.
+     */
     public @NotNull Quartet<
             Optional<BookCopy>,
             Optional<Student>,
@@ -245,7 +268,20 @@ public final class Adapter {
         return returnValue.setAt3(StatusCode.OK);
     }
 
-    // todo: doc : )
+    /**
+     * <p>
+     *     From a given student id (919 number), a term code, and strike barcode, attempts to check in specified book
+     *     for that student.
+     * </p>
+     * @param user (type User) represents the session user that's currently interacting with the system (should already be logged in)
+     * @param studentId (type String) represents a student id.
+     *      Note: student id is not the database's informal primary key (PIDM), but rather
+     *      the 919 number (candidate key)
+     * @param barcode  (type String) representing the strike barcode, NW's specific barcode for books.
+     * @param termCode (type String) represents a term code denoting a specific term for a given year (ie: 202010 -- Fall 2020)
+     *
+     * @return StatusCode representing that the specific book for a given student id, term, and barcode has been checked in.
+     */
     public @NotNull StatusCode checkInBookForStudent(
             @NotNull final User user,
             @NotNull final String studentId,
@@ -287,6 +323,19 @@ public final class Adapter {
 
     }
 
+    /**
+     * <p>
+     *     From a given student id (919 number) and strike barcode, attempts to sell specified book
+     *     for that student.
+     * </p>
+     * @param user (type User) represents the session user that's currently interacting with the system (should already be logged in)
+     * @param studentId (type String) represents a student id.
+     *      Note: student id is not the database's informal primary key (PIDM), but rather
+     *      the 919 number (candidate key)
+     * @param barcode  (type String) representing the strike barcode, NW's specific barcode for books.
+     *
+     * @return StatusCode representing that the specific book for a given student id, term, and barcode has been sold.
+     */
     public @NotNull StatusCode sellBookForStudent(
             @NotNull final User user,
             @NotNull final String studentId,
@@ -316,6 +365,16 @@ public final class Adapter {
         return this._bookCopyRepository.sellBook(barcode, studentId);
     }
 
+    /**
+     * <p>
+     *     From a given username (PIDM) and password (S_Number), attempts to create specified user
+     * </p>
+     *
+     * @param username: String username representing their pidm.
+     * @param password: String password representing their S_Number.
+     *
+     * @return StatusCode representing that the specific user for a given  username and password has been added.
+     */
     public @NotNull Pair<Optional<User>, StatusCode> userLogin(
             @NotNull final String username,
             @NotNull final String password){
@@ -355,10 +414,18 @@ public final class Adapter {
         return returnValue.setAt0(Optional.of(loginUser)).setAt1(StatusCode.OK);
     }
 
-
-    // verifies that user access role is apt for invoked operation
-    // note: this should be the user from shared session state ONLY
-    // todo: add doc here :)
+    /**
+     * <p>
+     *     verifies that user access role is apt for invoked operation
+     *     note: this should be the user from shared session state ONLY
+     * </p>
+     *
+     * @param userRole: UserRole userRole representing the password of the logged in user.
+     * @param permissionLevelRequired: UserRole permissionLevelRequired representing the required level of access.
+     *
+     * @return Optional StatusCode representing that the specific user has privilege or
+     * the user doesn't have required level of access.
+     */
     private static @NotNull Optional<StatusCode> isUserPrivilegeValid(
             @NotNull final UserRole userRole,
             @NotNull final UserRole permissionLevelRequired){
