@@ -215,10 +215,40 @@ public abstract class Person implements DataAccessConversion {
         // set person attributes here in order of spriden table
 
         // order: pkey, id, lastName, firstName, middleName
-        this.pidm = String.valueOf(((BigDecimal)values[0]).doubleValue());
+        this.pidm = String.valueOf(((BigDecimal)values[0]));
+        System.out.println("person id orm: " + (String)values[1]);
         this.id = (String)values[1];
         this.lastName = (String)values[2];
         this.firstName = (String)values[3];
         this.middleName = (String)values[4];
+    }
+
+
+    /**
+     * <p>Checks for equality among Persons</p>
+     * @param objectB an upcasted object representing a Person
+     * @return a boolean indicating if the two Persons are equal
+     */
+    @Override
+    public boolean equals(Object objectB){
+
+        // if objectB is null then return false
+        if(objectB == null)
+            return false;
+
+        // if object addresses are same then return true
+        if(this == objectB)
+            return true;
+
+        // type cast objectB to User
+        final Person person = (Person)objectB;
+
+        // equality check (pidm, id, lastname, firstname, middle) are equal
+        return
+                    this.getPidm().equals(person.getPidm()) &&
+                    this.getId().equals(person.getId()) &&
+                    this.getLastName().equals(person.getLastName()) &&
+                    this.getFirstName().equals(person.getFirstName()) &&
+                    this.getMiddleName().equals(person.getMiddleName());
     }
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Entity
-public class User extends Person{
+public class User extends Person {
 
     /**
      * <p>
@@ -189,5 +189,31 @@ public class User extends Person{
         this.password = (String)values[values.length - 2];
         this.userRole = UserRole.createUserRoleByNominalValue((String)values[values.length - 1]).orElseThrow();
 
+    }
+
+    /**
+     * <p>Checks for equality among Users</p>
+     * @param objectB an upcasted object representing a User
+     * @return a boolean indicating if the two Users are equal
+     */
+    @Override
+    public boolean equals(Object objectB){
+
+        // if objectB is null then return false
+        if(objectB == null)
+            return false;
+
+        // if object addresses are same then return true
+        if(this == objectB)
+            return true;
+
+        // type cast objectB to User
+        final User user = (User)objectB;
+
+        // equality check (Person state equal & user-role, password) are equal
+        return
+                super.equals(objectB) &&
+                        this.getPassword().equals(user.getPassword()) &&
+                        this.getUserRole() == user.getUserRole();
     }
 }
