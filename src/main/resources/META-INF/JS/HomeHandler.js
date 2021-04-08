@@ -1,15 +1,18 @@
 /**
- * @Author Chase Staples
- * @DateCreated 03/18/21
- *
- *
+ * Create new map for li tags
  */
 
-
 liMap = new Map();
-userInfoMap = new Map();
 
 
+/**
+ * @function get_list_items
+ *
+ * Create a list of ul tags and list items
+ * Sets nav bar id and li id to liMap
+ * key: nav bar id (ie: SupervisorAddBooks)
+ * Value: li id (ie: /AddBooks)
+ */
 function get_list_items(){
 
     ulList = document.getElementsByTagName('ul');
@@ -43,7 +46,15 @@ function get_list_items(){
     console.log(liMap);
 }
 
-
+/**
+ * @onload
+ *
+ * Determines if the user is a student or supervisor
+ * Creates response and set the login user info
+ * Creates input tag list for user and student
+ * Calls function get_list_items to get the li map
+ * For loop for each li to add an onclick listener to create manual forms
+ */
 
 window.onload = () => {
     console.log("Navbar:", document.getElementsByTagName('nav')[0].id);
@@ -56,16 +67,32 @@ window.onload = () => {
         console.log("Supervisor Menu");
     }
 
+    let response = JSON.parse(window.getElementById("hiddenInput").value);
+    let loginUserInfo = LoginUserInfo.createLoginUserInfoFromJson(response.LoginUserInfo);
+    SessionStorage.setItem("loginUserInfo", loginUserInfo);
+
+
+    UserInfo.getInputTaglist();
+    StudentInfo.getInputTaglist();
+
     get_list_items();
 
     liList = document.getElementsByTagName('li');
 
     for(let i = 0; i < liList.length; i++){
         liList[i].onclick = createManualForm;
-
-
     }
 
+}
+
+/**
+ * @function createManualForm
+ * Creates a form manually, sets and logs important information
+ * (Name, Navbar ID, Li, Key, Value)
+ *
+ * @param {1} url
+ * the element clicked on
+ */
 function createManualForm(url){
 
 
@@ -86,14 +113,21 @@ function createManualForm(url){
 
     form.method = "GET";
     form.action = `${toForm}`;
-    form.name = `${submenu}`
-    form.id = `${submenu}`
+    form.name = `${submenu}`;
+
 
     submitManualForm(form);
 
 
 }
 
+/**
+ * @function submitManualForm
+ * submits the form
+ * @param {1} form
+ * the form
+ */
+
 function submitManualForm(form){
     form.submit();
-}}
+}
