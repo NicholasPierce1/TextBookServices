@@ -1,20 +1,14 @@
 package com.webapp.TextBook.controller.api_controller;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webapp.TextBook.repository.Bag.BagRepositoryImpl;
 import com.webapp.TextBook.repository.adapter.Adapter;
 import com.webapp.TextBook.repository.data_access.*;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
 import com.webapp.TextBook.sharedFiles.VerifySessionUser;
 import com.webapp.TextBook.validation.ApiValidation.ApiValidationHandler.ApiValidationHandler;
-import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentBookInfo;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
-import org.apache.tomcat.util.json.JSONParser;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Triplet;
