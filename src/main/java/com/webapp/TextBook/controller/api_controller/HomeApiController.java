@@ -54,6 +54,8 @@ public class HomeApiController {
         outputData.put("bag", null);
         outputData.put("term", null);
         outputData.put("statusMessage", null);
+        outputData.put("GeneralError", null);
+        outputData.put("Errors",null);
 
         try {
 
@@ -67,7 +69,7 @@ public class HomeApiController {
 
 
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
-                outputData.put("Errors", null);
+
                 return new ResponseEntity<String>(outputData.toString(), new HttpHeaders(),
                         HttpStatus.BAD_REQUEST);
 
@@ -132,14 +134,14 @@ public class HomeApiController {
         } catch (JSONException e) {
 
             outputData.put("GeneralError", generalJsonStringErrorMessage);
-            outputData.put("Errors", null);
+
 
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
 
             outputData.put("GeneralError", "Internal Error: (HomeApiController: getCheckedOutBooks)");
-            outputData.put("Errors", null);
+
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         }
@@ -157,6 +159,8 @@ public class HomeApiController {
         JSONObject outputData = new JSONObject();
         outputData.put("bookCopy", null);
         outputData.put("statusMessage", null);
+        outputData.put("GeneralError", null);
+        outputData.put("Errors",null);
 
 
         try {
@@ -173,7 +177,7 @@ public class HomeApiController {
 
 
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
-                outputData.put("Errors", null);
+
                 return new ResponseEntity<String>(outputData.toString(), new HttpHeaders(),
                         HttpStatus.BAD_REQUEST);
 
@@ -238,14 +242,14 @@ public class HomeApiController {
         } catch (JSONException e) {
 
             outputData.put("GeneralError", generalJsonStringErrorMessage);
-            outputData.put("Errors", null);
+
 
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
 
             outputData.put("GeneralError", "Internal Error: (HomeApiController: checkOutBook)");
-            outputData.put("Errors", null);
+
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         }
@@ -266,6 +270,8 @@ public class HomeApiController {
         JSONObject outputData = new JSONObject();
         outputData.put("barcode", null);
         outputData.put("statusMessage", null);
+        outputData.put("GeneralError", null);
+        outputData.put("Errors",null);
 
 
         try {
@@ -281,7 +287,7 @@ public class HomeApiController {
 
 
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
-                outputData.put("Errors", null);
+
                 return new ResponseEntity<String>(outputData.toString(), new HttpHeaders(),
                         HttpStatus.BAD_REQUEST);
 
@@ -344,14 +350,14 @@ public class HomeApiController {
         } catch (JSONException e) {
 
             outputData.put("GeneralError", generalJsonStringErrorMessage);
-            outputData.put("Errors", null);
+
 
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
 
             outputData.put("GeneralError", "Internal Error: (HomeApiController: checkOutBook)");
-            outputData.put("Errors", null);
+
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         }
@@ -374,6 +380,8 @@ public class HomeApiController {
         JSONObject outputData = new JSONObject();
         outputData.put("barcode", null);
         outputData.put("statusMessage", null);
+        outputData.put("GeneralError", null);
+        outputData.put("Errors",null);
 
 
         try {
@@ -389,7 +397,7 @@ public class HomeApiController {
 
 
                 outputData.put("GeneralError", generalJsonStringErrorMessage);
-                outputData.put("Errors", null);
+
                 return new ResponseEntity<String>(outputData.toString(), new HttpHeaders(),
                         HttpStatus.BAD_REQUEST);
 
@@ -452,14 +460,14 @@ public class HomeApiController {
         } catch (JSONException e) {
 
             outputData.put("GeneralError", generalJsonStringErrorMessage);
-            outputData.put("Errors", null);
+
 
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
 
             outputData.put("GeneralError", "Internal Error: (HomeApiController: checkOutBook)");
-            outputData.put("Errors", null);
+
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         }
