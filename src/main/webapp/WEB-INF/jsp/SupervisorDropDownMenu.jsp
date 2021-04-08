@@ -137,7 +137,7 @@
             </div>
         </div>
 
-        <input type="hidden" type="text" id="data" name="data" value="">
+        <input type="hidden" type="text" id="hiddenInput" name="data" value="">
     </nav>
 </section>
 

@@ -118,6 +118,8 @@
                 </div>
             </div>
         </nav>
+
+       <input type="hidden" type="text" id="hiddenInput" name="data" value="">
     </section>
 
     <div class="container my-container "
