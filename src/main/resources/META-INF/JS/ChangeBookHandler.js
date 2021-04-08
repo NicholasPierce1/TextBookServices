@@ -7,3 +7,184 @@ function change_to_barcode(){
 function change_to_codeYear(){
     document.getElementById('display_container').innerHTML='<div class="Form my-1 py-3"> <h2>Change Code/Year</h2> <div class="row gy-5 pt-2"> <div class="col-md-4"> <div class="input-group mb-3"> <label for="book_code_chCodeYear" class="input-group-text">Book Code</label> <input id="book_code_chCodeYear" class="form-control"> </div> </div> <div class="col-md-4"> <div class="input-group mb-3"> <label for="book_year_chCodeYear" class="input-group-text">Book Year</label> <input id="book_year_chCodeYear" class="form-control"> </div> </div> </div> <div class="row gy-5"> <div class="col-md-4"> <div class="input-group mb-3"> <label for="new_book_code_chCodeYear" class="input-group-text">New Book Code</label> <input id="new_book_code_chCodeYear" class="form-control"> </div> </div> <div class="col-md-4"> <div class="input-group mb-3"> <label for="new_book_year_chCodeYear" class="input-group-text">New Book Year</label> <input id="new_book_year_chCodeYear" class="form-control"> </div> </div> </div> <div class="row gy-3 my-1"> <div class="btn-group"> <label class="btn btn-custom btn-text" for = "change_codeYear">Change</label> <input type="button" class="btn-check" id="change_codeYear" autocomplete="off"> <label class="btn btn-custom btn-text" for = "clear_codeYear">Clear</label> <input type="button" class="btn-check" id="clear_codeYear" autocomplete="off"> </div> </div> </div>';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function onClickHandlerForSellBook(e){
+    checkStudentInfoInputsAndState(e);
+
+}
+
+function getBarcodeFromInput(){
+    if(document.getElementById("barcode") != null){
+        return document.getElementById("barcode");
+    }
+    else{
+        console.log("Error occurred: Barcode");
+    }
+}
+
+
+
+function onClickHandlerForGetAllCheckedOutBooksForStudentAndTerm(e){
+    checkStudentInfoInputsAndState(e);
+}
+
+
+function onFocusOutForBarcode(e){
+    if(e == null){
+        return;
+    }
+    else{
+        getTableRowFromBookCopy(e);
+        if(getTableRowFromBookCopy(e) != null){
+            refreshViewWithJsonForCheckedOutBook(json);
+        }
+        else{
+            refreshViewWithJsonForCheckedInBook(json);
+        }
+    }
+}
+
+function getTableRowFromBookCopy(barcode){
+    if(getBookCopyWhereBarcodeMatches(barcode) == null){
+        return null;
+    }
+    else{
+        if(getBookCopyWhereBarcodeMatches(barcode)){
+            return document.getElementById("table").innerHTML = "Found in this table.";
+        }
+        else{
+            console.log("Error occurred: No Match");
+        }
+    }
+
+}
+
+function getBookCopyWhereBarcodeMatches(barcode){
+    let sessionBarcodeList = new Map();
+    let bookCopyList = [window.sessionStorage.getItem('bookCopy')];
+    for(let i = 0; i < bookCopyList.length; i++){
+        sessionBarcodeList.set(bookCopyList[i]);
+    }
+    for(let i = 0; i < sessionBarcodeList.length; i++){
+        if(sessionBarcodeList[i] == barcode){
+            let match = sessionBarcodeList.get(barcode);
+            return match;
+        }
+
+        else{
+            return null;
+        }
+
+    }
+}
+
+
+function checkStudentInfoInputsAndState(input){
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if(input.length != 0 && input != null && !StudentInfo.has(input)){
+                StudentInfo.set(input);
+                console.log(this.status);
+            }
+            else{
+                console.log("An Error Occurred");
+            }
+       }
+       else{
+        console.log(`An Error Occurred, State: ${this.readystate} and status: ${this.status}`);
+    }
+    };
+    xhttp.open("GET", "studentInfo", true);
+    xhttp.send();
+}
+
