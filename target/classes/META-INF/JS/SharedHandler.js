@@ -15,12 +15,12 @@
 function printError(errorMsg){
 
     alert("ERROR: " + errorMsg);
+    console.log(errorMsg);
 
 }
 
 
 /**
- * @Author Chase Staples
  * @class ErrorBindings
  *
  * @Purpose
@@ -32,13 +32,15 @@ class ErrorBindings{
      * Class Variables
      * Names describe their values
      */
+
+
+    #fieldErrorName;
+    #fieldErrorMessage;
+    #errorData;
+
     static #fieldErrorNameKey = "fieldName";
     static #fieldErrorMessageKey = "message";
     static #errorDataKey = "faultyData";
-
-    fieldErrorName = fieldErrorNameKey;
-    fieldErrorMessage = fieldErrorMessageKey;
-    errorData = errorDataKey;
 
     /**
      * @constructor
@@ -53,12 +55,50 @@ class ErrorBindings{
      */
 
 
-    constructor(){
+     /**
+      * @error -> array
+      *
+      * creates an array of key : value pairs with
+      * name of field and type of field
+      */
+    static error = [
+        {
+         name: ErrorBindings.#fieldErrorNameKey,
+         type: "string"
+        },
+        {
+         name: ErrorBindings.#fieldErrorMessageKey,
+         type: "string"
+        },
+        {
+         name: ErrorBindings.#errorDataKey,
+         type: "string"
+        }
+    ];
 
-            this.#fieldErrorName = fieldErrorName;
-            this.#fieldErrorMessage = fieldErrorMessage;
-            this.#errorData = errorData;
-            console.log(fieldErrorName +  fieldErrorMessage + errorData);
+    /**
+     * Number of fields in the static array
+     */
+    static numberOfFields = error.length;
+
+    ErrorBindings(){}
+
+    /**
+     * @constuctor
+     *  creates new ErrorBindings object for new errors
+     *  logs error to console
+     * @param {1} fieldErrorName
+     *  name of the error
+     * @param {2} fieldErrorMessage
+     *  error message
+     * @param {3} errorData
+     *  error data
+     */
+    constructor(fieldErrorName, fieldErrorMessage, errorData){
+
+        this._fieldErrorMessage = fieldErrorMessage;
+        this._fieldErrorName = fieldErrorName;
+        this._errorData = errorData;
     }
 
     /**
@@ -70,7 +110,10 @@ class ErrorBindings{
      */
     static parseInput(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new ErrorBindings(jsonObject.fieldName, jsonObject.message, jsonObject.faultyData);
 
         }
         catch{
@@ -87,7 +130,7 @@ class ErrorBindings{
      *
      */
     getFieldErrorName(){
-        return this.fieldErrorName;
+        return this.#fieldErrorName;
     }
 
     /**
@@ -96,7 +139,7 @@ class ErrorBindings{
      *  Getter to return error message
      */
     getFieldErrorMessage(){
-        return this.fieldErrorMessage;
+        return this.#fieldErrorMessage;
     }
 
     /**
@@ -105,29 +148,112 @@ class ErrorBindings{
      *  Getter to return error data
      */
     getErrorData(){
-        return this.errorData;
+        return this.#errorData;
     }
 
+    /**
+    * @method getInputTagList
+    *
+    * Method for creating input element and setting the name and type fields
+    *
+    * @return new input tag list with error bindings
+    */
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = new Array();
+
+        for(let i = 0; i < UserInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", ErrorBindings.error[i].name);
+            inputTag.setAttribute("Type", ErrorBindings.error[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
+    }
 
 }
+
+ /**
+  * @class UserInfo
+  *
+  * creating info for user and their usernames and password
+  * getters to return username and password
+  *
+  */
 
 class UserInfo{
 
-    static #STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
-    static #S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    static #S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
+    /**
+     * Class Variables
+     * Names describe their values
+     */
 
-    #haveSuffix;
+    #username;
+    #password;
 
-    constructor(){
-        this.#STUDENT_ID_PATTERN = STUDENT_ID_PATTERN;
-        this.#S_NUMBER_PREFIX = S_NUMBER_PREFIX;
-        this.#S_NUMBER_SUFFIX = S_NUMBER_SUFFIX;
+    static #usernameKey = "_username";
+    static #passwordKey = "_password";
+
+    /**
+      * @user -> array
+      *
+      * creates an array of key : value pairs with
+      * name of field and type of field
+      */
+
+    static user = [
+        {
+         name: UserInfo.#usernameKey,
+         type: "string"
+        },
+        {
+         name: UserInfo.#passwordKey,
+         type: "number"
+        }
+    ];
+
+    /**
+     * Number of fields in the static array
+    */
+
+    static numberOfFields = user.length;
+
+    UserInfo(){}
+
+    /**
+     * @constuctor
+     *  creates new user info object
+     * @param {1} ID
+     *  ID for students (919#)
+     * @param {2} TERM_CODE
+     *  Their term
+     *
+     */
+
+    constructor(username, password){
+        this.username = username;
+        this.password = password;
     }
+
+    /**
+     * @method parseInput
+     *  takes JSON object and parses to string
+     *  throws error if an error occurred
+     * @param {1} jsonObj
+     *  JSON object that was inputted
+     */
 
     static parseJson(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new UserInfo(jsonObject._username, jsonObject._password);
 
         }
         catch{
@@ -136,35 +262,132 @@ class UserInfo{
         }
     }
 
-    getSTUDENT_ID_PATTERN(){
-        return this.STUDENT_ID_PATTERN;
+    /**
+     * @method getUsername
+     * @return
+     *  user's username
+     *
+     */
+
+    getUsername(){
+        return this.#username;
     }
 
-    getS_NUMBER_PREFIX(){
-        return this.S_NUMBER_PREFIX;
+
+    /**
+     * @method getPassword
+     * @return
+     *  user's password
+     *
+     */
+    getPassword(){
+        return this.#password;
     }
 
-    getS_NUMBER_SUFFIX(){
-        return this.S_NUMBER_SUFFIX;
+    /**
+    * @method getInputTagList
+    *
+    * Method for creating input element and setting the name and type fields
+    *
+    * @return new input tag list with user info
+    */
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = new Array();
+
+        for(let i = 0; i < UserInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", UserInfo.user[i].name);
+            inputTag.setAttribute("Type", UserInfo.user[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
     }
 }
+
+
+ /**
+  * @class StudentInfo
+  *
+  * creating info for students with id and term code
+  * getters to return id and termcode
+  *
+  */
 
 class StudentInfo{
 
-    static #STUDENT_ID_PATTERN = Pattern.compile("^919[0-9]{6}$");
-    static #S_NUMBER_PREFIX = Pattern.compile("^[s,S][0-9]{6}(@(.*)|)$");
-    static #S_NUMBER_SUFFIX = Pattern.compile("^.{7}@.*$");
 
+    /**
+     * Class Variables
+     * Names describe their values
+     */
 
-    constructor(){
-        this.#STUDENT_ID_PATTERN = STUDENT_ID_PATTERN;
-        this.#S_NUMBER_PREFIX = S_NUMBER_PREFIX;
-        this.#S_NUMBER_SUFFIX = S_NUMBER_SUFFIX;
+    #ID;
+    #TERM_CODE;
+
+    static #idKey = "id";
+    static #termCodeKey = "termCode"
+
+      /**
+      * @student -> array
+      *
+      * creates an array of key : value pairs with
+      * name of field and type of field
+      */
+
+    static student = [
+        {
+         name: StudentInfo.#idKey,
+         type: "number"
+        },
+        {
+         name: StudentInfo.#termCodeKey,
+         type: "number"
+        }
+    ];
+
+    /**
+     * Number of fields in the static array
+     */
+
+    static numberOfFields = student.length;
+
+    StudentInfo(){}
+
+    /**
+     * @constuctor
+     *  creates new student info object
+     * @param {1} ID
+     *  ID for students (919#)
+     * @param {2} TERM_CODE
+     *  Their term
+     *
+     */
+
+    constructor(ID, TERM_CODE){
+        this.#ID = ID;
+        this.#TERM_CODE = TERM_CODE;
     }
 
+    /**
+     * @method parseInput
+     *  takes JSON object and parses to string
+     *  throws error if an error occurred
+     * @param {1} jsonObj
+     *  JSON object that was inputted
+     */
     static parseJson(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new StudentInfo(jsonObject.id, jsonObject.termCode);
 
         }
         catch{
@@ -173,19 +396,55 @@ class StudentInfo{
         }
     }
 
-    getSTUDENT_ID_PATTERN(){
-        return this.#STUDENT_ID_PATTERN;
+    /**
+     * @method getID
+     * @return
+     *  ID (919#)
+     *
+     */
+
+    getID(){
+        return this.#ID;
     }
 
-    getS_NUMBER_PREFIX(){
-        return this.#S_NUMBER_PREFIX;
+    /**
+     * @method getTermCode
+     * @return
+     *  Term Code
+     *
+     */
+
+    getTermCode(){
+        return this.#TERM_CODE;
     }
 
-    getS_NUMBER_SUFFIX(){
-        return this.#S_NUMBER_SUFFIX;
+    /**
+    * @method getInputTagList
+    *
+    * Method for creating input element and setting the name and type fields
+    *
+    * @return new input tag list with student info
+    */
+
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = new Array();
+
+        for(let i = 0; i < StudentInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", StudentInfo.student[i].username);
+            inputTag.setAttribute("Type", StudentInfo.student[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
     }
 }
-
 
 
 /**
@@ -209,7 +468,7 @@ class BookCopy{
 
     static parseInput(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+            return (JSON.parse(jsonObj));
 
         }
         catch{
@@ -251,7 +510,7 @@ class BookCopy{
 
     static parseInput(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+            return (JSON.parse(jsonObj));
 
         }
         catch{
@@ -288,7 +547,7 @@ class BookCopy{
 
     static parseInput(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+            return (JSON.parse(jsonObj));
 
         }
         catch{
