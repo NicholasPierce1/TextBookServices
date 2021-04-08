@@ -179,16 +179,81 @@ class ErrorBindings{
 
 }
 
+ /**
+  * @class UserInfo
+  *
+  * creating info for user and their usernames and password
+  * getters to return username and password
+  *
+  */
 
 class UserInfo{
 
-    constructor(){
+    /**
+     * Class Variables
+     * Names describe their values
+     */
 
+    #username;
+    #password;
+
+    static #usernameKey = "_username";
+    static #passwordKey = "_password";
+
+    /**
+      * @user -> array
+      *
+      * creates an array of key : value pairs with
+      * name of field and type of field
+      */
+
+    static user = [
+        {
+         name: UserInfo.#usernameKey,
+         type: "string"
+        },
+        {
+         name: UserInfo.#passwordKey,
+         type: "number"
+        }
+    ];
+
+    /**
+     * Number of fields in the static array
+    */
+
+    static numberOfFields = user.length;
+
+    UserInfo(){}
+
+    /**
+     * @constuctor
+     *  creates new user info object
+     * @param {1} ID
+     *  ID for students (919#)
+     * @param {2} TERM_CODE
+     *  Their term
+     *
+     */
+
+    constructor(username, password){
+        this.username = username;
+        this.password = password;
     }
+
+    /**
+     * @method parseInput
+     *  takes JSON object and parses to string
+     *  throws error if an error occurred
+     * @param {1} jsonObj
+     *  JSON object that was inputted
+     */
 
     static parseJson(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new UserInfo(jsonObject._username, jsonObject._password);
 
         }
         catch{
@@ -197,14 +262,55 @@ class UserInfo{
         }
     }
 
+    /**
+     * @method getUsername
+     * @return
+     *  user's username
+     *
+     */
+
+    getUsername(){
+        return this.#username;
+    }
+
+
+    /**
+     * @method getPassword
+     * @return
+     *  user's password
+     *
+     */
+    getPassword(){
+        return this.#password;
+    }
+
+    /**
+    * @method getInputTagList
+    *
+    * Method for creating input element and setting the name and type fields
+    *
+    * @return new input tag list with user info
+    */
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = new Array();
+
+        for(let i = 0; i < UserInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", UserInfo.user[i].name);
+            inputTag.setAttribute("Type", UserInfo.user[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
+    }
 }
 
-/**
- * @Authors Chase Staples and Spyridon Kaperonis
- * @DateCreated 03/09/21
- *
- *
- */
 
  /**
   * @class StudentInfo
