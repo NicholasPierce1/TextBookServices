@@ -19,8 +19,8 @@ import java.util.function.Supplier;
 public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel{
 
         // enumerates static members
-        public final static String NOMINAL_USERNAME = "username";
-        public final static String NOMINAL_PASSWORD = "password";
+        public final static String NOMINAL_USERNAME = "_username";
+        public final static String NOMINAL_PASSWORD = "_password";
 
 
         private String _username;

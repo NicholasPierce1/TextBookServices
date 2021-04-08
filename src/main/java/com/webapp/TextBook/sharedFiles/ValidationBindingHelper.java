@@ -17,20 +17,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Helper class for any/all Error Binding validations that are used for more specific classes
+ * Helps with Error handling, as well as JSON conversions
+ */
 public class ValidationBindingHelper {
 
     private static final String failedValidationStatusMessage = "Input missing or invalid";
     private static final String INTERNAL_VALIDATION_ERROR = "Internal Error: please contact IT.";
 
     // creates local final strings for error and general errors key
+    //Used for setting standard Error keys and logic. (see line 175ish)
     private static final String ERRORS_KEY = "Errors";
     private static final String GENERAL_ERRORS_KEY = "GeneralError";
+
+    /**
+     *
+     * @param result
+     * @param map
+     * @return Pair of boolean and JSONObject. Boolean is if there were errors, and a JSON object containing a list of errors
+     * @throws JSONException
+     */
 
     public static Pair<Boolean,JSONObject> validationBindingHandler(@NotNull final BindingResult result, @NotNull final ModelMap map) throws JSONException {
         JSONObject data = new JSONObject();
         Boolean returnResult = null;
         try {
-
 
             if (result.hasErrors()) {
                 //binding errors present, load in Status/Error messages and return to login
@@ -66,12 +78,19 @@ public class ValidationBindingHelper {
             returnResult = false;
         }
         finally {
+            data.put(GENERAL_ERRORS_KEY, INTERNAL_VALIDATION_ERROR);
             return new Pair<Boolean, JSONObject>(returnResult,data);
         }
     }
 
-    // assist in validation execution for api validation
-    // note: json exception guarantee not to occur
+    /***
+     * assist in validation execution for api validation
+     * note: json exception guarantee not to occur
+     * @param apiValidationResult
+     * @param jsonObject
+     * @return if optional is empty or not
+     * @throws JSONException
+     */
     public static boolean handleApiValidationBindingForJsonOutput(@NotNull final Optional<String> apiValidationResult, @NotNull final JSONObject jsonObject) throws JSONException{
 
         // if optional is empty then return success result, else invoke helper to set error state
@@ -84,7 +103,13 @@ public class ValidationBindingHelper {
         return false;
     }
 
-    // todo: create handler for conjoined optional validation results on stream-filter predicates
+    /***
+     * Looks to deal with errors in JSON array
+     * @param apiValidationResults
+     * @param jsonObject
+     * @return if array is empty, then there are no errors, otherwise return false.
+     * @throws JSONException
+     */
     public static boolean handlerApiValidationBindingsForJsonOutput(@NotNull final List<Optional<String>> apiValidationResults, @NotNull final JSONObject jsonObject) throws JSONException{
 
         // enumerates local variables
@@ -92,6 +117,7 @@ public class ValidationBindingHelper {
 
         try {
             // streams list & filters on predicate that optional is not-empty (retains errors)
+            //used to filter the error bindings, and then handle them
             apiValidationResults.stream().filter(
                     Optional::isPresent
             ).map(
@@ -107,14 +133,16 @@ public class ValidationBindingHelper {
                         try {
 
                             // will work always
-                            final JSONArray singleErrorStringArray = new JSONArray(errorString);
+                            final JSONArray errorBindingArray = new JSONArray(errorString);
 
-                            //checking to insure only one error string is present
-                            if(singleErrorStringArray.length() != 1){
-                                throw new JSONException("(ValidationBindingHelper): Internal Error: More than one String present in ErrorStringArray");
+                            // checking to ensure JSONObjects are present (not empty)
+                            if(errorBindingArray.length() == 0){
+                                throw new JSONException("(ValidationBindingHelper): Internal Error: Empty ErrorBinding given -- ErrorStringArray");
                             }
-                            // extracts single member ([JSONObject] -> JSONObject) and places into return JsonArray
-                            jsonArray.put(singleErrorStringArray.get(0));
+
+                            // extracts all members ([JSONObject] -> JSONObject) and places into return JsonArray
+                            for(int i = 0; i < errorBindingArray.length(); i++)
+                                jsonArray.put(errorBindingArray.get(i)); // extracts ErrorBinding in JSONObject form
                         }
                         catch (JSONException jsonException) { // note will never occur
                             jsonException.printStackTrace();
@@ -158,8 +186,14 @@ public class ValidationBindingHelper {
         }
     }
 
-    // private helper for overlapping api validation setter
-    // note: json exception guarantee not to occur
+    /**
+     *  private helper for overlapping api validation setter
+     *    note: json exception guarantee not to occur
+     * @param errorMessage
+     * @param outputData
+     * @throws JSONException
+     */
+
     private static void handleErrorMessageType(@NotNull final String errorMessage, @NotNull final JSONObject outputData) throws JSONException{
 
         // captures local boolean for errorMessage state type
@@ -171,6 +205,11 @@ public class ValidationBindingHelper {
 
     }
 
+    /**
+     * Little helper method for dealing with general errors
+     * @param outputData
+     * @throws JSONException
+     */
     private static void handleSuccessValidationErrorMessage(@NotNull final JSONObject outputData) throws JSONException {
         // set errors state for successful output json object
         outputData.put(ERRORS_KEY, null);
