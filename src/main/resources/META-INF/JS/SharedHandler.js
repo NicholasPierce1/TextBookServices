@@ -15,6 +15,7 @@
 function printError(errorMsg){
 
     alert("ERROR: " + errorMsg);
+    console.log(errorMsg);
 
 }
 
@@ -25,20 +26,62 @@ function printError(errorMsg){
  * @Purpose
  *  Create error bindings and parse json object
  */
-
 class ErrorBindings{
 
     /**
      * Class Variables
      * Names describe their values
      */
-    static #fieldErrorNameKey = "fieldName";
-    static #fieldErrorMessageKey = "message";
-    static #errorDataKey = "faultyData";
+
 
     #fieldErrorName;
     #fieldErrorMessage;
     #errorData;
+
+    static #fieldErrorNameKey = "fieldName";
+    static #fieldErrorMessageKey = "message";
+    static #errorDataKey = "faultyData";
+
+    /**
+     * @constructor
+     *  creates new ErrorBindings object for new errors
+     *  logs error to console
+     * @param {1} fieldErrorName
+     *  name of the error
+     * @param {2} fieldErrorMessage
+     *  error message
+     * @param {3} errorData
+     *  error data
+     */
+
+
+     /**
+      * @error -> array
+      *
+      * creates an array of key : value pairs with
+      * name of field and type of field
+      */
+    static error = [
+        {
+         name: ErrorBindings.#fieldErrorNameKey,
+         type: "string"
+        },
+        {
+         name: ErrorBindings.#fieldErrorMessageKey,
+         type: "string"
+        },
+        {
+         name: ErrorBindings.#errorDataKey,
+         type: "string"
+        }
+    ];
+
+    /**
+     * Number of fields in the static array
+     */
+    static numberOfFields = error.length;
+
+    ErrorBindings(){}
 
     /**
      * @constuctor
@@ -51,14 +94,11 @@ class ErrorBindings{
      * @param {3} errorData
      *  error data
      */
+    constructor(fieldErrorName, fieldErrorMessage, errorData){
 
-
-    constructor(){
-
-            this.fieldErrorName = fieldErrorNameKey;
-            this.fieldErrorMessage = fieldErrorMessageKey;
-            this.errorData = errorDataKey;
-            console.log(fieldErrorName +  fieldErrorMessage + errorData);
+        this._fieldErrorMessage = fieldErrorMessage;
+        this._fieldErrorName = fieldErrorName;
+        this._errorData = errorData;
     }
 
     /**
@@ -70,7 +110,10 @@ class ErrorBindings{
      */
     static parseInput(jsonObj){
         try{
-            return (JSON.parse(jsonObj));
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new ErrorBindings(jsonObject.fieldName, jsonObject.message, jsonObject.faultyData);
 
         }
         catch{
@@ -108,19 +151,34 @@ class ErrorBindings{
         return this.#errorData;
     }
 
+    /**
+    * @method getInputTagList
+    *
+    * Method for creating input element and setting the name and type fields
+    *
+    * @return new input tag list with error bindings
+    */
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = new Array();
+
+        for(let i = 0; i < UserInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", ErrorBindings.error[i].name);
+            inputTag.setAttribute("Type", ErrorBindings.error[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
+    }
 
 }
 
-function parseJson(jsonObj){
-    try{
-        return (JSON.parse(jsonObj));
-
-    }
-    catch{
-        throw("Error parsing json object");
-        console.log("Error parsing json object");
-    }
-}
 
 class UserInfo{
 
