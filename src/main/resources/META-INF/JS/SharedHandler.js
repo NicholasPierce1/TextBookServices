@@ -199,16 +199,89 @@ class UserInfo{
 
 }
 
+/**
+ * @Authors Chase Staples and Spyridon Kaperonis
+ * @DateCreated 03/09/21
+ *
+ *
+ */
+
+ /**
+  * @class StudentInfo
+  *
+  * creating info for students with id and term code
+  * getters to return id and termcode
+  *
+  */
+
 class StudentInfo{
 
 
-    constructor(){
+    /**
+     * Class Variables
+     * Names describe their values
+     */
 
+    #ID;
+    #TERM_CODE;
+
+    static #idKey = "id";
+    static #termCodeKey = "termCode"
+
+      /**
+      * @student -> array
+      *
+      * creates an array of key : value pairs with
+      * name of field and type of field
+      */
+
+    static student = [
+        {
+         name: StudentInfo.#idKey,
+         type: "number"
+        },
+        {
+         name: StudentInfo.#termCodeKey,
+         type: "number"
+        }
+    ];
+
+    /**
+     * Number of fields in the static array
+     */
+
+    static numberOfFields = student.length;
+
+    StudentInfo(){}
+
+    /**
+     * @constuctor
+     *  creates new student info object
+     * @param {1} ID
+     *  ID for students (919#)
+     * @param {2} TERM_CODE
+     *  Their term
+     *
+     */
+
+    constructor(ID, TERM_CODE){
+        this.#ID = ID;
+        this.#TERM_CODE = TERM_CODE;
     }
 
+    /**
+     * @method parseInput
+     *  takes JSON object and parses to string
+     *  throws error if an error occurred
+     * @param {1} jsonObj
+     *  JSON object that was inputted
+     */
     static parseJson(jsonObj){
         try{
-            return (JSON.parse(jsonObj)).toString();
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new StudentInfo(jsonObject.id, jsonObject.termCode);
 
         }
         catch{
@@ -217,7 +290,56 @@ class StudentInfo{
         }
     }
 
+    /**
+     * @method getID
+     * @return
+     *  ID (919#)
+     *
+     */
+
+    getID(){
+        return this.#ID;
+    }
+
+    /**
+     * @method getTermCode
+     * @return
+     *  Term Code
+     *
+     */
+
+    getTermCode(){
+        return this.#TERM_CODE;
+    }
+
+    /**
+    * @method getInputTagList
+    *
+    * Method for creating input element and setting the name and type fields
+    *
+    * @return new input tag list with student info
+    */
+
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = new Array();
+
+        for(let i = 0; i < StudentInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", StudentInfo.student[i].username);
+            inputTag.setAttribute("Type", StudentInfo.student[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
+    }
 }
+
 
 /**
  * @class BookCopy
