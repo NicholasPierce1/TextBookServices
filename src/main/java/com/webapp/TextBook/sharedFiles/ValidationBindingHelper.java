@@ -133,14 +133,16 @@ public class ValidationBindingHelper {
                         try {
 
                             // will work always
-                            final JSONArray singleErrorStringArray = new JSONArray(errorString);
+                            final JSONArray errorBindingArray = new JSONArray(errorString);
 
-                            //checking to insure only one error string is present
-                            if(singleErrorStringArray.length() != 1){
-                                throw new JSONException("(ValidationBindingHelper): Internal Error: More than one String present in ErrorStringArray");
+                            // checking to ensure JSONObjects are present (not empty)
+                            if(errorBindingArray.length() == 0){
+                                throw new JSONException("(ValidationBindingHelper): Internal Error: Empty ErrorBinding given -- ErrorStringArray");
                             }
-                            // extracts single member ([JSONObject] -> JSONObject) and places into return JsonArray
-                            jsonArray.put(singleErrorStringArray.get(0));
+
+                            // extracts all members ([JSONObject] -> JSONObject) and places into return JsonArray
+                            for(int i = 0; i < errorBindingArray.length(); i++)
+                                jsonArray.put(errorBindingArray.get(i)); // extracts ErrorBinding in JSONObject form
                         }
                         catch (JSONException jsonException) { // note will never occur
                             jsonException.printStackTrace();

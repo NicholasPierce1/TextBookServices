@@ -52,4 +52,18 @@ public class SharedSessionData {
         SharedSessionData.SHARED_SESSION_DATA_MAP.put(sessionKey, value);
     }
 
+    // adds a method to remove session state
+    public static void removeSessionValueWithKey(@NotNull final String sessionKey) throws RuntimeException{
+
+        // validation check on session key -- if not within list of accepted keys (or in session map currently) then throw exception
+        if(
+                Arrays.binarySearch(SharedSessionData.SESSION_STATE_KEYS, sessionKey) == -1
+                        ||
+                !SharedSessionData.SHARED_SESSION_DATA_MAP.containsKey(sessionKey))
+            throw new RuntimeException("Session Key provided is not currently tracked by session state");
+
+        // invokes session map to remove key-value pair where key matches
+        SharedSessionData.SHARED_SESSION_DATA_MAP.remove(sessionKey);
+    }
+
 }
