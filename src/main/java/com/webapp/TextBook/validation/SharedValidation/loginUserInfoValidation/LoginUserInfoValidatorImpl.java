@@ -10,19 +10,29 @@ import com.webapp.TextBook.validation.Shared.ErrorBindingException;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 
+/**
+ * Handles validation for user log in
+ */
+
 public class LoginUserInfoValidatorImpl implements
         ConstraintValidator<LogInUserInfoValidationInterface, LoginUserInfo>,
         SharedValidationState {
 
 
     private boolean haveSuffix;
-
+    //Basic initialize method.
     @Override
     public void initialize(LogInUserInfoValidationInterface info){
             this.haveSuffix = info.haveSuffix();
 
     }
 
+    /**
+     * Checks various business rules. Each infraction is added to the error binding list
+     * @param user
+     * @param constraintContext
+     * @return if there are no errors added to the error binding list
+     */
     @Override
     public boolean isValid(LoginUserInfo user, ConstraintValidatorContext constraintContext){
 

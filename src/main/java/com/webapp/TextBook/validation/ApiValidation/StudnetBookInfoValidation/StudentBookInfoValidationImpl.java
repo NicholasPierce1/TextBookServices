@@ -25,7 +25,7 @@ import java.util.Optional;
 /***
  * This class is responsible for validaiing student book info
  */
-@Component
+//@Component
 public class StudentBookInfoValidationImpl
         implements ConstraintValidator<StudentBookInfoValidationInterface, StudentBookInfo>,
         SharedValidationState
