@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-/***
+/**
  * Refer to LoginUserInfoValidatorInterface for context
  *
  */
@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = StudentBookInfoValidationImpl.class)
 @Documented
 public @interface StudentBookInfoValidationInterface {
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.CheckCase.message}";
+    String message() default "";
 
     Class<?>[] groups() default { };
 
