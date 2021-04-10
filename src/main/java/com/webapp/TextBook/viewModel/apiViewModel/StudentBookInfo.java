@@ -157,6 +157,12 @@ public final class StudentBookInfo extends ApiViewModelCreation{
         );
 
     }
+
+    /**
+     * 
+     * @param jsonObject
+     * @return API from a given JSON object
+     */
     public static @NotNull Optional<StudentBookInfo> createApiFromJson(
             @NotNull final JSONObject jsonObject){
         return createApiFromJson(jsonObject, null);
