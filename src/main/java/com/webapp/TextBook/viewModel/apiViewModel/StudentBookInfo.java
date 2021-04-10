@@ -47,7 +47,7 @@ public final class StudentBookInfo extends ApiViewModelCreation{
 
     /**
      * <h1>valueStateSetter</h1>
-     * <h3>type: Consumer( type params: Pair (type params: StudentInfo & JSONObject)</h3>
+     * <h3>type: Consumer( type params: Pair (type params: StudentBookInfo & JSONObject)</h3>
      *
      * <p>
      *     Description: From a StudentInfo object & its corresponding JSONObject (should be a
@@ -149,7 +149,7 @@ public final class StudentBookInfo extends ApiViewModelCreation{
                 StudentBookInfo::new :
                 studentBookInfoSupplier;
 
-        // invokes parent's static helper to set the state for a LoginUserInfo
+        // invokes parent's static helper to set the state for a StudentBookInfo
         return ApiViewModelCreation.createApiViewModelFromJson(
                 jsonObject,
                 localStudentBookInfoSupplier,
