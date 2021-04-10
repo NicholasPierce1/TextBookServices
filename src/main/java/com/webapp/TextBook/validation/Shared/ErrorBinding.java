@@ -64,7 +64,7 @@ public final class ErrorBinding <T> {
     public static class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
         /**
          * Takes in a list of error bindings to make a JSON String
-         * @param errors - Error binding list 
+         * @param errors - Error binding list
          * @return JSON string
          * @throws ErrorBindingException
          * @throws Exception
@@ -88,7 +88,7 @@ public final class ErrorBinding <T> {
                     catch(JSONException ex){
 
                         // logs json exception
-                        System.out.println(ex.getMessage());
+                        System.out.println( "Internal Error occured in ErrorBiding - CreateJsonStringFromErrorBindings:" + ex.getMessage());
 
                         // wraps into ErrorBindingException and rethrows
                         throw new ErrorBindingException(eb);
