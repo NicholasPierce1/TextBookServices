@@ -1,12 +1,16 @@
 package com.webapp.TextBook.ValidationTest.SharedValidationTest.LoginUserValidationTest;
 import com.webapp.TextBook.validation.ApiValidation.ApiValidationHandler.ApiValidationHandler;
+import com.webapp.TextBook.validation.Shared.ErrorBinding;
+import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import com.webapp.TextBook.validation.SharedValidation.loginUserInfoValidation.LoginUserInfoValidatorImpl;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Optional;
 
 /** Tests logic concerning LoginuserInfo
@@ -56,6 +60,41 @@ public class LoginUserInfoValidationImplTest {
     }
 
     // test for username invalid
+    /**
+     * <p>
+     *     todo: add here
+     * </p>
+     */
+    @Test
+    public void testInvalidUsername() throws Exception {
+
+        // creates target input (invalid username)
+        // 919 has one extra input char
+        final LoginUserInfo invalidLoginUserInfo = new LoginUserInfo("9191234565", "s123456");
+
+        // invokes api validator to acquire binding result
+        final Optional<String> invalidLoginUserInfoResult = this.validator.getApiBindingError(invalidLoginUserInfo);
+
+        // creates expected json array to string
+        final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
+                Arrays.asList(
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_USERNAME,
+                                "Invalid 919 number. Please follow format (919######).",
+                                invalidLoginUserInfo.get_username())
+                )
+        );
+
+        // assert that an error was given
+        assert(invalidLoginUserInfoResult.isPresent());
+
+        // assert error string is not generic
+        assert(!SharedValidationState.isGenericErrorMessage(invalidLoginUserInfoResult.get()));
+
+        // assert json array error string is expected
+        assert(errorBindingJsonString.equals(invalidLoginUserInfoResult.get()));
+
+    }
 
     // test for password invalid
 
