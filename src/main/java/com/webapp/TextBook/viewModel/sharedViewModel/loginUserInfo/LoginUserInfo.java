@@ -94,7 +94,7 @@ public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel
         this._username = _username;
     }
 
-    
+
 
     /**
      * <p>
