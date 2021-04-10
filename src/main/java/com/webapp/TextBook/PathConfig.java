@@ -23,9 +23,14 @@ public class PathConfig implements WebMvcConfigurer {
     };
 
     private static final String CLASSPATH_IMG_RESOURCE_LOCATION = "classpath:/static/img/";
+
     private static final String CLASSPATH_JS_RESOURCE_LOCATION = "classpath:/static/JS/";
 
     private static final String CLASSPATH_CSS_RESOURCE_LOCATION = "classpath:/static/CSS/";
+
+    private static final String CLASSPATH_JS_BOOTSTRAP_RESOURCE_LOCATION = "classpath:/static/js-bootstrap/";
+
+    private static final String CLASSPATH_CSS_BOOTSTRAP_RESOURCE_LOCATION = "classpath:/static/css-bootstrap/";
 
     @Bean
     public ViewResolver viewResolver(){
@@ -71,6 +76,13 @@ public class PathConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/js/**")
                 .addResourceLocations(CLASSPATH_JS_RESOURCE_LOCATION);
+
+        registry.addResourceHandler("/js-bootstrap/")
+                .addResourceLocations(CLASSPATH_JS_BOOTSTRAP_RESOURCE_LOCATION);
+
+        registry.addResourceHandler("/css-bootstrap/")
+                .addResourceLocations(CLASSPATH_CSS_BOOTSTRAP_RESOURCE_LOCATION);
+
         registry.addResourceHandler("/**")
                 .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
 
