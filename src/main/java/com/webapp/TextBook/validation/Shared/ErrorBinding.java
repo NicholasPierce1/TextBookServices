@@ -9,6 +9,10 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Sets up all relevant Error Binding logic that we will use for later validation.
+ * @param <T>
+ */
 public final class ErrorBinding <T> {
     private  String _fieldErrorName, _fieldErrorMessage;
     private T _errorData;
@@ -16,12 +20,23 @@ public final class ErrorBinding <T> {
     private final static String FIELD_ERROR_MESSAGE_KEY = "message";
     private final static String ERROR_DATA_KEY ="faultyData";
 
+    /**
+     * Basic Constructor
+     * @param fieldErrorName
+     * @param fieldErrorMessage
+     * @param errorData
+     */
     public  ErrorBinding(String fieldErrorName, String fieldErrorMessage, @Nullable T errorData){
         this._fieldErrorMessage = fieldErrorMessage;
         this._fieldErrorName = fieldErrorName;
         this._errorData = errorData;
     }
 
+    /**
+     * Used to create JSONStirng
+     * @return A JSONObject as a JSON String
+     * @throws JSONException
+     */
     public JSONObject toJsonString() throws JSONException{
 
         // if error name or message are not set then throw exception for invalid state in
@@ -43,9 +58,17 @@ public final class ErrorBinding <T> {
 
     }
 
-
+    /**
+     * Used as a helper for Error binding, specifically, for dealing with JSON manipulation
+     */
     public static class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
-
+        /**
+         * Takes in a list of error bindings to make a JSON String
+         * @param errors - Error binding list 
+         * @return JSON string
+         * @throws ErrorBindingException
+         * @throws Exception
+         */
         public static @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding<?>> errors) throws ErrorBindingException, Exception{
             ErrorBinding<?> faultyBinding = null;
             JSONArray jsnArr = new JSONArray();
