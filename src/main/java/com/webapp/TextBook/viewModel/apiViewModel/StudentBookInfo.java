@@ -159,7 +159,7 @@ public final class StudentBookInfo extends ApiViewModelCreation{
     }
 
     /**
-     * 
+     *
      * @param jsonObject
      * @return API from a given JSON object
      */

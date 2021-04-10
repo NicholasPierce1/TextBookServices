@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/***
+/**
 Handles viewmodel duties for the StudentInfo page
  */
 public class StudentInfo extends ApiViewModelCreation {
@@ -67,7 +67,7 @@ public class StudentInfo extends ApiViewModelCreation {
                     "for more info." + e.getLocalizedMessage());
         }
     });
-    /***
+    /**
      * Student 919 number
      */
     public String id;
@@ -76,7 +76,7 @@ public class StudentInfo extends ApiViewModelCreation {
      * term within a give year (ie: 202010 --> Fall 2020). Refer to design documents for more info.</p>
      */
     public String termCode;
-    /***
+    /**
      * Constructors
      *         1. Blank
      *         2. Takes all inputs
@@ -88,7 +88,7 @@ public class StudentInfo extends ApiViewModelCreation {
 
     }
 
-    /***
+    /**
      * All neccessary getters and setters for non-final values
      */
 
@@ -107,32 +107,11 @@ public class StudentInfo extends ApiViewModelCreation {
     public void setTermCode(String termCode) {
         this.termCode = termCode;
     }
-    /***
+    /**
      *  Implements the needed method. Refer to LoginUserInfo for context.
      */
-    /*
-    public @NotNull Optional<StudentInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<StudentInfo> initialInstantiation) {
-        final StudentInfo student = new StudentInfo();
 
-        // try-catch for JSON key errors in parsing partial user definition
-        try{
 
-            student.setId(jsonObject.getString(StudentInfo.NOMINAL_ID));
-
-            student.setTermCode(jsonObject.getString(StudentInfo.NOMINAL_TERM_CODE));
-
-            return Optional.of(student);
-
-        }
-        catch(JSONException jsonException){
-            // logs (prints now) exception
-            System.out.println(jsonException.getMessage());
-
-            return Optional.empty();
-        }
-    }
-
-     */
 
     /**
      * <p>
@@ -153,11 +132,11 @@ public class StudentInfo extends ApiViewModelCreation {
 
         // creates a local supplier based on the predicate if the given supplier is null or not
         // use the blank constructor as a default
-        final Supplier<StudentInfo> localLoginUserInfoSupplier = studentInfoSupplier == null ?
+        final Supplier<StudentInfo> localStudnetInfoSupplier = studentInfoSupplier == null ?
                 StudentInfo::new :
                 studentInfoSupplier;
 
-        // invokes parent's static helper to set the state for a LoginUserInfo
+        // invokes parent's static helper to set the state for a studenInfo
         return ApiViewModelCreation.createApiViewModelFromJson(
                 jsonObject,
                 studentInfoSupplier,
