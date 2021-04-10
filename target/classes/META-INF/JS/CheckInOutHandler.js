@@ -58,7 +58,7 @@ var form = document.getElementById("new_id");
          DataUserInfoMap['UserPrefix'] = (parseJson(userPrefix), "user prefix");
          DataUserInfoMap['UserSuffix'] = (parseJson(userSuffix), "user suffix");
   
-         invisible_input = document.getElementById("data");
+         invisible_input = document.getElementById("data-");
   
          error_labels = [];
  
@@ -641,7 +641,6 @@ var form = document.getElementById("new_id");
             };
             xhttp.open("GET", "studentInfo", true);
             xhttp.send();
+            }
         }
-        
-    
 });

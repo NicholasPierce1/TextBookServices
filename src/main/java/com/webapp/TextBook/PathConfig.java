@@ -63,14 +63,14 @@ public class PathConfig implements WebMvcConfigurer {
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/img/**")
-//                .addResourceLocations("/static/img/");
-//
-//        registry.addResourceHandler("/css/**")
-//                .addResourceLocations("/static/css/");
-//
-//        registry.addResourceHandler("/js/**")
-//                .addResourceLocations("/WEB-INF/js/");
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations(CLASSPATH_IMG_RESOURCE_LOCATION);
+
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations(CLASSPATH_CSS_RESOURCE_LOCATION);
+
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations(CLASSPATH_JS_RESOURCE_LOCATION);
         registry.addResourceHandler("/**")
                 .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
 
