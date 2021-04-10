@@ -63,7 +63,8 @@ public class LoginUserInfoValidatorImpl implements
                 constraintContext.disableDefaultConstraintViolation();
 
                 constraintContext.buildConstraintViolationWithTemplate(
-                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
+                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList)
+                ).addConstraintViolation();
 
 
                 return false;
@@ -107,26 +108,35 @@ public class LoginUserInfoValidatorImpl implements
                             user.get_password().replaceFirst("@.*", "")
                     );
 
+
             }
             if(!errorList.isEmpty()){ //Error list is not empty
                 //if binding error list is not empty then set constraint validator’s message
                 // to the abstract method’s json creator helper.
                 constraintContext.disableDefaultConstraintViolation();
 
-                constraintContext.buildConstraintViolationWithTemplate(ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
+                constraintContext.buildConstraintViolationWithTemplate(
+                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList)
+                ).addConstraintViolation();
 
             }
         }
         catch (ErrorBindingException e){
             System.out.println("Internal Error in LoginUserInfoValidationImpl- isValid: \n" + e.getStackTrace());
-            constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
+            constraintContext.disableDefaultConstraintViolation();
+            constraintContext.buildConstraintViolationWithTemplate(
+                    SharedValidationState.GENERIC_JSON_ERROR_MESSAGE)
+                    .addConstraintViolation();
             return  false;
         }
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
             System.out.println("Internal Error in LoginUserInfoValidationImpl- isValid: \n" + exception.getStackTrace());
-            constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
+            constraintContext.disableDefaultConstraintViolation();
+            constraintContext.buildConstraintViolationWithTemplate(
+                    SharedValidationState.GENERIC_ERROR_MESSAGE)
+                    .addConstraintViolation();
             return  false;
         }
 

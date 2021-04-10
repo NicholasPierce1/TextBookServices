@@ -7,34 +7,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.awt.*;
+import java.util.Optional;
 
 /** Tests logic concerning LoginuserInfo
  *
  */
 @SpringBootTest
 public class LoginUserInfoValidationImplTest {
+
+    // injection for api validation for manual validation triggers
     @Autowired
-    ApiValidationHandler validator;
+    private ApiValidationHandler validator;
 
 
 
     /**
-     * Tests the isValid method for LoginUserInfo. Each case is described down below
+     * more doc needed here: test for both inputs valid
      */
     @Test
-    public void testIsValid(){
+    public void testBothInputsValid(){
 
-        LoginUserInfoValidatorImpl loginUserInfo = new LoginUserInfoValidatorImpl();
-        //CASE ONE: null
-        LoginUserInfo nullUser = new LoginUserInfo(null, null);
-        //assert  !validator.getApiBindingError().isValid(nullUser,) ;
-        //CASE TWO: bad 919
-        LoginUserInfo bad919 = new LoginUserInfo("s52936", "8675309");
-        //assert  !loginUserInfo.isValid(bad919, );
-        //CASE THREE: bad sNumber
-        LoginUserInfo badS = new LoginUserInfo("n52936", "");
+        // creates targeted inputs (input fields valid) --> one has suffix and a capital 's' while other is converse
+        final LoginUserInfo validLoginUserInfoWithSuffix = new LoginUserInfo("919123456", "S123456@nwmissouri.edu");
 
+        final LoginUserInfo validLoginUserInfoWithoutSuffix = new LoginUserInfo("919987654", "s987654");
+
+        // invokes api validation handler and captures validation result
+
+        final Optional<String> validLoginUserInfoWithSuffixResult = this.validator.getApiBindingError(validLoginUserInfoWithSuffix);
+
+        final Optional<String> validLoginUserInfoWithoutSuffixResult = this.validator.getApiBindingError(validLoginUserInfoWithoutSuffix);
+
+        // denotes transformation input result upon passwords (email suffix should be spliced)
+        final String passwordTransformationWithSuffix = "S123456";
+
+        final String passwordTransformationWithoutSuffix = "s987654";
+
+        // asserts no errors uncovered (optional is empty) and password transformation is of expected
+
+        // with suffix
+        assert(validLoginUserInfoWithSuffixResult.isEmpty());
+        assert(passwordTransformationWithSuffix.equals(validLoginUserInfoWithSuffix.get_password()));
+
+        // without suffix
+        assert(validLoginUserInfoWithoutSuffixResult.isEmpty());
+        assert(validLoginUserInfoWithoutSuffix.get_password().equals(passwordTransformationWithoutSuffix));
 
     }
+
+    // test for username invalid
+
+    // test for password invalid
+
+    // test for both invalid
 
 }
