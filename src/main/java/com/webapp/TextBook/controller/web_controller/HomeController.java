@@ -1,7 +1,9 @@
 package com.webapp.TextBook.controller.web_controller;
 
 
+import javassist.compiler.ast.Symbol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -36,6 +38,19 @@ public class HomeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap modelMap){
         modelMap.addAttribute("test", "value test here");
+
+
+        final JSONObject data = new JSONObject();
+        try {
+            data.put("GeneralErrors", null);
+            data.put("Errors", null);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+        }
+
+        modelMap.addAttribute("data", data);
+
         System.out.println("called");
         return "login";
     }

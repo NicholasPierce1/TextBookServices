@@ -1,4 +1,8 @@
-<%--
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONObject" %>
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONArray" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONException" %><%--
   Created by IntelliJ IDEA.
   User: Spyridon
   Date: 3/9/2021
@@ -13,13 +17,71 @@
     <title>Login Template</title>
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/css/loginCSS.css">
+    <script type="application/javascript" src="/js/SharedHandler.js"></script>
+    <script type="application/javascript" src="/js/LoginHandler.js"></script>
 </head>
 <body>
 
 <%
+    // enumerates constant key fields for decoding and input-form binding (username & password)
+    final String loginUserInfoUsernameKey = "_username";
+    final String loginUserInfoPasswordKey = "_password";
+
+    // acquire json object for dynamic state parsing/decoding
+    final JSONObject data = (JSONObject)request.getAttribute("data");
+
+    /*
+     declares a general errors (holds either a general error from server or
+     -- if exception yielded, then set general errors to local constant
+     */
+
+    String generalErrors = null;
+    final String generalErrorsDefault = "error occurred in rendering page; please contact IT Support";
+
+    // initializes a map to hold all possible json objects (ErrorBindings)
+    final Map<String, JSONObject> errorBindings = new HashMap<String, JSONObject>();
+
+    // acquires errors (JSONArray) & general errors (String) -- note: may be null
+    try {
+        generalErrors = data.isNull("GeneralErrors") ? "" : data.getString("GeneralErrors");
+        final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
+
+        if(bindingErrors != null && generalErrors != null)
+            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
+
+        if(bindingErrors != null) {
+
+            // iterate over all error bindings and dynamically set them into the map
+            // to where the keys stated above can access their state IF they exist
+            for (int i = 0; i < bindingErrors.length(); i++) {
+
+                // accesses JSONObject
+                final JSONObject errorBinding = bindingErrors.getJSONObject(i);
+
+                // set field name as the key (will be same to the constant keys stated above)
+                // sets value to the JSONObject itself
+                errorBindings.put(errorBinding.getString("fieldName"), errorBinding);
+
+            }
+        }
+        else if(generalErrors != null) // general errors set only
+            generalErrors = generalErrorsDefault;
+
+        // else -- no errors are set, normal flow occurs
+
+
+    }
+    catch(Exception ex){
+
+        System.out.println("internal error in rendering page: " + ex.getMessage());
+
+        // sets general errors to constant
+        generalErrors = generalErrorsDefault;
+    }
+
 
 %>
-
+<input type="hidden" id="generalErrors" value="">
 <section class="Form my-4 py-5">
     <div class="container">
         <div class="row">
@@ -29,15 +91,90 @@
                 <form>
                     <div class="form-group">
                         <div class="col-lg-12 mx-lg-auto">
-                            <input type="email" placeholder="Email" class="form-control my-4 p-2">
                             <%
-                            out.println("<label type=\"hidden\" id=\"emailErrorLabel\"></label>");
+                                /*
+                                IF corresponding error binding exist then set message error label and
+                                set form refresh state in input field if it is not null
+                                 */
+
+                                String emailPlaceHolder = "Email";
+                                String emailErrorMessage = "";
+                                String emailHiddenValue = "hidden";
+                                try {
+                                    // if error bindings retain the error binding for username then set place holder and mesage accordingly
+                                    if (errorBindings.containsKey(loginUserInfoUsernameKey)) {
+
+
+                                        emailPlaceHolder =
+                                                errorBindings.get(loginUserInfoUsernameKey).getString("faultyData") == null ?
+                                                        "Email" :
+                                                        errorBindings.get(loginUserInfoUsernameKey).getString("faultyData");
+
+                                        emailErrorMessage = errorBindings.get(loginUserInfoUsernameKey).getString("message");
+
+                                        emailHiddenValue = "text";
+                                    }
+                                }
+                                catch(Exception ex){
+
+                                    System.out.println("internal error in rendering page: " + ex.getMessage());
+
+                                    // sets general errors to constant
+                                    generalErrors = generalErrorsDefault;
+                                }
+
+                                out.println(
+                                    "<input type=\"email\"" +
+                                            " placeholder=\"" + emailPlaceHolder + "\" name=\""
+                                            + loginUserInfoUsernameKey +
+                                            "\" class=\"form-control my-4 p-2\">"
+                            );
+
+                            out.println("<label type=\"" + emailHiddenValue + "\" id=\"emailErrorLabel\">" + emailErrorMessage + "</label>");
                             %>
                         </div>
                         <div class="col-lg-12 mx-lg-auto">
-                            <input type="password" placeholder="**********" class="form-control my-3 p-2">
                             <%
-                                out.println("<label type=\"hidden\" id=\"passwordErrorLabel\"></label>");
+                                /*
+                                IF corresponding error binding exist then set message error label and
+                                set form refresh state in input field if it is not null
+                                 */
+
+                                String passwordPlaceHolder = "****";
+                                String passwordErrorMessage = "";
+                                String passwordHiddenValue = "hidden";
+
+                                try {
+                                    // if error bindings retain the error binding for username then set place holder and mesage accordingly
+                                    if (errorBindings.containsKey(loginUserInfoPasswordKey)) {
+
+
+                                        passwordPlaceHolder =
+                                                errorBindings.get(loginUserInfoUsernameKey).getString("faultyData") == null ?
+                                                        "Email" :
+                                                        errorBindings.get(loginUserInfoUsernameKey).getString("faultyData");
+
+                                        passwordErrorMessage = errorBindings.get(loginUserInfoUsernameKey).getString("message");
+
+                                        passwordHiddenValue = "text";
+                                    }
+                                }
+                                catch(Exception ex){
+
+                                    System.out.println("internal error in rendering page: " + ex.getMessage());
+
+                                    // sets general errors to constant
+                                    generalErrors = generalErrorsDefault;
+                                }
+
+                                out.println(
+                                        "<input type=\"password\"" +
+                                                " placeholder=\"" + passwordPlaceHolder + "\" name=\""
+                                                + loginUserInfoUsernameKey +
+                                                "\" class=\"form-control my-3 p-2\">"
+                                );
+
+                                out.println("<label type=\"" + passwordHiddenValue + "\" id=\"passwordErrorLabel\">" + passwordErrorMessage + "</label>");
                             %>
                         </div>
                         <div class="col-lg-12 mx-lg-auto">
@@ -56,6 +193,10 @@
     </div>
 </section>
 
+<%
+    // sets the hidden input for general errors
+    out.println("<input id=\"generalErrors\" type=\"hidden\" value=" + generalErrors + ">");
+%>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
