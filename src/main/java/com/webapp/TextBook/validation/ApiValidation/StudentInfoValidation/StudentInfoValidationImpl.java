@@ -37,11 +37,11 @@ public class StudentInfoValidationImpl
         ArrayList<ErrorBinding<?>> errorList = new ArrayList<ErrorBinding<?>>();
 
         try{
-        //for invlaid 919 numbers
+        //for invalid 919 numbers. Checks if it matches regext pattern
         if(!studentInfo.getId().matches(RegexPatternContainer.STUDENT_ID_PATTERN.pattern())){
             errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_ID, "Invalid 919 format", null));
             }
-        //for invalid term code
+        //for invalid term code. Checks if it matches Regex pattern
         if(!studentInfo.getTermCode().matches(RegexPatternContainer.TERM_PATTERN.pattern())){
             errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_TERM_CODE, "Invalid term code format", null));
 
@@ -56,16 +56,19 @@ public class StudentInfoValidationImpl
         }
         }
         catch (ErrorBindingException e){
-            System.out.println("Error binding failed\n" + e.getStackTrace());
+            System.out.println("Internal Error occurred in: \n" + e.getStackTrace());
             constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
+            return false;
+
         }
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
-            System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
+            System.out.println("Internal Error occurred in: \n" + exception.getStackTrace());
             constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
+            return false;
         }
-
+        //If list is empty, no errors.
         return errorList.isEmpty();
 
     }
