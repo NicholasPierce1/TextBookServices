@@ -57,6 +57,10 @@ function get_list_items(){
  */
 
 window.onload = () => {
+
+    let userInfo = new UserInfo();
+    let StudentInfo = new StudentInfo();
+
     console.log("Navbar:", document.getElementsByTagName('nav')[0].id);
     if((document.getElementsByTagName('nav')[0].id) == 'Student'){
         window.sessionStorage.setItem('nav', (document.getElementsByTagName('nav')[0].id));
