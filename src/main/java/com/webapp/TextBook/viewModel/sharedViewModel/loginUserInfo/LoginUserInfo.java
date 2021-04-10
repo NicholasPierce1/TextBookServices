@@ -94,30 +94,7 @@ public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel
         this._username = _username;
     }
 
-    /*
-    @Override
-    public @NotNull Optional<LoginUserInfo> createApiViewModelFromJson(@NotNull JSONObject jsonObject, Supplier<LoginUserInfo> initialInstantiation) {
-        // instantiates empty user for partial construction
-        final LoginUserInfo user = new LoginUserInfo();
-
-        // try-catch for JSON key errors in parsing partial user definition
-        try{
-
-            user.set_password(jsonObject.getString(LoginUserInfo.NOMINAL_PASSWORD));
-
-            user.set_username(jsonObject.getString(LoginUserInfo.NOMINAL_USERNAME));
-
-            return Optional.of(user);
-
-        }
-        catch(JSONException jsonException){
-            // logs (prints now) exception
-            System.out.println(jsonException.getMessage());
-
-            return Optional.empty();
-        }
-    }
-     */
+    
 
     /**
      * <p>
