@@ -38,15 +38,14 @@ var form = document.getElementById("new_id");
  form.addEventListener("click",
      windows.onload = () => {
 
+        //Create a Map and set a form objct to it
+        let newMap = new Map();
+        let form = {};
+        newMap.set(0,form);
+
         //Student data in local storage
         const DataStudentLocalStorage = window.localStorage;
         
-        // Create map 
-         var DataUserInfoMap = new Object();
-
-        // Form object in the map
-         form_obj = {/*Term:"Spring", Year:2021, number_id: 919444666, name:"Someone", barcode:12345566, bag_number:12345 */ };
-         DataUserInfoMap['form_Object'] = form_obj;
   
          //
          let user_info = new user_info();

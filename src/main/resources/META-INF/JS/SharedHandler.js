@@ -456,19 +456,61 @@ class StudentInfo{
 
 class BookCopy{
 
-    static BOOK_TITLE = Pattern.compile("");
-    static BOOK_ISBN = Pattern.compile("^[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]{1}$");
-    
+    //Static private variables holding keys in JSON format.
+    static #ID = {};
+    static #bookCode = {};
+    static #editionYear = {};
+    static #seqNr = {};
+    static #strikeBarcode = {};
+    static #pidm = {};
+    static #termCode = {};
+    static #dateCheckedOut = {};
+    static #disposition = {};
+    static #bookSalePrice = {};
+    static #prevPidm = {};
+    static #prevTermCode = {};
+    static #prevDateCheckedIn = {};
+    static #activityDate = {};
+    static #billFlag = {};
 
 
-    constructor(){
-        this.BOOK_TITLE = this.BOOK_TITLE;
-        this.BOOK_ISBN = this.BOOK_ISBN;
+    //Constructor that takes all the inputs and creates one.
+    constructor(ID, bookCode, editionyear, seqNr, strikeBarcode, pidm, termCode, dateCheckedOut,
+        disposition, bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag){
+        this.#ID = ID;
+        this.#bookCode = bookCode;
+        this.#editionYear = editionyear;
+        this.#seqNr = seqNr;
+        this.#strikeBarcode = strikeBarcode;
+        this.#pidm = pidm;
+        this.#termCode = termCode;
+        this.#dateCheckedOut = dateCheckedOut;
+        this.#disposition = disposition;
+        this.#bookSalePrice = bookSalePrice;
+        this.#prevPidm = prevPidm;
+        this.#prevTermCode = prevTermCode;
+        this.#prevDateCheckedIn = prevDateCheckedIn;
+        this.#activityDate = activityDate;
+        this.#billFlag = billFlag;
     }
 
-    static parseInput(jsonObj){
+
+    /**
+     * @method parseInput
+     *  takes JSON object and parses to string
+     *  throws error if an error occurred
+     * @param {1} jsonObj
+     *  JSON object that was inputted
+     */
+     static parseJson(jsonObj){
         try{
-            return (JSON.parse(jsonObj));
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new BookCopy(jsonObject.ID, jsonObject.bookCode, jsonObject.editionyear, jsonObject.seqNr,
+                jsonObject.strikeBarcode, jsonObject.pidm, jsonObject.termCode, jsonObject.dateCheckedOut, 
+                jsonObject.disposition, jsonObject.bookSalePrice, jsonObject.prevPidm, jsonObject.prevTermCode,
+                jsonObject.prevDateCheckedIn, jsonObject.activityDate, jsonObject.billFlag);
 
         }
         catch{
@@ -477,14 +519,100 @@ class BookCopy{
         }
     }
 
-    geBOOK_TITLE(){
-        return this.BOOK_TITLE;
-    }
-    
-    getBOOK_ISBN(){
-        return this.BOOK_ISBN;
+
+    /**
+     * GETTERS 
+     */
+
+
+
+    /**
+     * @method getID
+     * @returns ID 
+     */
+    getID(){
+        return this.ID;
     }
 
+    /**
+     * @method getbookCode
+     * @returns bookCode
+     */
+    getbookCode(){
+        return this.#bookCode;
+    }
+
+    /**
+     * @method geteditionyear
+     * @returns editionyear
+     */
+    geteditionyear(){
+        return this.editionyear;
+    }
+
+    /**
+     * @method getseqNr
+     * @returns  seqNr
+     */
+    getseqNr(){
+        return this.seqNr;
+    }
+
+    /**
+     * @method getdispsition
+     * @returns disposition
+     */
+    getdisposition(){
+        return this.disposition;
+    }
+
+    /**
+     * @method getbookSalePrice
+     * @returns bookSalePrice
+     */
+    getbookSalePrice(){
+        return this.bookSalePrice;
+    }
+
+    /**
+     * @method getprevPidm
+     * @returns prevPidm
+     */
+    getprevPidm(){
+        return this.prevPidm;
+    }
+
+    /**
+     * @method getprevTermCode
+     * @returns  prevTermCode
+     */
+    getprevTermCode(){
+        return this.prevTermCode;
+    }
+
+    /**
+     * @method getprevDateCheckedIn
+     * @returns prevDateCheckedIn
+     */
+    getprevDateCheckedIn(){
+        return this.prevDateCheckedIn
+    }
+
+    /**
+     * @method getactivityDate
+     * @returns activityDate
+     */
+    getactivityDate(){
+        return this.activityDate;
+    }
+
+    /**
+     * @method getbillFlag
+     * @returns billFlag
+     */
+    getbillFlag(){
+        return this.billFlag;
+    }
 
 }
 
@@ -496,21 +624,26 @@ class BookCopy{
 
  class Bag{
 
-    static STUDENT_ID = Pattern.compile("^919[0-9]{6}$");
-    static BAG_NUMBER = Pattern.compile("^#[0-9]{5}$");
+    static #pidm = {};
+    static #bagNumber = {};
     
 
 
     constructor(){
-        this.STUDENT_ID = this.STUDENT_ID;
-        this.BAG_NUMBER = this.BAG_NUMBER;
+        this.pidm = pidm;
+        this.bagNumber = bagNumber;
        
     }
 
+    
 
     static parseInput(jsonObj){
+        
         try{
-            return (JSON.parse(jsonObj));
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new Bag(jsonObject.pidm, jsonObject.bagNumber)
 
         }
         catch{
@@ -519,12 +652,21 @@ class BookCopy{
         }
     }
 
-    getSTUDENT_ID(){
-        return this.STUDENT_ID;
+
+    /**
+     * @method getpidm
+     * @returns  pidm
+     */
+    getpidm(){
+        return this.pidm;
     }
 
-    getBAG_NUMBER(){
-        return this.BAG_NUMBER;
+    /**
+     * @method getbagNumber
+     * @returns  bagNumber
+     */
+    getbagNumber(){
+        return this.bagNumber;
     }
 
 }
@@ -537,17 +679,22 @@ class BookCopy{
 
  class Term{
 
-    static TERM = Pattern.compile("");
-    static YEAR = Pattern.compile("");
-
+    //Static private values
+    static #termCode;
+    static #termDescription;
+    
+    //Constructor that takes all inputs
     constructor(){
-        this.TERM = this.TERM;
-        this.YEAR = this.YEAR;
+        this.termCode = termCode;
+        this.termDescription = termDescription;
     }
 
     static parseInput(jsonObj){
         try{
-            return (JSON.parse(jsonObj));
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return (jsonObject.termCode, jsonObject.termDescription);
 
         }
         catch{
@@ -557,11 +704,20 @@ class BookCopy{
     }
 
 
-    getTERM(){
-        return this.TERM;
+    /**
+     * @method gettermCode
+     * @returns termCode
+     */
+    gettermCode(){
+        return this.termCode;
     }
-    getYEAR(){
-        return this.YEAR;
+
+    /**
+     * @method gettermDescription
+     * @returns  termDescription
+     */
+    gettermDescription(){
+        return this.termDescription;
     }
 }
 
