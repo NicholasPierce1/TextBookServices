@@ -18,7 +18,7 @@ public @interface StudentInfoValidationInterface {
      * Refer to LoginUserInfoValidatorInterface for context
      *
      */
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.CheckCase.message}";
+    String message() default "";
 
     Class<?>[] groups() default { };
 
