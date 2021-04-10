@@ -22,10 +22,9 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Optional;
 
-/***
+/**
  * This class is responsible for validaiing student book info
  */
-//@Component
 public class StudentBookInfoValidationImpl
         implements ConstraintValidator<StudentBookInfoValidationInterface, StudentBookInfo>,
         SharedValidationState
@@ -47,7 +46,7 @@ public class StudentBookInfoValidationImpl
             this._validator = validator;
         }
 
-        /***
+        /**
          *
          * @param constraintAnnotation
          * Implements required method
@@ -60,7 +59,7 @@ public class StudentBookInfoValidationImpl
         @Override
 
         // todo: this is not good documentation, commenting, and coding practices
-        /****
+        /**
          * Enforces business logic/rules for student book info.
          * @Params Studnetbookinfo, contstraintValidatorContext
          * Code will check various conditions, if conditons are not meant the infraction will be added
@@ -110,7 +109,7 @@ public class StudentBookInfoValidationImpl
                 }
 
                 //If if dosen't match the barcode pattern, add to list.
-                if (studentBookInfo.getBarCode().matches(RegexPatternContainer.BARCODE_PATTERN.pattern())) {
+                if (!studentBookInfo.getBarCode().matches(RegexPatternContainer.BARCODE_PATTERN.pattern())) {
                     ERROR_LIST.add(new ErrorBinding<String>(StudentBookInfo.NOMINAL_BARCODE, "Invlid Barcide", null));
 
                 }
@@ -163,7 +162,7 @@ public class StudentBookInfoValidationImpl
                 return true;
             }
             catch (ErrorBindingException e){
-                System.out.println("Error binding failed\n" + e.getMessage());
+                System.out.println("Internal Error From StudentBookValidationImpl- isValid: \n" + e.getMessage());
                 constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
 
                 return false;
@@ -171,7 +170,7 @@ public class StudentBookInfoValidationImpl
             catch(Exception exception){
                 // for when conversion of binding list fails upon
                 // error event json generation
-                System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getMessage());
+                System.out.println("\"Internal Error From StudentBookValidationImpl- isValid: \n" + exception.getMessage());
                 constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
 
                 return false;

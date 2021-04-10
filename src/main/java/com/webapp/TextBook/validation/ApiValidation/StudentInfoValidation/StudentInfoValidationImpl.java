@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class StudentInfoValidationImpl
          implements ConstraintValidator<StudentInfoValidationInterface, StudentInfo>,
         SharedValidationState {
-    /***
+    /**
      * Implements iniatalized method
      * @param constraintAnnotation
      */
@@ -25,7 +25,7 @@ public class StudentInfoValidationImpl
     public void initialize(StudentInfoValidationInterface constraintAnnotation) {
 
     }
-    /***
+    /**
      *
      * @param studentInfo
      * @param constraintValidatorContext
@@ -56,7 +56,7 @@ public class StudentInfoValidationImpl
         }
         }
         catch (ErrorBindingException e){
-            System.out.println("Internal Error occurred in: \n" + e.getStackTrace());
+            System.out.println("Internal Error occurred in StudentInfoValidationImpl- isValid: \n" + e.getStackTrace());
             constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
             return false;
 
@@ -64,7 +64,7 @@ public class StudentInfoValidationImpl
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
-            System.out.println("Internal Error occurred in: \n" + exception.getStackTrace());
+            System.out.println("Internal Error occurred in StudentInfoValidationImpl- isValid: \n" + exception.getStackTrace());
             constraintValidatorContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
             return false;
         }
