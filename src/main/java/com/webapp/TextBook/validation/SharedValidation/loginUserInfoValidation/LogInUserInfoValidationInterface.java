@@ -13,22 +13,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = LoginUserInfoValidatorImpl.class)
 @Documented
 public @interface LogInUserInfoValidationInterface {
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.CheckCase." +
-            "message}";
+    String message() default "";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
 
-    //int value() default 22; <------ for reference
+
     boolean haveSuffix() default false;
 
 
 
-//    @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
-//    @Retention(RUNTIME)
-//    @Documented
-//    @interface List {
-//        com.webapp.TextBook.validation.loginUserInfoValidation[] value();
-//    }
+
 }

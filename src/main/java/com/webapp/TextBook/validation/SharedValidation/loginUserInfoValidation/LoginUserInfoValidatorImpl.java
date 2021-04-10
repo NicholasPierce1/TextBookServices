@@ -29,6 +29,7 @@ public class LoginUserInfoValidatorImpl implements
 
     /**
      * Checks various business rules. Each infraction is added to the error binding list
+     * Said error list is then checked to see if anything was added to it.
      * @param user
      * @param constraintContext
      * @return if there are no errors added to the error binding list
@@ -117,14 +118,16 @@ public class LoginUserInfoValidatorImpl implements
             }
         }
         catch (ErrorBindingException e){
-            System.out.println("Error binding failed\n" + e.getStackTrace());
+            System.out.println("Internal Error in LoginUserInfoValidationImpl- isValid: \n" + e.getStackTrace());
             constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
+            return  false;
         }
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
-            System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
+            System.out.println("Internal Error in LoginUserInfoValidationImpl- isValid: \n" + exception.getStackTrace());
             constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
+            return  false;
         }
 
         //Check binding error list is empty and do some stuff
