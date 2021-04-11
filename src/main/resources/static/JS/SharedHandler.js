@@ -79,9 +79,11 @@ class ErrorBindings{
     /**
      * Number of fields in the static array
      */
-    static numberOfFields = error.length;
+    static numberOfFields = 3;
 
-    ErrorBindings(){}
+    ErrorBindings(){
+
+    }
 
     /**
      * @constuctor
@@ -222,7 +224,7 @@ class UserInfo{
      * Number of fields in the static array
     */
 
-    static numberOfFields = user.length;
+    static numberOfFields = 2;
 
     UserInfo(){}
 
@@ -356,7 +358,7 @@ class StudentInfo{
      * Number of fields in the static array
      */
 
-    static numberOfFields = student.length;
+    static numberOfFields = 2;
 
     StudentInfo(){}
 

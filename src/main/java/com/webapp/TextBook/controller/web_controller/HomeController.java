@@ -55,5 +55,10 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping(value = "/testCheckInOut", method = RequestMethod.GET)
+    public String testCheckInOut(){
+        return "CheckInCheckOut";
+    }
+
 
 }

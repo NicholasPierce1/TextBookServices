@@ -191,9 +191,12 @@
 
             </div>
         </div>
+    </div>
 </section>
 
+    <button onclick="testStatusCodeErrorOnClick();">test show status code error</button>
 
+    <label id="testStatusCodeError" style="visibility: hidden">test</label>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
 <script src="/js-bootstrap/bootstrap.min.js"></script>
 </body>

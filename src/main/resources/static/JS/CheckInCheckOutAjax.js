@@ -13,6 +13,8 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
         .then(response => {
             if(response.ok){
                 return response.json();
+                // should call respective handler
+                // (hint: all functions that should be called start with "refreshView...."
             }
             else{
                 console.log("An Error Occurred")
