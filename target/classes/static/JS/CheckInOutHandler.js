@@ -18,7 +18,7 @@ window.onload = (ev) =>{
 
     form = document.getElementById("new_id") | null;
 
-    if(form)
+    if(form) // currently null always
         form.addEventListener("click",
             (ev) => {
 

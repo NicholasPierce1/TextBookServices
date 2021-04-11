@@ -14,7 +14,7 @@
     <link rel="stylesheeg" href="/CSS/checkinoutCSS.css">
     <script type="application/javascript" src="/js/SharedHandler.js"></script>
     <script type="application/javascript" src="/js/CheckInOutHandler.js"></script>
-
+    <script type="application/javascript" src="/js/ViewModel/test.js"></script>
 
  
 </head>
