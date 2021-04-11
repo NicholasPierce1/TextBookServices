@@ -150,4 +150,21 @@ public class Bag implements DataAccessConversion {
         this.pidm = (String)values[0];
         this.bagNumber = ((BigDecimal)values[1]).doubleValue();
     }
+
+    // todo: add doc here
+    @Override
+    public boolean equals(Object object){
+
+        // todo: add comments
+        if(object == null)
+            return false;
+
+        else if (object == this)
+            return true;
+
+        final Bag bag = (Bag)object;
+
+        return this.getPidm().equals(bag.getPidm()) && this.getBagNumber().equals(bag.getBagNumber());
+
+    }
 }

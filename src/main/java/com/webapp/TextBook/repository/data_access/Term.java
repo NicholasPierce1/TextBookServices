@@ -148,4 +148,22 @@ public class Term implements DataAccessConversion {
         this.termCode = (String)values[0];
         this.termDescription = (String)values[1];
     }
+
+
+    // todo: add doc here
+    @Override
+    public boolean equals(Object object){
+
+        // todo: add comments
+        if(object == null)
+            return false;
+
+        else if (object == this)
+            return true;
+
+        final Term term = (Term)object;
+
+        return this.getTermCode().equals(term.getTermCode()) && this.getTermDescription().equals(term.getTermDescription());
+
+    }
 }
