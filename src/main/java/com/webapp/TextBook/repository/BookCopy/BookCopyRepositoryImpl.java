@@ -256,7 +256,17 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.DatabaseError;
         }
     }
-    // todo: add doc here :)
+
+    /**
+     *<p>
+     * This is a procedure to query the database for records from the BookCopy table that matches
+     * the given barcode, studentId, and checks the BookCopy disposition. Then the given BookCopy is sold and the table is updated.
+     *</p>
+     *
+     * @param barcode: String barcode representing the strike barcode, NW's specific barcode for books.
+     * @param studentId: String studentId representing the unique string for a 919 number.
+     * @return StatusCode to see if process was successful.
+     */
     public @NotNull StatusCode sellBook(@NotNull final String barcode, @NotNull final String studentId){
         final String TABLE_NAME = GetTableName();
 
@@ -285,7 +295,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             transaction = em.getTransaction();
             transaction.begin();
 
-            // Query to update BookCopy table with new information, hence "checking in" the book copy.
+            // Query to update BookCopy table and changing the disposition to S for sold
             String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'S' " +
                     "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
 
@@ -314,15 +324,30 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.DatabaseError;
         }
     }
-    // todo: add doc here :)
+    /**
+     *<p>
+     * This is a procedure to help in other transactional methods to change the disposition of a BookCopy.
+     *</p>
+     *
+     * @param pidm: String pidm representing the unique string code connected to a student's 919 number.
+     * @param termCode: String termCode representing the name of the term code.
+     * @param disposition: Character disposition to represent the status of the book copy.
+     * @param newDisposition: Character newDisposition to represent the new status of the book copy we want to set.
+     * @return StatusCode to see if process was successful.
+     */
     private @NotNull StatusCode changeBookDisposition(@NotNull final String pidm, @NotNull final String termCode, @NotNull final char disposition, @NotNull final char newDisposition){
         final String TABLE_NAME = GetTableName();
+
+        //Retrieving current date to use for later attributes.
         Date date = new Date();
         SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = sdFormat.format(date);
 
+        // Create the EntityManager
         EntityManager em = _entityManagerFactory.createEntityManager();
+
         try{
+            //Initiate transaction, writing query to update BookCopy record with new disposition
             transaction = em.getTransaction();
             transaction.begin();
             if(newDisposition == 'O') {
@@ -338,10 +363,11 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
                 // Executing and committing the update.
                 updateBookCopyQuery.executeUpdate();
                 transaction.commit();
-                // Returning the Book Copy record that was updated
+                // Returning OK if process is successful
                 return StatusCode.OK;
             }
             else if(newDisposition == 'I'){
+                //Writing query to update BookCopy record with new disposition
                 String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'I', tableName.\"NWTXDT_PREV_PIDM\" = ?, tableName.\"NWTXDT_PREV_TERM\" = ?, tableName.\"NWTXDT_PREV_DATE_CHECKED_IN\" = ?, tableName.\"NWTXDT_ACTIVITY_DATE\" = ? " +
                         "WHERE tableName.\"NWTXDT_PIDM\" = ? AND tableName.\"NWTXDT_TERM\" = ? AND tableName.\"NWTXDT_DISPOSITION\" = 'O'";
                 Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
@@ -349,18 +375,15 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
                 // Adding arguments from method to the query
                 updateBookCopyQuery.setParameter(1, pidm);
                 updateBookCopyQuery.setParameter(2, termCode);
-
-                // Date stuff hard
                 updateBookCopyQuery.setParameter(3, currentDate);
                 updateBookCopyQuery.setParameter(4, currentDate);
-
                 updateBookCopyQuery.setParameter(5, pidm);
                 updateBookCopyQuery.setParameter(6, termCode);
 
                 // Executing and committing the update.
                 updateBookCopyQuery.executeUpdate();
                 transaction.commit();
-                // Returning the Book Copy record that was updated
+                // Returning OK if process was successful
                 return StatusCode.OK;
             }
             else{
@@ -373,22 +396,40 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.DatabaseError;
         }
     }
-    // todo: add doc here :)
+
+    /**
+     *<p>
+     * This is a helper procedure to query the database for records from the BookCopy table that matches
+     * the given strikeBarcode.
+     *</p>
+     *
+     * @param strikeBarcode: String strikeBarcode representing the strike barcode, NW's specific barcode for books.
+     * @return Pair of a Optional BookCopy and it's StatusCode from the resulting query.
+     */
     private @NotNull Pair<Optional<BookCopy>, StatusCode> findBookCopyByStrikeBarcode(@NotNull final String strikeBarcode) {
         final String TABLE_NAME = GetTableName();
 
         try {
+            // Create the EntityManager and writing the query to access BookCopy records that matches the strikeBarcode.
             EntityManager em = _entityManagerFactory.createEntityManager();
             String originalQuery = "SELECT tableName.* FROM tableName WHERE tableName.\"NWTXDT_BARCODE\" = ?";
+
+            // Calling the query for the specific table specified in TABLE_NAME.
             Query getCheckInBooksQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery, TABLE_NAME));
+
+            //Setting the strikeBarcode parameter in the query.
             getCheckInBooksQuery.setParameter(1, strikeBarcode);
+
             // Saving the result from the query.
             Object[] record = (Object[]) getCheckInBooksQuery.getSingleResult();
             BookCopy returnType = DataAccessConversionHelper.createDataAccessObject(record, BookCopy::new);
+
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.of(returnType), StatusCode.OK);
-        } catch (NoResultException ex) {
+        }
+        catch (NoResultException ex) {
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.BookCopyUndefined);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             System.out.println("db error --\n" + ex.getMessage());
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
