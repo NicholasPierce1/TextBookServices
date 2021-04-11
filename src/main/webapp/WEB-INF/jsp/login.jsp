@@ -101,7 +101,7 @@
                                 String emailErrorMessage = "";
                                 String emailHiddenValue = "hidden";
                                 try {
-                                    // if error bindings retain the error binding for username then set place holder and mesage accordingly
+                                    // if error bindings retain the error binding for username then set place holder and message accordingly
                                     if (errorBindings.containsKey(loginUserInfoUsernameKey)) {
 
 
@@ -145,7 +145,7 @@
                                 String passwordHiddenValue = "hidden";
 
                                 try {
-                                    // if error bindings retain the error binding for username then set place holder and mesage accordingly
+                                    // if error bindings retain the error binding for username then set place holder and message accordingly
                                     if (errorBindings.containsKey(loginUserInfoPasswordKey)) {
 
 

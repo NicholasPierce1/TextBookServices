@@ -12,14 +12,77 @@
         <meta name="viewport" content="width-device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Student View</title>
+
         <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="/css/homeCSS.css">
         <script type="application/javascript" src="/js/SharedHandler.js"></script>
         <script type="text/javascript"src = "/js/HomeHandler.js"></script>
+
     </head>
 
 </head>
 <body>
+
+<%
+    // enumerates constant key fields for decoding and input-form binding (username & password)
+    final String loginUserInfoUsernameKey = "_username";
+    final String loginUserInfoPasswordKey = "_password";
+
+    // acquire json object for dynamic state parsing/decoding
+    final JSONObject data = (JSONObject)request.getAttribute("data");
+
+    /*
+     declares a general errors (holds either a general error from server or
+     -- if exception yielded, then set general errors to local constant
+     */
+
+    String generalErrors = null;
+    final String generalErrorsDefault = "error occurred in rendering page; please contact IT Support";
+
+    // initializes a map to hold all possible json objects (ErrorBindings)
+    final Map<String, JSONObject> errorBindings = new HashMap<String, JSONObject>();
+
+    // acquires errors (JSONArray) & general errors (String) -- note: may be null
+    try {
+        generalErrors = data.isNull("GeneralErrors") ? "" : data.getString("GeneralErrors");
+        final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
+
+        if(bindingErrors != null && generalErrors != null)
+            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
+
+        if(bindingErrors != null) {
+
+            // iterate over all error bindings and dynamically set them into the map
+            // to where the keys stated above can access their state IF they exist
+            for (int i = 0; i < bindingErrors.length(); i++) {
+
+                // accesses JSONObject
+                final JSONObject errorBinding = bindingErrors.getJSONObject(i);
+
+                // set field name as the key (will be same to the constant keys stated above)
+                // sets value to the JSONObject itself
+                errorBindings.put(errorBinding.getString("fieldName"), errorBinding);
+
+            }
+        }
+        else if(generalErrors != null) // general errors set only
+            generalErrors = generalErrorsDefault;
+
+        // else -- no errors are set, normal flow occurs
+
+
+    }
+    catch(Exception ex){
+
+        System.out.println("internal error in rendering page: " + ex.getMessage());
+
+        // sets general errors to constant
+        generalErrors = generalErrorsDefault;
+    }
+
+
+%>
+<input type="hidden" id="generalErrors" value="">
     <section>
         <nav id="Student"  class="navbar navbar-expand-lg navbar-custom navbar-dark">
             <div class="container-fluid">
@@ -57,7 +120,10 @@
 
        <input type="hidden" type="text" id="hiddenInput" name="data" value="">
     </section>
-
+<%
+    // sets the hidden input for general errors
+    out.println("<input id=\"generalErrors\" type=\"hidden\" value=" + generalErrors + ">");
+%>
     <div class="container my-container "
                style="background-color: #bebebe;
                       border: 2px solid black;
