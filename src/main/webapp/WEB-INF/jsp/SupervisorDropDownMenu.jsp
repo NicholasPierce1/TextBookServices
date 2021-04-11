@@ -96,19 +96,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav pb-1 pt-1">
-                    <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="fetchAPI();">Home</a>
+                    <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="">Home</a>
                 </ul>
                 <div class="nav-item dropdown pb-1 pt-1" id="Inventory">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Inventory" name="ulInv">
-                        <li id="AddBooks"><a class="dropdown-item" href="#" onclick="fetchAPI();">Add Books</a></li>
-                        <li id="ChangeBook"><a class="dropdown-item" href="#" onclick="fetchAPI();">Change Book</a></li>
-                        <li id="QueryBooks"><a class="dropdown-item" href="#" onclick="fetchAPI();">Query Book</a></li>
-                        <li id="QueryCourse"><a class="dropdown-item" href="#" onclick="fetchAPI();">Query Course</a></li>
-                        <li id="CourseMessage"><a class="dropdown-item" href="#" onclick="fetchAPI();">Course Message</a></li>
-                        <li id="Maintenance"><a class="dropdown-item" href="#" onclick="fetchAPI();">Maintenance</a></li>
+                        <li id="AddBooks"><a class="dropdown-item" href="#" onclick="">Add Books</a></li>
+                        <li id="ChangeBook"><a class="dropdown-item" href="#" onclick="">Change Book</a></li>
+                        <li id="QueryBooks"><a class="dropdown-item" href="#" onclick="">Query Book</a></li>
+                        <li id="QueryCourse"><a class="dropdown-item" href="#" onclick="">Query Course</a></li>
+                        <li id="CourseMessage"><a class="dropdown-item" href="#" onclick="">Course Message</a></li>
+                        <li id="Maintenance"><a class="dropdown-item" href="#" onclick="">Maintenance</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Patrons" name="ulPatrons">
@@ -116,8 +116,8 @@
                         Patrons
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Patrons">
-                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="fetchAPI();">Check In/Out</a></li>
-                        <li id="Patrons"><a class="dropdown-item" href="#" onclick="fetchAPI();">Patrons</a></li>
+                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="">Check In/Out</a></li>
+                        <li id="Patrons"><a class="dropdown-item" href="#" onclick="">Patrons</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Reports">
@@ -125,8 +125,8 @@
                         Reports
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Reports" name="ulReports">
-                        <li id="Action"><a class="dropdown-item" href="#" onclick="fetchAPI();">Action</a></li>
-                        <li id="AnotherAction"><a class="dropdown-item" href="#" onclick="fetchAPI();">Another action</a></li>
+                        <li id="Action"><a class="dropdown-item" href="#" onclick="">Action</a></li>
+                        <li id="AnotherAction"><a class="dropdown-item" href="#" onclick="">Another action</a></li>
                     </ul>
                 </div>
 
