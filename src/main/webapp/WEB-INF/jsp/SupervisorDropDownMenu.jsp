@@ -87,7 +87,7 @@
 <section>
     <nav id="Supervisor" class="navbar navbar-expand-lg navbar-custom navbar-dark">
         <div class="container-fluid">
-            <img src="NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
+            <img src="/img/NorthwestLogo.png" width="50" height="50" class="d-inline-block align-top" alt="">
             <a class="navbar-brand" href="#"></a>
                 <span class="navbar-brand mb-0 h1">Supervisor View</span>
             </a>
