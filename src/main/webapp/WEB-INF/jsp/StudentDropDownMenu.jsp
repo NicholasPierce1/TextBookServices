@@ -12,76 +12,12 @@
         <meta name="viewport" content="width-device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Student View</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-              rel="stylesheet"
-              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-              crossorigin="anonymous">
+        <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/homeCSS.css">
+        <script type="application/javascript" src="/js/SharedHandler.js"></script>
+        <script type="text/javascript"src = "/js/HomeHandler.js"></script>
     </head>
-    <style>
-        /* Hide input number arrows for Firefox */
-        input[type=number]{
-            -moz-appearance: textfield;
-        }
-        /* Hide input number arrows for Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button{
-            -webkit-appearance:none;
-            margin: 0;
-        }
-        /* Remove arrow from navbar dropdown */
-        .dropdown-toggle::after {
-            content: none;
-        }
-        @media all and (min-width: 992px) {
-            .navbar .nav-item .dropdown-menu{ display: none; }
-            .navbar .nav-item:hover .nav-link{ color: #fff;  }
-            .navbar .nav-item:hover .dropdown-menu{ display: block; }
-            .navbar .nav-item .dropdown-menu{ margin-top:0; }
-        }
-        .navbar-custom {
-            background-color: rgb(0,103,76);
-        }
-        .navbar-text {
-            color: white;
-            font-size: 23px ;
-        }
-        .btn-custom {
-            background-color: rgb(0,103,76);
-        }
-        .btn-text{
-            color: white;
-        }
-        .toggler-custom{
-            border-color: white;
-        }
-        .buttonsOpt {
-            align-items: center;
-        }
-        .btn{
-            float: left;
-            border: 1px;
-            border-radius: 10px;
-        }
-        .Form{
-            background-color: rgb(216, 221, 214);
-            padding: 1em;
-            margin: 0 -1em;
-            border-radius: 0.5em;
-        }
-        .btn-logout-custom{
-            background-color: rgb(216, 221, 214);
-            font-size: 23px;
-        }
-        .input-group-text{
-            border-radius: 10px;
-        }
 
-
-
-
-
-
-    </style>
 </head>
 <body>
     <section>
@@ -189,12 +125,7 @@
    </script>
 
 </body>
-    <script type="text/javascript"
-            src = "JS/SharedHandler.js"></script>
-    <script type="text/javascript"
-            src = "/HomeHandler.js"></script>
-    <script type="text/javascript"
-            src = "/HomeAjax.js"></script>
+
 
 <footer class="bg-dark text-center text-white sticky-bottom"
        style="bottom: 0;">
