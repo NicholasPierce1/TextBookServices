@@ -23,7 +23,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src='/logo.jpg' style="width: 80px; height: 50px;">
+                <img src='/img/Northwestlogo.png' style="width: 80px; height: 50px;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
