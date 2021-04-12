@@ -166,4 +166,11 @@ public class Term implements DataAccessConversion {
         return this.getTermCode().equals(term.getTermCode()) && this.getTermDescription().equals(term.getTermDescription());
 
     }
+
+    @Override
+    public String toString(){
+        return "TermCode: " + this.getTermCode() +
+                "\nTermDescription: " + this.getTermDescription();
+
+    }
 }

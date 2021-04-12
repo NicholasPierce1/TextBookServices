@@ -108,4 +108,9 @@ public class Student extends Person {
                 super.equals(objectB);
     }
 
+    @Override
+    public String toString(){
+        return super.toString();
+    }
+
 }
