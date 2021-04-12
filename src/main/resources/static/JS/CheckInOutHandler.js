@@ -595,22 +595,7 @@ var form = document.getElementById("new_id");
 
             //If no match then return null
 
-            let sessionBarcodeList = new Map();
-            let bookCopyList = [window.sessionStorage.getItem('bookCopy')];
-            for(let i = 0; i < bookCopyList.length; i++){
-                sessionBarcodeList.set(bookCopyList[i]);
-            }
-            for(let i = 0; i < sessionBarcodeList.length; i++){
-                if(sessionBarcodeList[i] == barcode){
-                    let match = sessionBarcodeList.get(barcode);
-                    return match;
-                }
 
-                else{
-                    return null;
-                }
-
-            }
         }   
 
 
@@ -624,23 +609,6 @@ var form = document.getElementById("new_id");
 
             //If map does not retain the key then skip this.
 
-         var xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    if(input.length != 0 && input != null && !StudentInfo.has(input)){
-                        StudentInfo.set(input);
-                        console.log(this.status);
-                    }
-                    else{
-                        console.log("An Error Occurred");
-                    }
-               }
-               else{
-                console.log(`An Error Occurred, State: ${this.readystate} and status: ${this.status}`);
-            }
-            };
-            xhttp.open("GET", "studentInfo", true);
-            xhttp.send();
-            }
+
         }
 });
