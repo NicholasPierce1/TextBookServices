@@ -19,6 +19,60 @@
  
 </head>
 <body>
+<%
+    // enumerates constant key fields for decoding and input0form binding
+    final int student_ID = 919444333;
+    final String student_name = "student_name";
+    final String studentBook_barcode = "sldhaldha";
+    final int studentBook_bag_number = 12345;
+
+    // acquire json object for dynamic state parsing/decoding
+    final JSONObject data = (JSONObject)request.getAttribute("data");
+
+    /*
+        declares a general errors (holds either a general error from server or
+        -- if exception yielded, then set gneral errors to local constant)
+    */
+    String generalErrors = null;
+    final String generalErrorsDefault = "error occured in rendering page; please contact IT supportb";
+
+    // initializes a map to hold all possible json objects (ErrorBinidngs)
+    final Map<String, JSONObject> errorBindings = new HashMap<String, JSONObject>();
+
+    // acquires errors (JSONArray) & general errors (String) -- note: may be null
+    try {
+        generalErrors = data.isNull("GeneralErrors") ? "" : data.getString("GeneralErrors");
+        final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
+
+        if(bindingErrors != null && generalErrors != null){
+            throw new RuntimeException("Exception occured in binding state -- genral errors AND errors are set");
+        }
+        if(bindingErrors != null){
+            //iterate over all error bindings and dynamically se them into the map
+            // to where the keys stated above can access their state IF they exist
+            for(int i =0; i< bindingErrors.length(); i++){
+
+                // accesses JSONObject
+                final JSONObject errorBindings = bindingErrors.getJSONObject(i);
+
+                // set field name as the key (will be same to the constant keys stated above)
+                // sets value to the JSONObject itself
+                errorBindings.put(errorBinding.getString("fieldName"), errorBinding);
+            }
+        }
+        else if(generalErrors != null) // general errors set only
+            generalErrors = generalErrorsDefault;
+    }
+    catch(Exception ex){
+
+        System.out.println("internal error in rendering page: " + ex.getMessage());
+
+        // sets general errors to constant
+        generalErrors = generalErrorsDefault;
+    }
+%>
+
+
 <section>
     <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
         <div class="container-fluid">
@@ -70,38 +124,6 @@
             </div>
         </div>
     </nav>
-    <!-- <nav class="navbar navbar-expand-sm navbar dark bg-dark">
-        <a href="#" class="navbar-brand">Student View</a> -->
-
-    <!-- For Small Windows -->
-    <!-- <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-        <span class="navbar-toggle-icon"></span>
-    </button> -->
-
-    <!-- Shows collapsed navbar to the screen
-        - Links will be in js with form submissions
-    -->
-    <!-- <div class="collapse navbar-collapse" id="menu">
-        <ul class="navbar-nav">
-            <li class="nav-item"> -->
-    <!--Links to Checked In/Out View -->
-    <!-- <a href="#" class="nav-link">Check In/ Check Out</a>
-</li>
-<li class="nav-item"> -->
-    <!--Links to Patron Views
-        - Patron Schedule
-        - Sold Books
-        - Previous Books
-    -->
-    <!-- <a href="#" class="nav-link">Patron Views</a>
-</li>
-<li class="nav-item"> -->
-    <!--Links to Login View -->
-    <!-- <a href="#" class="nav-link">Exit</a>
-</li>
-</ul>
-</div>
-</nav> -->
 </section>
 <section>
 
