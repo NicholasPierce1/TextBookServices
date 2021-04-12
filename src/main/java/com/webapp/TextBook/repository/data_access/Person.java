@@ -240,7 +240,7 @@ public abstract class Person implements DataAccessConversion {
         if(this == objectB)
             return true;
 
-        // type cast objectB to User
+        // type cast objectB to Person
         final Person person = (Person)objectB;
 
         // equality check (pidm, id, lastname, firstname, middle) are equal
