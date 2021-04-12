@@ -7,6 +7,7 @@ import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONTokener;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.awt.*;
@@ -96,8 +97,113 @@ public class LoginUserInfoValidationImplTest {
 
     }
 
-    // test for password invalid
+    /**
+     * Test for invalid password. Tests both the password and the error message
+     */
+    @Test
+    public void testInvalidPassword() throws Exception{
+        //n is disallowed
+        final LoginUserInfo badPassword = new LoginUserInfo("919123456", "n123456");
+        final LoginUserInfo invalidLoginUserInfo = new LoginUserInfo("9191234565", "s123456");
 
-    // test for both invalid
+        final Optional<String> invalidLoginUserInfoResult = this.validator.getApiBindingError(badPassword);
+        // creates expected json array to string
+        final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
+                Arrays.asList(
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_PASSWORD,
+                                "Password does not follow S-Number form (S######). Please revise",
+                                null)
+
+
+                )
+        );
+
+        // assert that an error was given
+        assert(invalidLoginUserInfoResult.isPresent());
+
+        // assert error string is not generic
+        assert(!SharedValidationState.isGenericErrorMessage(invalidLoginUserInfoResult.get()));
+
+        // assert json array error string is expected
+       assert(errorBindingJsonString.equals(invalidLoginUserInfoResult.get()));
+    }
+
+    /**
+     * Tests for both being invalid. Tests both the error and the error message
+     */
+    @Test
+    public void testBothInvalid() throws  Exception{
+        // 919 has one extra input char
+        final LoginUserInfo invalidLoginUserInfo = new LoginUserInfo("9191234565", "n123456");
+
+        // invokes api validator to acquire binding result
+        final Optional<String> invalidLoginUserInfoResult = this.validator.getApiBindingError(invalidLoginUserInfo);
+
+        // creates expected json array to string
+        final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
+                Arrays.asList(
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_USERNAME,
+                                "Invalid 919 number. Please follow format (919######).",
+                                invalidLoginUserInfo.get_username()),
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_PASSWORD,
+                                "Password does not follow S-Number form (S######). Please revise",
+                                null)
+
+
+                )
+        );
+
+        // assert that an error was given
+        assert(invalidLoginUserInfoResult.isPresent());
+
+        // assert error string is not generic
+        assert(!SharedValidationState.isGenericErrorMessage(invalidLoginUserInfoResult.get()));
+
+        // assert json array error string is expected
+        assert(errorBindingJsonString.equals(invalidLoginUserInfoResult.get()));
+
+    }
+
+    /**
+     * Testing for null values
+     */
+    @Test
+    public void testNull() throws Exception{
+        final LoginUserInfo invalidLoginUserInfo = new LoginUserInfo(null, null);
+
+        // invokes api validator to acquire binding result
+        final Optional<String> invalidLoginUserInfoResult = this.validator.getApiBindingError(invalidLoginUserInfo);
+
+        // creates expected json array to string
+        final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
+                Arrays.asList(
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_USERNAME,
+                                "Username field is empty",
+                                null),
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_PASSWORD,
+                                "Password field is empty",
+                                null)
+
+
+                )
+        );
+
+        // assert that an error was given
+        assert(invalidLoginUserInfoResult.isPresent());
+
+        // assert error string is not generic
+        assert(!SharedValidationState.isGenericErrorMessage(invalidLoginUserInfoResult.get()));
+
+        // assert json array error string is expected
+        System.out.println("EXPECTED: " + errorBindingJsonString);
+        System.out.println("ACTUAL:" + invalidLoginUserInfoResult.get());
+        assert(errorBindingJsonString.equals(invalidLoginUserInfoResult.get()));
+
+    }
 
 }
