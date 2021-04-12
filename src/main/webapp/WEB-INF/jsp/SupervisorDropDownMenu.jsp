@@ -1,4 +1,7 @@
-<%--
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONObject" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONArray" %><%--
   Created by IntelliJ IDEA.
   User: s528345
   Date: 3/4/2021
@@ -270,6 +273,7 @@
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.1);">
             About | Privacy Policy | Terms of Use <br>
             © 2021 Copyright: TextBook Services
+        </div>
         </div>
 
     </footer>
