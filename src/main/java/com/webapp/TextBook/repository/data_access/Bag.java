@@ -167,4 +167,11 @@ public class Bag implements DataAccessConversion {
         return this.getPidm().equals(bag.getPidm()) && this.getBagNumber().equals(bag.getBagNumber());
 
     }
+
+    @Override
+    public String toString(){
+        return
+                "pidm: " + this.getPidm() +
+                        "\nbagNumber: " + this.getBagNumber();
+    }
 }

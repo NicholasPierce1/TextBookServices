@@ -584,8 +584,22 @@ public class BookCopy implements DataAccessConversion {
 
     @Override
     public String toString(){
-        // todo: add here
-        return "";
+        return
+                "bookCode: " + this.getBookCode() +
+                        "\neditionYear: " + this.getEditionYear() +
+                        "\nseqNr: " + this.getSeqNr() +
+                        "\nstrikeBarcode: " + this.getStrikeBarcode() +
+                        "\npidm: " + this.getPidm() +
+                        "\ntermCode: " + this.getTermCode() +
+                        "\ndateCheckedOut: " + this.getDateCheckedOut() +
+                        "\ndisposition: " + this.getDisposition() +
+                        "\nbookSalePrice: " + this.getBookSalePrice() +
+                        "\nprevPidm: " + this.getPrevPidm() +
+                        "\nprevTermCode: " + this.getPrevTermCode() +
+                        "\nprevDateCheckedIn: " + this.getPrevDateCheckedIn() +
+                        "\nactivityDate: " + this.getActivityDate() +
+                        "\nbillFlag: " + this.getBillFlag();
+        }
 
     }
 }
