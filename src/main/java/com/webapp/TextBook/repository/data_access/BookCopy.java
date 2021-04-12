@@ -540,14 +540,16 @@ public class BookCopy implements DataAccessConversion {
         this.editionYear = ((BigDecimal) values[1]).intValue();
         this.seqNr = ((BigDecimal) values[2]).intValue();
         this.strikeBarcode = (String) values[3];
-        this.dateCheckedOut = (Date) values[4];
-        this.disposition = ((String) values[5]).charAt(0);
-        this.bookSalePrice = ((BigDecimal) values[6]).doubleValue();
-        this.prevPidm = ((BigDecimal) values[7]).doubleValue();
-        this.prevTermCode = (String) values[8];
-        this.prevDateCheckedIn = (Date) values[9];
-        this.activityDate = (Date) values[10];
-        this.billFlag = ((String) values[11]).charAt(0);
+        this.pidm = (String) values[4];
+        this.termCode = (String) values[5];
+        this.dateCheckedOut = (Date) values[6];
+        this.disposition = ((String) values[7]).charAt(0);
+        this.bookSalePrice = ((BigDecimal) values[8]).doubleValue();
+        this.prevPidm = ((BigDecimal) values[9]).doubleValue();
+        this.prevTermCode = (String) values[10];
+        this.prevDateCheckedIn = (Date) values[11];
+        this.activityDate = (Date) values[12];
+        this.billFlag = ((String) values[13]).charAt(0);
     }
 
 
@@ -565,18 +567,18 @@ public class BookCopy implements DataAccessConversion {
 
         return
                 this.getBookCode().equals(book.getBookCode()) &&
-                        Objects.equals(this.getEditionYear(), book.getEditionYear()) &&
-                        Objects.equals(this.getSeqNr(), book.getSeqNr()) &&
+                        this.getEditionYear() ==  book.getEditionYear() &&
+                        this.getSeqNr() ==  book.getSeqNr() &&
                         this.getStrikeBarcode().equals(book.getStrikeBarcode()) &&
                         this.getPidm().equals(book.getPidm()) &&
                         this.getTermCode().equals(book.getTermCode()) &&
                         this.getDateCheckedOut().equals(book.getDateCheckedOut()) &&
-                        Objects.equals(this.getDisposition(), book.getDisposition()) &&
-                        Objects.equals(this.getBookSalePrice(), book.getBookSalePrice()) &&
-                        Objects.equals(this.getPrevPidm(), book.getPrevPidm()) &&
+                        this.getDisposition() == book.getDisposition() &&
+                        this.getBookSalePrice() == book.getBookSalePrice() &&
+                        this.getPrevPidm() == book.getPrevPidm() &&
                         this.getPrevTermCode().equals(book.getPrevTermCode()) &&
                         this.getPrevDateCheckedIn().equals(book.getPrevDateCheckedIn()) &&
                         this.getActivityDate().equals(book.getActivityDate()) &&
-                        Objects.equals(this.getBillFlag(), book.getBillFlag());
+                        this.getBillFlag() == book.getBillFlag();
     }
 }

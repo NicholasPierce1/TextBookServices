@@ -16,8 +16,13 @@ public class BookCopyDataAccessTest {
     public void testUpdateDataAccessObject() {
         // creates input conglomerate, DBO arrays
         final Object[] inputConglomeration1 = {
-                "123", 2020, 456, "789", new BigDecimal("123"), "202020", new Date(), 'c',
-                new BigDecimal(34.), new BigDecimal(24.), "201920", new Date(), new Date(), 'w'
+                "123", new BigDecimal(2020), new BigDecimal(456), "789", "123", "202020", new Date(2000, 11, 21), "c",
+                new BigDecimal(34), new BigDecimal(24), "201920", new Date(2011, 8, 20 ), new Date(2009, 6, 12), "w"
+        };
+
+        final Object[] inputConglomeration2 = {
+                "456", new BigDecimal(2021), new BigDecimal(789), "789", "123", "202020", new Date(2000, 11, 21), "c",
+                new BigDecimal(34), new BigDecimal(24), "201920", new Date(2011, 8, 20 ), new Date(2009, 6, 12), "w"
         };
 
 
@@ -29,13 +34,30 @@ public class BookCopyDataAccessTest {
                 "789",
                 "123",
                 "202020",
-                new Date(),
+                new Date(2000, 11, 21),
                 'c',
-                34.,
-                24.,
+                34,
+                24,
                 "201920",
-                new Date(),
-                new Date(),
+                new Date(2011, 8,20),
+                new Date(2009, 6,12),
+                'w'
+        );
+
+        final BookCopy expectedBookCopy2 = new BookCopy(
+                "123",
+                2020,
+                456,
+                "789",
+                "123",
+                "202020",
+                new Date(2000, 11, 21),
+                'c',
+                34,
+                24,
+                "201920",
+                new Date(2011, 8,20),
+                new Date(2009, 6,12),
                 'w'
         );
 
@@ -43,5 +65,7 @@ public class BookCopyDataAccessTest {
 
         // invoke target User method for ORM equality
         assert (DataAccessConversionHelper.createDataAccessObject(inputConglomeration1, BookCopy::new).equals(expectedBookCopy1));
+        assert (DataAccessConversionHelper.createDataAccessObject(inputConglomeration1, BookCopy::new).equals(expectedBookCopy2));
+
     }
 }
