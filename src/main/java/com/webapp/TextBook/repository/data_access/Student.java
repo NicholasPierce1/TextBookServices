@@ -89,4 +89,23 @@ public class Student extends Person {
         super.updateDataAccessObject(values);
     }
 
+    @Override
+    public boolean equals(Object objectB){
+
+        // if objectB is null then return false
+        if(objectB == null)
+            return false;
+
+        // if object addresses are same then return true
+        if(this == objectB)
+            return true;
+
+        // type cast objectB to Student
+        final Student student = (Student) objectB;
+
+        // equality check Student are equal
+        return
+                super.equals(objectB);
+    }
+
 }

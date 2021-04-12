@@ -31,13 +31,24 @@ public class BagDataAccessTest {
                 "123", new BigDecimal(12.34)
         };
 
+        final Object[] inputConglomeration2 = {
+                "456", new BigDecimal(34.)
+        };
+
         // create the expected outputs
         final Bag expectedBag1 = new Bag(
                 "123",
                 12.34
         );
 
+        final Bag expectedBag2 = new Bag(
+                "456",
+                34.
+        );
+
         // invoke target User method for ORM equality
         assert(DataAccessConversionHelper.createDataAccessObject(inputConglomeration1, Bag::new).equals(expectedBag1));
+        assert(DataAccessConversionHelper.createDataAccessObject(inputConglomeration2, Bag::new).equals(expectedBag2));
+
     }
 }

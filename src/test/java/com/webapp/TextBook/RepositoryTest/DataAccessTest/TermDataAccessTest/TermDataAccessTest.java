@@ -19,13 +19,24 @@ public class TermDataAccessTest {
                 "123", "202120"
         };
 
+        final Object[] inputConglomeration2 = {
+                "456", "202020"
+        };
+
         // create the expected outputs
         final Term expectedTerm1 = new Term(
                 "123",
                 "202120"
         );
 
+        final Term expectedTerm2 = new Term(
+                "456",
+                "202020"
+        );
+
         // invoke target User method for ORM equality
         assert(DataAccessConversionHelper.createDataAccessObject(inputConglomeration1, Term::new).equals(expectedTerm1));
+        assert(DataAccessConversionHelper.createDataAccessObject(inputConglomeration2, Term::new).equals(expectedTerm2));
+
     }
 }
