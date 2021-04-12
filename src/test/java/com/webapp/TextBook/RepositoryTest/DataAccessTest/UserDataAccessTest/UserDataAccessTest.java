@@ -126,7 +126,6 @@ public class UserDataAccessTest {
         // invoke target User method for ORM equality
         assert(DataAccessConversionHelper.createDataAccessObject(inputConglomeration1, User::new).equals(expectedUser1));
         assert(DataAccessConversionHelper.createDataAccessObject(inputConglomeration2, User::new).equals(expectedUser2));
-
     }
 
 }

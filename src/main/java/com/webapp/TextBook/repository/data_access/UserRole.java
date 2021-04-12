@@ -74,4 +74,9 @@ public enum UserRole {
 
     }
 
+    @Override
+    public String toString(){
+        return this.get_NOMINAL_VALUE();
+    }
+
 }

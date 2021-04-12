@@ -216,4 +216,11 @@ public class User extends Person {
                         this.getPassword().equals(user.getPassword()) &&
                         this.getUserRole() == user.getUserRole();
     }
+
+    @Override
+    public String toString(){
+        return super.toString() +
+                "\npassword: " + this.getPassword() +
+                "\nuser role: " + this.getUserRole();
+    }
 }

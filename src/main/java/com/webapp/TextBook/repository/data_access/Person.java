@@ -216,7 +216,6 @@ public abstract class Person implements DataAccessConversion {
 
         // order: pkey, id, lastName, firstName, middleName
         this.pidm = String.valueOf(((BigDecimal)values[0]));
-        System.out.println("person id orm: " + (String)values[1]);
         this.id = (String)values[1];
         this.lastName = (String)values[2];
         this.firstName = (String)values[3];
@@ -250,5 +249,15 @@ public abstract class Person implements DataAccessConversion {
                     this.getLastName().equals(person.getLastName()) &&
                     this.getFirstName().equals(person.getFirstName()) &&
                     this.getMiddleName().equals(person.getMiddleName());
+    }
+
+    @Override
+    public String toString(){
+        return
+                "pidm: " + this.getPidm() +
+                        "\nid: " + this.getId() +
+                        "\nlastname: " + this.getLastName() +
+                        "\nfirstname: " + this.getFirstName() +
+                        "\nmiddlename: " + this.getMiddleName();
     }
 }

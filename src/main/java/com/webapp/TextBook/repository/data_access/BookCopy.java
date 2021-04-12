@@ -552,7 +552,7 @@ public class BookCopy implements DataAccessConversion {
         this.billFlag = ((String) values[13]).charAt(0);
     }
 
-
+    // todo: add doc
     @Override
     public boolean equals(Object object) {
 
@@ -580,5 +580,12 @@ public class BookCopy implements DataAccessConversion {
                         this.getPrevDateCheckedIn().equals(book.getPrevDateCheckedIn()) &&
                         this.getActivityDate().equals(book.getActivityDate()) &&
                         this.getBillFlag() == book.getBillFlag();
+    }
+
+    @Override
+    public String toString(){
+        // todo: add here
+        return "";
+
     }
 }
