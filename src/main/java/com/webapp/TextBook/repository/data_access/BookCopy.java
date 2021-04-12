@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -148,8 +149,8 @@ public class BookCopy implements DataAccessConversion {
 
     /**
      * <p>
-     *  Creates a BookCopy -- Empty constructor.
-     *</p>
+     * Creates a BookCopy -- Empty constructor.
+     * </p>
      */
     public BookCopy() {
         this._ID = UUID.randomUUID();
@@ -157,23 +158,23 @@ public class BookCopy implements DataAccessConversion {
 
     /**
      * <p>
-     *  Creates a BookCopy -- Full constructor with all variables.
-     *</p>
+     * Creates a BookCopy -- Full constructor with all variables.
+     * </p>
      *
-     * @param bookCode: String bookCode variable
-     * @param editionYear: int editionYear variable
-     * @param seqNr: int seqNr variable
-     * @param strikeBarcode: String strikeBarcode variable
-     * @param pidm: String pidm variable
-     * @param termCode: String termCode variable
-     * @param dateCheckedOut: Date dateCheckedOut variable
-     * @param disposition: char disposition variable
-     * @param bookSalePrice: double bookSalePrice variable
-     * @param prevPidm: double prevPidm variable
-     * @param prevTermCode: String prevTermCode variable
+     * @param bookCode:          String bookCode variable
+     * @param editionYear:       int editionYear variable
+     * @param seqNr:             int seqNr variable
+     * @param strikeBarcode:     String strikeBarcode variable
+     * @param pidm:              String pidm variable
+     * @param termCode:          String termCode variable
+     * @param dateCheckedOut:    Date dateCheckedOut variable
+     * @param disposition:       char disposition variable
+     * @param bookSalePrice:     double bookSalePrice variable
+     * @param prevPidm:          double prevPidm variable
+     * @param prevTermCode:      String prevTermCode variable
      * @param prevDateCheckedIn: Date prevDateCheckedIn variable
-     * @param activityDate: Date activityDate variable
-     * @param billFlag: char billFlag variable
+     * @param activityDate:      Date activityDate variable
+     * @param billFlag:          char billFlag variable
      */
     public BookCopy(String bookCode, int editionYear, int seqNr, String strikeBarcode, String pidm, String termCode, Date dateCheckedOut, char disposition, double bookSalePrice, double prevPidm, String prevTermCode, Date prevDateCheckedIn, Date activityDate, char billFlag) {
         this._ID = UUID.randomUUID();
@@ -194,9 +195,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the bookCode.
-     *</p>
+     * <p>
+     * Returns the bookCode.
+     * </p>
      *
      * @return String bookCode information.
      */
@@ -205,9 +206,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the billFlag.
-     *</p>
+     * <p>
+     * Returns the billFlag.
+     * </p>
      *
      * @return char billFlag information.
      */
@@ -216,9 +217,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the disposition.
-     *</p>
+     * <p>
+     * Returns the disposition.
+     * </p>
      *
      * @return char disposition information.
      */
@@ -227,9 +228,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the activityDate.
-     *</p>
+     * <p>
+     * Returns the activityDate.
+     * </p>
      *
      * @return Date activityDate information.
      */
@@ -238,9 +239,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the dateCheckedOut.
-     *</p>
+     * <p>
+     * Returns the dateCheckedOut.
+     * </p>
      *
      * @return Date dateCheckedOut information.
      */
@@ -249,9 +250,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the prevDateCheckedIn.
-     *</p>
+     * <p>
+     * Returns the prevDateCheckedIn.
+     * </p>
      *
      * @return Date prevDateCheckedIn information.
      */
@@ -260,9 +261,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the bookSalePrice.
-     *</p>
+     * <p>
+     * Returns the bookSalePrice.
+     * </p>
      *
      * @return Double bookSalePrice information.
      */
@@ -271,9 +272,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the prevPidm.
-     *</p>
+     * <p>
+     * Returns the prevPidm.
+     * </p>
      *
      * @return Double prevPidm information.
      */
@@ -282,9 +283,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the editionYear.
-     *</p>
+     * <p>
+     * Returns the editionYear.
+     * </p>
      *
      * @return int editionYear information.
      */
@@ -293,9 +294,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the seqNr.
-     *</p>
+     * <p>
+     * Returns the seqNr.
+     * </p>
      *
      * @return int seqNr information.
      */
@@ -304,9 +305,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the pidm.
-     *</p>
+     * <p>
+     * Returns the pidm.
+     * </p>
      *
      * @return String pidm information.
      */
@@ -315,9 +316,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the prevTermCode.
-     *</p>
+     * <p>
+     * Returns the prevTermCode.
+     * </p>
      *
      * @return String prevTermCode information.
      */
@@ -326,9 +327,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the strikeBarcode.
-     *</p>
+     * <p>
+     * Returns the strikeBarcode.
+     * </p>
      *
      * @return String strikeBarcode information.
      */
@@ -337,9 +338,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the termCode.
-     *</p>
+     * <p>
+     * Returns the termCode.
+     * </p>
      *
      * @return String termCode information.
      */
@@ -348,9 +349,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Returns the _ID.
-     *</p>
+     * <p>
+     * Returns the _ID.
+     * </p>
      *
      * @return UUID _ID information.
      */
@@ -359,9 +360,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the activityDate to a new date.
-     *</p>
+     * <p>
+     * Sets the activityDate to a new date.
+     * </p>
      *
      * @param activityDate: Date activityDate variable
      */
@@ -370,9 +371,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the billFlag to a new character.
-     *</p>
+     * <p>
+     * Sets the billFlag to a new character.
+     * </p>
      *
      * @param billFlag: char billFlag variable
      */
@@ -381,9 +382,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the bookCode to a new string.
-     *</p>
+     * <p>
+     * Sets the bookCode to a new string.
+     * </p>
      *
      * @param bookCode: String bookCode variable
      */
@@ -392,9 +393,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the bookSalePrice to a new double.
-     *</p>
+     * <p>
+     * Sets the bookSalePrice to a new double.
+     * </p>
      *
      * @param bookSalePrice: double bookSalePrice variable
      */
@@ -403,9 +404,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the dateCheckedOut to a new date.
-     *</p>
+     * <p>
+     * Sets the dateCheckedOut to a new date.
+     * </p>
      *
      * @param dateCheckedOut: Date dateCheckedOut variable
      */
@@ -414,9 +415,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the disposition to a new character.
-     *</p>
+     * <p>
+     * Sets the disposition to a new character.
+     * </p>
      *
      * @param disposition: char disposition variable
      */
@@ -425,9 +426,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the editionYear to a new date.
-     *</p>
+     * <p>
+     * Sets the editionYear to a new date.
+     * </p>
      *
      * @param editionYear: int editionYear variable
      */
@@ -436,9 +437,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the pidm to a new string.
-     *</p>
+     * <p>
+     * Sets the pidm to a new string.
+     * </p>
      *
      * @param pidm: String pidm variable
      */
@@ -447,9 +448,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the prevDateCheckedIn to a new date.
-     *</p>
+     * <p>
+     * Sets the prevDateCheckedIn to a new date.
+     * </p>
      *
      * @param prevDateCheckedIn: Date prevDateCheckedIn variable
      */
@@ -458,9 +459,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the prevPidm to a new double.
-     *</p>
+     * <p>
+     * Sets the prevPidm to a new double.
+     * </p>
      *
      * @param prevPidm: double prevPidm variable
      */
@@ -469,9 +470,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the prevTermCode to a new string.
-     *</p>
+     * <p>
+     * Sets the prevTermCode to a new string.
+     * </p>
      *
      * @param prevTermCode: String prevTermCode variable
      */
@@ -480,9 +481,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the seqNr to a new int.
-     *</p>
+     * <p>
+     * Sets the seqNr to a new int.
+     * </p>
      *
      * @param seqNr: int seqNr variable
      */
@@ -491,9 +492,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the strikeBarcode to a new string.
-     *</p>
+     * <p>
+     * Sets the strikeBarcode to a new string.
+     * </p>
      *
      * @param strikeBarcode: String strikeBarcode variable
      */
@@ -502,9 +503,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the termCode to a new string.
-     *</p>
+     * <p>
+     * Sets the termCode to a new string.
+     * </p>
      *
      * @param termCode: String termCode variable
      */
@@ -513,9 +514,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
-     *     Sets the _ID to a new UUID.
-     *</p>
+     * <p>
+     * Sets the _ID to a new UUID.
+     * </p>
      *
      * @param _ID: UUID _ID variable
      */
@@ -524,9 +525,9 @@ public class BookCopy implements DataAccessConversion {
     }
 
     /**
-     *<p>
+     * <p>
      * Updates a Java BookCopy object with the values given from the DBO object information.
-     *</p>
+     * </p>
      *
      * @param values: Generic object holding the DBO information of a BookCopy
      */
@@ -535,18 +536,47 @@ public class BookCopy implements DataAccessConversion {
         // The int index value for values[] represents the corresponding column in the table and follows in order.
         // order: pkey (bookCode, editionYear, seqNr), strikeBarcode, dateCheckedOut, disposition,
         // bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag
-        this.bookCode = (String)values[0];
-        this.editionYear = ((BigDecimal)values[1]).intValue();
-        this.seqNr = ((BigDecimal)values[2]).intValue();
-        this.strikeBarcode = (String)values[3];
-        this.dateCheckedOut =(Date)values[4];
-        this.disposition = ((String)values[5]).charAt(0);
-        this.bookSalePrice = ((BigDecimal)values[6]).doubleValue();
-        this.prevPidm = ((BigDecimal)values[7]).doubleValue();
-        this.prevTermCode = (String)values[8];
-        this.prevDateCheckedIn = (Date)values[9];
-        this.activityDate = (Date)values[10];
-        this.billFlag = ((String)values[11]).charAt(0);
+        this.bookCode = (String) values[0];
+        this.editionYear = ((BigDecimal) values[1]).intValue();
+        this.seqNr = ((BigDecimal) values[2]).intValue();
+        this.strikeBarcode = (String) values[3];
+        this.dateCheckedOut = (Date) values[4];
+        this.disposition = ((String) values[5]).charAt(0);
+        this.bookSalePrice = ((BigDecimal) values[6]).doubleValue();
+        this.prevPidm = ((BigDecimal) values[7]).doubleValue();
+        this.prevTermCode = (String) values[8];
+        this.prevDateCheckedIn = (Date) values[9];
+        this.activityDate = (Date) values[10];
+        this.billFlag = ((String) values[11]).charAt(0);
     }
 
+
+    @Override
+    public boolean equals(Object object) {
+
+        // todo: add comments
+        if (object == null)
+            return false;
+
+        else if (object == this)
+            return true;
+
+        final BookCopy book = (BookCopy) object;
+
+        return
+                this.getBookCode().equals(book.getBookCode()) &&
+                        Objects.equals(this.getEditionYear(), book.getEditionYear()) &&
+                        Objects.equals(this.getSeqNr(), book.getSeqNr()) &&
+                        this.getStrikeBarcode().equals(book.getStrikeBarcode()) &&
+                        this.getPidm().equals(book.getPidm()) &&
+                        this.getTermCode().equals(book.getTermCode()) &&
+                        this.getDateCheckedOut().equals(book.getDateCheckedOut()) &&
+                        Objects.equals(this.getDisposition(), book.getDisposition()) &&
+                        Objects.equals(this.getBookSalePrice(), book.getBookSalePrice()) &&
+                        Objects.equals(this.getPrevPidm(), book.getPrevPidm()) &&
+                        this.getPrevTermCode().equals(book.getPrevTermCode()) &&
+                        this.getPrevDateCheckedIn().equals(book.getPrevDateCheckedIn()) &&
+                        this.getActivityDate().equals(book.getActivityDate()) &&
+                        Objects.equals(this.getBillFlag(), book.getBillFlag());
+    }
 }
