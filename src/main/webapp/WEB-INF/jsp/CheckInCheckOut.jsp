@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONObject" %><%--
   Created by IntelliJ IDEA.
   User: Spyridon
   Date: 3/9/2021
@@ -15,63 +15,25 @@
     <script type="application/javascript" src="/js/SharedHandler.js"></script>
     <script type="application/javascript" src="/js/CheckInOutHandler.js"></script>
     <script type="application/javascript" src="/js/ViewModel/test.js"></script>
+    <script type="application/javascript" src="/js/TestJavaScriptFiles/ChaseTestFile.js"></script>
+    <script type="application/javascript" src="/js/TestJavaScriptFiles/SpyridonTestFile.js"></script>
 
+    <!--
+
+     - create script tag here for a new js file that holds the test suites for all the targeted functions
+
+    -->
  
 </head>
 <body>
 <%
-    // enumerates constant key fields for decoding and input0form binding
-    final int student_ID = 919444333;
-    final String student_name = "student_name";
-    final String studentBook_barcode = "sldhaldha";
-    final int studentBook_bag_number = 12345;
+    // extract json data from page load (NOT api call -- but from form controller)
+    final String data = ((JSONObject)request.getAttribute("data")).toString();
 
-    // acquire json object for dynamic state parsing/decoding
-    final JSONObject data = (JSONObject)request.getAttribute("data");
-
-    /*
-        declares a general errors (holds either a general error from server or
-        -- if exception yielded, then set gneral errors to local constant)
-    */
-    String generalErrors = null;
-    final String generalErrorsDefault = "error occurred in rendering page; please contact IT support";
-
-    // initializes a map to hold all possible json objects (ErrorBinidngs)
-    final Map<String, JSONObject> errorBindings = new HashMap<String, JSONObject>();
-
-    // acquires errors (JSONArray) & general errors (String) -- note: may be null
-    try {
-        generalErrors = data.isNull("GeneralErrors") ? "" : data.getString("GeneralErrors");
-        final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
-
-        if(bindingErrors != null && generalErrors != null){
-            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
-        }
-        if(bindingErrors != null){
-            //iterate over all error bindings and dynamically se them into the map
-            // to where the keys stated above can access their state IF they exist
-            for(int i =0; i< bindingErrors.length(); i++){
-
-                // accesses JSONObject
-                final JSONObject errorBindings = bindingErrors.getJSONObject(i);
-
-                // set field name as the key (will be same to the constant keys stated above)
-                // sets value to the JSONObject itself
-                errorBindings.put(errorBinding.getString("fieldName"), errorBinding);
-            }
-        }
-        else if(generalErrors != null) // general errors set only
-            generalErrors = generalErrorsDefault;
-    }
-    catch(Exception ex){
-
-        System.out.println("internal error in rendering page: " + ex.getMessage());
-
-        // sets general errors to constant
-        generalErrors = generalErrorsDefault;
-    }
+    // print's invisible input tag with the id "data" for extraction by js files in client-browser
+    out.println("<input type=\"hidden\" value=\"" + data + "\" id=\"data\">" );
 %>
-
+<input type="hidden" value="blah" id="blah2">
 
 <section>
     <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
@@ -162,41 +124,6 @@
                 
                     <div class="input-group mb-3">
                         <label class="input-group-text">919#</label>
-
-                        <%
-
-                            String student_IDPlaceholder = "919111222";
-                            String studentIDErrorMessage = "";
-                            String studentIDHiddenValue = "hidden";
-
-                            try{
-                                if(student.containsKey(student_ID)){
-                                    student_IDPlaceholder = errorBindings.get(student_ID).getString("faultyData") == null ?
-                                    "919111222" : errorBindings.get(student_ID).getString("faultyData");
-
-                                    studentIDErrorMessage = errorBindings.get(student_ID).getString("message");
-                                    studentIDHiddenValue = "text";
-
-
-                                }
-                            }
-                            catch(Exception ex){
-                                System.out.println("internal error in rendering page: " + ex.getMessage());
-
-                                // Sets general errors to constant
-                                generalErrors = generalErrorsDefault;
-                            }
-                            
-                            out.println("<input type=\"number\"" + 
-                            " placeholder=\"" + student_IDPlaceholder + "\" 919#=\""
-                            + student_ID +
-                            "\" class=\"form-control\">");
-
-                            out.println("<label type=\"" + studentIDHiddenValue + "\"
-                            id=\"studentIDHiddenValue\">" + studentIDErrorMessage + "</label>");
-                            
-
-                        %>
                         <input type="number" class="form-control" placeholder="ID">
                         <label type="hidden" id = "error_studentID"></label>
                     </div>
@@ -253,6 +180,14 @@
 </section>
 
     <button onclick="testStatusCodeErrorOnClick();">test show status code error</button>
+
+<!--
+
+- create new buttons for EACH test
+IF the test function needs data to run (ie: handleStatusErrorMessage(String) )
+ then have the onClick test function have hardcoded, local constants (params)
+
+-->
 
     <label id="testStatusCodeError" style="visibility: hidden">test</label>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
