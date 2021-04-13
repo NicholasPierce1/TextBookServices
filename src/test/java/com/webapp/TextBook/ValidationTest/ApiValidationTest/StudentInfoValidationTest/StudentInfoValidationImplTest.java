@@ -86,7 +86,7 @@ public class StudentInfoValidationImplTest {
 
         // invokes api validation handler and captures validation result
 
-        final Optional<String> validStudnetInfoResult = this.validator.getApiBindingError(invalidStudentIdInput);
+        final Optional<String> invalidStudnetInfoResult = this.validator.getApiBindingError(invalidStudentIdInput);
         final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
                 Arrays.asList(
                         new ErrorBinding<String>(
@@ -95,14 +95,72 @@ public class StudentInfoValidationImplTest {
                 )
         );
 
-        assert(validStudnetInfoResult.isPresent());
+        assert(invalidStudnetInfoResult.isPresent());
 
         // assert error string is not generic
-        assert(!SharedValidationState.isGenericErrorMessage(validStudnetInfoResult.get()));
+        assert(!SharedValidationState.isGenericErrorMessage(invalidStudnetInfoResult.get()));
 
         // assert json array error string is expected
 
-        assert(errorBindingJsonString.equals(validStudnetInfoResult.get()));
+        assert(errorBindingJsonString.equals(invalidStudnetInfoResult.get()));
+    }
+
+
+    @Test
+    public void testInvalidTerm() throws  Exception{
+        //10 to start term code
+        final StudentInfo invalidStudentUsernameInput = new StudentInfo("919545753", "102020");
+
+
+        // invokes api validation handler and captures validation result
+
+        final Optional<String> invalidStudnetInfoResult = this.validator.getApiBindingError(invalidStudentUsernameInput);
+        final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
+                Arrays.asList(
+                        new ErrorBinding<String>(
+                                StudentInfo.NOMINAL_TERM_CODE, "Invalid term code format",null
+                        )
+                )
+        );
+
+        assert(invalidStudnetInfoResult.isPresent());
+
+        // assert error string is not generic
+        assert(!SharedValidationState.isGenericErrorMessage(invalidStudnetInfoResult.get()));
+
+        // assert json array error string is expected
+
+        assert(errorBindingJsonString.equals(invalidStudnetInfoResult.get()));
+    }
+
+    @Test
+    public void testInvalidBoth() throws  Exception{
+        //10 to start term code
+        final StudentInfo invalidStudentUsernameInput = new StudentInfo("819545753", "102020");
+
+
+        // invokes api validation handler and captures validation result
+
+        final Optional<String> invalidStudnetInfoResult = this.validator.getApiBindingError(invalidStudentUsernameInput);
+        final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
+                Arrays.asList(
+                        new ErrorBinding<String>(
+                                StudentInfo.NOMINAL_ID, "Invalid 919 format",null
+                        ),
+                        new ErrorBinding<String>(
+                                StudentInfo.NOMINAL_TERM_CODE, "Invalid term code format",null
+                        )
+                )
+        );
+
+        assert(invalidStudnetInfoResult.isPresent());
+
+        // assert error string is not generic
+        assert(!SharedValidationState.isGenericErrorMessage(invalidStudnetInfoResult.get()));
+
+        // assert json array error string is expected
+
+        assert(errorBindingJsonString.equals(invalidStudnetInfoResult.get()));
     }
 
 }
