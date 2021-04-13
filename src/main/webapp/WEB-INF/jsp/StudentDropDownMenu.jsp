@@ -31,6 +31,12 @@
     final String loginUserInfoUsernameKey = "_username";
     final String loginUserInfoPasswordKey = "_password";
 
+    //Set given loginUserInfo into session storage
+    let loginUserInfo = LoginUserInfo.createLoginUserInfoFromJson(response.LoginUserInfo);
+    window.SessionStorage.setItem("loginUserInfo", loginUserInfo);
+    let username = loginUserInfo.getUsername();
+    let password = loginUserInfo.getPassword();
+
     // acquire json object for dynamic state parsing/decoding
     final JSONObject data = (JSONObject)request.getAttribute("data");
 

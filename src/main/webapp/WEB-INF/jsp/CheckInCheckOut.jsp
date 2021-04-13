@@ -11,7 +11,7 @@
     <title>Check In/Out</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
-    <link rel="stylesheeg" href="/CSS/checkinoutCSS.css">
+    <link rel="stylesheet" href="/CSS/checkinoutCSS.css">
     <script type="application/javascript" src="/js/SharedHandler.js"></script>
     <script type="application/javascript" src="/js/CheckInOutHandler.js"></script>
     <script type="application/javascript" src="/js/ViewModel/test.js"></script>
@@ -34,7 +34,7 @@
         -- if exception yielded, then set gneral errors to local constant)
     */
     String generalErrors = null;
-    final String generalErrorsDefault = "error occured in rendering page; please contact IT supportb";
+    final String generalErrorsDefault = "error occurred in rendering page; please contact IT support";
 
     // initializes a map to hold all possible json objects (ErrorBinidngs)
     final Map<String, JSONObject> errorBindings = new HashMap<String, JSONObject>();
@@ -45,7 +45,7 @@
         final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
 
         if(bindingErrors != null && generalErrors != null){
-            throw new RuntimeException("Exception occured in binding state -- genral errors AND errors are set");
+            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
         }
         if(bindingErrors != null){
             //iterate over all error bindings and dynamically se them into the map
