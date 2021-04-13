@@ -35,14 +35,16 @@ public class StudentInfoValidationImpl
     @Override
     public boolean isValid(StudentInfo studentInfo, ConstraintValidatorContext constraintValidatorContext) {
         ArrayList<ErrorBinding<?>> errorList = new ArrayList<ErrorBinding<?>>();
-
+        System.out.println("SBI: have arrived at isValid");
         try{
         //for invalid 919 numbers. Checks if it matches regext pattern
         if(!studentInfo.getId().matches(RegexPatternContainer.STUDENT_ID_PATTERN.pattern())){
+            System.out.println("SBI: Invalid ID found");
             errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_ID, "Invalid 919 format", null));
             }
         //for invalid term code. Checks if it matches Regex pattern
         if(!studentInfo.getTermCode().matches(RegexPatternContainer.TERM_PATTERN.pattern())){
+            System.out.println("SBI: Invalid term code found");
             errorList.add(new ErrorBinding<String>(StudentInfo.NOMINAL_TERM_CODE, "Invalid term code format", null));
 
         }
@@ -69,7 +71,8 @@ public class StudentInfoValidationImpl
             return false;
         }
         //If list is empty, no errors.
-        return errorList.isEmpty();
+        //return errorList.isEmpty();
+       return  false;
 
     }
 

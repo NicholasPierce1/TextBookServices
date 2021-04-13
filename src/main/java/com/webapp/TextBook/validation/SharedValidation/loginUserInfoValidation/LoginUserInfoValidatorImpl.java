@@ -48,7 +48,7 @@ public class LoginUserInfoValidatorImpl implements
             userInputsNull = true;
             errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_PASSWORD, "Password field is empty", null));
         }
-        else if(user.get_username() == null){
+         if(user.get_username() == null){
             userInputsNull = true;
             errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_USERNAME, "Username field is empty", null));
         }

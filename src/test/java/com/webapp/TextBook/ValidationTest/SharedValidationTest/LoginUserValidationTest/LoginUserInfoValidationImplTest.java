@@ -181,12 +181,12 @@ public class LoginUserInfoValidationImplTest {
         final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
                 Arrays.asList(
                         new ErrorBinding<String>(
-                                LoginUserInfo.NOMINAL_USERNAME,
-                                "Username field is empty",
-                                null),
-                        new ErrorBinding<String>(
                                 LoginUserInfo.NOMINAL_PASSWORD,
                                 "Password field is empty",
+                                null),
+                        new ErrorBinding<String>(
+                                LoginUserInfo.NOMINAL_USERNAME,
+                                "Username field is empty",
                                 null)
 
 
