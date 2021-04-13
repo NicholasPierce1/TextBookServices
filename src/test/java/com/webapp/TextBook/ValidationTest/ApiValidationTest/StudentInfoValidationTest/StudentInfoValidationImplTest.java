@@ -94,10 +94,7 @@ public class StudentInfoValidationImplTest {
                         )
                 )
         );
-        // assert that an error was given
-//        for(int i = 0; i < 200; i++) {
-//            System.out.println("OUTPUT FROM METHOD" + validStudnetInfoResult.get());
-//        }
+
         assert(validStudnetInfoResult.isPresent());
 
         // assert error string is not generic

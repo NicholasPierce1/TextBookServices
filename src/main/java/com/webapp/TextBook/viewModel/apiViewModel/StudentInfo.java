@@ -1,6 +1,7 @@
 package com.webapp.TextBook.viewModel.apiViewModel;
 
 import com.sun.istack.Nullable;
+import com.webapp.TextBook.validation.ApiValidation.StudentInfoValidation.StudentInfoValidationInterface;
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
 import com.webapp.TextBook.viewModel.shared.ApiViewModel;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
@@ -17,6 +18,7 @@ import java.util.function.Supplier;
 /**
 Handles viewmodel duties for the StudentInfo page
  */
+@StudentInfoValidationInterface
 public class StudentInfo extends ApiViewModelCreation {
     /***
      * Place holder for the word "ID"
