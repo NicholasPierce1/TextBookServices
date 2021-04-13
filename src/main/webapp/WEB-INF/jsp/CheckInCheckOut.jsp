@@ -159,8 +159,44 @@
             </div>
             <div class="row gy-5">
                 <div class="col-md-4 pt-2">
+                
                     <div class="input-group mb-3">
                         <label class="input-group-text">919#</label>
+
+                        <%
+
+                            String student_IDPlaceholder = "919111222";
+                            String studentIDErrorMessage = "";
+                            String studentIDHiddenValue = "hidden";
+
+                            try{
+                                if(student.containsKey(student_ID)){
+                                    student_IDPlaceholder = errorBindings.get(student_ID).getString("faultyData") == null ?
+                                    "919111222" : errorBindings.get(student_ID).getString("faultyData");
+
+                                    studentIDErrorMessage = errorBindings.get(student_ID).getString("message");
+                                    studentIDHiddenValue = "text";
+
+
+                                }
+                            }
+                            catch(Exception ex){
+                                System.out.println("internal error in rendering page: " + ex.getMessage());
+
+                                // Sets general errors to constant
+                                generalErrors = generalErrorsDefault;
+                            }
+                            
+                            out.println("<input type=\"number\"" + 
+                            " placeholder=\"" + student_IDPlaceholder + "\" 919#=\""
+                            + student_ID +
+                            "\" class=\"form-control\">");
+
+                            out.println("<label type=\"" + studentIDHiddenValue + "\"
+                            id=\"studentIDHiddenValue\">" + studentIDErrorMessage + "</label>");
+                            
+
+                        %>
                         <input type="number" class="form-control" placeholder="ID">
                         <label type="hidden" id = "error_studentID"></label>
                     </div>
