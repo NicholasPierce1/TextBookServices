@@ -45,11 +45,11 @@ public class BookCopy implements DataAccessConversion {
 
     /**
      * <p>
-     * Integer variable to hold the edition year.
+     * String variable to hold the edition year.
      * Usage: Attribute in creation of BookCopy for ORM conversion of Oracle's DBO into DA POJO.
      * </p>
      */
-    public int editionYear;
+    public String editionYear;
 
     /**
      * <p>
@@ -105,7 +105,7 @@ public class BookCopy implements DataAccessConversion {
      * Usage: Attribute in creation of BookCopy for ORM conversion of Oracle's DBO into DA POJO.
      * </p>
      */
-    public double bookSalePrice;
+    public Double bookSalePrice;
 
     /**
      * <p>
@@ -176,7 +176,7 @@ public class BookCopy implements DataAccessConversion {
      * @param activityDate:      Date activityDate variable
      * @param billFlag:          char billFlag variable
      */
-    public BookCopy(String bookCode, int editionYear, int seqNr, String strikeBarcode, String pidm, String termCode, Date dateCheckedOut, char disposition, double bookSalePrice, double prevPidm, String prevTermCode, Date prevDateCheckedIn, Date activityDate, char billFlag) {
+    public BookCopy(String bookCode, String editionYear, int seqNr, String strikeBarcode, String pidm, String termCode, Date dateCheckedOut, char disposition, Double bookSalePrice, double prevPidm, String prevTermCode, Date prevDateCheckedIn, Date activityDate, char billFlag) {
         this._ID = UUID.randomUUID();
         this.bookCode = bookCode;
         this.editionYear = editionYear;
@@ -267,7 +267,7 @@ public class BookCopy implements DataAccessConversion {
      *
      * @return Double bookSalePrice information.
      */
-    public double getBookSalePrice() {
+    public Double getBookSalePrice() {
         return bookSalePrice;
     }
 
@@ -287,9 +287,9 @@ public class BookCopy implements DataAccessConversion {
      * Returns the editionYear.
      * </p>
      *
-     * @return int editionYear information.
+     * @return String editionYear information.
      */
-    public int getEditionYear() {
+    public String getEditionYear() {
         return editionYear;
     }
 
@@ -399,7 +399,7 @@ public class BookCopy implements DataAccessConversion {
      *
      * @param bookSalePrice: double bookSalePrice variable
      */
-    public void setBookSalePrice(double bookSalePrice) {
+    public void setBookSalePrice(Double bookSalePrice) {
         this.bookSalePrice = bookSalePrice;
     }
 
@@ -432,7 +432,7 @@ public class BookCopy implements DataAccessConversion {
      *
      * @param editionYear: int editionYear variable
      */
-    public void setEditionYear(int editionYear) {
+    public void setEditionYear(String editionYear) {
         this.editionYear = editionYear;
     }
 
@@ -537,19 +537,30 @@ public class BookCopy implements DataAccessConversion {
         // order: pkey (bookCode, editionYear, seqNr), strikeBarcode, dateCheckedOut, disposition,
         // bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag
         this.bookCode = (String) values[0];
-        this.editionYear = ((BigDecimal) values[1]).intValue();
-        this.seqNr = ((BigDecimal) values[2]).intValue();
+        this.editionYear = ((String)values[1]);
+        if(values[2] != null)
+            this.seqNr = ((BigDecimal) values[2]).intValue();
         this.strikeBarcode = (String) values[3];
-        this.pidm = (String) values[4];
-        this.termCode = (String) values[5];
-        this.dateCheckedOut = (Date) values[6];
-        this.disposition = ((String) values[7]).charAt(0);
-        this.bookSalePrice = ((BigDecimal) values[8]).doubleValue();
-        this.prevPidm = ((BigDecimal) values[9]).doubleValue();
-        this.prevTermCode = (String) values[10];
-        this.prevDateCheckedIn = (Date) values[11];
-        this.activityDate = (Date) values[12];
-        this.billFlag = ((String) values[13]).charAt(0);
+        if(values[4] != null)
+            this.pidm = (String) values[4];
+        if(values[5] != null)
+            this.termCode = (String) values[5];
+        if(values[6] != null)
+            this.dateCheckedOut = (Date) values[6];
+        if(values[7] != null)
+            this.disposition = ((String) values[7]).charAt(0);
+        if(values[8] != null)
+            this.bookSalePrice = ((BigDecimal) values[8]).doubleValue();
+        if(values[9] != null)
+            this.prevPidm = ((BigDecimal) values[9]).doubleValue();
+        if(values[10] != null)
+            this.prevTermCode = (String) values[10];
+        if(values[11] != null)
+            this.prevDateCheckedIn = (Date) values[11];
+        if(values[12] != null)
+            this.activityDate = (Date) values[12];
+        if(values[13] != null)
+            this.billFlag = ((String) values[13]).charAt(0);
     }
 
     // todo: add doc
@@ -601,5 +612,4 @@ public class BookCopy implements DataAccessConversion {
                         "\nbillFlag: " + this.getBillFlag();
         }
 
-    }
 }

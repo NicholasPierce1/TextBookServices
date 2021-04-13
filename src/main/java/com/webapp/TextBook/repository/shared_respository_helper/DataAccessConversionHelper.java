@@ -43,7 +43,7 @@ public class DataAccessConversionHelper {
             throw new DataAccessConversionException("" +
                     "DataAccess type conversion failed. Make sure Object[] matches the column" +
                     "order of the table's DDL implementation and that the DataAccessConversion implementation" +
-                    "matches the table's DDL implementation.");
+                    "matches the table's DDL implementation.\n" + e.getLocalizedMessage());
         }
 
     }

@@ -96,6 +96,8 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             // Saving the results from the query.
             List<Object[]> records = getCheckedOutBooksQuery.getResultList();
 
+            System.out.println(records.get(0).length);
+
             // Creates new BookCopy type List.
             List<BookCopy> returnType = new ArrayList<BookCopy>();
 
