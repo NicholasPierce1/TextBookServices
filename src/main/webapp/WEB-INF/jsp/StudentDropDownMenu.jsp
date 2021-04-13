@@ -138,7 +138,7 @@
 </body>
 
 
-<footer class="bg-dark text-center text-white sticky-bottom"
+< class="bg-dark text-center text-white sticky-bottom"
        style="bottom: 0;">
 
    <!-- Grid container -->

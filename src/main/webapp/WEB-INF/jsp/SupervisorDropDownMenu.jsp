@@ -155,7 +155,7 @@
     </body>
 
 
-    <footer class="bg-dark text-center text-white fixed-bottom"
+    <div class="bg-dark text-center text-white fixed-bottom"
             style="bottom: 0;">
 
         <!-- Grid container -->
@@ -216,6 +216,7 @@
             © 2021 Copyright: TextBook Services
         </div>
         </div>
+    </div>
 
     </footer>
 
