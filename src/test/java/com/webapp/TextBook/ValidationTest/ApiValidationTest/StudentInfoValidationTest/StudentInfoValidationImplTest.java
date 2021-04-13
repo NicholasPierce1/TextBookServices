@@ -136,12 +136,12 @@ public class StudentInfoValidationImplTest {
     @Test
     public void testInvalidBoth() throws  Exception{
         //10 to start term code
-        final StudentInfo invalidStudentUsernameInput = new StudentInfo("819545753", "102020");
+        final StudentInfo invalidStudentBothInput = new StudentInfo("819545753", "102020");
 
 
         // invokes api validation handler and captures validation result
 
-        final Optional<String> invalidStudnetInfoResult = this.validator.getApiBindingError(invalidStudentUsernameInput);
+        final Optional<String> invalidStudnetInfoResult = this.validator.getApiBindingError(invalidStudentBothInput);
         final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
                 Arrays.asList(
                         new ErrorBinding<String>(

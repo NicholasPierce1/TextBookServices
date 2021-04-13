@@ -1,6 +1,7 @@
 package com.webapp.TextBook.viewModel.apiViewModel;
 
 import com.sun.istack.Nullable;
+import com.webapp.TextBook.validation.ApiValidation.StudnetBookInfoValidation.StudentBookInfoValidationInterface;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import com.webapp.TextBook.viewModel.shared.ApiViewModelCreation;
 import com.webapp.TextBook.viewModel.shared.ApiViewModel;
@@ -18,6 +19,7 @@ import java.util.function.Supplier;
 /**
  * Viewmodel duties for StudnetBookInfo page
  */
+@StudentBookInfoValidationInterface
 public final class StudentBookInfo extends ApiViewModelCreation{
 
 
