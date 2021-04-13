@@ -147,7 +147,9 @@ public class Bag implements DataAccessConversion {
     public void updateDataAccessObject(@NotNull Object[] values) {
 
         // given: pkey, bagNumber
-        this.pidm = (String)values[0];
+        if(values[0] != null)
+            this.pidm = (String)values[0];
+        if(values[1] != null)
         this.bagNumber = ((BigDecimal)values[1]).doubleValue();
     }
 
