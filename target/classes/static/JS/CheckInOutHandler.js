@@ -217,6 +217,12 @@ function handleErrorBindings() {
     return
 }
 
+
+/**
+ * @purpose 
+ * @param {*} bookCopyList 
+ */
+
 function showBookCopyForAllCheckedOutBooks(bookCopyList) {
     // call helper for each book copy
     for (let i = 0; i < bookCopyList.length; i++) {
@@ -227,15 +233,20 @@ function showBookCopyForAllCheckedOutBooks(bookCopyList) {
 }
 
 
+/**
+ * @purpose Create a table for Checked out book.
+ * @param {*} BookCopy 
+ */
 
 function showBookCopyForCheckedOutBook(BookCopy) {
 
     // I need to add the bookcopy data into bookcopy object
     book_obj = JSON.parse(BookCopy);
 
+    let table = document.getElementsByTagName("table");
     let thead = table.createTHead();
     let row = thead.insertRow();
-    
+
     for(let element of book_obj){
         if(element.disposition == "O"){
             let th = document.createElement("th");
