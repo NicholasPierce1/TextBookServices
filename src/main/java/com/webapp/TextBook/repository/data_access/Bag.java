@@ -37,7 +37,7 @@ public class Bag implements DataAccessConversion {
      * Usage: Attribute in creation of Bag for ORM conversion of Oracle's DBO into DA POJO.
      * </p>
      */
-    public String pidm;
+    public int pidm;
 
     /**
      * <p>
@@ -63,7 +63,7 @@ public class Bag implements DataAccessConversion {
      * @param pidm: String pidm variable
      * @param bagNumber: char bagNumber variable
      */
-    public Bag(String pidm, Double bagNumber){
+    public Bag(int pidm, Double bagNumber){
         this._ID = this._ID = UUID.randomUUID();
         this.pidm = pidm;
         this.bagNumber = bagNumber;
@@ -99,7 +99,7 @@ public class Bag implements DataAccessConversion {
      *
      * @param pidm: String pidm variable
      */
-    public void setPidm(String pidm) {
+    public void setPidm(int pidm) {
         this.pidm = pidm;
     }
 
@@ -110,7 +110,7 @@ public class Bag implements DataAccessConversion {
      *
      * @return String pidm information.
      */
-    public String getPidm() {
+    public int getPidm() {
         return pidm;
     }
 
@@ -148,7 +148,7 @@ public class Bag implements DataAccessConversion {
 
         // given: pkey, bagNumber
         if(values[0] != null)
-            this.pidm = (String)values[0];
+            this.pidm = ((BigDecimal)values[0]).intValue();
         if(values[1] != null)
         this.bagNumber = ((BigDecimal)values[1]).doubleValue();
     }
@@ -166,7 +166,7 @@ public class Bag implements DataAccessConversion {
 
         final Bag bag = (Bag)object;
 
-        return this.getPidm().equals(bag.getPidm()) && this.getBagNumber().equals(bag.getBagNumber());
+        return this.getPidm() == (bag.getPidm()) && this.getBagNumber().equals(bag.getBagNumber());
 
     }
 

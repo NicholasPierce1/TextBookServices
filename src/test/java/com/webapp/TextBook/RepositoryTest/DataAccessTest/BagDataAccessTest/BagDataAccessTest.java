@@ -28,21 +28,21 @@ public class BagDataAccessTest {
 
         // creates input conglomerate, DBO arrays
         final Object[] inputConglomeration1 = {
-                "123", new BigDecimal(12.34)
+                new BigDecimal(123), new BigDecimal(12.34)
         };
 
         final Object[] inputConglomeration2 = {
-                "456", new BigDecimal(34.)
+                new BigDecimal(456), new BigDecimal(34.)
         };
 
         // create the expected outputs
         final Bag expectedBag1 = new Bag(
-                "123",
+                123,
                 12.34
         );
 
         final Bag expectedBag2 = new Bag(
-                "456",
+                456,
                 34.
         );
 
