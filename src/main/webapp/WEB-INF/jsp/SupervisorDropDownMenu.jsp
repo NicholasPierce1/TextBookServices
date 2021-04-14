@@ -68,8 +68,10 @@
                         Patrons
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
-                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="">Check In/Out</a></li>
-                        <li id="Patrons"><a class="dropdown-item" href="#" onclick="">Patrons</a></li>
+                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="">Check In/ Check Out</a></li>
+                        <li id="PatronSchedule"><a class="dropdown-item" href="#" onclick="">Patron Schedule</a></li>
+                        <li id="PatronPreviousBooks"><a class="dropdown-item" href="#" onclick="">Patron Previous Books</a></li>
+                        <li id="PatronSoldBooks"><a class="dropdown-item" href="#" onclick="">Patron Sold Books</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Reports">
