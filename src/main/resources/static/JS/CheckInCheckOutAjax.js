@@ -62,15 +62,16 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
 
 async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 
-    fetch(loginUserInfo, {
+    fetch(`${localHostPrefix}/checkoutBook`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: ({
-               `username: ${loginUserInfo.getUserName()}`
-               `password: ${loginUserInfo.getPassword()}`
+               loginUserInfo: loginUserInfo.createJsonForm(),
+               studentInfo: studentInfo.createJsonForm(),
+               studentBookInfo: studentBookInfo.createJsonForm()
             })
         })
             .then(response => {
@@ -92,77 +93,22 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
                 console.log(data)
             });
 
-        fetch(studentInfo, {
-            method: "GET",
-             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: ({
-                `ID: ${studentInfo.getID()}`
-                `TermCode: ${studentInfo.getTermCode()}`
 
-            })
-        })
-            .then(response => {
-                if(response.ok){
-                    refreshViewWithJsonForCheckedOutBook(response.json)
-                }
-                else{
-                    console.log("An Error Occurred")
-                    throw Error("Error");
-                }
-            },
-                errorReason => {
-                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                printError(errorReason);
-                })
-            .then(data => {
-                console.log(data)
-            });
-
-    fetch(studentBookInfo, {
-            method: "GET",
-             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: ({
-                BarCode: `${studentBookInfo.getBarcode()}`
-                StudentInfo: `${studentBookInfo.studentInfo()}`
-
-            })
-        })
-            .then(response => {
-                if(response.ok){
-                    refreshViewWithJsonForCheckedOutBook(response.json)
-                }
-                else{
-                    console.log("An Error Occurred")
-                    throw Error("Error");
-                }
-            },
-                errorReason => {
-                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                printError(errorReason);
-                })
-            .then(data => {
-                console.log(data)
-            });
 }
 
 
 async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 
-    fetch(loginUserInfo, {
+    fetch(`${localHostPrefix}/checkInBook`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: ({
-               `username: ${loginUserInfo.getUserName()}`
-               `password: ${loginUserInfo.getPassword()}`
+               loginUserInfo: loginUserInfo.createJsonForm(),
+               studentInfo: studentInfo.createJsonForm(),
+               studentBookInfo: studentBookInfo.createJsonForm()
             })
         })
             .then(response => {
@@ -184,75 +130,19 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
                 console.log(data)
             });
 
-        fetch(studentInfo, {
-            method: "GET",
-             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: ({
-                `ID: ${studentInfo.getID()}`
-                `TermCode: ${studentInfo.getTermCode()}`
 
-            })
-        })
-            .then(response => {
-                if(response.ok){
-                    refreshViewWithJsonForCheckedInBook(response.json)
-                }
-                else{
-                    console.log("An Error Occurred")
-                    throw Error("Error");
-                }
-            },
-                errorReason => {
-                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                printError(errorReason);
-                })
-            .then(data => {
-                console.log(data)
-            });
-
-    fetch(studentBookInfo, {
-            method: "GET",
-             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: ({
-                BarCode: `${studentBookInfo.getBarcode()}`
-                StudentInfo: `${studentBookInfo.studentInfo()}`
-
-            })
-        })
-            .then(response => {
-                if(response.ok){
-                    refreshViewWithJsonForCheckedInBook(response.json)
-                }
-                else{
-                    console.log("An Error Occurred")
-                    throw Error("Error");
-                }
-            },
-                errorReason => {
-                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                printError(errorReason);
-                })
-            .then(data => {
-                console.log(data)
-            });
 }
 
 async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
-    fetch(loginUserInfo, {
+    fetch(`${localHostPrefix}/sellBook`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
         body: ({
-           `username: ${loginUserInfo.getUserName()}`
-           `password: ${loginUserInfo.getPassword()}`
+           loginUserInfo: loginUserInfo.createJsonForm(),
+           studentBookInfo: studentBookInfo.createJsonForm()
         })
     })
         .then(response => {
@@ -274,32 +164,5 @@ async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
             console.log(data)
         });
 
-    fetch(studentInfo, {
-        method: "GET",
-         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: ({
-            `ID: ${studentInfo.getID()}`
-            `TermCode: ${studentInfo.getTermCode()}`
-
-        })
-    })
-        .then(response => {
-            if(response.ok){
-                refreshViewWithJsonForSellBook(response.json)
-            }
-            else{
-                console.log("An Error Occurred")
-                throw Error("Error");
-            }
-        },
-            errorReason => {
-            console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-            printError(errorReason);
-            })
-        .then(data => {
-            console.log(data)
-        });
+    
 }
