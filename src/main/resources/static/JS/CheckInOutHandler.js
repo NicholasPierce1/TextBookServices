@@ -226,19 +226,20 @@ function showBookCopyForAllCheckedOutBooks(bookCopyList) {
 
 }
 
+
+
 function showBookCopyForCheckedOutBook(BookCopy) {
 
     // I need to add the bookcopy data into bookcopy object
+    book_obj = JSON.parse(BookCopy);
 
-
-    let table = document.getElementsByTagName("table");
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    for (let element of BookCopy) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(element);
-        th.appendChild(text);
-        row.appendChild(th);
+    for(let element of book_obj){
+        if(element.disposition == "O"){
+            let th = document.createElement("th");
+            let text = document.createTextNode(element);
+            th.appendChild(text);
+            row.appendChild(th);
+        }
     }
 
 }

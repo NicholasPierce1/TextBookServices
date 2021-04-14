@@ -311,6 +311,14 @@ class UserInfo{
         console.log("Done! Creating tag list");
         return inputTagList;
     }
+
+    // todo: add doc
+     createJsonForm(){
+        return {
+            _username: this.#username,
+            _password: this.#password
+        };
+     }
 }
 
 
@@ -446,6 +454,14 @@ class StudentInfo{
         console.log("Done! Creating tag list");
         return inputTagList;
     }
+
+    // todo: add doc
+     createJsonForm(){
+        return {
+            id: this.#ID,
+            termCode: this.#TERM_CODE
+        };
+     }
 }
 
 

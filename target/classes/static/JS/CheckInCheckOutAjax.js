@@ -1,32 +1,35 @@
-async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo){
-    fetch(loginUserInfo, {
+let localHostPrefix = "http://localhost:8080/rest/api/inventory";
+
+async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
+    fetch(`${localHostPrefix}/getCheckedOutBooks`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({
-           `username: ${loginUserInfo.getUsername()}`
-           `password: ${loginUserInfo.getPassword()}`
+        body: JSON.stringify({ //todo: nick stuff pt. 2
+            loginUserInfo: loginUserInfo.createJsonForm(),
+            studentInfo: studentInfo.createJsonForm()
         })
-        .then(response => {
-            if(response.ok){
-                //return response.json();
-                refreshViewWithJsonForAllCheckedOutBooks(response.json)
+            .then(response => {
+                    if (response.ok) {
+                        //return response.json();
+                        refreshViewWithJsonForAllCheckedOutBooks(response.json)
 
-            }
-            else{
-                console.log("An Error Occurred")
-                throw Error("Error");
-            }
-        },
-            errorReason => {
-            console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
-            printError(errorReason);
+                    } else {
+                        console.log("An Error Occurred")
+                        throw Error("Error");
+                    }
+                },
+                errorReason => {
+                    console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                    printError(errorReason);
+                })
+            .then(data => {
+                console.log(data)
             })
-        .then(data => {
-            console.log(data)
-        });
+    });
+}
 
     fetch(studentInfo, {
         method: "GET",
