@@ -22,7 +22,7 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
                     }
                 },
                 errorReason => {
-                    console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                    console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                     printError(errorReason);
                 })
             .then(data => {
@@ -31,16 +31,15 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
     });
 }
 
-    fetch(studentInfo, {
+    fetch(`${localHostPrefix}/getCheckedOutBooks`, {
         method: "GET",
          headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: ({
-            `ID: ${studentInfo.getID()}`
-            `TermCode: ${studentInfo.getTermCode()}`
-
+        body: JSON.stringify({ //todo: nick stuff pt. 2
+            loginUserInfo: loginUserInfo.createJsonForm(),
+            studentInfo: studentInfo.createJsonForm()
         })
     })
         .then(response => {
@@ -53,7 +52,7 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
             }
         },
             errorReason => {
-            console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+            console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
             printError(errorReason);
             })
         .then(data => {
@@ -86,7 +85,7 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
                 }
             },
                 errorReason => {
-                console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                 printError(errorReason);
                 })
             .then(data => {
@@ -115,7 +114,7 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
                 }
             },
                 errorReason => {
-                console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                 printError(errorReason);
                 })
             .then(data => {
@@ -144,7 +143,7 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
                 }
             },
                 errorReason => {
-                console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                 printError(errorReason);
                 })
             .then(data => {
@@ -178,7 +177,7 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
                 }
             },
                 errorReason => {
-                console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                 printError(errorReason);
                 })
             .then(data => {
@@ -207,7 +206,7 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
                 }
             },
                 errorReason => {
-                console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                 printError(errorReason);
                 })
             .then(data => {
@@ -236,7 +235,7 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
                 }
             },
                 errorReason => {
-                console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
                 printError(errorReason);
                 })
             .then(data => {
@@ -268,7 +267,7 @@ async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
             }
         },
             errorReason => {
-            console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+            console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
             printError(errorReason);
             })
         .then(data => {
@@ -297,7 +296,7 @@ async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
             }
         },
             errorReason => {
-            console.log(`An error occured in the fetch api\nreason: ${errorReason}`);
+            console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
             printError(errorReason);
             })
         .then(data => {
