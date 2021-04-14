@@ -120,39 +120,28 @@ function errorMessage(){
     }
 }
 
+/**
+ * Makes visible statusMessage error label and 
+ * it injects statusMessage into the label.
+ * @param {*} statusMessage 
+ */
 
+function showStatusMessageError(statusMessage) {
+    statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
+    
+    statusMessageErrorlabel.style.visibility = "Visible";
+    statusMessageErrorlabel.style.color="red";
+    statusMessageErrorlabel.innerHTML = statusMessage;
 
-function showStatusMessageError() {
-    error_IDnumber = document.getElementById("error_idNum");
-    error_name = document.getElementById("error_name");
-    error_barcode = document.getElementById("error_barcode");
-    error_bagNum = document.getElementById("error_bag");
-
-
-    error_IDnumber.innerHTML = ""
-    error_IDnumber.style.visibility = "Visible";
-
-    error_name.innerHTML = ""
-    error_name.style.visibility = "Visible";
-
-    error_barcode.innerHTML = ""
-    error_barcode.style.visibility = "Visible";
-
-    error_bagNum.innerHTML = ""
-    error_bagNum.style.visibility = "Visible";
 
 }
 
+/**
+ * Makes statusMessage error label hidden. 
+ */
 function hideStatusMessageError() {
-    error_IDnumber = document.getElementById("error_idNum");
-    error_name = document.getElementById("error_name");
-    error_barcode = document.getElementById("error_barcode");
-    error_bagNum = document.getElementById("error_bag");
-
-    error_IDnumber.style.visibility = "hidden";
-    error_name.style.visibility = "hidden";
-    error_barcode.style.visibility = "hidden";
-    error_bagNum.style.visibility = "hidden";
+    statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
+    statusMessageErrorlabel.style.visibility = "hidden";
 }
 
 function showBagError() {

@@ -5,11 +5,10 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: ({
-           `username: ${loginUserInfo.getUserName()}`
+        body: JSON.stringify({
+           `username: ${loginUserInfo.getUsername()}`
            `password: ${loginUserInfo.getPassword()}`
         })
-    })
         .then(response => {
             if(response.ok){
                 //return response.json();
