@@ -152,6 +152,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row gy-5">
+                <div class="col-md-4 pt-2">
+                    <label type="hidden" id="statusMessageErrorLabel"></label>
+                </div>
+            </div>
 
 
 
