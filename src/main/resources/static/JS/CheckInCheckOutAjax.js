@@ -1,4 +1,4 @@
-let localHostPrefix = "http://localhost:8080/api/inventory";
+let localHostPrefix = "http://localhost:8080/rest/api/inventory";
 
 async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
     fetch(`${localHostPrefix}/getCheckedOutBooks`, {
