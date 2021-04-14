@@ -26,6 +26,7 @@ public final class ErrorBinding <T> {
      * @param fieldErrorMessage
      * @param errorData
      */
+
     public  ErrorBinding(String fieldErrorName, String fieldErrorMessage, @Nullable T errorData){
         this._fieldErrorMessage = fieldErrorMessage;
         this._fieldErrorName = fieldErrorName;
