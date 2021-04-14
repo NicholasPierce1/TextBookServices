@@ -26,6 +26,14 @@
 </head>
 <body>
 
+<%
+    // extract json data from page load (NOT api call -- but from form controller)
+    final String data = ((JSONObject)request.getAttribute("data")).toString();
+
+    // print's invisible input tag with the id "data" for extraction by js files in client-browser
+    out.println("<input type=\"hidden\" value=\"" + data + "\" id=\"data\">" );
+%>
+
 <input type="hidden" id="generalErrors" value="">
 
 <section>
@@ -42,11 +50,11 @@
                 <ul class="navbar-nav pb-1 pt-1">
                     <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="">Home</a>
                 </ul>
-                <div class="nav-item dropdown pb-1 pt-1" id="Inventory">
+                <div class="nav-item dropdown pb-1 pt-1" id="supervisorDropDownDiv">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Inventory" name="ulInv">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="supervisorDropDownUl" name="ulInv">
                         <li id="AddBooks"><a class="dropdown-item" href="#" onclick="">Add Books</a></li>
                         <li id="ChangeBook"><a class="dropdown-item" href="#" onclick="">Change Book</a></li>
                         <li id="QueryBooks"><a class="dropdown-item" href="#" onclick="">Query Book</a></li>
@@ -55,11 +63,11 @@
                         <li id="Maintenance"><a class="dropdown-item" href="#" onclick="">Maintenance</a></li>
                     </ul>
                 </div>
-                <div class="nav-item dropdown pb-1 pt-1" id="Patrons" name="ulPatrons">
+                <div class="nav-item dropdown pb-1 pt-1" id="patronDropDownDiv" name="ulPatrons">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Patrons
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Patrons">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
                         <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="">Check In/Out</a></li>
                         <li id="Patrons"><a class="dropdown-item" href="#" onclick="">Patrons</a></li>
                     </ul>

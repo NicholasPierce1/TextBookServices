@@ -26,6 +26,13 @@
 </head>
 <body>
 
+<%
+    // extract json data from page load (NOT api call -- but from form controller)
+    final String data = ((JSONObject)request.getAttribute("data")).toString();
+
+    // print's invisible input tag with the id "data" for extraction by js files in client-browser
+    out.println("<input type=\"hidden\" value=\"" + data + "\" id=\"data\">" );
+%>
 
 <input type="hidden" id="generalErrors" value="">
     <section>
@@ -40,16 +47,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav pb-1 pt-1" id="Home" >
-                        <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="">Home</a>
+                       <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="">Home</a>
                     </ul>
                     <ul class="navbar-nav pb-1 pt-1" id="CheckInCheckOut" >
                         <a class="nav-link navbar-text" aria-current="page" href="#" onclick="">Check In / Check Out</a>
                     </ul>
-                    <div class="nav-item dropdown pb-1 pt-1">
+                    <div class="nav-item dropdown pb-1 pt-1" id="patronDropDownDiv">
                         <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Patron Info
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Patrons">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
                             <li id="PatronSchedule"><a class="dropdown-item" href="#" onclick="">Patron Schedule</a></li>
                             <li id="PatronPreviousBooks"><a class="dropdown-item" href="#" onclick="">Patron Previous Books</a></li>
                             <li id="PatronSoldBooks"><a class="dropdown-item" href="#" onclick="">Patron Sold Books</a></li>
