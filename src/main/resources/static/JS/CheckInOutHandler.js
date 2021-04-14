@@ -108,13 +108,13 @@ function hideStatusCodeError() {
 
 function errorMessage(){
     if(isNaN(document.getElementById("IDnumber"))){
-        error_IDnumber.style.visibility="visible"
+        error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
         error_IDnumber.innerHTML("<p>Please enter the 919#</p>");
 
     }
     else if(typeof(document.getElementById("IDnumber"))!=="number"){
-        error_IDnumber.style.visibility="visible"
+        error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
         error_IDnumber.innerHTML("<p>Incorrect input type</p>");
     }
@@ -127,8 +127,11 @@ function errorMessage(){
  */
 
 function showStatusMessageError(statusMessage) {
-    statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
+
+    //Get dom element. label for statusMessage.
+    const statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
     
+    // Make label visible and add a red color.
     statusMessageErrorlabel.style.visibility = "Visible";
     statusMessageErrorlabel.style.color="red";
     statusMessageErrorlabel.innerHTML = statusMessage;
@@ -137,16 +140,24 @@ function showStatusMessageError(statusMessage) {
 }
 
 /**
- * Makes statusMessage error label hidden. 
+ * @purpose Makes statusMessage error label hidden. 
  */
 function hideStatusMessageError() {
-    statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
+    //Get dom element. label for statusMessage.
+    const statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
+
+    // Make label hidden.
     statusMessageErrorlabel.style.visibility = "hidden";
 }
 
+/**
+ * @purpose Display "Not Verified" in bag error label using innerHTML. 
+ */
+
 function showBagError() {
-    const error_bag = document.getElementById("error_bag");
-    error_bag.style.visibility = "visible"
+    //Get dom element for label of bag error.
+    const error_bag = window.document.getElementById("error_bag");
+    error_bag.style.visibility = "visible";
     error_bag.innerHTML = "Not Verified";
 }
 
@@ -155,7 +166,8 @@ function showBagError() {
  */
 
 function hideBagError() {
-    const error_bag = document.getElementById("error_bag");
+    //Get dom element for label of bag error.
+    const error_bag = window.document.getElementById("error_bag");
     error_bag.style.visibility = "hidden";
 }
  /**
