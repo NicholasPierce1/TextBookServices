@@ -148,4 +148,19 @@ public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel
         return createApiFromJson(jsonObject, null);
 
     }
+
+
+    /**
+     * .equals method to compare fields for testing
+     */
+    @Override
+    public boolean equals(Object loginObj){
+        LoginUserInfo expected = (LoginUserInfo) loginObj;
+        //compare the actual and expected values
+        return (
+                this._password.equals(expected.get_password())
+                && this._username.equals(expected.get_username())
+        );
+
+    }
 }
