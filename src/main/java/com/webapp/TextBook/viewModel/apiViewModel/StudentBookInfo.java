@@ -169,4 +169,20 @@ public final class StudentBookInfo extends ApiViewModelCreation{
             @NotNull final JSONObject jsonObject){
         return createApiFromJson(jsonObject, null);
     }
+
+    /**
+     * Overrides teh
+     * @param expected
+     * @return
+     */
+    @Override
+    public boolean equals(Object expected){
+        StudentBookInfo sbi = (StudentBookInfo) expected;
+        //Pulls out studtent info for comparison
+        StudentInfo stu = sbi.studentInfo;
+        return(
+                this.studentInfo.equals(stu) && this.barCode.equals(sbi.barCode)
+                );
+
+    }
 }

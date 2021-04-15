@@ -163,7 +163,7 @@ public class StudentInfo extends ApiViewModelCreation {
     public boolean equals(Object stuInfo){
         StudentInfo expected = (StudentInfo)stuInfo ;
         return(
-                this.id.equals(id) && this.termCode.equals(termCode)
+                this.id.equals(expected.id) && this.termCode.equals(expected.termCode)
                 );
 
     }
