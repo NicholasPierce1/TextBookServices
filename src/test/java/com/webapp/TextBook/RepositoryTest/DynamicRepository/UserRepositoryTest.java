@@ -25,6 +25,8 @@ public class UserRepositoryTest {
 
         final String password = "S000001@nwmissouri.edu";
 
+        final String userRole = "Supervisor";
+
         try{
             // invoke repository to garner partial user from a given username and password
             final Pair<Optional<Object[]>, StatusCode> RESULT =
@@ -38,7 +40,11 @@ public class UserRepositoryTest {
             if (RESULT.getValue0().isPresent()) {
 
                 final Object[] user = RESULT.getValue0().get();
-                System.out.println(user);
+                System.out.println("Size of returned list: "+ user.length);
+                System.out.println("Username: "+ user[0]);
+                System.out.println("Password: "+ user[1]);
+                System.out.println("User Role: "+ user[2]);
+
             }
 
             assert(true);
