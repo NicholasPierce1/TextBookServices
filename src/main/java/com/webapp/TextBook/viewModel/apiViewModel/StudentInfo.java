@@ -134,14 +134,14 @@ public class StudentInfo extends ApiViewModelCreation {
 
         // creates a local supplier based on the predicate if the given supplier is null or not
         // use the blank constructor as a default
-        final Supplier<StudentInfo> localStudnetInfoSupplier = studentInfoSupplier == null ?
+        final Supplier<StudentInfo> localStudentInfoSupplier = studentInfoSupplier == null ?
                 StudentInfo::new :
                 studentInfoSupplier;
 
         // invokes parent's static helper to set the state for a studenInfo
         return ApiViewModelCreation.createApiViewModelFromJson(
                 jsonObject,
-                studentInfoSupplier,
+                localStudentInfoSupplier,
                 StudentInfo.valueStateSetter
                 );
 
@@ -152,5 +152,19 @@ public class StudentInfo extends ApiViewModelCreation {
             @NotNull final JSONObject jsonObject){
 
         return createApiFromJson(jsonObject,null);
+    }
+
+    /**
+     * equals mehtod for Testing. Compares paramters
+     * @param stuInfo
+     * @return
+     */
+    @Override
+    public boolean equals(Object stuInfo){
+        StudentInfo expected = (StudentInfo)stuInfo ;
+        return(
+                this.id.equals(id) && this.termCode.equals(termCode)
+                );
+
     }
 }
