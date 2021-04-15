@@ -73,12 +73,14 @@ public class PersonRepositoryTest {
 
             // prints all results to verify that state of bookcopy (ORM) works as expected
             if (RESULTS.getValue0().isPresent()) {
-
+                final Object[] user = RESULTS.getValue0().get();
                 // print the number of results expected (current instance: 4/13 --> 4)
-                System.out.println(RESULTS.getValue0().get().length);
-
-                for (final Object o: RESULTS.getValue0().get())
-                    System.out.println(o);
+                System.out.println("Size of Object[] list: " + RESULTS.getValue0().get().length);
+                System.out.println("PIDM: "+  user[0]);
+                System.out.println("ID: "+  user[1]);
+                System.out.println("LastName: "+  user[2]);
+                System.out.println("FirstName: "+  user[3]);
+                System.out.println("MiddleInitial: "+  user[4]);
             }
 
             assert(true);
