@@ -207,11 +207,11 @@ function handlerStatusMessageError(statusMessage) {
 }
 
 function handleErrorBindings() {
-    const id_error_label = document.getElementById("error_idNum");
+    const id_error_label = document.getElementById("error_studentID");
     const studentID = document.getElementById("student_id_in");
 
-    id_error_labelValue = id_error_label.value;
-    if (id_error_label != null && studentID.innerHTML == "") {
+    const id_error_labelValue = id_error_label.value;
+    if (id_error_labelValue != null && studentID.innerHTML == "") {
         studentID.innerHTML = "";
     }
     return
@@ -240,9 +240,10 @@ function showBookCopyForAllCheckedOutBooks(bookCopyList) {
 
 function showBookCopyForCheckedOutBook(BookCopy) {
 
-    // I need to add the bookcopy data into bookcopy object
+    //Parse book copy in JSON
     book_obj = JSON.parse(BookCopy);
 
+    //Get DOM element for table
     let table = document.getElementsByTagName("table");
     let thead = table.createTHead();
     let row = thead.insertRow();
@@ -272,13 +273,14 @@ function removeTableRow(table) {
 function hideErrorBindings() {
 
 
+
 }
 
 function deleteTableRowWhereBarcodeMatches(barcode) {
-    const table = document.getElementsByTagName('table').rows;
+    const table = window.document.getElementsByTagName("table").rows;
     for (let i of table) {
         if (i == barcode) {
-            table.row;
+            table.deleteRow(table[i]);
         }
     }
 }

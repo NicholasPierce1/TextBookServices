@@ -182,6 +182,9 @@
             </div>
         </div>
     </div>
+
+    <table>
+    </table>
 </section>
 
     <button onclick="testStatusCodeErrorOnClick();">test show status code error</button>
