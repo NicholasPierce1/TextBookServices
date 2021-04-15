@@ -2,8 +2,13 @@ package com.webapp.TextBook.ValidationTest.Shared;
 
 import com.sun.istack.Nullable;
 import com.webapp.TextBook.validation.Shared.ErrorBinding;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class tests Error Binding
@@ -67,5 +72,7 @@ public class TestErrorBinding <T>{
         }
 
     }
+
+
 
 }
