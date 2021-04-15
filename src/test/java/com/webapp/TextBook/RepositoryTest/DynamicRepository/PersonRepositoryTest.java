@@ -77,17 +77,17 @@ public class PersonRepositoryTest {
 
 
     @Test
-    public void testtestGetPartialUserWithCanidateKey(){
+    public void testGetPartialUserWithCanidateKey(){
 
         // supply hard coded student id (pidm) & term code
-        final String STUDENT_PIDM = "467767";
+        final String USER_ID = "919000001";
 
-        final String TERM_CODE = "202120";
+
 
         try {
             // invoke repository to garner all book copies for a given student and term
-            final Pair<Optional<List<BookCopy>>, StatusCode> RESULTS =
-                    this._bookCopyRepository.getAllCheckedOutBooks(STUDENT_PIDM, TERM_CODE);
+            final Pair< Optional<Object[]>, StatusCode >  RESULTS =
+                    this._personRepository.getPartialUserWithCandidateKey(USER_ID);
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
             System.out.println(RESULTS.getValue1()); // should be OK
@@ -97,10 +97,10 @@ public class PersonRepositoryTest {
             if (RESULTS.getValue0().isPresent()) {
 
                 // print the number of results expected (current instance: 4/13 --> 4)
-                System.out.println(RESULTS.getValue0().get().size());
+                System.out.println(RESULTS.getValue0().get().length);
 
-                for (final BookCopy bookCopy : RESULTS.getValue0().get())
-                    System.out.println(bookCopy);
+                for (final Object o: RESULTS.getValue0().get())
+                    System.out.println(o);
             }
 
             assert(true);
