@@ -164,5 +164,5 @@ async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
             console.log(data)
         });
 
-    
+
 }

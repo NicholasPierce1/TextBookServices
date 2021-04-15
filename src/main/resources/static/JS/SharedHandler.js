@@ -1,4 +1,4 @@
-/**
+   /**
  * @Authors Chase Staples and Spyridon Kaperonis
  * @DateCreated 03/09/21
  *
@@ -556,7 +556,7 @@ class BookCopy{
      * @method getbookCode
      * @returns bookCode
      */
-    getbookCode(){
+    getBookCode(){
         return this.#bookCode;
     }
 
@@ -564,7 +564,7 @@ class BookCopy{
      * @method geteditionyear
      * @returns editionyear
      */
-    geteditionyear(){
+    getEditionyear(){
         return this.editionyear;
     }
 
@@ -572,7 +572,7 @@ class BookCopy{
      * @method getseqNr
      * @returns  seqNr
      */
-    getseqNr(){
+    getSeqNr(){
         return this.seqNr;
     }
 
@@ -580,7 +580,7 @@ class BookCopy{
      * @method getdispsition
      * @returns disposition
      */
-    getdisposition(){
+    getDisposition(){
         return this.disposition;
     }
 
@@ -588,7 +588,7 @@ class BookCopy{
      * @method getbookSalePrice
      * @returns bookSalePrice
      */
-    getbookSalePrice(){
+    getBookSalePrice(){
         return this.bookSalePrice;
     }
 
@@ -596,7 +596,7 @@ class BookCopy{
      * @method getprevPidm
      * @returns prevPidm
      */
-    getprevPidm(){
+    getPrevPidm(){
         return this.prevPidm;
     }
 
@@ -604,7 +604,7 @@ class BookCopy{
      * @method getprevTermCode
      * @returns  prevTermCode
      */
-    getprevTermCode(){
+    getPrevTermCode(){
         return this.prevTermCode;
     }
 
@@ -612,7 +612,7 @@ class BookCopy{
      * @method getprevDateCheckedIn
      * @returns prevDateCheckedIn
      */
-    getprevDateCheckedIn(){
+    getPrevDateCheckedIn(){
         return this.prevDateCheckedIn
     }
 
@@ -620,7 +620,7 @@ class BookCopy{
      * @method getactivityDate
      * @returns activityDate
      */
-    getactivityDate(){
+    getActivityDate(){
         return this.activityDate;
     }
 
@@ -628,7 +628,7 @@ class BookCopy{
      * @method getbillFlag
      * @returns billFlag
      */
-    getbillFlag(){
+    getBillFlag(){
         return this.billFlag;
     }
 
@@ -675,7 +675,7 @@ class BookCopy{
      * @method getpidm
      * @returns  pidm
      */
-    getpidm(){
+    getPidm(){
         return this.pidm;
     }
 
@@ -683,7 +683,7 @@ class BookCopy{
      * @method getbagNumber
      * @returns  bagNumber
      */
-    getbagNumber(){
+    getBagNumber(){
         return this.bagNumber;
     }
 
@@ -712,7 +712,7 @@ class BookCopy{
 
             const jsonObject = JSON.parse(jsonObj);
 
-            return (jsonObject.termCode, jsonObject.termDescription);
+            return new Term(jsonObject.termCode, jsonObject.termDescription);
 
         }
         catch{
@@ -726,7 +726,7 @@ class BookCopy{
      * @method gettermCode
      * @returns termCode
      */
-    gettermCode(){
+    getTermCode(){
         return this.termCode;
     }
 
@@ -734,7 +734,7 @@ class BookCopy{
      * @method gettermDescription
      * @returns  termDescription
      */
-    gettermDescription(){
+    getTermDescription(){
         return this.termDescription;
     }
 }
