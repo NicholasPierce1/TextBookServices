@@ -1,0 +1,16 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "spring.datasource.driver-class",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.driver-class."
+    },
+    {
+      "name": "spring.jpa.hibernate.naming-strategy",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.hibernate.naming-strategy."
+    }
+  ],
+  "hints": []
+}
