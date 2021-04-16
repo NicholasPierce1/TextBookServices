@@ -103,7 +103,7 @@ public class ValidationBindingHelper {
         return false;
     }
 
-    /***
+    /**
      * Looks to deal with errors in JSON array
      * @param apiValidationResults
      * @param jsonObject
