@@ -362,7 +362,7 @@ public final class Adapter {
             // returns error status code
             return optionalStudentCodePair.getValue1();
 
-        return this._bookCopyRepository.sellBook(barcode, studentId);
+        return this._bookCopyRepository.sellBook(barcode);
     }
 
     /**

@@ -68,6 +68,41 @@ public class BookCopyRepositoryTest {
             assert(false);
         }
 
+    }
+
+    @Test
+    public void testCheckoutBookForStudentAndTerm(){
+
+        // enumerates local, final state to denote a new student within a term + a targeted "dummy" bookcopy
+        final String studentId = "12345678";
+        final String currentTermCode = "202120";
+        final String targetedBookCopyStrikeBarcode = "111111111111/";
+
+        // encapsulates process within try-catch
+        // if no errors yielded then test passed
+        try{
+
+            // checks out the pre-test created book to the dummy student
+            final Pair<Optional<BookCopy>, StatusCode> results = this._bookCopyRepository.checkOutBook(
+                    targetedBookCopyStrikeBarcode,
+                    studentId,
+                    currentTermCode
+            );
+
+            // manual print to verify state is palatable
+            System.out.println("status code of result (should be ok in local trial (cannot run without pre-test state creation):" +
+                    results.getValue1());
+
+            if(results.getValue0().isPresent())
+                // 919 and term code should match from local constant denoted above + strike code is the same
+                System.out.println("returned book copy: " + results.getValue0().get());
+
+            assert(true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
 
 
     }

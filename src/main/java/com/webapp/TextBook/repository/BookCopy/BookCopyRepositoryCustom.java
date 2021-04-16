@@ -65,8 +65,7 @@ public interface BookCopyRepositoryCustom extends Repository {
      *
      * @param barcode: String barcode representing the book copy's strike barcode.
      *               This corresponding book should be checked out by the given student.
-     * @param studentId: String studentId representing the unique string for a 919 number.
      * @return StatusCode of a BookCopy.
      */
-    @NotNull StatusCode sellBook(@NotNull final String barcode, @NotNull final String studentId);
+    @NotNull StatusCode sellBook(@NotNull final String barcode);
 }

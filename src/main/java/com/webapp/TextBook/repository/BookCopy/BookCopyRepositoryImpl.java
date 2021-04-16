@@ -1,5 +1,6 @@
 package com.webapp.TextBook.repository.BookCopy;
 
+import com.sun.istack.Nullable;
 import com.webapp.TextBook.repository.data_access.Bag;
 import com.webapp.TextBook.repository.data_access.BookCopy;
 import com.webapp.TextBook.repository.shared_respository_helper.DataAccessConversionHelper;
@@ -12,6 +13,7 @@ import com.webapp.TextBook.sharedFiles.StatusCode;
 import javax.persistence.*;
 import javax.transaction.Transaction;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.awt.print.Book;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -127,43 +129,38 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
      * @param termCode: String termCode representing the name of the term code.
      * @return Optional BookCopy object with Status Code
      */
-    public @NotNull Pair<Optional<BookCopy>, StatusCode> checkOutBook(@NotNull final String strikeBarcode, @NotNull final String studentId, @NotNull String termCode){
-        final String TABLE_NAME = GetTableName();
-        Date date = new Date();
-        SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String currentDate = sdFormat.format(date);
+    public @NotNull Pair<Optional<BookCopy>, StatusCode> checkOutBook(
+            @NotNull final String strikeBarcode,
+            @NotNull final String studentId,
+            @NotNull String termCode){
 
         try {
             // Create the EntityManager and writing the query to access BookCopy records that matches the strikeBarcode.
             EntityManager em = _entityManagerFactory.createEntityManager();
             Pair<Optional<BookCopy>, StatusCode> result = findBookCopyByStrikeBarcode(strikeBarcode);
 
+            // verifies the status code of operation is OK
+            if(result.getValue1() != StatusCode.OK)
+                return result; // error occurred, return faulty result
 
-            if(result.getValue0().get().pidm == null && result.getValue0().get().termCode == null && result.getValue0().get().dateCheckedOut == null && result.getValue0().get().disposition == 'I'){
-                changeBookDisposition(result.getValue0().get().pidm, result.getValue0().get().termCode, result.getValue0().get().disposition, 'O');
-                // Initiate transaction
-                transaction = em.getTransaction();
-                transaction.begin();
-                // Query to update BookCopy table with new information, hence "checking out" the book copy.
-                String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_PIDM\" = ?, tableName.\"NWTXDT_TERM\" = ?, tableName.\"NWTXDT_DATE_CHECKED_OUT\" = ? " +
-                        "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
+            // capture the book copy and verify integrity state (should never throw)
+            final BookCopy bookCopy = result.getValue0().orElseThrow();
 
-                // Adding the BookCopy tableName to the query
-                Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
+            // corroborate book copy is applicable to a checkout operation (not own by someone else)
+            /*
+            1) disposition is 'I'
+            2) no current pidm (student holding book) --> implies term and date checkout are null
+             */
+            if(
+                    bookCopy.pidm == null &&
+                    bookCopy.termCode == null &&
+                    bookCopy.dateCheckedOut == null &&
+                    bookCopy.disposition == 'I'){
 
-                // Adding arguments from method to the query
-                updateBookCopyQuery.setParameter(1, studentId);
-                updateBookCopyQuery.setParameter(2, termCode);
-                updateBookCopyQuery.setParameter(3, currentDate);
-                updateBookCopyQuery.setParameter(4, strikeBarcode);
-
-
-                // Executing and committing the update.
-                updateBookCopyQuery.executeUpdate();
-                transaction.commit();
-
+                final StatusCode statusCode = changeBookDisposition(bookCopy, studentId, termCode, 'O');
                 // Returning the Book Copy record that was updated
-                return new Pair<Optional<BookCopy>, StatusCode>(result.getValue0(), StatusCode.OK);
+
+                return new Pair<Optional<BookCopy>, StatusCode>(statusCode == StatusCode.OK ? Optional.of(bookCopy) : Optional.empty(), statusCode);
             }
             else {
                 return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.BookAlreadyCheckedOut);
@@ -174,10 +171,6 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.CheckedInBookCopyUndefined);
         }
         catch (RuntimeException ex) {
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-                return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.FailureToUpdateBookCopy);
-            }
             System.out.println("db error --\n" + ex.getMessage());
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
@@ -200,60 +193,25 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
         try {
             // Create the EntityManager and writing the query to access BookCopy records that matches the strikeBarcode, studentId, termCode and disposition is 'O'.
             EntityManager em = _entityManagerFactory.createEntityManager();
-            String originalQuery = "SELECT tableName.* FROM tableName WHERE tableName.\"NWTXDT_BARCODE\" = ? AND tableName.\"NWTXDT_PIDM\" = ? AND tableName.\"NWTXDT_TERM\" = ? AND tableName.\"NWTXDT_DISPOSITION\" = 'O'";
 
-            // Calling the query for the specific table specified in TABLE_NAME.
-            Query getCheckInBooksQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery, TABLE_NAME));
+            Pair<Optional<BookCopy>, StatusCode> result = findBookCopyByStrikeBarcode(strikeBarcode);
 
-            // Adds the strikeBarcode, studentId, and termCode from the method call to the query.
-            getCheckInBooksQuery.setParameter(1, strikeBarcode);
-            getCheckInBooksQuery.setParameter(2, studentId);
-            getCheckInBooksQuery.setParameter(3, termCode);
+            // verifies the status code of operation is OK
+            if(result.getValue1() != StatusCode.OK)
+                return result.getValue1(); // error occurred, return faulty result
 
-            // Saving the results from the query.
-            List<Object[]> records = getCheckInBooksQuery.getResultList();
+            // capture the book copy and verify integrity state (should never throw)
+            final BookCopy bookCopy = result.getValue0().orElseThrow();
 
-            // Creates new BookCopy type List.
-            List<BookCopy> returnType = new ArrayList<BookCopy>();
+            return changeBookDisposition(bookCopy, null, null, 'I');
 
-            // Using the information stored in the query results, create new BookCopy objects.
-            DataAccessConversionHelper.createDataAccessObjects(records, returnType, BookCopy::new);
-
-            // Searching through list of Book Copies to find those that are available.
-            for(int i = 0; i < returnType.size(); i++){
-                changeBookDisposition(returnType.get(i).pidm,returnType.get(i).termCode, returnType.get(i).disposition, 'I');
-                // Initiate transaction
-                transaction = em.getTransaction();
-                transaction.begin();
-
-                // Query to update BookCopy table with new information, hence "checking in" the book copy.
-                String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_PIDM\" = NULL, tableName.\"NWTXDT_TERM\" = NULL, tableName.\"NWTXDT_DATE_CHECKED_OUT\" = NULL" +
-                        "WHERE tableName.\"NWTXDT_PIDM\" = ? AND tableName.\"NWTXDT_TERM\" = ?";
-
-                // Adding the BookCopy tableName to the query
-                Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
-
-                // Adding arguments from method to the query
-                updateBookCopyQuery.setParameter(1, studentId);
-                updateBookCopyQuery.setParameter(2, termCode);
-
-                // Executing and committing the update.
-                updateBookCopyQuery.executeUpdate();
-                transaction.commit();
-                // Returning the Book Copy record status that was updated
-                return StatusCode.OK;
-            }
-            return StatusCode.BookCopyLongUndefined;
         }
         catch(NoResultException noResultException) {
             System.out.println("Internal Error: BookCopyRepositoryImpl--getAllCheckedOutBooks--\n" + noResultException.getMessage());
             return StatusCode.BookCopyLongUndefined;
         }
         catch (RuntimeException ex) {
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-                return StatusCode.FailureToUpdateBookCopy;
-            }
+
             System.out.println("db error --\n" + ex.getMessage());
             return StatusCode.DatabaseError;
         }
@@ -266,62 +224,31 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
      *</p>
      *
      * @param barcode: String barcode representing the strike barcode, NW's specific barcode for books.
-     * @param studentId: String studentId representing the unique string for a 919 number.
      * @return StatusCode to see if process was successful.
      */
-    public @NotNull StatusCode sellBook(@NotNull final String barcode, @NotNull final String studentId){
+    public @NotNull StatusCode sellBook(@NotNull final String barcode){
         final String TABLE_NAME = GetTableName();
 
         try {
-            // Create the EntityManager and writing the query to access BookCopy records that matches the strikeBarcode and pidm and disposition is not S or I.
+            // Create the EntityManager and writing the query to access BookCopy records that matches the strikeBarcode, studentId, termCode and disposition is 'O'.
             EntityManager em = _entityManagerFactory.createEntityManager();
-            String originalQuery = "SELECT tableName.* FROM tableName WHERE tableName.\"NWTXDT_BARCODE\" = ? AND tableName.\"NWTXDT_PIDM\" = ? AND (tableName.\"NWTXDT_DISPOSITION\" != 'S' OR tableName.\"NWTXDT_DISPOSITION\" != 'I')";
 
-            // Calling the query for the specific table specified in TABLE_NAME.
-            Query getBooksToSell = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
+            Pair<Optional<BookCopy>, StatusCode> result = findBookCopyByStrikeBarcode(barcode);
 
-            // Adds the studentId from the method call to the query.
-            getBooksToSell.setParameter(1, barcode);
-            getBooksToSell.setParameter(2, studentId);
+            // verifies the status code of operation is OK
+            if(result.getValue1() != StatusCode.OK)
+                return result.getValue1(); // error occurred, return faulty result
 
-            List<Object[]> records = getBooksToSell.getResultList();
+            // capture the book copy and verify integrity state (should never throw)
+            final BookCopy bookCopy = result.getValue0().orElseThrow();
 
-            // Creates new BookCopy type List.
-            List<BookCopy> returnType = new ArrayList<BookCopy>();
-
-            // Using the information stored in the query results, create new BookCopy objects.
-            DataAccessConversionHelper.createDataAccessObjects(records, returnType, BookCopy::new);
-
-
-            // Initiate transaction
-            transaction = em.getTransaction();
-            transaction.begin();
-
-            // Query to update BookCopy table and changing the disposition to S for sold
-            String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'S' " +
-                    "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
-
-            // Adding the BookCopy tableName to the query
-            Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
-
-            // Adding arguments from method to the query
-            updateBookCopyQuery.setParameter(1, barcode);
-
-            // Executing and committing the update.
-            updateBookCopyQuery.executeUpdate();
-            transaction.commit();
-            // Returning the Book Copy record status that was updated
-            return StatusCode.OK;
+            return changeBookDisposition(bookCopy, null, null, 'S');
         }
         catch(NoResultException noResultException) {
             System.out.println("Internal Error: BookCopyRepositoryImpl--getAllCheckedOutBooks--\n" + noResultException.getMessage());
             return StatusCode.SellBookNotFound;
         }
         catch (RuntimeException ex) {
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-                return StatusCode.FailureToUpdateBookCopy;
-            }
             System.out.println("db error --\n" + ex.getMessage());
             return StatusCode.DatabaseError;
         }
@@ -331,69 +258,141 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
      * This is a procedure to help in other transactional methods to change the disposition of a BookCopy.
      *</p>
      *
-     * @param pidm: String pidm representing the unique string code connected to a student's 919 number.
-     * @param termCode: String termCode representing the name of the term code.
-     * @param disposition: Character disposition to represent the status of the book copy.
+     * @param bookCopy: BookCopy representing the scope/target book copy to modify disposition accordingly (assumed to already exist/verify)
+     * @param newPidm: String representing the new student (919) to hold the targeted book (assumes exists)
+     * @param newTerm: String representing the current/new term code to hold the targeted book (assumes exists)
      * @param newDisposition: Character newDisposition to represent the new status of the book copy we want to set.
      * @return StatusCode to see if process was successful.
      */
-    private @NotNull StatusCode changeBookDisposition(@NotNull final String pidm, @NotNull final String termCode, @NotNull final char disposition, @NotNull final char newDisposition){
-        final String TABLE_NAME = GetTableName();
+    private @NotNull StatusCode changeBookDisposition(
+            @NotNull final BookCopy bookCopy,
+            @Nullable final String newPidm,
+            @Nullable final String newTerm,
+            @NotNull final char newDisposition){
 
+        final String TABLE_NAME = GetTableName();
         //Retrieving current date to use for later attributes.
         Date date = new Date();
-        SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdFormat = new SimpleDateFormat("dd-MM-yyyy");
         String currentDate = sdFormat.format(date);
 
         // Create the EntityManager
         EntityManager em = _entityManagerFactory.createEntityManager();
 
         try{
-            //Initiate transaction, writing query to update BookCopy record with new disposition
-            transaction = em.getTransaction();
-            transaction.begin();
-            if(newDisposition == 'O') {
-                String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'O', tableName.\"NWTXDT_ACTIVITY_DATE\" = ? " +
-                        "WHERE tableName.\"NWTXDT_PIDM\" = ? AND tableName.\"NWTXDT_TERM\" = ?, AND tableName.\"NWTXDT_DISPOSITION\" = 'I'";
-                Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
+            switch(newDisposition) {
+                case 'I': // want to check in a book copy
+                {
+                    //Initiate transaction, writing query to update BookCopy record with new disposition
+                    transaction = em.getTransaction();
+                    transaction.begin();
 
-                // Adding arguments from method to the query
-                updateBookCopyQuery.setParameter(1, currentDate);
-                updateBookCopyQuery.setParameter(2, pidm);
-                updateBookCopyQuery.setParameter(3, termCode);
+                    String transactionQuery = "UPDATE tableName set tableName.\"NWTXDT_DISPOSITION\" = 'I', tableName.\"NWTXDT_ACTIVITY_DATE\" = to_date(?, 'DD-MM-RRRR') " +
+                            "tableName.\"NWTXDT_PREV_PIDM\" = ?, tableName.\"NWTXDT_PREV_TERM\" = ?, " +
+                            "tableName.\"NWTXDT_PIDM\" = null, tableName.\"NWTXDT_TERM\" = null, tableName.\"NWTXDT_DATE_CHECKED_OUT\" = null " +
+                            "tableName.\"NWTXDT_PREV_DATE_CHECKED_IN\" = to_date(?, 'DD-MM-RRRR') " +
+                            "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
+                    Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
 
-                // Executing and committing the update.
-                updateBookCopyQuery.executeUpdate();
-                transaction.commit();
-                // Returning OK if process is successful
-                return StatusCode.OK;
-            }
-            else if(newDisposition == 'I'){
-                //Writing query to update BookCopy record with new disposition
-                String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'I', tableName.\"NWTXDT_PREV_PIDM\" = ?, tableName.\"NWTXDT_PREV_TERM\" = ?, tableName.\"NWTXDT_PREV_DATE_CHECKED_IN\" = ?, tableName.\"NWTXDT_ACTIVITY_DATE\" = ? " +
-                        "WHERE tableName.\"NWTXDT_PIDM\" = ? AND tableName.\"NWTXDT_TERM\" = ? AND tableName.\"NWTXDT_DISPOSITION\" = 'O'";
-                Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
+                    // Adding arguments from method to the query
+                    updateBookCopyQuery.setParameter(1, currentDate);
+                    updateBookCopyQuery.setParameter(2, bookCopy.getPidm());
+                    updateBookCopyQuery.setParameter(3, bookCopy.getTermCode());
+                    updateBookCopyQuery.setParameter(4, currentDate);
+                    updateBookCopyQuery.setParameter(5, bookCopy.getStrikeBarcode());
+                    // Executing and committing the update.
+                    final int amountUpdated = updateBookCopyQuery.executeUpdate();
 
-                // Adding arguments from method to the query
-                updateBookCopyQuery.setParameter(1, pidm);
-                updateBookCopyQuery.setParameter(2, termCode);
-                updateBookCopyQuery.setParameter(3, currentDate);
-                updateBookCopyQuery.setParameter(4, currentDate);
-                updateBookCopyQuery.setParameter(5, pidm);
-                updateBookCopyQuery.setParameter(6, termCode);
+                    if (amountUpdated != 1) // 0 or multiple books amended
+                        throw new RuntimeException("Internal Error (BookCopyRepositoryImpl -- ChangeBookDisposition): 0 or many books" +
+                                "were updated. Please check logs and current database installation for more info " +
+                                "\n(amount of books modified): " + amountUpdated);
 
-                // Executing and committing the update.
-                updateBookCopyQuery.executeUpdate();
-                transaction.commit();
-                // Returning OK if process was successful
-                return StatusCode.OK;
-            }
-            else{
-                return StatusCode.BookCopyUndefined;
+                    transaction.commit();
+                    // Returning OK if process is successful
+                    return StatusCode.OK;
+                }
+                case 'O': {
+                    // want to checkout a book
+
+                    //Initiate transaction, writing query to update BookCopy record with new disposition
+                    transaction = em.getTransaction();
+                    transaction.begin();
+
+                    // check nullable fields aren't null
+                    if (newPidm == null || newTerm == null)
+                        throw new RuntimeException("Internal Error (BookCopyRepositoryImpl -- ChangeBookDisposition): " +
+                                "trying to check out book where new pidm and/or term aren't set. Please revise.");
+
+
+                    //Writing query to update BookCopy record with new disposition
+                    String transactionQuery = "UPDATE tableName set tableName.\"NWTXDT_DISPOSITION\" = 'O'," +
+                            " tableName.\"NWTXDT_ACTIVITY_DATE\" = to_date(?, 'DD-MM-RRRR')," +
+                            " tableName.\"NWTXDT_PIDM\" = ?, tableName.\"NWTXDT_TERM\" = ?," +
+                            " tableName.\"NWTXDT_DATE_CHECKED_OUT\" = to_date(?, 'DD-MM-RRRR')" +
+                            " WHERE tableName.\"NWTXDT_BARCODE\" = ?";
+                    Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
+
+                    // Adding arguments from method to the query
+                    updateBookCopyQuery.setParameter(1, currentDate);
+                    updateBookCopyQuery.setParameter(2, newPidm);
+                    updateBookCopyQuery.setParameter(3, newTerm);
+                    updateBookCopyQuery.setParameter(4, currentDate);
+                    updateBookCopyQuery.setParameter(5, bookCopy.getStrikeBarcode());
+
+                    // Executing and committing the update.
+                    final int amountUpdated = updateBookCopyQuery.executeUpdate();
+
+                    if (amountUpdated != 1) // 0 or multiple books amended
+                        throw new RuntimeException("Internal Error (BookCopyRepositoryImpl -- ChangeBookDisposition): 0 or many books" +
+                                "were updated. Please check logs and current database installation for more info " +
+                                "\n(amount of books modified): " + amountUpdated);
+
+                    // update state of bookcopy to match the definition that was modified to
+                    bookCopy.setDisposition('O');
+                    bookCopy.setActivityDate(date);
+                    bookCopy.setPidm(newPidm);
+                    bookCopy.setTermCode(newTerm);
+                    bookCopy.setDateCheckedOut(date);
+
+                    transaction.commit();
+                    // Returning OK if process was successful
+                    return StatusCode.OK;
+                }
+                case 'S': // want to sell a book
+                {
+                    //Initiate transaction, writing query to update BookCopy record with new disposition
+                    transaction = em.getTransaction();
+                    transaction.begin();
+
+                    // Query to update BookCopy table and changing the disposition to S for sold
+                    // ASSUMPTION: current book is being sold to the person who owns it (checked out to)
+                    String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'S' " +
+                            "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
+
+                    // Adding the BookCopy tableName to the query
+                    Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
+
+                    // Adding arguments from method to the query
+                    updateBookCopyQuery.setParameter(1, bookCopy.getStrikeBarcode());
+
+                    // Executing and committing the update.
+                    final int amountUpdated = updateBookCopyQuery.executeUpdate();
+
+                    if (amountUpdated != 1) // 0 or multiple books amended
+                        throw new RuntimeException("Internal Error (BookCopyRepositoryImpl -- ChangeBookDisposition): 0 or many books" +
+                                "were updated. Please check logs and current database installation for more info " +
+                                "\n(amount of books modified): " + amountUpdated);
+
+                    transaction.commit();
+                }
+                default:
+                    return StatusCode.BookCopyUndefined;
             }
         }
         catch(RuntimeException ex){
-            transaction.rollback();
+            if(transaction != null && transaction.isActive())
+                transaction.rollback();
             System.out.println("db error --\n" + ex.getMessage());
             return StatusCode.DatabaseError;
         }
