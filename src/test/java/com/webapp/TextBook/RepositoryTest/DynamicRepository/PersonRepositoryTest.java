@@ -57,13 +57,13 @@ public class PersonRepositoryTest {
     @Test
     public void testGetPartialUserWithCanidateKey(){
 
-        // supply hard coded student id (pidm) & term code
+        // supply hard coded user id
         final String USER_ID = "919000001";
 
 
 
         try {
-            // invoke repository to garner all book copies for a given student and term
+            // invoke repository to garner user given user id
             final Pair< Optional<Object[]>, StatusCode >  RESULTS =
                     this._personRepository.getPartialUserWithCandidateKey(USER_ID);
 
@@ -71,10 +71,10 @@ public class PersonRepositoryTest {
             System.out.println(RESULTS.getValue1()); // should be OK
             System.out.println(RESULTS.getValue0().isPresent());
 
-            // prints all results to verify that state of bookcopy (ORM) works as expected
+            // prints all results to verify that state of user (ORM) works as expected
             if (RESULTS.getValue0().isPresent()) {
                 final Object[] user = RESULTS.getValue0().get();
-                // print the number of results expected (current instance: 4/13 --> 4)
+
                 System.out.println("Size of Object[] list: " + RESULTS.getValue0().get().length);
                 System.out.println("PIDM: "+  user[0]);
                 System.out.println("ID: "+  user[1]);
