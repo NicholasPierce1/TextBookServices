@@ -48,19 +48,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav pb-1 pt-1">
-                    <a class="nav-link active navbar-text" aria-current="page" href="#" onclick="">Home</a>
+                    <a class="nav-link active navbar-text" aria-current="page" href="/SupervisorDropDownMenu" onclick="submitManualForm();">Home</a>
                 </ul>
                 <div class="nav-item dropdown pb-1 pt-1" id="supervisorDropDownDiv">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="supervisorDropDownUl" name="ulInv">
-                        <li id="AddBooks"><a class="dropdown-item" href="#" onclick="">Add Books</a></li>
-                        <li id="ChangeBook"><a class="dropdown-item" href="#" onclick="">Change Book</a></li>
-                        <li id="QueryBooks"><a class="dropdown-item" href="#" onclick="">Query Book</a></li>
-                        <li id="QueryCourse"><a class="dropdown-item" href="#" onclick="">Query Course</a></li>
-                        <li id="CourseMessage"><a class="dropdown-item" href="#" onclick="">Course Message</a></li>
-                        <li id="Maintenance"><a class="dropdown-item" href="#" onclick="">Maintenance</a></li>
+                        <li id="AddBooks"><a class="dropdown-item" href="/AddBooks" onclick="submitManualForm();">Add Books</a></li>
+                        <li id="ChangeBook"><a class="dropdown-item" href="ChangeBook" onclick="submitManualForm();">Change Book</a></li>
+                        <li id="QueryBooks"><a class="dropdown-item" href="QueryBooks" onclick="submitManualForm();">Query Book</a></li>
+                        <li id="QueryCourse"><a class="dropdown-item" href="QueryCourse" onclick="submitManualForm();">Query Course</a></li>
+                        <li id="CourseMessage"><a class="dropdown-item" href="CourseMessage" onclick="submitManualForm();">Course Message</a></li>
+                        <li id="Maintenance"><a class="dropdown-item" href="Maintenance" onclick="submitManualForm();">Maintenance</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="patronDropDownDiv" name="ulPatrons">
@@ -68,10 +68,10 @@
                         Patrons
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
-                        <li id="CheckInCheckOut"><a class="dropdown-item" href="#" onclick="">Check In/ Check Out</a></li>
-                        <li id="PatronSchedule"><a class="dropdown-item" href="#" onclick="">Patron Schedule</a></li>
-                        <li id="PatronPreviousBooks"><a class="dropdown-item" href="#" onclick="">Patron Previous Books</a></li>
-                        <li id="PatronSoldBooks"><a class="dropdown-item" href="#" onclick="">Patron Sold Books</a></li>
+                        <li id="CheckInCheckOut"><a class="dropdown-item" href="/CheckInCheckOut" onclick="submitManualForm();">Check In/ Check Out</a></li>
+                        <li id="PatronSchedule"><a class="dropdown-item" href="/PatronSchedule" onclick="submitManualForm();">Patron Schedule</a></li>
+                        <li id="PatronPreviousBooks"><a class="dropdown-item" href="PatronPreviousBooks" onclick="submitManualForm();">Patron Previous Books</a></li>
+                        <li id="PatronSoldBooks"><a class="dropdown-item" href="PatronSoldBooks" onclick="submitManualForm();">Patron Sold Books</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Reports">
@@ -79,8 +79,8 @@
                         Reports
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Reports" name="ulReports">
-                        <li id="Action"><a class="dropdown-item" href="#" onclick="">Action</a></li>
-                        <li id="AnotherAction"><a class="dropdown-item" href="#" onclick="">Another action</a></li>
+                        <li id="Action"><a class="dropdown-item" href="Action" onclick="submitManualForm();">Action</a></li>
+                        <li id="AnotherAction"><a class="dropdown-item" href="AnotherAction" onclick="submitManualForm();">Another action</a></li>
                     </ul>
                 </div>
 
@@ -165,7 +165,7 @@
     </body>
 
 
-    <div class="bg-dark text-center text-white fixed-bottom"
+    <div class="bg-dark text-center text-white sticky-bottom"
             style="bottom: 0;">
 
         <!-- Grid container -->

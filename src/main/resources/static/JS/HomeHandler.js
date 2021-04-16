@@ -46,7 +46,9 @@ function get_list_items(){
     console.log(liMap);
 }
 
-// todo: add docs
+/*
+* Create maps for student and supervisor menus
+*/
 const studentNavMappings = ["patronDropDownUl"];
 
 const supervisorNavMappings = [studentNavMappings[0], "supervisorDropDownUl"];
@@ -66,6 +68,13 @@ const LI_NAV_PAIRS_KEY = "liNavPairs";
 
 const formControllerResponseData = "data";
 
+
+/*
+* @function setNavMappings
+* generates nav bar mappings for student and supervisor menus
+* generated from the li list
+*
+*/
 function setNavMappings(){
 
     // console.log("Navbar:", document.getElementByTagName('nav').id);
@@ -78,15 +87,20 @@ function setNavMappings(){
     //     console.log("Supervisor Menu");
     // }
 
+
+    // Create new li nav bar map
     const liNavMapPair = new Map();
 
+    // Creating nav bar id from the view
     let navId = window.document.getElementById("nav").id;
 
+    // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
     if(navId === null)
         throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
     else if(navId !== "Student" || navId !== "Supervisor")
         throw new Error("id value does not equal student or supervisor; please revise");
 
+    // Choose which map to generate based on nav bar id (Student or Supervisor)
     let mappingsToGenerate = navId === "Student" ? studentNavMappings : supervisorNavMappings;
 
     // integrity check that UL exist for mapping -- generate mappings
@@ -121,6 +135,7 @@ function setNavMappings(){
 
     }
 
+    // Set key value pairs into session storage for potential later use by the user
     window.sessionStorage.setItem(LI_NAV_PAIRS_KEY, JSON.stringify(liNavMapPair));
 
     /*
@@ -131,14 +146,21 @@ function setNavMappings(){
 
 }
 
+/**
+ * @function getLoginUserInfo
+ * parses login user info response data from the controller
+ *
+ */
+
 function getLoginUserInfo(){
 
     // extracts string json and convert to json object
     const json = JSON.parse(window.document.getElementById(`${formControllerResponseData}`).value);
 
+    //If there was no login user info, throw an error message
     if(!json.LoginUserInfo)
         throw new Error("json does not retain a login user info.");
-
+    //Returns login user info in json form
     return json.LoginUserInfo;
 
 }
@@ -227,9 +249,9 @@ function createManualForm(event){
 
 /**
  * @function submitManualForm
- * submits the form
  * @param {1} event
- * the form
+ * submitting the for made in createManualForm()
+ * catching errors if something went wrong
  */
 
 function submitManualForm(event){
