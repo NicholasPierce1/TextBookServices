@@ -12,6 +12,7 @@ let form;
 
 // imports home handler to ensure shared, home state is invokable
 import * as HOME from "./HomeHandler";
+import * as SHARED from "./SharedHandler";
 
 // establishes the window's onload functionality
 // initialize state (render and save login user info, set any non-locally scoped members
@@ -158,7 +159,7 @@ function hideBagError() {
 function handleErrorResponse(json) {
     //ask about the gen_error
     if (gen_error) {
-        printError();
+        SHARED.printError();
         return true;
         if (true) {
             return handlerStatusMessageError();
@@ -169,7 +170,7 @@ function handleErrorResponse(json) {
 
     if (error) {
         const errorBindings = {errorN: ""};
-        for (i = 0; i < error.length; i++) {
+        for (let i = 0; i < error.length; i++) {
             errorBindings.errorN = error;
             helper(false);
         }
