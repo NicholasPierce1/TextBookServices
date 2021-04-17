@@ -47,20 +47,20 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav pb-1 pt-1">
-                    <a class="nav-link active navbar-text" aria-current="page" href="/SupervisorDropDownMenu" onclick="submitManualForm();">Home</a>
+                <ul class="navbar-nav pb-1 pt-1", id="supervisorDropDownHomeUl">
+                    <a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/SupervisorDropDownMenu">Home</a>
                 </ul>
                 <div class="nav-item dropdown pb-1 pt-1" id="supervisorDropDownDiv">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="supervisorDropDownUl" name="ulInv">
-                        <li id="AddBooks"><a class="dropdown-item" href="/AddBooks" onclick="submitManualForm();">Add Books</a></li>
-                        <li id="ChangeBook"><a class="dropdown-item" href="ChangeBook" onclick="submitManualForm();">Change Book</a></li>
-                        <li id="QueryBooks"><a class="dropdown-item" href="QueryBooks" onclick="submitManualForm();">Query Book</a></li>
-                        <li id="QueryCourse"><a class="dropdown-item" href="QueryCourse" onclick="submitManualForm();">Query Course</a></li>
-                        <li id="CourseMessage"><a class="dropdown-item" href="CourseMessage" onclick="submitManualForm();">Course Message</a></li>
-                        <li id="Maintenance"><a class="dropdown-item" href="Maintenance" onclick="submitManualForm();">Maintenance</a></li>
+                        <li id="AddBooks"><a class="dropdown-item" targetEndpoint="/AddBooks">Add Books</a></li>
+                        <li id="ChangeBook"><a class="dropdown-item" targetEndpoint="/ChangeBook">Change Book</a></li>
+                        <li id="QueryBooks"><a class="dropdown-item" targetEndpoint="/QueryBooks">Query Book</a></li>
+                        <li id="QueryCourse"><a class="dropdown-item" targetEndpoint="/QueryCourse">Query Course</a></li>
+                        <li id="CourseMessage"><a class="dropdown-item" targetEndpoint="/CourseMessage">Course Message</a></li>
+                        <li id="Maintenance"><a class="dropdown-item" targetEndpoint="/Maintenance">Maintenance</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="patronDropDownDiv" name="ulPatrons">
@@ -68,10 +68,10 @@
                         Patrons
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
-                        <li id="CheckInCheckOut"><a class="dropdown-item" href="/CheckInCheckOut" onclick="submitManualForm();">Check In/ Check Out</a></li>
-                        <li id="PatronSchedule"><a class="dropdown-item" href="/PatronSchedule" onclick="submitManualForm();">Patron Schedule</a></li>
-                        <li id="PatronPreviousBooks"><a class="dropdown-item" href="PatronPreviousBooks" onclick="submitManualForm();">Patron Previous Books</a></li>
-                        <li id="PatronSoldBooks"><a class="dropdown-item" href="PatronSoldBooks" onclick="submitManualForm();">Patron Sold Books</a></li>
+                        <li id="CheckInCheckOut"><a class="dropdown-item" targetEndpoint="/CheckInCheckOut">Check In/ Check Out</a></li>
+                        <li id="PatronSchedule"><a class="dropdown-item" targetEndpoint="/PatronSchedule">Patron Schedule</a></li>
+                        <li id="PatronPreviousBooks"><a class="dropdown-item" targetEndpoint="/PatronPreviousBooks">Patron Previous Books</a></li>
+                        <li id="PatronSoldBooks"><a class="dropdown-item" targetEndpoint="/PatronSoldBooks">Patron Sold Books</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="Reports">

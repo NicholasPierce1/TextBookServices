@@ -26,7 +26,7 @@ function printError(errorMsg){
  * @Purpose
  *  Create error bindings and parse json object
  */
-class ErrorBindings{
+export class ErrorBindings{
 
     /**
      * Class Variables
@@ -189,7 +189,7 @@ class ErrorBindings{
   *
   */
 
-class UserInfo{
+export class UserInfo{
 
     /**
      * Class Variables
@@ -333,7 +333,7 @@ class UserInfo{
   *
   */
 
-class StudentInfo{
+export class StudentInfo{
 
 
     /**
@@ -478,7 +478,7 @@ class StudentInfo{
  *  
  */
 
-class BookCopy{
+export class BookCopy{
 
     //Static private variables holding keys in JSON format.
     static #ID = {};
@@ -644,21 +644,21 @@ class BookCopy{
     */
     createJsonForm(){
         return{
-          ID: this.#ID;
-          BookCode: this.#bookCode;
-          EditionYear: this.#editionYear;
-          SeqNr: this.#seqNr;
-          StrikeBarCode: this.#strikeBarcode;
-          Pidm: this.#pidm;
-          TermCode: this.#termCode;
-          DateCheckOut: this.#dateCheckedOut;
-          Dispostion: this.#disposition;
-          BookSalePrice: this.#bookSalePrice;
-          PrevPidm: this.#prevPidm;
-          PrevTermCode: this.#prevTermCode;
-          PrevDateCheckedIn: this.#prevDateCheckedIn;
-          ActivityDate: this.#activityDate;
-          BillFlag: this.#billFlag;
+          ID: this.#ID,
+          BookCode: this.#bookCode,
+          EditionYear: this.#editionYear,
+          SeqNr: this.#seqNr,
+          StrikeBarCode: this.#strikeBarcode,
+          Pidm: this.#pidm,
+          TermCode: this.#termCode,
+          DateCheckOut: this.#dateCheckedOut,
+          Dispostion: this.#disposition,
+          BookSalePrice: this.#bookSalePrice,
+          PrevPidm: this.#prevPidm,
+          PrevTermCode: this.#prevTermCode,
+          PrevDateCheckedIn: this.#prevDateCheckedIn,
+          ActivityDate: this.#activityDate,
+          BillFlag: this.#billFlag
         }
     }
 }
@@ -722,8 +722,8 @@ class BookCopy{
     */
      createJsonForm(){
         return {
-            Pidm: this.#pidm;
-            BagNumber: this.#bagNumber;
+            Pidm: this.#pidm,
+            BagNumber: this.#bagNumber
         }
      }
 
@@ -784,8 +784,8 @@ class BookCopy{
     */
      createJsonForm(){
         return {
-            TermCode: this.#termCode;
-            BagNumber: this.#termDescription;
+            TermCode: this.#termCode,
+            BagNumber: this.#termDescription
         }
      }
 }

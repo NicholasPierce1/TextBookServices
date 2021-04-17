@@ -46,20 +46,20 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav pb-1 pt-1" id="Home" >
-                       <a class="nav-link active navbar-text" aria-current="page" href="/StudentDropDownMenu" onclick="submitManualForm();">Home</a>
+                    <ul class="navbar-nav pb-1 pt-1" id="patronDropDownHomeUl" >
+                       <a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/StudentDropDownMenu">Home</a>
                     </ul>
-                    <ul class="navbar-nav pb-1 pt-1" id="CheckInCheckOut" >
-                        <a class="nav-link navbar-text" aria-current="page" href="/CheckInCheckOut" onclick="submitManualForm();">Check In / Check Out</a>
+                    <ul class="navbar-nav pb-1 pt-1" id="patronDropDownCheckInCheckOutUl" >
+                        <a class="nav-link navbar-text" aria-current="page" targetEndpoint="/CheckInCheckOut">Check In / Check Out</a>
                     </ul>
                     <div class="nav-item dropdown pb-1 pt-1" id="patronDropDownDiv">
                         <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Patron Info
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
-                            <li id="PatronSchedule"><a class="dropdown-item" href="/PatronSchedule" onclick="submitManualForm();">Patron Schedule</a></li>
-                            <li id="PatronPreviousBooks"><a class="dropdown-item" href="/PatronPreviousBooks" onclick="submitManualForm();">Patron Previous Books</a></li>
-                            <li id="PatronSoldBooks"><a class="dropdown-item" href="PatronSoldBooks" onclick="submitManualForm();">Patron Sold Books</a></li>
+                            <li id="PatronSchedule"><a class="dropdown-item" targetEndpoint="/PatronSchedule">Patron Schedule</a></li>
+                            <li id="PatronPreviousBooks"><a class="dropdown-item" targetEndpoint="/PatronPreviousBooks">Patron Previous Books</a></li>
+                            <li id="PatronSoldBooks"><a class="dropdown-item" targetEndpoint="PatronSoldBooks">Patron Sold Books</a></li>
                         </ul>
                     </div>
 

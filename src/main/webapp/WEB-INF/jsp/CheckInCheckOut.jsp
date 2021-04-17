@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/CSS/checkinoutCSS.css">
     <script type="application/javascript" src="/js/SharedHandler.js"></script>
+    <script type="application/javascript" src="/js/HomeHandler.js"></script>
     <script type="application/javascript" src="/js/CheckInOutHandler.js"></script>
     <script type="application/javascript" src="/js/ViewModel/test.js"></script>
     <script type="application/javascript" src="/js/TestJavaScriptFiles/ChaseTestFile.js"></script>
