@@ -316,10 +316,10 @@ export class UserInfo{
     * returns fields created in json form
     */
      createJsonForm(){
-        return JSON.stringify({
+        return {
             _username: this.#username,
             _password: this.#password
-        });
+        };
      }
 }
 

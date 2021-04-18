@@ -14,6 +14,8 @@ window.onload = () => {
 
     console.log(getLiNavMapPairs());
     console.log(getLoginUserInfo());
+
+    setOnClicksToNavItems();
 }
 
 /**
@@ -131,7 +133,7 @@ export function setNavMappings(){
 
             // given: retains an anchor tag
             const anchorTag = liList[j].getElementsByTagName("a")[0];
-            console.log(anchorTag.parentElement);
+
             // asserts attribute (targetEndpoint) exist within an anchor tag
             if(!anchorTag.getAttribute("targetEndpoint"))
                 throw new Error("Anchor tag, which is within an applicable nav item, does not have" +
@@ -177,7 +179,7 @@ export function getLoginUserInfo(){
     if(!json.LoginUserInfo)
         throw new Error("json does not retain a login user info.");
     //Returns login user info in json form
-    return json.LoginUserInfo;
+    return SHARED.UserInfo.parseJson(json.LoginUserInfo);
 
 }
 
@@ -233,9 +235,7 @@ function createManualForm(event){
     const liNavMapPairKey = `${liTagParent.parentElement.id}${liTagParent.id}`;
 
     // acquire url & method pairs from key
-    const urlMethodPair = JSON.parse(
-        window.sessionStorage.getItem(LI_NAV_PAIRS_KEY)
-    ).get(liNavMapPairKey);
+    const urlMethodPair = getLiNavMapPairs().get(liNavMapPairKey);
 
     if(!urlMethodPair)
         throw new Error(`Map does not retain the key {${liNavMapPairKey}`);
@@ -250,27 +250,34 @@ function createManualForm(event){
     // sets form to login user info
     const loginUserInfo = getLoginUserInfo();
 
-    if(!loginUserInfo._password || !loginUserInfo._username)
+    if(!loginUserInfo.getPassword()|| !loginUserInfo.getUsername())
         throw new Error("login user info does not retain apt state. Please revise JSON for LoginUserInfo");
+
+    console.log(loginUserInfo.getPassword() + " : " + loginUserInfo.getUsername());
 
     // creates composite input elements to append to form
     const userNameInputElement = window.document.createElement("input");
     userNameInputElement.type = "text";
     userNameInputElement.name = "_username";
-    userNameInputElement.value = loginUserInfo._username;
+    userNameInputElement.value = loginUserInfo.getUsername();
 
     const passwordInputElement = window.document.createElement("input");
     passwordInputElement.type = "password";
     passwordInputElement.name = "_password";
-    passwordInputElement.value = loginUserInfo._password;
+    passwordInputElement.value = loginUserInfo.getPassword();
 
     // appends input elements to form
     form.appendChild(userNameInputElement);
     form.appendChild(passwordInputElement);
 
+    for(let i = 0; i < form.getElementsByTagName("input").length; i++)
+        console.log(form.getElementsByTagName("input")[i].value);
+
+    // appends to document body & sets visibility to invisible
+    form.style.visibility = "invisible";
+    window.document.body.appendChild(form);
 
     return form;
-
 
 }
 
@@ -284,11 +291,12 @@ function createManualForm(event){
 function submitManualForm(event){
 
     try {
-        createManualForm(event).submit();
+        console.log("called here!!");
+        console.log(createManualForm(event));//.submit();
     }
     catch (e) {
         console.log("internal error (home handler -- submit manual form)");
-        printError(e.message);
+        SHARED.printError(e.message);
     }
 
 }
@@ -296,12 +304,12 @@ function submitManualForm(event){
 // appends every nav item child (href's onclick) to trigger the manual form submission
 function setOnClicksToNavItems() {
     // Creating nav bar id from the view
-    let navId = window.document.getElementById("nav").id;
+    let navId = window.document.getElementsByTagName("nav")[0].id;
 
     // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
     if (navId === null)
         throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
-    else if (navId !== "Student" || navId !== "Supervisor")
+    else if (!(navId !== "Student" || navId !== "Supervisor"))
         throw new Error("id value does not equal student or supervisor; please revise");
 
     // Choose which map to generate based on nav bar id (Student or Supervisor)
@@ -315,18 +323,18 @@ function setOnClicksToNavItems() {
 
         const ulToGenerateMappings = window.document.getElementById(mappingsToGenerate[i]);
 
-        const liList = ulToGenerateMappings.getElementsByTagName("li").length;
+        const liList = ulToGenerateMappings.getElementsByTagName("li");
 
         if (liList.length === 0)
             throw new Error(`UL list with id {${ulToGenerateMappings.id}} is empty`);
 
-        for (let j = 0; j < liList; j++) {
+        for (let j = 0; j < liList.length; j++) {
 
             // given: retains an anchor tag
             const anchorTag = liList[j].getElementsByTagName("a")[0];
 
             // sets on click
-            anchorTag.onclick = createManualForm;
+            anchorTag.onclick = submitManualForm;
 
         }
     }

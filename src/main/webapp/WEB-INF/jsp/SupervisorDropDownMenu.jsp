@@ -18,8 +18,13 @@
 
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/css/homeCSS.css">
-    <script type="application/javascript" src="/js/SharedHandler.js"></script>
-    <script type="text/javascript"src = "/js/HomeHandler.js"></script>
+    <script type="module" src = "/js/HomeHandler.js"></script>
+
+    <!--
+per nick: remove in production. Testing path variables incur errors from get requests
+relating to favico
+-->
+    <link rel="shortcut icon" href="#">
 
 </head>
 
@@ -31,10 +36,8 @@
     final String data = ((JSONObject)request.getAttribute("data")).toString();
 
     // print's invisible input tag with the id "data" for extraction by js files in client-browser
-    out.println("<input type=\"hidden\" value=\"" + data + "\" id=\"data\">" );
+    out.println("<input type=\"hidden\" value=" + data + " id=\"data\">" );
 %>
-
-<input type="hidden" id="generalErrors" value="">
 
 <section>
     <nav id="Supervisor" class="navbar navbar-expand-lg navbar-custom navbar-dark">
@@ -48,7 +51,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav pb-1 pt-1", id="supervisorDropDownHomeUl">
-                    <a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/SupervisorDropDownMenu">Home</a>
+                    <li id="supervisorDropDownHome"><a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/SupervisorDropDownMenu">Home</a></li>
                 </ul>
                 <div class="nav-item dropdown pb-1 pt-1" id="supervisorDropDownDiv">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
