@@ -10,42 +10,23 @@ let errorLabelTest;
 //Get Form from jsp view
 let form;
 
+// imports home handler to ensure shared, home state is invokable
+import * as HOME from "./HomeHandler";
+import * as SHARED from "./SharedHandler";
+
+// establishes the window's onload functionality
+// initialize state (render and save login user info, set any non-locally scoped members
 window.onload = (ev) =>{
     errorLabelTest = document.getElementById("testStatusCodeError");
-    console.log(errorLabelTest !== null);
-    console.log(errorLabelTest.innerHTML === "test");
-    console.log(errorLabelTest.style.visibility === "hidden");
 
-    form = document.getElementById("new_id") | null;
+    // invokes the home handler to initialize view state
+    try{
+        HOME.initializeSharedState();
+    }
+    catch(ex){
+        console.log("failed to initialize home state:\n" + ex);
+    }
 
-    if(form) // currently null always
-        form.addEventListener("click",
-            (ev) => {
-
-                //Create a Map and set a form objct to it
-                let newMap = new Map();
-                let form = {};
-                newMap.set(0, form);
-
-                //Student data in local storage
-                const DataStudentLocalStorage = window.localStorage;
-
-
-                //
-                let user_info = new user_info();
-                let userID = user_info.getSTUDENT_ID_PATTERN();
-                let userPrefix = user_info.getS_NUMBER_PREFIX();
-                let userSuffix = user_info.getS_NUMBER_SUFFIX();
-
-
-                DataUserInfoMap['UserID'] = (parseJson(userID), "User Id");
-                DataUserInfoMap['UserPrefix'] = (parseJson(userPrefix), "user prefix");
-                DataUserInfoMap['UserSuffix'] = (parseJson(userSuffix), "user suffix");
-
-                invisible_input = document.getElementById("data-");
-
-                error_labels = [];
-            });
 
 }
 
@@ -178,7 +159,7 @@ function hideBagError() {
 function handleErrorResponse(json) {
     //ask about the gen_error
     if (gen_error) {
-        printError();
+        SHARED.printError();
         return true;
         if (true) {
             return handlerStatusMessageError();
@@ -189,7 +170,7 @@ function handleErrorResponse(json) {
 
     if (error) {
         const errorBindings = {errorN: ""};
-        for (i = 0; i < error.length; i++) {
+        for (let i = 0; i < error.length; i++) {
             errorBindings.errorN = error;
             helper(false);
         }

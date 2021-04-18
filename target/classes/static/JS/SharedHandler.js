@@ -12,7 +12,7 @@
  * @param errorMsg
  *  error message itself
  */
-function printError(errorMsg){
+ function printError(errorMsg){
 
     alert("ERROR: " + errorMsg);
     console.log(errorMsg);
@@ -26,7 +26,7 @@ function printError(errorMsg){
  * @Purpose
  *  Create error bindings and parse json object
  */
-class ErrorBindings{
+ class ErrorBindings{
 
     /**
      * Class Variables
@@ -189,7 +189,7 @@ class ErrorBindings{
   *
   */
 
-class UserInfo{
+ class UserInfo{
 
     /**
      * Class Variables
@@ -312,7 +312,10 @@ class UserInfo{
         return inputTagList;
     }
 
-    // todo: add doc
+    /*
+    * @function createJsonForm
+    * returns fields created in json form
+    */
      createJsonForm(){
         return {
             _username: this.#username,
@@ -330,7 +333,7 @@ class UserInfo{
   *
   */
 
-class StudentInfo{
+ class StudentInfo{
 
 
     /**
@@ -455,7 +458,10 @@ class StudentInfo{
         return inputTagList;
     }
 
-    // todo: add doc
+    /*
+    * @function createJsonForm
+    * returns fields created in json form
+    */
      createJsonForm(){
         return {
             id: this.#ID,
@@ -472,24 +478,24 @@ class StudentInfo{
  *  
  */
 
-class BookCopy{
+ class BookCopy{
 
     //Static private variables holding keys in JSON format.
-    static #ID = {};
-    static #bookCode = {};
-    static #editionYear = {};
-    static #seqNr = {};
-    static #strikeBarcode = {};
-    static #pidm = {};
-    static #termCode = {};
-    static #dateCheckedOut = {};
-    static #disposition = {};
-    static #bookSalePrice = {};
-    static #prevPidm = {};
-    static #prevTermCode = {};
-    static #prevDateCheckedIn = {};
-    static #activityDate = {};
-    static #billFlag = {};
+     #ID;
+     #bookCode;
+     #editionYear;
+     #seqNr;
+     #strikeBarcode;
+     #pidm;
+     #termCode;
+     #dateCheckedOut;
+     #disposition;
+     #bookSalePrice;
+     #prevPidm;
+     #prevTermCode;
+     #prevDateCheckedIn;
+     #activityDate;
+     #billFlag;
 
 
     //Constructor that takes all the inputs and creates one.
@@ -549,7 +555,7 @@ class BookCopy{
      * @returns ID 
      */
     getID(){
-        return this.ID;
+        return this.#ID;
     }
 
     /**
@@ -565,7 +571,7 @@ class BookCopy{
      * @returns editionyear
      */
     getEditionyear(){
-        return this.editionyear;
+        return this.#editionYear;
     }
 
     /**
@@ -573,7 +579,7 @@ class BookCopy{
      * @returns  seqNr
      */
     getSeqNr(){
-        return this.seqNr;
+        return this.#seqNr;
     }
 
     /**
@@ -581,7 +587,7 @@ class BookCopy{
      * @returns disposition
      */
     getDisposition(){
-        return this.disposition;
+        return this.#disposition;
     }
 
     /**
@@ -589,7 +595,7 @@ class BookCopy{
      * @returns bookSalePrice
      */
     getBookSalePrice(){
-        return this.bookSalePrice;
+        return this.#bookSalePrice;
     }
 
     /**
@@ -597,7 +603,7 @@ class BookCopy{
      * @returns prevPidm
      */
     getPrevPidm(){
-        return this.prevPidm;
+        return this.#prevPidm;
     }
 
     /**
@@ -605,7 +611,7 @@ class BookCopy{
      * @returns  prevTermCode
      */
     getPrevTermCode(){
-        return this.prevTermCode;
+        return this.#prevTermCode;
     }
 
     /**
@@ -613,7 +619,7 @@ class BookCopy{
      * @returns prevDateCheckedIn
      */
     getPrevDateCheckedIn(){
-        return this.prevDateCheckedIn
+        return this.#prevDateCheckedIn
     }
 
     /**
@@ -621,7 +627,7 @@ class BookCopy{
      * @returns activityDate
      */
     getActivityDate(){
-        return this.activityDate;
+        return this.#activityDate;
     }
 
     /**
@@ -629,10 +635,34 @@ class BookCopy{
      * @returns billFlag
      */
     getBillFlag(){
-        return this.billFlag;
+        return this.#billFlag;
     }
 
+    /*
+    * @function createJsonForm
+    * returns fields created in json form
+    */
+    createJsonForm(){
+        return{
+          ID: this.#ID,
+          BookCode: this.#bookCode,
+          EditionYear: this.#editionYear,
+          SeqNr: this.#seqNr,
+          StrikeBarCode: this.#strikeBarcode,
+          Pidm: this.#pidm,
+          TermCode: this.#termCode,
+          DateCheckOut: this.#dateCheckedOut,
+          Dispostion: this.#disposition,
+          BookSalePrice: this.#bookSalePrice,
+          PrevPidm: this.#prevPidm,
+          PrevTermCode: this.#prevTermCode,
+          PrevDateCheckedIn: this.#prevDateCheckedIn,
+          ActivityDate: this.#activityDate,
+          BillFlag: this.#billFlag
+        }
+    }
 }
+
 
 /**
  * @class Bag
@@ -676,7 +706,7 @@ class BookCopy{
      * @returns  pidm
      */
     getPidm(){
-        return this.pidm;
+        return this.#pidm;
     }
 
     /**
@@ -684,8 +714,19 @@ class BookCopy{
      * @returns  bagNumber
      */
     getBagNumber(){
-        return this.bagNumber;
+        return this.#bagNumber;
     }
+
+    /*
+    * @function createJsonForm
+    * returns fields created in json form
+    */
+     createJsonForm(){
+        return {
+            Pidm: this.#pidm,
+            BagNumber: this.#bagNumber
+        }
+     }
 
 }
 
@@ -727,7 +768,7 @@ class BookCopy{
      * @returns termCode
      */
     getTermCode(){
-        return this.termCode;
+        return this.#termCode;
     }
 
     /**
@@ -735,7 +776,18 @@ class BookCopy{
      * @returns  termDescription
      */
     getTermDescription(){
-        return this.termDescription;
+        return this.#termDescription;
     }
+
+    /*
+    * @function createJsonForm
+    * returns fields created in json form
+    */
+     createJsonForm(){
+        return {
+            TermCode: this.#termCode,
+            BagNumber: this.#termDescription
+        }
+     }
 }
 

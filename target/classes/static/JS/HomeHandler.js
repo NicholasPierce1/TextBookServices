@@ -1,8 +1,10 @@
+import * as SHARED from "./SharedHandler"; // ensures shared handler is imported
+
 /**
  * Create new map for li tags
  */
 
-liMap = new Map();
+let liMap = new Map();
 
 
 /**
@@ -15,7 +17,7 @@ liMap = new Map();
  */
 function get_list_items(){
 
-    ulList = document.getElementsByTagName('ul');
+    let ulList = document.getElementsByTagName('ul');
 
     for(let i = 0; i < ulList.length; i++){
 
@@ -46,10 +48,12 @@ function get_list_items(){
     console.log(liMap);
 }
 
-// todo: add docs
-const studentNavMappings = ["patronDropDownUl"];
+/*
+* Create maps for student and supervisor menus
+*/
+const studentNavMappings = ["patronDropDownUl", "patronDropDownCheckInCheckOutUl", "patronDropDownHomeUl"];
 
-const supervisorNavMappings = [studentNavMappings[0], "supervisorDropDownUl"];
+const supervisorNavMappings = [studentNavMappings[0], "supervisorDropDownUl", "supervisorDropDownHomeUl"];
 
 /**
  * @onload
@@ -66,7 +70,14 @@ const LI_NAV_PAIRS_KEY = "liNavPairs";
 
 const formControllerResponseData = "data";
 
-function setNavMappings(){
+
+/*
+* @function setNavMappings
+* generates nav bar mappings for student and supervisor menus
+* generated from the li list
+*
+*/
+export function setNavMappings(){
 
     // console.log("Navbar:", document.getElementByTagName('nav').id);
     // if((document.getElementByTagName('nav').id) === 'Student'){
@@ -78,21 +89,26 @@ function setNavMappings(){
     //     console.log("Supervisor Menu");
     // }
 
+
+    // Create new li nav bar map
     const liNavMapPair = new Map();
 
+    // Creating nav bar id from the view
     let navId = window.document.getElementById("nav").id;
 
+    // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
     if(navId === null)
         throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
     else if(navId !== "Student" || navId !== "Supervisor")
         throw new Error("id value does not equal student or supervisor; please revise");
 
+    // Choose which map to generate based on nav bar id (Student or Supervisor)
     let mappingsToGenerate = navId === "Student" ? studentNavMappings : supervisorNavMappings;
 
     // integrity check that UL exist for mapping -- generate mappings
     for(let i = 0; i < mappingsToGenerate.length; i++) {
 
-        if (window.document.getElementById(mappingsToGenerate[i]) === null)
+        if (!window.document.getElementById(mappingsToGenerate[i]))
             throw new Error(`Ul list with id {${mappingsToGenerate[i]}} does not exist in document.`);
 
         const ulToGenerateMappings = window.document.getElementById(mappingsToGenerate[i]);
@@ -107,12 +123,18 @@ function setNavMappings(){
             // given: retains an anchor tag
             const anchorTag = liList[i].getElementsByTagName("a")[0];
 
+            // asserts attribute (targetEndpoint) exist within an anchor tag
+            if(!anchorTag.getAttribute("targetEndpoint"))
+                throw new Error("Anchor tag, which is within an applicable nav item, does not have" +
+                    "the custom attribute (targetEndpoint) set. Please set it to where it hold the" +
+                    "url of the nav item's endpoint.");
+
             // sets li mapping pair
             // key: ul's id + li's id
             liNavMapPair.set(
                 `${mappingsToGenerate[i]}${liList[i].id}`,
                 {
-                    url: anchorTag.href,
+                    url: anchorTag.getAttribute("targetEndpoint"),
                     methodType: "GET"
                 }
             );
@@ -121,6 +143,7 @@ function setNavMappings(){
 
     }
 
+    // Set key value pairs into session storage for potential later use by the user
     window.sessionStorage.setItem(LI_NAV_PAIRS_KEY, JSON.stringify(liNavMapPair));
 
     /*
@@ -131,15 +154,35 @@ function setNavMappings(){
 
 }
 
-function getLoginUserInfo(){
+/**
+ * @function getLoginUserInfo
+ * parses login user info response data from the controller
+ *
+ */
+
+export function getLoginUserInfo(){
+
+    // if login user is set in session map then extract, parse
+    if(window.sessionStorage.getItem(loginUserInfoKey))
+        return UserInfo.parseJson(JSON.parse(window.sessionStorage.getItem(loginUserInfoKey)));
 
     // extracts string json and convert to json object
     const json = JSON.parse(window.document.getElementById(`${formControllerResponseData}`).value);
 
+    //If there was no login user info, throw an error message
     if(!json.LoginUserInfo)
         throw new Error("json does not retain a login user info.");
-
+    //Returns login user info in json form
     return json.LoginUserInfo;
+
+}
+
+export const loginUserInfoKey = "loginInfoUserKey";
+// sets login user info in session storage
+function setLoginUserInfo(){
+
+    // converts to vm equivalent & set in vm
+    window.sessionStorage.setItem(loginUserInfoKey, UserInfo.parseJson(getLoginUserInfo()).createJsonForm());
 
 }
 
@@ -227,9 +270,9 @@ function createManualForm(event){
 
 /**
  * @function submitManualForm
- * submits the form
  * @param {1} event
- * the form
+ * submitting the for made in createManualForm()
+ * catching errors if something went wrong
  */
 
 function submitManualForm(event){
@@ -242,4 +285,51 @@ function submitManualForm(event){
         printError(e.message);
     }
 
+}
+
+// appends every nav item child (href's onclick) to trigger the manual form submission
+function setOnClicksToNavItems() {
+    // Creating nav bar id from the view
+    let navId = window.document.getElementById("nav").id;
+
+    // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
+    if (navId === null)
+        throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
+    else if (navId !== "Student" || navId !== "Supervisor")
+        throw new Error("id value does not equal student or supervisor; please revise");
+
+    // Choose which map to generate based on nav bar id (Student or Supervisor)
+    let mappingsToGenerate = navId === "Student" ? studentNavMappings : supervisorNavMappings;
+
+    // integrity check that UL exist for mapping -- generate mappings
+    for (let i = 0; i < mappingsToGenerate.length; i++) {
+
+        if (!window.document.getElementById(mappingsToGenerate[i]))
+            throw new Error(`Ul list with id {${mappingsToGenerate[i]}} does not exist in document.`);
+
+        const ulToGenerateMappings = window.document.getElementById(mappingsToGenerate[i]);
+
+        const liList = ulToGenerateMappings.getElementsByTagName("li").length;
+
+        if (liList.length === 0)
+            throw new Error(`UL list with id {${ulToGenerateMappings.id}} is empty`);
+
+        for (let j = 0; j < liList; j++) {
+
+            // given: retains an anchor tag
+            const anchorTag = liList[i].getElementsByTagName("a")[0];
+
+            // sets on click
+            anchorTag.onclick = createManualForm;
+
+        }
+    }
+}
+
+// single function that invokes the nav mappings, nav item on clicks, and sets the login user info in the
+// session map
+export function initializeSharedState(){
+    setNavMappings();
+    setOnClicksToNavItems();
+    setLoginUserInfo();
 }

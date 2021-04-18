@@ -35,7 +35,7 @@
      -- if exception yielded, then set general errors to local constant
      */
 
-    String generalErrors = null;
+    String generalErrors = "";
     final String generalErrorsDefault = "error occurred in rendering page; please contact IT Support";
 
     // initializes a map to hold all possible json objects (ErrorBindings)
@@ -64,8 +64,6 @@
 
             }
         }
-        else if(generalErrors != null) // general errors set only
-            generalErrors = generalErrorsDefault;
 
         // else -- no errors are set, normal flow occurs
 
@@ -81,7 +79,6 @@
 
 
 %>
-<input type="hidden" id="generalErrors" value="">
 <section class="Form my-4 py-5">
     <div class="container">
         <div class="row">
@@ -106,8 +103,8 @@
 
 
                                         emailPlaceHolder =
-                                                errorBindings.get(loginUserInfoUsernameKey).getString("faultyData") == null ?
-                                                        "Email" :
+                                                errorBindings.get(loginUserInfoUsernameKey).isNull("faultyData") ?
+                                                        emailPlaceHolder :
                                                         errorBindings.get(loginUserInfoUsernameKey).getString("faultyData");
 
                                         emailErrorMessage = errorBindings.get(loginUserInfoUsernameKey).getString("message");
@@ -117,7 +114,7 @@
                                 }
                                 catch(Exception ex){
 
-                                    System.out.println("internal error in rendering page: " + ex.getMessage());
+                                    System.out.println("username: internal error in rendering page: " + ex.getMessage());
 
                                     // sets general errors to constant
                                     generalErrors = generalErrorsDefault;
@@ -150,18 +147,18 @@
 
 
                                         passwordPlaceHolder =
-                                                errorBindings.get(loginUserInfoUsernameKey).getString("faultyData") == null ?
-                                                        "Email" :
-                                                        errorBindings.get(loginUserInfoUsernameKey).getString("faultyData");
+                                                errorBindings.get(loginUserInfoPasswordKey).isNull("faultyData") ?
+                                                        passwordPlaceHolder :
+                                                        errorBindings.get(loginUserInfoPasswordKey).getString("faultyData");
 
-                                        passwordErrorMessage = errorBindings.get(loginUserInfoUsernameKey).getString("message");
+                                        passwordErrorMessage = errorBindings.get(loginUserInfoPasswordKey).getString("message");
 
                                         passwordHiddenValue = "text";
                                     }
                                 }
                                 catch(Exception ex){
 
-                                    System.out.println("internal error in rendering page: " + ex.getMessage());
+                                    System.out.println("passwrod: internal error in rendering page: " + ex.getMessage());
 
                                     // sets general errors to constant
                                     generalErrors = generalErrorsDefault;
@@ -170,7 +167,7 @@
                                 out.println(
                                         "<input type=\"password\"" +
                                                 " placeholder=\"" + passwordPlaceHolder + "\" name=\""
-                                                + loginUserInfoUsernameKey +
+                                                + loginUserInfoPasswordKey +
                                                 "\" class=\"form-control my-3 p-2\">"
                                 );
 
@@ -195,7 +192,8 @@
 
 <%
     // sets the hidden input for general errors
-    out.println("<input id=\"generalErrors\" type=\"hidden\" value=" + generalErrors + ">");
+    System.out.println("making general error: " + generalErrors);
+    out.println("<input id=\"generalErrors\" type=\""+ "hidden" + "\" value=\"" + generalErrors + "\">");
 %>
 
 <script type="application/javascript" src="/js-bootstrap/bootstrap.bundle.min.js"></script>

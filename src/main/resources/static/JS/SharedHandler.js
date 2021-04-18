@@ -12,7 +12,7 @@
  * @param errorMsg
  *  error message itself
  */
-export function printError(errorMsg){
+ function printError(errorMsg){
 
     alert("ERROR: " + errorMsg);
     console.log(errorMsg);
@@ -26,7 +26,7 @@ export function printError(errorMsg){
  * @Purpose
  *  Create error bindings and parse json object
  */
-export class ErrorBindings{
+ class ErrorBindings{
 
     /**
      * Class Variables
@@ -189,7 +189,7 @@ export class ErrorBindings{
   *
   */
 
-export class UserInfo{
+ class UserInfo{
 
     /**
      * Class Variables
@@ -333,7 +333,7 @@ export class UserInfo{
   *
   */
 
-export class StudentInfo{
+ class StudentInfo{
 
 
     /**
@@ -478,24 +478,24 @@ export class StudentInfo{
  *  
  */
 
-export class BookCopy{
+ class BookCopy{
 
     //Static private variables holding keys in JSON format.
-    static #ID = {};
-    static #bookCode = {};
-    static #editionYear = {};
-    static #seqNr = {};
-    static #strikeBarcode = {};
-    static #pidm = {};
-    static #termCode = {};
-    static #dateCheckedOut = {};
-    static #disposition = {};
-    static #bookSalePrice = {};
-    static #prevPidm = {};
-    static #prevTermCode = {};
-    static #prevDateCheckedIn = {};
-    static #activityDate = {};
-    static #billFlag = {};
+     #ID;
+     #bookCode;
+     #editionYear;
+     #seqNr;
+     #strikeBarcode;
+     #pidm;
+     #termCode;
+     #dateCheckedOut;
+     #disposition;
+     #bookSalePrice;
+     #prevPidm;
+     #prevTermCode;
+     #prevDateCheckedIn;
+     #activityDate;
+     #billFlag;
 
 
     //Constructor that takes all the inputs and creates one.
@@ -571,7 +571,7 @@ export class BookCopy{
      * @returns editionyear
      */
     getEditionyear(){
-        return this.#editionyear;
+        return this.#editionYear;
     }
 
     /**
@@ -662,6 +662,7 @@ export class BookCopy{
         }
     }
 }
+
 
 /**
  * @class Bag
