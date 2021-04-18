@@ -93,10 +93,7 @@
 
     </nav>
 </section>
-<%
-    // sets the hidden input for general errors
-    out.println("<input id=\"generalErrors\" type=\"hidden\" value=" + generalErrors + ">");
-%>
+
 <div class="container my-container "
            style="background-color: #bebebe;
                   border: 2px solid black;

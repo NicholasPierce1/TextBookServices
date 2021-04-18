@@ -18,8 +18,13 @@
 
         <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="/css/homeCSS.css">
-        <script type="application/javascript" src="/js/SharedHandler.js"></script>
-        <script type="text/javascript"src = "/js/HomeHandler.js"></script>
+        <script type="module" src = "/js/HomeHandler.js"></script>
+
+        <!--
+    per nick: remove in production. Testing path variables incur errors from get requests
+    relating to favico
+-->
+        <link rel="shortcut icon" href="#">
 
     </head>
 
@@ -31,7 +36,7 @@
     final String data = ((JSONObject)request.getAttribute("data")).toString();
 
     // print's invisible input tag with the id "data" for extraction by js files in client-browser
-    out.println("<input type=\"hidden\" value=\"" + data + "\" id=\"data\">" );
+    out.println("<input type=\"hidden\" value=" + data + " id=\"data\">" );
 %>
 
 <input type="hidden" id="generalErrors" value="">
@@ -47,10 +52,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav pb-1 pt-1" id="patronDropDownHomeUl" >
-                       <a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/StudentDropDownMenu">Home</a>
+                        <li id="PatronHome"><a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/StudentDropDownMenu">Home</a></li>
                     </ul>
                     <ul class="navbar-nav pb-1 pt-1" id="patronDropDownCheckInCheckOutUl" >
-                        <a class="nav-link navbar-text" aria-current="page" targetEndpoint="/CheckInCheckOut">Check In / Check Out</a>
+                        <li id="PatronCheckInCheckOut"><a class="nav-link navbar-text" aria-current="page" targetEndpoint="/CheckInCheckOut">Check In / Check Out</a></li>
                     </ul>
                     <div class="nav-item dropdown pb-1 pt-1" id="patronDropDownDiv">
                         <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,10 +77,6 @@
 
        <input type="hidden" type="text" id="hiddenInput" name="data" value="">
     </section>
-<%
-    // sets the hidden input for general errors
-    out.println("<input id=\"generalErrors\" type=\"hidden\" value=" + generalErrors + ">");
-%>
     <div class="container my-container "
                style="background-color: #bebebe;
                       border: 2px solid black;

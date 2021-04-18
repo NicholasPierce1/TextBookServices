@@ -26,7 +26,7 @@
  * @Purpose
  *  Create error bindings and parse json object
  */
- class ErrorBindings{
+export class ErrorBindings{
 
     /**
      * Class Variables
@@ -189,7 +189,7 @@
   *
   */
 
- class UserInfo{
+export class UserInfo{
 
     /**
      * Class Variables
@@ -239,8 +239,8 @@
      */
 
     constructor(username, password){
-        this.username = username;
-        this.password = password;
+        this.#username = username;
+        this.#password = password;
     }
 
     /**
@@ -253,9 +253,8 @@
 
     static parseJson(jsonObj){
         try{
-            const jsonObject = JSON.parse(jsonObj);
 
-            return new UserInfo(jsonObject._username, jsonObject._password);
+            return new UserInfo(jsonObj._username, jsonObj._password);
 
         }
         catch{
@@ -317,10 +316,10 @@
     * returns fields created in json form
     */
      createJsonForm(){
-        return {
+        return JSON.stringify({
             _username: this.#username,
             _password: this.#password
-        };
+        });
      }
 }
 
@@ -333,7 +332,7 @@
   *
   */
 
- class StudentInfo{
+export class StudentInfo{
 
 
     /**
@@ -478,7 +477,7 @@
  *  
  */
 
- class BookCopy{
+export class BookCopy{
 
     //Static private variables holding keys in JSON format.
      #ID;
@@ -670,7 +669,7 @@
  * @Purpose
  */
 
- class Bag{
+export class Bag{
 
     static #pidm = {};
     static #bagNumber = {};
@@ -736,7 +735,7 @@
  * @Purpose
  */
 
- class Term{
+export class Term{
 
     //Static private values
     static #termCode;

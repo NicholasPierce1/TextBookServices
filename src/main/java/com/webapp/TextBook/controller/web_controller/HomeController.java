@@ -4,6 +4,7 @@ package com.webapp.TextBook.controller.web_controller;
 import javassist.compiler.ast.Symbol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -113,12 +114,75 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/testStudentDropDown", method = RequestMethod.GET)
-    public String testStudentDropDown(){
+    public String testStudentDropDown(ModelMap modelMap){
+
+        // known: if this page loads then no errors uncovered
+        // render login user info and stashed inside json object
+
+        // enumerates model map keys & login user info keys
+        final String modelMapDataKey = "data";
+        final JSONObject modelMapDataValue = new JSONObject();
+        final String loginUserInfoJsonKey = "LoginUserInfo";
+        final String loginUserInfoUsernameKey = "_username";
+        final String loginUserInfoPasswordKey = "_password";
+
+        // creates login user info json object equivalent
+        final JSONObject loginUserInfoJson = new JSONObject();
+
+        try{
+
+            // sets login user info state
+            loginUserInfoJson.put(loginUserInfoUsernameKey, "username");
+            loginUserInfoJson.put(loginUserInfoPasswordKey, "password");
+
+            // appends login user info json to model map json
+            modelMapDataValue.put(loginUserInfoJsonKey,loginUserInfoJson);
+
+            // appends model map json into model map
+            modelMap.put(modelMapDataKey, modelMapDataValue);
+
+        }
+        catch(JSONException ex){
+            System.out.println(ex.getMessage());
+        }
+
         return "StudentDropDownMenu";
     }
 
     @RequestMapping(value = "/testSupervisorDropDown", method = RequestMethod.GET)
-    public String testSupervisorDropDown(){
+    public String testSupervisorDropDown(ModelMap modelMap){
+
+
+        // known: if this page loads then no errors uncovered
+        // render login user info and stashed inside json object
+
+        // enumerates model map keys & login user info keys
+        final String modelMapDataKey = "data";
+        final JSONObject modelMapDataValue = new JSONObject();
+        final String loginUserInfoJsonKey = "LoginUserInfo";
+        final String loginUserInfoUsernameKey = "_username";
+        final String loginUserInfoPasswordKey = "_password";
+
+        // creates login user info json object equivalent
+        final JSONObject loginUserInfoJson = new JSONObject();
+
+        try{
+
+            // sets login user info state
+            loginUserInfoJson.put(loginUserInfoUsernameKey, "username");
+            loginUserInfoJson.put(loginUserInfoPasswordKey, "password");
+
+            // appends login user info json to model map json
+            modelMapDataValue.put(loginUserInfoJsonKey,loginUserInfoJson);
+
+            // appends model map json into model map
+            modelMap.put(modelMapDataKey, modelMapDataValue);
+
+        }
+        catch(JSONException ex){
+            System.out.println(ex.getMessage());
+        }
+
         return "SupervisorDropDownMenu";
     }
 

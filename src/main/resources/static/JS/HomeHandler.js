@@ -1,4 +1,4 @@
-import * as SHARED from "./SharedHandler"; // ensures shared handler is imported
+import * as SHARED from "./SharedHandler.js"; // ensures shared handler is imported
 
 /**
  * Create new map for li tags
@@ -6,6 +6,15 @@ import * as SHARED from "./SharedHandler"; // ensures shared handler is imported
 
 let liMap = new Map();
 
+let navItemMaps = null;
+
+window.onload = () => {
+    console.log("running");
+    setNavMappings();
+
+    console.log(getLiNavMapPairs());
+    console.log(getLoginUserInfo());
+}
 
 /**
  * @function get_list_items
@@ -94,12 +103,12 @@ export function setNavMappings(){
     const liNavMapPair = new Map();
 
     // Creating nav bar id from the view
-    let navId = window.document.getElementById("nav").id;
+    let navId = window.document.getElementsByTagName("nav")[0].id;
 
     // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
     if(navId === null)
         throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
-    else if(navId !== "Student" || navId !== "Supervisor")
+    else if(!(navId !== "Student" || navId !== "Supervisor"))
         throw new Error("id value does not equal student or supervisor; please revise");
 
     // Choose which map to generate based on nav bar id (Student or Supervisor)
@@ -113,16 +122,16 @@ export function setNavMappings(){
 
         const ulToGenerateMappings = window.document.getElementById(mappingsToGenerate[i]);
 
-        const liList = ulToGenerateMappings.getElementsByTagName("li").length;
+        const liList = ulToGenerateMappings.getElementsByTagName("li");
 
         if(liList.length === 0)
             throw new Error(`UL list with id {${ulToGenerateMappings.id}} is empty`);
 
-        for(let j = 0; j < liList; j++){
+        for(let j = 0; j < liList.length; j++){
 
             // given: retains an anchor tag
-            const anchorTag = liList[i].getElementsByTagName("a")[0];
-
+            const anchorTag = liList[j].getElementsByTagName("a")[0];
+            console.log(anchorTag.parentElement);
             // asserts attribute (targetEndpoint) exist within an anchor tag
             if(!anchorTag.getAttribute("targetEndpoint"))
                 throw new Error("Anchor tag, which is within an applicable nav item, does not have" +
@@ -132,7 +141,7 @@ export function setNavMappings(){
             // sets li mapping pair
             // key: ul's id + li's id
             liNavMapPair.set(
-                `${mappingsToGenerate[i]}${liList[i].id}`,
+                `${mappingsToGenerate[i]}${liList[j].id}`,
                 {
                     url: anchorTag.getAttribute("targetEndpoint"),
                     methodType: "GET"
@@ -143,8 +152,7 @@ export function setNavMappings(){
 
     }
 
-    // Set key value pairs into session storage for potential later use by the user
-    window.sessionStorage.setItem(LI_NAV_PAIRS_KEY, JSON.stringify(liNavMapPair));
+    navItemMaps = liNavMapPair;
 
     /*
     let response = JSON.parse(window.getElementById("hiddenInput").value);
@@ -162,10 +170,6 @@ export function setNavMappings(){
 
 export function getLoginUserInfo(){
 
-    // if login user is set in session map then extract, parse
-    if(window.sessionStorage.getItem(loginUserInfoKey))
-        return UserInfo.parseJson(JSON.parse(window.sessionStorage.getItem(loginUserInfoKey)));
-
     // extracts string json and convert to json object
     const json = JSON.parse(window.document.getElementById(`${formControllerResponseData}`).value);
 
@@ -177,14 +181,16 @@ export function getLoginUserInfo(){
 
 }
 
-export const loginUserInfoKey = "loginInfoUserKey";
-// sets login user info in session storage
-function setLoginUserInfo(){
+// exported function to return to li nav map pairs, if it exist
+// if not then render it via setting nav id maps
+export function getLiNavMapPairs(){
+    if(navItemMaps)
+        return navItemMaps;
 
-    // converts to vm equivalent & set in vm
-    window.sessionStorage.setItem(loginUserInfoKey, UserInfo.parseJson(getLoginUserInfo()).createJsonForm());
-
+    return setNavMappings();
 }
+
+
 
 /**
  * @function createManualForm
@@ -317,7 +323,7 @@ function setOnClicksToNavItems() {
         for (let j = 0; j < liList; j++) {
 
             // given: retains an anchor tag
-            const anchorTag = liList[i].getElementsByTagName("a")[0];
+            const anchorTag = liList[j].getElementsByTagName("a")[0];
 
             // sets on click
             anchorTag.onclick = createManualForm;
@@ -331,5 +337,4 @@ function setOnClicksToNavItems() {
 export function initializeSharedState(){
     setNavMappings();
     setOnClicksToNavItems();
-    setLoginUserInfo();
 }
