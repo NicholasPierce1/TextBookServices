@@ -12,7 +12,7 @@
  * @param errorMsg
  *  error message itself
  */
- function printError(errorMsg){
+ export function printError(errorMsg){
 
     alert("ERROR: " + errorMsg);
     console.log(errorMsg);

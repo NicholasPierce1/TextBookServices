@@ -36,11 +36,11 @@ import java.util.List;
 @RequestMapping(path = "/")
 public class HomeController {
 
-    @RequestMapping(value = "/{toReturn}", method = RequestMethod.GET)
-    public String index(@PathVariable(required = false, name = "toReturn") String toReturn, ModelMap modelMap){
+    @RequestMapping(value = {"/{toReturn}", "/"}, method = RequestMethod.GET)
+    public String index(@PathVariable(required = false, name = "toReturn") Optional<String> toReturn, ModelMap modelMap){
         modelMap.addAttribute("test", "value test here");
 
-        Integer toReturnNum = toReturn == null ? null : Integer.parseInt(toReturn);
+        Integer toReturnNum = toReturn.isEmpty() ? null : Integer.parseInt(toReturn.get());
 
         final JSONObject data = new JSONObject();
 

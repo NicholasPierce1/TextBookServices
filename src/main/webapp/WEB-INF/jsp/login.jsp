@@ -17,8 +17,13 @@
     <title>Login Template</title>
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/css/loginCSS.css">
-    <script type="application/javascript" src="/js/SharedHandler.js"></script>
-    <script type="application/javascript" src="/js/LoginHandler.js"></script>
+    <script type="module" src="/js/LoginHandler.js"></script>
+
+    <!--
+        per nick: remove in production. Testing path variables incur errors from get requests
+        relating to favico
+    -->
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
 
@@ -46,7 +51,7 @@
         generalErrors = data.isNull("GeneralErrors") ? "" : data.getString("GeneralErrors");
         final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
 
-        if(bindingErrors != null && generalErrors != null)
+        if(bindingErrors != null && !generalErrors.equals(""))
             throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
 
         if(bindingErrors != null) {

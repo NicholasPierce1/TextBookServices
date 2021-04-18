@@ -3,7 +3,7 @@
 // if not then invoke alert from shared handler
 
 // imports method definition from shared handler
-//import {printError} from "./SharedHandler.js";
+import {printError} from "./SharedHandler.js";
 
 window.onload =
      () => {
@@ -14,8 +14,6 @@ window.onload =
         // if value is not empty (never null) then invoke alert (general error occurred)
         if(generalErrorInputElement.value)
             printError(generalErrorInputElement.value);
+
     }
 
-function callMe(){
-    console.log("call me");
-}
