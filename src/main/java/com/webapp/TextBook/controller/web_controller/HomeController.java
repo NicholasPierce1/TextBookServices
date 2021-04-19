@@ -109,7 +109,38 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/testCheckInOut", method = RequestMethod.GET)
-    public String testCheckInOut(){
+    public String testCheckInOut(ModelMap modelMap){
+
+        // known: if this page loads then no errors uncovered
+        // render login user info and stashed inside json object
+
+        // enumerates model map keys & login user info keys
+        final String modelMapDataKey = "data";
+        final JSONObject modelMapDataValue = new JSONObject();
+        final String loginUserInfoJsonKey = "LoginUserInfo";
+        final String loginUserInfoUsernameKey = "_username";
+        final String loginUserInfoPasswordKey = "_password";
+
+        // creates login user info json object equivalent
+        final JSONObject loginUserInfoJson = new JSONObject();
+
+        try{
+
+            // sets login user info state
+            loginUserInfoJson.put(loginUserInfoUsernameKey, "username");
+            loginUserInfoJson.put(loginUserInfoPasswordKey, "password");
+
+            // appends login user info json to model map json
+            modelMapDataValue.put(loginUserInfoJsonKey,loginUserInfoJson);
+
+            // appends model map json into model map
+            modelMap.put(modelMapDataKey, modelMapDataValue);
+
+        }
+        catch(JSONException ex){
+            System.out.println(ex.getMessage());
+        }
+
         return "CheckInCheckOut";
     }
 

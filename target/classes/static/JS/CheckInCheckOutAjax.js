@@ -47,7 +47,7 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
                 refreshViewWithJsonForAllCheckedOutBooks(response.json)
             }
             else{
-                console.log("An Error Occurred")
+                console.log("An Error Occurred");
                 throw Error("Error");
             }
         },
@@ -56,9 +56,8 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
             printError(errorReason);
             })
         .then(data => {
-            console.log(data)
+            console.log(data);
         });
-}
 
 async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 

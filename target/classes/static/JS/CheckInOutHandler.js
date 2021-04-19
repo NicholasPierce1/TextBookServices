@@ -11,8 +11,9 @@ let errorLabelTest;
 let form;
 
 // imports home handler to ensure shared, home state is invokable
-import * as HOME from "./HomeHandler";
-import * as SHARED from "./SharedHandler";
+import * as HOME from "./HomeHandler.js";
+import * as SHARED from "./SharedHandler.js";
+import * as TEST_NICK_DEMO from "./TestJavaScriptFiles/NickTestFileDemo.js";
 
 // establishes the window's onload functionality
 // initialize state (render and save login user info, set any non-locally scoped members
@@ -21,7 +22,15 @@ window.onload = (ev) =>{
 
     // invokes the home handler to initialize view state
     try{
-        HOME.initializeSharedState();
+        // HOME.initializeSharedState();
+        
+        // todo: spyridon, chase
+        // set on clicks of the test button 
+        const testButton = window.document.getElementById("testButton");
+        console.log("running");
+        testButton.onclick = TEST_NICK_DEMO.testStatusCodeErrorOnClick;
+        console.log(`${testButton.onclick}`);
+        
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);
@@ -35,16 +44,14 @@ window.onload = (ev) =>{
  * Test Code
 */
 
+/*
+test works:
+1) create the test function (function that calls the targeted method to test).
+   create dummy/test state and invoke the targeted method
+2) set button on click (on load) to the test function
+3) run it & debug
+ */
 
-let testStatusCodeInt = 1;
-// test function for show status code error
-function testStatusCodeErrorOnClick(event){
-
-    if(++testStatusCodeInt % 2 === 0) // even clicks
-        showStatusCodeError("test error message");
-    else
-        hideStatusCodeError();
-}
 
 
 /**
@@ -52,10 +59,10 @@ function testStatusCodeErrorOnClick(event){
  *  Small Functions
  */
 
-function showStatusCodeError(message) {
+export function showStatusCodeError(message) {
 
 
-    const errorLabel = window.document.getElementById("testStatusCodeError");
+    const errorLabel = window.document.getElementById("statusMessageErrorLabel");
 
     if(typeof(message) != "string" || errorLabel === null)
         throw new Error("input param is not a string or id is null");
@@ -69,10 +76,10 @@ function showStatusCodeError(message) {
     console.log("test here");
 }
 
-function hideStatusCodeError() {
+export function hideStatusCodeError() {
 
 
-    const errorLabel = window.document.getElementById("testStatusCodeError");
+    const errorLabel = window.document.getElementById("statusMessageErrorLabel");
 
     if(errorLabel === null)
         throw new Error("is null");
@@ -87,7 +94,7 @@ function hideStatusCodeError() {
  * Function to display errors using innerHTML.
  */
 
-function errorMessage(){
+export function errorMessage(){
     if(isNaN(document.getElementById("IDnumber"))){
         error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
@@ -107,7 +114,7 @@ function errorMessage(){
  * @param {*} statusMessage 
  */
 
-function showStatusMessageError(statusMessage) {
+export function showStatusMessageError(statusMessage) {
 
     //Get dom element. label for statusMessage.
     const statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
@@ -123,7 +130,7 @@ function showStatusMessageError(statusMessage) {
 /**
  * @purpose Makes statusMessage error label hidden. 
  */
-function hideStatusMessageError() {
+export function hideStatusMessageError() {
     //Get dom element. label for statusMessage.
     const statusMessageErrorlabel = window.document.getElementById("statusMessageErrorLabel");
 
@@ -135,7 +142,7 @@ function hideStatusMessageError() {
  * @purpose Display "Not Verified" in bag error label using innerHTML. 
  */
 
-function showBagError() {
+export function showBagError() {
     //Get dom element for label of bag error.
     const error_bag = window.document.getElementById("error_bag");
     error_bag.style.visibility = "visible";
@@ -146,7 +153,7 @@ function showBagError() {
  * @purpose Hides errors for the Bag input
  */
 
-function hideBagError() {
+export function hideBagError() {
     //Get dom element for label of bag error.
     const error_bag = window.document.getElementById("error_bag");
     error_bag.style.visibility = "hidden";
@@ -156,7 +163,7 @@ function hideBagError() {
  *  Functions that call the small functions
  */
 
-function handleErrorResponse(json) {
+export function handleErrorResponse(json) {
     //ask about the gen_error
     if (gen_error) {
         SHARED.printError();
@@ -179,7 +186,7 @@ function handleErrorResponse(json) {
     hideErrorBindings();
 }
 
-function handlerStatusMessageError(statusMessage) {
+export function handlerStatusMessageError(statusMessage) {
     if (statusMessage == "OK" || null) {
         showStatusMessageError();
         return true;
@@ -187,7 +194,7 @@ function handlerStatusMessageError(statusMessage) {
 
 }
 
-function handleErrorBindings() {
+export function handleErrorBindings() {
     const id_error_label = document.getElementById("error_studentID");
     const studentID = document.getElementById("student_id_in");
 
@@ -204,7 +211,7 @@ function handleErrorBindings() {
  * @param {*} bookCopyList 
  */
 
-function showBookCopyForAllCheckedOutBooks(bookCopyList) {
+export function showBookCopyForAllCheckedOutBooks(bookCopyList) {
     // call helper for each book copy
     for (let i = 0; i < bookCopyList.length; i++) {
         helper(bookCopyList[i])
@@ -219,7 +226,7 @@ function showBookCopyForAllCheckedOutBooks(bookCopyList) {
  * @param {*} BookCopy 
  */
 
-function showBookCopyForCheckedOutBook(BookCopy) {
+export function showBookCopyForCheckedOutBook(BookCopy) {
 
     //Parse book copy in JSON
     book_obj = JSON.parse(BookCopy);
@@ -242,7 +249,7 @@ function showBookCopyForCheckedOutBook(BookCopy) {
 
 
 
-function removeTableRow(table) {
+export function removeTableRow(table) {
     const viewTable = document.getElementsByTagName('table');
 
 }
@@ -251,13 +258,13 @@ function removeTableRow(table) {
  *  hide error bindings
  */
 
-function hideErrorBindings() {
+export function hideErrorBindings() {
 
 
 
 }
 
-function deleteTableRowWhereBarcodeMatches(barcode) {
+export function deleteTableRowWhereBarcodeMatches(barcode) {
     const table = window.document.getElementsByTagName("table").rows;
     for (let i of table) {
         if (i == barcode) {
@@ -266,7 +273,7 @@ function deleteTableRowWhereBarcodeMatches(barcode) {
     }
 }
 
-function onFocusOutForBarcode() {
+export function onFocusOutForBarcode() {
 
 
     //Get barcode input
@@ -287,7 +294,7 @@ function onFocusOutForBarcode() {
 
 }
 
-function getBarcodeFromInput() {
+export function getBarcodeFromInput() {
     //Get barcode from input element
     barcode = document.getElementById("barcode");
 
@@ -299,7 +306,7 @@ function getBarcodeFromInput() {
     }
 }
 
-function getTableRowFromBookCopy(barcode) {
+export function getTableRowFromBookCopy(barcode) {
     //call getBookCopyWhereBarcodeMatches
     let checkIfNull = getBookCopyWhereBarcodeMatches();
 
@@ -332,7 +339,7 @@ function getTableRowFromBookCopy(barcode) {
 
 }
 
-function getBookCopyWhereBarcodeMatches(barcode) {
+export function getBookCopyWhereBarcodeMatches(barcode) {
 
     //Extract book copy list from local session map
 
@@ -357,7 +364,7 @@ function getBookCopyWhereBarcodeMatches(barcode) {
 }
 
 
-function checkStudentInfoInputsAndState() {
+export function checkStudentInfoInputsAndState() {
     /*
 
     //Check if inputs for student info are empty and show general error message.
@@ -402,7 +409,7 @@ function checkStudentInfoInputsAndState() {
  * @returns
  */
 
-function refreshViewWithJsonForAllCheckedOutBooks(jsonResponse) {
+export function refreshViewWithJsonForAllCheckedOutBooks(jsonResponse) {
 
     if (handleErrorResponse() === false) {
         return
@@ -431,14 +438,14 @@ function refreshViewWithJsonForAllCheckedOutBooks(jsonResponse) {
 
 }
 
-function refreshViewWithJsonForCheckedOutBook(json) {
+export function refreshViewWithJsonForCheckedOutBook(json) {
     if (handleErrors() == false) {
         const book_copy = new BookCopy();
         showBookCopyForAllCheckedOutBooks(book_copy);
     }
 }
 
-function refreshViewWithJsonForCheckedInBook(json) {
+export function refreshViewWithJsonForCheckedInBook(json) {
     if (handlerStatusMessageError() == false) {
         return
     }
@@ -446,7 +453,7 @@ function refreshViewWithJsonForCheckedInBook(json) {
     // Parse barcode
 }
 
-function refreshViewWithJsonForSellBook(json) {
+export function refreshViewWithJsonForSellBook(json) {
     if (handlerError == false) {
         return;
     } else {
@@ -457,7 +464,7 @@ function refreshViewWithJsonForSellBook(json) {
 
 }
 
-function initiateApiFor_AllCheckedOutBooksForStudentAndTerm() {
+export function initiateApiFor_AllCheckedOutBooksForStudentAndTerm() {
 
     //const DataStudentSessionMap = window.sessionStorage;
     const term = document.getElementById("term");
@@ -490,7 +497,7 @@ function initiateApiFor_AllCheckedOutBooksForStudentAndTerm() {
  *
 */
 
-function initiateApiFor_GetCheckedOutBookForStudentTerm() {
+export function initiateApiFor_GetCheckedOutBookForStudentTerm() {
 
     try {
 
@@ -529,7 +536,7 @@ function initiateApiFor_GetCheckedOutBookForStudentTerm() {
  */
 
 
-function initiateApiFor_CheckInBookForStudentAndTerm() {
+export function initiateApiFor_CheckInBookForStudentAndTerm() {
     try {
 
 
@@ -567,7 +574,7 @@ function initiateApiFor_CheckInBookForStudentAndTerm() {
  * @param {*} barcode
 */
 
-function initiateApiFor_SellBookForStudent(barcode) {
+export function initiateApiFor_SellBookForStudent(barcode) {
 
     try {
         //Extract user and student info from local session
@@ -597,7 +604,7 @@ function initiateApiFor_SellBookForStudent(barcode) {
 */
 
 
-function onClickHandlerFor_SellBook() {
+export function onClickHandlerFor_SellBook() {
 
     //Check Student info inputs and state
     studentID = document.getElementById("student_id_in");
@@ -610,7 +617,7 @@ function onClickHandlerFor_SellBook() {
     // .....
 }
 
-function onClickHandlerFor_GetAllCheckedOutBooksForStudentAndTerm() {
+export function onClickHandlerFor_GetAllCheckedOutBooksForStudentAndTerm() {
     //Call checkStudentInfoInputsAndState
     checkStudentInfoInputsAndState();
     //Call respective ajax handler

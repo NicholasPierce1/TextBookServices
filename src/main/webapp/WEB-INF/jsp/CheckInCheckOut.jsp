@@ -12,18 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/CSS/checkinoutCSS.css">
-    <script type="application/javascript" src="/js/SharedHandler.js"></script>
-    <script type="application/javascript" src="/js/HomeHandler.js"></script>
-    <script type="application/javascript" src="/js/CheckInOutHandler.js"></script>
+    <script type="module" src="/js/CheckInOutHandler.js"></script>
     <script type="application/javascript" src="/js/ViewModel/test.js"></script>
-    <script type="application/javascript" src="/js/TestJavaScriptFiles/ChaseTestFile.js"></script>
-    <script type="application/javascript" src="/js/TestJavaScriptFiles/SpyridonTestFile.js"></script>
 
     <!--
-
-     - create script tag here for a new js file that holds the test suites for all the targeted functions
-
+        per nick: remove in production. Testing path variables incur errors from get requests
+        relating to favico
     -->
+    <link rel="shortcut icon" href="#">
  
 </head>
 <body>
@@ -32,7 +28,7 @@
     final String data = ((JSONObject)request.getAttribute("data")).toString();
 
     // print's invisible input tag with the id "data" for extraction by js files in client-browser
-    out.println("<input type=\"hidden\" value=\"" + data + "\" id=\"data\">" );
+    out.println("<input type=\"hidden\" value=" + data + " id=\"data\">" );
 %>
 <input type="hidden" value="blah" id="blah2">
 
@@ -188,7 +184,7 @@
     </table>
 </section>
 
-    <button onclick="testStatusCodeErrorOnClick();">test show status code error</button>
+    <button id="testButton">test show status code error</button>
 
 <!--
 
