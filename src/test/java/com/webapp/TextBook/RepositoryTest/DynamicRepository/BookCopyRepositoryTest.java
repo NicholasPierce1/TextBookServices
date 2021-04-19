@@ -110,6 +110,32 @@ public class BookCopyRepositoryTest {
     @Test
     public void testCheckInBook(){
 
+        // enumerates local, final state to denote a new student within a term + a targeted "dummy" bookcopy
+        final String studentId = "12345678";
+        final String currentTermCode = "202120";
+        final String targetedBookCopyStrikeBarcode = "111111111111/";
+
+        // encapsulates process within try-catch
+        // if no errors yielded then test passed
+        try{
+
+            // checks out the pre-test created book to the dummy student
+            final StatusCode result = this._bookCopyRepository.checkInBook(
+                    targetedBookCopyStrikeBarcode,
+                    studentId,
+                    currentTermCode
+            );
+
+            // manual print to verify state is palatable
+            System.out.println("status code of result (should be ok in local trial (cannot run without pre-test state creation):" +
+                    result.getContentMessage());
+
+            assert(true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
     }
 
     @Test
