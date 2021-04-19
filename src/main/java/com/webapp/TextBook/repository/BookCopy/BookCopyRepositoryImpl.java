@@ -367,7 +367,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
 
                     // Query to update BookCopy table and changing the disposition to S for sold
                     // ASSUMPTION: current book is being sold to the person who owns it (checked out to)
-                    String transactionQuery = "UPDATE tablName set tableName.\"NWTXDT_DISPOSITION\" = 'S' " +
+                    String transactionQuery = "UPDATE tableName set tableName.\"NWTXDT_DISPOSITION\" = 'S' " +
                             "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
 
                     // Adding the BookCopy tableName to the query
