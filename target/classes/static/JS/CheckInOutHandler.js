@@ -29,8 +29,7 @@ window.onload = (ev) =>{
         const testButton = window.document.getElementById("testButton");
         console.log("running");
         testButton.onclick = TEST_NICK_DEMO.testStatusCodeErrorOnClick;
-        console.log(`${testButton.onclick}`);
-        
+
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);
