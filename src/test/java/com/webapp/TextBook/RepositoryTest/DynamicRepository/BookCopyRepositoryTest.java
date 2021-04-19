@@ -107,4 +107,14 @@ public class BookCopyRepositoryTest {
 
     }
 
+    @Test
+    public void testCheckInBook(){
+
+    }
+
+    @Test
+    public void testSellBook(){
+
+    }
+
 }
