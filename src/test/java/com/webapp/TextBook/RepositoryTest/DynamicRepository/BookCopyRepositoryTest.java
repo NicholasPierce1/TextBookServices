@@ -141,6 +141,18 @@ public class BookCopyRepositoryTest {
     @Test
     public void testSellBook(){
 
+        final String targetedBookCopyStrikeBarcode = "111111111111/";
+
+        try{
+            final StatusCode result = this._bookCopyRepository.sellBook(targetedBookCopyStrikeBarcode);
+            System.out.println("status code of result (should be ok in local trial (cannot run without pre-test state creation):" +
+                    result.getContentMessage());
+            assert(true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
     }
 
 }
