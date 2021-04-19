@@ -385,6 +385,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
                                 "\n(amount of books modified): " + amountUpdated);
 
                     transaction.commit();
+                    return StatusCode.OK;
                 }
                 default:
                     return StatusCode.BookCopyUndefined;

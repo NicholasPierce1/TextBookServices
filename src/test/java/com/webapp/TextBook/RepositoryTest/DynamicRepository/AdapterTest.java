@@ -25,8 +25,5 @@ public class AdapterTest {
 
     }
 
-    @Test
-    public void testUserLogin(){
 
-    }
 }
