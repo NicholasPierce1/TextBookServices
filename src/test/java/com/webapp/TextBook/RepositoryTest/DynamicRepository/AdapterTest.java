@@ -5,5 +5,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class AdapterTest {
-    
+    @Test
+    public void testGetAllCheckedOutBooks(){
+
+    }
+
+    @Test
+    public void testCheckOutBookForStudent(){
+
+    }
+
+    @Test
+    public void testCheckInBookForStudent(){
+
+    }
+
+    @Test
+    public void testSellBookForStudent(){
+
+    }
+
+    @Test
+    public void testUserLogin(){
+
+    }
 }
