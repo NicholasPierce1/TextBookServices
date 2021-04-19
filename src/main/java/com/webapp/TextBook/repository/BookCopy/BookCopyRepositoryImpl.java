@@ -287,9 +287,9 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
                     transaction = em.getTransaction();
                     transaction.begin();
 
-                    String transactionQuery = "UPDATE tableName set tableName.\"NWTXDT_DISPOSITION\" = 'I', tableName.\"NWTXDT_ACTIVITY_DATE\" = to_date(?, 'DD-MM-RRRR') " +
+                    String transactionQuery = "UPDATE tableName set tableName.\"NWTXDT_DISPOSITION\" = 'I', tableName.\"NWTXDT_ACTIVITY_DATE\" = to_date(?, 'DD-MM-RRRR'), " +
                             "tableName.\"NWTXDT_PREV_PIDM\" = ?, tableName.\"NWTXDT_PREV_TERM\" = ?, " +
-                            "tableName.\"NWTXDT_PIDM\" = null, tableName.\"NWTXDT_TERM\" = null, tableName.\"NWTXDT_DATE_CHECKED_OUT\" = null " +
+                            "tableName.\"NWTXDT_PIDM\" = null, tableName.\"NWTXDT_TERM\" = null, tableName.\"NWTXDT_DATE_CHECKED_OUT\" = null, " +
                             "tableName.\"NWTXDT_PREV_DATE_CHECKED_IN\" = to_date(?, 'DD-MM-RRRR') " +
                             "WHERE tableName.\"NWTXDT_BARCODE\" = ?";
                     Query updateBookCopyQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(transactionQuery, TABLE_NAME));
