@@ -214,5 +214,6 @@ public class ValidationBindingHelper {
         // set errors state for successful output json object
         outputData.put(ERRORS_KEY, null);
         outputData.put(GENERAL_ERRORS_KEY, null);
+
     }
 }
