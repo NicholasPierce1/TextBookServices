@@ -113,7 +113,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return new Pair<Optional<List<BookCopy>>, StatusCode>(Optional.empty(), StatusCode.NoCheckOutBooks);
         }
         catch (RuntimeException ex) {
-            System.out.println("db error --\n" + ex.getMessage());
+            System.out.println("db error -- getAllCheckedOutBooks()\n" + ex.getMessage());
             return new Pair<Optional<List<BookCopy>>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
     }
@@ -171,7 +171,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.CheckedInBookCopyUndefined);
         }
         catch (RuntimeException ex) {
-            System.out.println("db error --\n" + ex.getMessage());
+            System.out.println("db error -- checkoutBook()\n" + ex.getMessage());
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
     }
@@ -212,7 +212,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
         }
         catch (RuntimeException ex) {
 
-            System.out.println("db error --\n" + ex.getMessage());
+            System.out.println("db error -- checkInBook()\n" + ex.getMessage());
             return StatusCode.DatabaseError;
         }
     }
@@ -249,7 +249,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return StatusCode.SellBookNotFound;
         }
         catch (RuntimeException ex) {
-            System.out.println("db error --\n" + ex.getMessage());
+            System.out.println("db error -- sellBook()\n" + ex.getMessage());
             return StatusCode.DatabaseError;
         }
     }
@@ -393,7 +393,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
         catch(RuntimeException ex){
             if(transaction != null && transaction.isActive())
                 transaction.rollback();
-            System.out.println("db error --\n" + ex.getMessage());
+            System.out.println("db error -- changeBookDisposition()\n" + ex.getMessage());
             return StatusCode.DatabaseError;
         }
     }
@@ -431,7 +431,7 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.BookCopyUndefined);
         }
         catch (Exception ex) {
-            System.out.println("db error --\n" + ex.getMessage());
+            System.out.println("db error -- findBookCopyByStrikeBarcode()\n" + ex.getMessage());
             return new Pair<Optional<BookCopy>, StatusCode>(Optional.empty(), StatusCode.DatabaseError);
         }
     }
