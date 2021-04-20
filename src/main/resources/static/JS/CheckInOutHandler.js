@@ -4,7 +4,7 @@
  */
 
 
-let error_IDnumber = window.document.getElementById("error_studentID");
+
 let sessionMap = window.sessionStorage;
 let errorLabelTest;
 //Get Form from jsp view
@@ -14,6 +14,8 @@ let form;
 import * as HOME from "./HomeHandler.js";
 import * as SHARED from "./SharedHandler.js";
 import * as TEST_NICK_DEMO from "./TestJavaScriptFiles/NickTestFileDemo.js";
+import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
+import * as TEST_SPYRIDON from "./TestJavaScriptFiles/SpyridonTestFile.js";
 import * as AJAX from "./CheckInCheckOutAjax.js";
 
 // establishes the window's onload functionality
@@ -31,6 +33,23 @@ window.onload = (ev) =>{
         console.log("running");
         testButton.onclick = TEST_NICK_DEMO.testStatusCodeErrorOnClick;
 
+        /*
+        const test_ErrorMessage = window.document.getElementById("testErrorMessage");
+        console.log("running testErrorMessage");
+        test_ErrorMessage.onclick = TEST_SPYRIDON.testErrorMessage;
+
+        const testShowStatusMessageerror = window.document.getElementById("testStatusMessage");
+        console.log("running testShowStatusMessageError");
+        testShowStatusMessageerror.onclick = TEST_SPYRIDON.testShowStatusMessageError;
+        
+        const testShowBagError = window.document.getElementById("testShowBagError");
+        console.log("running testShowBagError");
+        testShowBagError.onclick = TEST_SPYRIDON.testshowBagError;
+
+        const testhandleErrorResponse = window.document.getElementById("testhandleErrorResponse");
+        console.log("running testhandleErrorResponse");
+        testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
+        */
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);
@@ -95,16 +114,18 @@ export function hideStatusCodeError() {
  */
 
 export function errorMessage(){
-    if(isNaN(document.getElementById("IDnumber"))){
+    const error_IDnumber = window.document.getElementById("error_studentID");
+   if(document.getElementById("IDnumber").value==""){
+        error_IDnumber.innerHTML("Please enter the 919#");
         error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
-        error_IDnumber.innerHTML("<p>Please enter the 919#</p>");
+        
 
     }
     else if(typeof(document.getElementById("IDnumber"))!=="number"){
         error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
-        error_IDnumber.innerHTML("<p>Incorrect input type</p>");
+        error_IDnumber.innerHTML("Incorrect input type");
     }
 }
 
@@ -167,7 +188,7 @@ export function handleErrorResponse(json) {
     //ask about the gen_error
     if (gen_error) {
         SHARED.printError();
-        return true;
+        //return true;
         if (true) {
             return handlerStatusMessageError();
         }

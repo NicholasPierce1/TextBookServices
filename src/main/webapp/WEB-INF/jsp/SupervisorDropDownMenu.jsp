@@ -77,11 +77,11 @@ relating to favico
                         <li id="PatronSoldBooks"><a class="dropdown-item" targetEndpoint="/PatronSoldBooks">Patron Sold Books</a></li>
                     </ul>
                 </div>
-                <div class="nav-item dropdown pb-1 pt-1" id="Reports">
-                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="Reports">
+                <div class="nav-item dropdown pb-1 pt-1" id="divReports">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="aReports">
                         Reports
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Reports" name="ulReports">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="ulReports" name="ulReports">
                         <li id="Action"><a class="dropdown-item" href="Action" onclick="submitManualForm();">Action</a></li>
                         <li id="AnotherAction"><a class="dropdown-item" href="AnotherAction" onclick="submitManualForm();">Another action</a></li>
                     </ul>
@@ -161,6 +161,10 @@ relating to favico
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous">
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+                integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+                crossorigin="anonymous"></script>
+        <script src="/js-bootstrap/bootstrap.min.js"></script>
 
     </body>
 

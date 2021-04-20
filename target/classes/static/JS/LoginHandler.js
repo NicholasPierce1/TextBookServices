@@ -4,6 +4,7 @@
 
 // imports method definition from shared handler
 import {printError} from "./SharedHandler.js";
+import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
 
 window.onload =
      () => {

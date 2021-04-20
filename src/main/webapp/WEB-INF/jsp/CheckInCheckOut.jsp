@@ -85,6 +85,7 @@
             <div class="navbar-item justify-content-end">
                 <button class="btn btn-logout-custom" type="button">Log Out</button>
             </div>
+            
         </div>
     </nav>
 </section>
@@ -126,9 +127,10 @@
                     <div class="input-group mb-3">
                         <label class="input-group-text">919#</label>
                         <input type="number" class="form-control" placeholder="ID">
-                        <label type="hidden" id = "error_studentID"></label>
+                        <label type="text" id = "error_studentID"></label>
                     </div>
                 </div>
+                
                 <div class="col-md-4 pt-2">
                     <div class="input-group mb-3">
                         <label class="input-group-text">Name</label>
@@ -189,7 +191,9 @@
 </section>
 
     <button id="testButton">test show status code error</button>
-
+    <button id="testErrorMessage">test ErrorMessage</button>
+    <button id="testStatusMessage">test ShowStatusMessageError</button>
+    <button id="testShowBagError">test ShowBagError</button>
 <!--
 
 - create new buttons for EACH test

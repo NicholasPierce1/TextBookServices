@@ -1,4 +1,5 @@
 import * as SHARED from "./SharedHandler.js"; // ensures shared handler is imported
+import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
 
 /**
  * Create new map for li tags
@@ -132,9 +133,7 @@ export function setNavMappings(){
             throw new Error(`Nav's id value ${navId} does not match any nav id to dynamically generate navigation
             mappings. Please revise.`);
     }
-
-    console.log(mappingsToGenerate);
-
+    
     // integrity check that UL exist for mapping -- generate mappings
     for(let i = 0; i < mappingsToGenerate.length; i++) {
 
@@ -355,15 +354,17 @@ function setOnClicksToNavItems() {
         const ulToGenerateMappings = window.document.getElementById(mappingsToGenerate[i]);
 
         const liList = ulToGenerateMappings.getElementsByTagName("li");
+        console.log(liList);
 
         if (liList.length === 0)
             throw new Error(`UL list with id {${ulToGenerateMappings.id}} is empty`);
 
         for (let j = 0; j < liList.length; j++) {
-
+            console.log(liList[j]);
             // given: retains an anchor tag
             const anchorTag = liList[j].getElementsByTagName("a")[0];
-
+            console.log(anchorTag);
+            console.log(anchorTag === null);
             // sets on click
             anchorTag.onclick = submitManualForm;
 
