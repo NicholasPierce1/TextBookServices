@@ -77,11 +77,11 @@ relating to favico
                         <li id="PatronSoldBooks"><a class="dropdown-item" targetEndpoint="/PatronSoldBooks">Patron Sold Books</a></li>
                     </ul>
                 </div>
-                <div class="nav-item dropdown pb-1 pt-1" id="Reports">
-                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="Reports">
+                <div class="nav-item dropdown pb-1 pt-1" id="divReports">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="aReports">
                         Reports
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="Reports" name="ulReports">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="ulReports" name="ulReports">
                         <li id="Action"><a class="dropdown-item" href="Action" onclick="submitManualForm();">Action</a></li>
                         <li id="AnotherAction"><a class="dropdown-item" href="AnotherAction" onclick="submitManualForm();">Another action</a></li>
                     </ul>
