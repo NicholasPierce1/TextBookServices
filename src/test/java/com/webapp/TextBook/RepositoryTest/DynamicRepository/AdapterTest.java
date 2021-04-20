@@ -20,13 +20,8 @@ import java.util.Optional;
 public class AdapterTest {
 
     @Autowired
-    private Adapter _bookCopyRepository;
+    private Adapter _adapter;
 
-    @Autowired
-    private PersonRepository _personRepository;
-
-    @Autowired
-    private UserRepository _userRepository;
 
     @Test
     public void testGetAllCheckedOutBooks(){
@@ -40,7 +35,7 @@ public class AdapterTest {
         try {
             // invoke repository to garner all book copies for a given student and term
             final Quintet<Optional<List<BookCopy>>, Optional<Student>, Optional<Bag>, Optional<Term>, StatusCode> RESULTS =
-                    _bookCopyRepository.getAllCheckedOutBooks(USER, TERM_CODE, STUDENT_ID);
+                    _adapter.getAllCheckedOutBooks(USER, TERM_CODE, STUDENT_ID);
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
             System.out.println(RESULTS.getValue4()); // should be OK
@@ -80,7 +75,7 @@ public class AdapterTest {
         try {
             // invoke repository to checkOutBook
             final Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> RESULTS =
-                    _bookCopyRepository.checkOutBookForStudent(USER,STRIKE_BARCODE ,STUDENT_ID, TERM_CODE);
+                    _adapter.checkOutBookForStudent(USER,STRIKE_BARCODE ,STUDENT_ID, TERM_CODE);
 
             // prints resulting status code (should be ok) and if the Book is present (should be present)
             System.out.println(RESULTS.getValue3()); // should be OK
@@ -118,7 +113,7 @@ public class AdapterTest {
         try {
             // invoke repository to checkInBook
             final StatusCode RESULTS =
-                    _bookCopyRepository.checkInBookForStudent(USER, STUDENT_ID, TERM_CODE, STRIKE_BARCODE);
+                    _adapter.checkInBookForStudent(USER, STUDENT_ID, TERM_CODE, STRIKE_BARCODE);
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
             System.out.println(RESULTS.getContentMessage()); // should be OK
@@ -147,7 +142,7 @@ public class AdapterTest {
         try {
             // invoke repository to SellBook
             final StatusCode RESULTS =
-                    _bookCopyRepository.sellBookForStudent(USER, STUDENT_ID, STRIKE_BARCODE);
+                    _adapter.sellBookForStudent(USER, STUDENT_ID, STRIKE_BARCODE);
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
             System.out.println(RESULTS.getContentMessage()); // should be OK
@@ -156,6 +151,33 @@ public class AdapterTest {
 
 
             assert (true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
+    }
+
+    @Test
+    public void testUserLogin(){
+
+        try {
+
+
+            final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+
+            final String STUDENT_USERNAME = "000000001";
+
+            final String STUDENT_PASSWORD = "S000001@nwmissouri.edu";
+
+            Pair<Optional<User>, StatusCode> RESULTS = _adapter.userLogin(STUDENT_USERNAME, STUDENT_PASSWORD);
+
+            System.out.println(RESULTS.getValue1()); // should be OK
+
+            if (RESULTS.getValue0().isPresent()){
+                System.out.println(RESULTS.getValue0().get());
+            }
+            assert(true);
         }
         catch(Exception ex){
             System.out.println(ex.getLocalizedMessage());
