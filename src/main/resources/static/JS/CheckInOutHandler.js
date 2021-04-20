@@ -45,6 +45,10 @@ window.onload = (ev) =>{
         console.log("running testShowBagError");
         testShowBagError.onclick = TEST_SPYRIDON.testshowBagError;
 
+        const testhandleErrorResponse = window.document.getElementById("testhandleErrorResponse");
+        console.log("running testhandleErrorResponse");
+        testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
+
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);
@@ -117,7 +121,7 @@ export function errorMessage(){
         
 
     }
-    else if(typeof(document.getElementById("IDnumber"))!==="number"){
+    else if(typeof(document.getElementById("IDnumber"))!=="number"){
         error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
         error_IDnumber.innerHTML("Incorrect input type");

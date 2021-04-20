@@ -27,3 +27,9 @@ export function testshowBagError(){
         CHECKIN_OUTHANDLER.hideBagError();
     }
 }
+
+export function testhandleErrorResponse(){
+
+        CHECKIN_OUTHANDLER.handleErrorResponse(json);
+    
+}
