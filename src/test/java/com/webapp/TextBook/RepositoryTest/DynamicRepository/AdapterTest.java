@@ -26,7 +26,7 @@ public class AdapterTest {
     @Test
     public void testGetAllCheckedOutBooks(){
 
-        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+        final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S467767@nwmissouri.edu");
 
         final String STUDENT_ID = "919000005";
 
@@ -64,7 +64,7 @@ public class AdapterTest {
 
     @Test
     public void testCheckOutBookForStudent(){
-        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+        final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S467767@nwmissouri.edu");
 
         final String STUDENT_ID = "919000005";
 
@@ -102,7 +102,7 @@ public class AdapterTest {
 
     @Test
     public void testCheckInBookForStudent(){
-        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+        final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S467767@nwmissouri.edu");
 
         final String STUDENT_ID = "919000005";
 
@@ -132,7 +132,7 @@ public class AdapterTest {
     @Test
     public void testSellBookForStudent(){
 
-        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+        final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S467767@nwmissouri.edu");
 
         final String STUDENT_ID = "919000005";
 
@@ -164,7 +164,7 @@ public class AdapterTest {
         try {
 
 
-            final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S000001@nwmissouri.edu");
+            final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S467767@nwmissouri.edu");
 
             final String STUDENT_USERNAME = "919000005";
 
