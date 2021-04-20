@@ -1,12 +1,10 @@
 let localHostPrefix = "http://localhost:8080/rest/api/inventory";
 
-
 import * as CHECK_IN_OUT_HANDLER from "./CheckInOutHandler.js";
 import * as SHARED from "./SharedHandler.js";
 
 export async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
     await fetch(`${localHostPrefix}/getCheckedOutBooks`, {
-
         method: "GET",
         headers: {
             'Content-Type': 'application/json',

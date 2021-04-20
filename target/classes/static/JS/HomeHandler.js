@@ -67,6 +67,8 @@ const studentNavMappings = ["patronDropDownUl", "patronDropDownCheckInCheckOutUl
 
 const supervisorNavMappings = [studentNavMappings[0], "supervisorDropDownUl", "supervisorDropDownHomeUl"];
 
+const checkInOutNavMappings = ["homeMenuUL", supervisorNavMappings[0], supervisorNavMappings[1]]
+
 /**
  * @onload
  *
@@ -111,11 +113,28 @@ export function setNavMappings(){
     // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
     if(navId === null)
         throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
-    else if(!(navId !== "Student" || navId !== "Supervisor"))
-        throw new Error("id value does not equal student or supervisor; please revise");
 
-    // Choose which map to generate based on nav bar id (Student or Supervisor)
-    let mappingsToGenerate = navId === "Student" ? studentNavMappings : supervisorNavMappings;
+    // Holds the dynamic mapping ul's to render the mapping pairs for manual form submission
+    let mappingsToGenerate;
+
+    // utilizes a switch to dynamically append the nav's ul of mappings for manual form submission
+    // if nav id does not match any of the ul drop downs an error is thrown
+    switch(navId){
+        case "Student":
+            mappingsToGenerate = studentNavMappings;
+            break;
+        case "Supervisor":
+            mappingsToGenerate = supervisorNavMappings;
+            break;
+        case "CheckInOut":
+            mappingsToGenerate = checkInOutNavMappings;
+            break;
+        default:
+            throw new Error(`Nav's id value ${navId} does not match any nav id to dynamically generate navigation
+            mappings. Please revise.`);
+    }
+
+    console.log(mappingsToGenerate);
 
     // integrity check that UL exist for mapping -- generate mappings
     for(let i = 0; i < mappingsToGenerate.length; i++) {
@@ -254,8 +273,6 @@ function createManualForm(event){
     if(!loginUserInfo.getPassword()|| !loginUserInfo.getUsername())
         throw new Error("login user info does not retain apt state. Please revise JSON for LoginUserInfo");
 
-    console.log(loginUserInfo.getPassword() + " : " + loginUserInfo.getUsername());
-
     // creates composite input elements to append to form
     const userNameInputElement = window.document.createElement("input");
     userNameInputElement.type = "text";
@@ -292,7 +309,6 @@ function createManualForm(event){
 function submitManualForm(event){
 
     try {
-        console.log("called here!!");
         console.log(createManualForm(event));//.submit();
     }
     catch (e) {
@@ -310,11 +326,26 @@ function setOnClicksToNavItems() {
     // If nav bar id is null throw error or if navid doesn't match 'student' or 'supervisor'
     if (navId === null)
         throw new Error("id value is not set in navId. Please revise -- cannot generate nav mappings");
-    else if (!(navId !== "Student" || navId !== "Supervisor"))
-        throw new Error("id value does not equal student or supervisor; please revise");
 
-    // Choose which map to generate based on nav bar id (Student or Supervisor)
-    let mappingsToGenerate = navId === "Student" ? studentNavMappings : supervisorNavMappings;
+    // Holds the dynamic mapping ul's to render the mapping pairs for manual form submission
+    let mappingsToGenerate;
+
+    // utilizes a switch to dynamically append the nav's ul of mappings for manual form submission
+    // if nav id does not match any of the ul drop downs an error is thrown
+    switch(navId){
+        case "Student":
+            mappingsToGenerate = studentNavMappings;
+            break;
+        case "Supervisor":
+            mappingsToGenerate = supervisorNavMappings;
+            break;
+        case "CheckInOut":
+            mappingsToGenerate = checkInOutNavMappings;
+            break;
+        default:
+            throw new Error(`Nav's id value ${navId} does not match any nav id to dynamically generate navigation
+            mappings. Please revise.`);
+    }
 
     // integrity check that UL exist for mapping -- generate mappings
     for (let i = 0; i < mappingsToGenerate.length; i++) {

@@ -25,7 +25,7 @@ window.onload = (ev) =>{
 
     // invokes the home handler to initialize view state
     try{
-        // HOME.initializeSharedState();
+        HOME.initializeSharedState();
         
         // todo: spyridon, chase
         // set on clicks of the test button 
