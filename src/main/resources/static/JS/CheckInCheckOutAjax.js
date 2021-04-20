@@ -1,8 +1,9 @@
 let localHostPrefix = "http://localhost:8080/rest/api/inventory";
 
 import * as CHECK_IN_OUT_HANDLER from "./CheckInOutHandler.js";
+import * as SHARED from "./SharedHandler.js";
 
-async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
+export async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
     await fetch(`${localHostPrefix}/getCheckedOutBooks`, {
         method: "GET",
         headers: {
@@ -25,7 +26,7 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
                 },
                 errorReason => {
                     console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                    printError(errorReason);
+                    SHARED.printError(errorReason);
                 })
             .then(data => {
                 console.log(data)
@@ -33,7 +34,7 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
     });
 }
 
-async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
+export async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 
     fetch(`${localHostPrefix}/checkoutBook`, {
             method: "GET",
@@ -60,7 +61,7 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
             },
                 errorReason => {
                 console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                printError(errorReason);
+                    SHARED.printError(errorReason);
                 })
             .then(data => {
                 console.log(data)
@@ -70,7 +71,7 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
 }
 
 
-async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
+export async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 
     fetch(`${localHostPrefix}/checkInBook`, {
             method: "GET",
@@ -97,7 +98,7 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
             },
                 errorReason => {
                 console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-                printError(errorReason);
+                    SHARED.printError(errorReason);
                 })
             .then(data => {
                 console.log(data)
@@ -106,7 +107,7 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
 
 }
 
-async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
+export async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
     fetch(`${localHostPrefix}/sellBook`, {
         method: "GET",
         headers: {
@@ -130,8 +131,8 @@ async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
             }
         },
             errorReason => {
-            console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
-            printError(errorReason);
+                console.log(`An error occurred in the fetch api\nreason: ${errorReason}`);
+                SHARED.printError(errorReason);
             })
         .then(data => {
             console.log(data)
