@@ -365,6 +365,11 @@ public class BookCopyRepositoryImpl implements BookCopyRepositoryCustom{
                     transaction = em.getTransaction();
                     transaction.begin();
 
+                    if(bookCopy.getDisposition() != 'O')
+                        throw new RuntimeException("Internal Error (BookCopyRepositoryImpl -- ChangeBookDisposition): " +
+                                "targeted book copy is not checked out. Please modify change disposition handler (whom invoke this" +
+                                "method) to properly sell a book that is not checked out to the current pidm captured in this instance.");
+
                     // Query to update BookCopy table and changing the disposition to S for sold
                     // ASSUMPTION: current book is being sold to the person who owns it (checked out to)
                     String transactionQuery = "UPDATE tableName set tableName.\"NWTXDT_DISPOSITION\" = 'S' " +
