@@ -7,6 +7,7 @@ import com.webapp.TextBook.repository.adapter.Adapter;
 import com.webapp.TextBook.repository.data_access.*;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import org.javatuples.Pair;
+import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +69,78 @@ public class AdapterTest {
 
     @Test
     public void testCheckOutBookForStudent(){
+        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
 
+        final String STUDENT_ID = "919000005";
+
+        final String STRIKE_BARCODE = "111111111111/";
+
+        final String TERM_CODE = "202120";
+
+        try {
+            // invoke repository to garner all book copies for a given student and term
+            final Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> RESULTS =
+                    _bookCopyRepository.checkOutBookForStudent(USER,STRIKE_BARCODE ,STUDENT_ID, TERM_CODE);
+
+            // prints resulting status code (should be ok) and if the list is present (should be present)
+            System.out.println(RESULTS.getValue3()); // should be OK
+            System.out.println("BookCopy List is present: " + RESULTS.getValue0().isPresent());
+            System.out.println("Student is present: " + RESULTS.getValue1().isPresent());
+            System.out.println("Term is present: " + RESULTS.getValue2().isPresent());
+
+
+            // prints all results to verify that state of bookcopy (ORM) works as expected
+            if (RESULTS.getValue0().isPresent()) {
+
+                // print the number of results expected (current instance: 4/13 --> 4)
+                System.out.println(RESULTS.getValue0().get());
+
+            }
+
+            assert(true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
     }
 
     @Test
     public void testCheckInBookForStudent(){
+        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
 
+        final String STUDENT_ID = "919000005";
+
+        final String STRIKE_BARCODE = "111111111111/";
+
+        final String TERM_CODE = "202120";
+
+        try {
+            // invoke repository to garner all book copies for a given student and term
+            final Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> RESULTS =
+                    _bookCopyRepository.checkOutBookForStudent(USER, STUDENT_ID, TERM_CODE, STRIKE_BARCODE);
+
+            // prints resulting status code (should be ok) and if the list is present (should be present)
+            System.out.println(RESULTS.getValue3()); // should be OK
+            System.out.println("BookCopy List is present: " + RESULTS.getValue0().isPresent());
+            System.out.println("Student is present: " + RESULTS.getValue1().isPresent());
+            System.out.println("Term is present: " + RESULTS.getValue2().isPresent());
+
+
+            // prints all results to verify that state of bookcopy (ORM) works as expected
+            if (RESULTS.getValue0().isPresent()) {
+
+                // print the number of results expected (current instance: 4/13 --> 4)
+                System.out.println(RESULTS.getValue0().get());
+
+            }
+
+            assert (true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
     }
 
     @Test
