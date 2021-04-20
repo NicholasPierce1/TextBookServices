@@ -1,6 +1,6 @@
 let localHostPrefix = "http://localhost:8080/rest/api/inventory";
 
-async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
+export async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo) {
     fetch(`${localHostPrefix}/getCheckedOutBooks`, {
         method: "GET",
         headers: {
@@ -59,7 +59,7 @@ async function getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, student
             console.log(data);
         });
 
-async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
+export async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 
     fetch(`${localHostPrefix}/checkoutBook`, {
             method: "GET",
@@ -96,7 +96,7 @@ async function getCheckoutBookForStudentAndTermAJAX(loginUserInfo, studentInfo, 
 }
 
 
-async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
+export async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, studentBookInfo){
 
     fetch(`${localHostPrefix}/checkInBook`, {
             method: "GET",
@@ -132,7 +132,7 @@ async function getCheckInBookForStudentAndTermAJAX(loginUserInfo, studentInfo, s
 
 }
 
-async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
+export async function sellBookForStudentAJAX(loginUserInfo, studentBookInfo){
     fetch(`${localHostPrefix}/sellBook`, {
         method: "GET",
         headers: {

@@ -29,7 +29,7 @@
 export class ErrorBindings{
 
     /**
-     * Class Variables
+     * Class Variables:
      * Names describe their values
      */
 
@@ -41,18 +41,7 @@ export class ErrorBindings{
     static #fieldErrorNameKey = "fieldName";
     static #fieldErrorMessageKey = "message";
     static #errorDataKey = "faultyData";
-
-    /**
-     * @constructor
-     *  creates new ErrorBindings object for new errors
-     *  logs error to console
-     * @param {1} fieldErrorName
-     *  name of the error
-     * @param {2} fieldErrorMessage
-     *  error message
-     * @param {3} errorData
-     *  error data
-     */
+    
 
 
      /**
@@ -86,31 +75,31 @@ export class ErrorBindings{
     }
 
     /**
-     * @constuctor
+     * @constructor
      *  creates new ErrorBindings object for new errors
      *  logs error to console
-     * @param {1} fieldErrorName
+     * @param {string} fieldErrorName
      *  name of the error
-     * @param {2} fieldErrorMessage
+     * @param {string} fieldErrorMessage
      *  error message
-     * @param {3} errorData
+     * @param {string} errorData
      *  error data
      */
     constructor(fieldErrorName, fieldErrorMessage, errorData){
 
-        this._fieldErrorMessage = fieldErrorMessage;
-        this._fieldErrorName = fieldErrorName;
-        this._errorData = errorData;
+        this.fieldName = fieldErrorName;
+        this.message = fieldErrorMessage;
+        this.faultyData = errorData;
     }
 
     /**
      * @method parseInput
      *  takes JSON object and parses to string
      *  throws error if an error occurred
-     * @param {1} jsonObj
+     * @param  jsonObj
      *  JSON object that was inputted
      */
-    static parseInput(jsonObj){
+    static parseJson(jsonObj){
         try{
 
             const jsonObject = JSON.parse(jsonObj);
@@ -120,7 +109,6 @@ export class ErrorBindings{
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object");
         }
     }
 
@@ -162,9 +150,9 @@ export class ErrorBindings{
     */
     getInputTagList(){
         console.log("Creating tag list");
-        const inputTagList = new Array();
+        const inputTagList = [];
 
-        for(let i = 0; i < UserInfo.numberOfFields; i++){
+        for(let i = 0; i < ErrorBindings.numberOfFields; i++){
 
             const inputTag = window.document.createElement("input");
 
@@ -179,6 +167,7 @@ export class ErrorBindings{
         return inputTagList;
     }
 
+    
 }
 
  /**
@@ -231,23 +220,23 @@ export class UserInfo{
     /**
      * @constuctor
      *  creates new user info object
-     * @param {1} ID
+     * @param {string} username 
      *  ID for students (919#)
-     * @param {2} TERM_CODE
+     * @param {number} password
      *  Their term
      *
      */
 
     constructor(username, password){
-        this.#username = username;
-        this.#password = password;
+        this.#_username = username;
+        this.#_password = password;
     }
 
     /**
-     * @method parseInput
+     * @method parseJson
      *  takes JSON object and parses to string
      *  throws error if an error occurred
-     * @param {1} jsonObj
+     * @param jsonObj
      *  JSON object that was inputted
      */
 
@@ -259,7 +248,6 @@ export class UserInfo{
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object");
         }
     }
 
@@ -294,7 +282,7 @@ export class UserInfo{
     */
     getInputTagList(){
         console.log("Creating tag list");
-        const inputTagList = new Array();
+        const inputTagList = [];
 
         for(let i = 0; i < UserInfo.numberOfFields; i++){
 
@@ -311,7 +299,7 @@ export class UserInfo{
         return inputTagList;
     }
 
-    /*
+    /**
     * @function createJsonForm
     * returns fields created in json form
     */
@@ -321,7 +309,9 @@ export class UserInfo{
             _password: this.#password
         };
      }
-}
+
+
+ }
 
 
  /**
@@ -373,25 +363,25 @@ export class StudentInfo{
     StudentInfo(){}
 
     /**
-     * @constuctor
+     * @constructor
      *  creates new student info object
-     * @param {1} ID
+     * @param {number} ID
      *  ID for students (919#)
-     * @param {2} TERM_CODE
+     * @param {number} TERM_CODE
      *  Their term
      *
      */
 
     constructor(ID, TERM_CODE){
-        this.#ID = ID;
-        this.#TERM_CODE = TERM_CODE;
+        this.#id = ID;
+        this.#termCode = TERM_CODE;
     }
 
     /**
      * @method parseInput
      *  takes JSON object and parses to string
      *  throws error if an error occurred
-     * @param {1} jsonObj
+     * @param jsonObj
      *  JSON object that was inputted
      */
     static parseJson(jsonObj){
@@ -404,7 +394,6 @@ export class StudentInfo{
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object");
         }
     }
 
@@ -440,7 +429,7 @@ export class StudentInfo{
 
     getInputTagList(){
         console.log("Creating tag list");
-        const inputTagList = new Array();
+        const inputTagList = [];
 
         for(let i = 0; i < StudentInfo.numberOfFields; i++){
 
@@ -457,7 +446,7 @@ export class StudentInfo{
         return inputTagList;
     }
 
-    /*
+    /**
     * @function createJsonForm
     * returns fields created in json form
     */
@@ -480,24 +469,25 @@ export class StudentInfo{
 export class BookCopy{
 
     //Static private variables holding keys in JSON format.
-     #ID;
-     #bookCode;
-     #editionYear;
-     #seqNr;
-     #strikeBarcode;
-     #pidm;
-     #termCode;
-     #dateCheckedOut;
-     #disposition;
-     #bookSalePrice;
-     #prevPidm;
-     #prevTermCode;
-     #prevDateCheckedIn;
-     #activityDate;
-     #billFlag;
+       #ID;
+       #bookCode;
+       #editionYear;
+       #seqNr;
+       #strikeBarcode;
+       #pidm;
+       #termCode;
+       #dateCheckedOut;
+       #disposition;
+       #bookSalePrice;
+       #prevPidm;
+       #prevTermCode;
+       #prevDateCheckedIn;
+       #activityDate;
+       #billFlag;
 
 
     //Constructor that takes all the inputs and creates one.
+    
     constructor(ID, bookCode, editionyear, seqNr, strikeBarcode, pidm, termCode, dateCheckedOut,
         disposition, bookSalePrice, prevPidm, prevTermCode, prevDateCheckedIn, activityDate, billFlag){
         this.#ID = ID;
@@ -519,10 +509,10 @@ export class BookCopy{
 
 
     /**
-     * @method parseInput
+     * @method parseJson
      *  takes JSON object and parses to string
      *  throws error if an error occurred
-     * @param {1} jsonObj
+     * @param  jsonObj
      *  JSON object that was inputted
      */
      static parseJson(jsonObj){
@@ -530,15 +520,17 @@ export class BookCopy{
 
             const jsonObject = JSON.parse(jsonObj);
 
-            return new BookCopy(jsonObject.ID, jsonObject.bookCode, jsonObject.editionyear, jsonObject.seqNr,
-                jsonObject.strikeBarcode, jsonObject.pidm, jsonObject.termCode, jsonObject.dateCheckedOut, 
-                jsonObject.disposition, jsonObject.bookSalePrice, jsonObject.prevPidm, jsonObject.prevTermCode,
-                jsonObject.prevDateCheckedIn, jsonObject.activityDate, jsonObject.billFlag);
+            return new BookCopy(
+                jsonObject.#ID, jsonObject.#bookCode, jsonObject.#editionYear,
+                jsonObject.#seqNr, jsonObject.#strikeBarcode, jsonObject.#pidm,
+                jsonObject.#termCode, jsonObject.#dateCheckedOut, jsonObject.#disposition,
+                jsonObject.#bookSalePrice, jsonObject.#prevPidm, jsonObject.#prevTermCode,
+                jsonObject.#prevDateCheckedIn, jsonObject.#activityDate, jsonObject.#billFlag);
 
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object");
+            
         }
     }
 
@@ -569,7 +561,7 @@ export class BookCopy{
      * @method geteditionyear
      * @returns editionyear
      */
-    getEditionyear(){
+    getEditionYear(){
         return this.#editionYear;
     }
 
@@ -580,9 +572,36 @@ export class BookCopy{
     getSeqNr(){
         return this.#seqNr;
     }
-
     /**
-     * @method getdispsition
+     * @method getStrikeBarcode
+     * @returns strike barcode
+     */
+    getStrikeBarcode(){
+        return this.#strikeBarcode;
+    }
+    /**
+     * @method getPidm
+     * @returns pidm
+     */
+    getPidm(){
+        return this.#pidm;
+    }
+    /**
+     * @method getTermCode
+     * @returns term code
+     */
+    getTermCode(){
+        return this.#termCode;
+    }
+    /**
+     * @method getDateCheckedOut
+     * @returns date checked out
+     */
+    getDateCheckedOut(){
+        return this.#dateCheckedOut;
+    }
+    /**
+     * @method getDisposition
      * @returns disposition
      */
     getDisposition(){
@@ -637,7 +656,7 @@ export class BookCopy{
         return this.#billFlag;
     }
 
-    /*
+    /**
     * @function createJsonForm
     * returns fields created in json form
     */
@@ -651,7 +670,7 @@ export class BookCopy{
           Pidm: this.#pidm,
           TermCode: this.#termCode,
           DateCheckOut: this.#dateCheckedOut,
-          Dispostion: this.#disposition,
+          Disposition: this.#disposition,
           BookSalePrice: this.#bookSalePrice,
           PrevPidm: this.#prevPidm,
           PrevTermCode: this.#prevTermCode,
@@ -667,35 +686,41 @@ export class BookCopy{
  * @class Bag
  * 
  * @Purpose
+ * Pidm and Bag Number
  */
 
 export class Bag{
 
-    static #pidm = {};
-    static #bagNumber = {};
-    
+    #pidm;
+    #bagNumber;
+
+    /**
+     * @constructor
+     *  create new bag
+     * @param {number} pidm
+     * @param {number} bagNumber
+     *
+     */
 
 
-    constructor(){
-        this.pidm = pidm;
-        this.bagNumber = bagNumber;
+    constructor(pidm, bagNumber){
+        this.#pidm = pidm;
+        this.#bagNumber = bagNumber;
        
     }
 
-    
-
-    static parseInput(jsonObj){
+    static parseJson(jsonObj){
         
         try{
 
             const jsonObject = JSON.parse(jsonObj);
 
-            return new Bag(jsonObject.pidm, jsonObject.bagNumber)
+            return new Bag(jsonObject.#pidm, jsonObject.#bagNumber)
 
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object");
+
         }
     }
 
@@ -716,7 +741,7 @@ export class Bag{
         return this.#bagNumber;
     }
 
-    /*
+    /**
     * @function createJsonForm
     * returns fields created in json form
     */
@@ -730,40 +755,46 @@ export class Bag{
 }
 
 /**
- * @class
+ * @class Term
  * 
  * @Purpose
+ * Term Code and Term Description
  */
 
 export class Term{
 
     //Static private values
-    static #termCode;
-    static #termDescription;
-    
-    //Constructor that takes all inputs
-    constructor(){
-        this.termCode = termCode;
-        this.termDescription = termDescription;
+    #termCode;
+    #termDescription;
+
+    /**
+     * @constructor
+     *  creates term
+     * @param {number} termCode
+     * @param {string} termDescription
+     *
+     */
+    constructor(termCode, termDescription){
+        this.#termCode = termCode;
+        this.#termDescription = termDescription;
     }
 
-    static parseInput(jsonObj){
+    static parseJson(jsonObj){
         try{
 
             const jsonObject = JSON.parse(jsonObj);
 
-            return new Term(jsonObject.termCode, jsonObject.termDescription);
+            return new Term(jsonObject.#termCode, jsonObject.#termDescription);
 
         }
         catch{
             throw("Error parsing json object");
-            console.log("Error parsing json object");
         }
     }
 
 
     /**
-     * @method gettermCode
+     * @method getTermCode
      * @returns termCode
      */
     getTermCode(){
@@ -771,14 +802,14 @@ export class Term{
     }
 
     /**
-     * @method gettermDescription
+     * @method getTermDescription
      * @returns  termDescription
      */
     getTermDescription(){
         return this.#termDescription;
     }
 
-    /*
+    /**
     * @function createJsonForm
     * returns fields created in json form
     */
