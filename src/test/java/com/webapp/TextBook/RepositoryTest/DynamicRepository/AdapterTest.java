@@ -168,7 +168,7 @@ public class AdapterTest {
 
             final String STUDENT_USERNAME = "919000005";
 
-            final String STUDENT_PASSWORD = "S000001@nwmissouri.edu";
+            final String STUDENT_PASSWORD = "S467767@nwmissouri.edu";
 
             Pair<Optional<User>, StatusCode> RESULTS = _adapter.userLogin(STUDENT_USERNAME, STUDENT_PASSWORD);
 
