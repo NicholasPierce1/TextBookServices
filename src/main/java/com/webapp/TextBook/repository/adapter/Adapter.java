@@ -400,7 +400,7 @@ public final class Adapter {
 
         final Pair<Optional<Object[]>, StatusCode> optionalUserCodePair =
                 this._userRepository.getPartialUserWithUsernameAndPassword(
-                        String.valueOf((BigDecimal)optionalSpridenCodePair.getValue0().orElseThrow()[0]),
+                        String.valueOf(((BigDecimal)optionalSpridenCodePair.getValue0().orElseThrow()[0])).toString(),
                         password);
 
         // evaluates if status code is ok (else return in guard block)
