@@ -33,6 +33,15 @@ window.onload = (ev) =>{
         console.log("running");
         testButton.onclick = TEST_NICK_DEMO.testStatusCodeErrorOnClick;
 
+        const testErrorMessage = window.document.getElementById("testErrorMessage");
+        console.log("running testErrorMessage");
+        testErrorMessage.onclick = TEST_SPYRIDON.testErrorMessage;
+
+        const testShowStatusMessageerror = window.document.getElementById("testStatusMessage");
+        console.log("running testShowStatusMessageError");
+        testShowStatusMessageerror.onclick = TEST_SPYRIDON.testShowStatusMessageError;
+        
+
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);

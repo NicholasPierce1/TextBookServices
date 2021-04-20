@@ -185,7 +185,8 @@
 </section>
 
     <button id="testButton">test show status code error</button>
-
+    <button id="testErrorMessage">test ErrorMessage</button>
+    <button id="testStatusMessage">test ShowStatusMessageError</button>
 <!--
 
 - create new buttons for EACH test
