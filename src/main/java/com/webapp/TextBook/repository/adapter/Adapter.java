@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -398,7 +399,9 @@ public final class Adapter {
             return returnValue.setAt1(optionalSpridenCodePair.getValue1());
 
         final Pair<Optional<Object[]>, StatusCode> optionalUserCodePair =
-                this._userRepository.getPartialUserWithUsernameAndPassword(username,password);
+                this._userRepository.getPartialUserWithUsernameAndPassword(
+                        String.valueOf((BigDecimal)optionalSpridenCodePair.getValue0().orElseThrow()[0]),
+                        password);
 
         // evaluates if status code is ok (else return in guard block)
         if(optionalUserCodePair.getValue1() != StatusCode.OK)
@@ -435,4 +438,5 @@ public final class Adapter {
         return permissionLevelRequired == UserRole.StudentEmployee ||
                 userRole == permissionLevelRequired ? Optional.empty() : Optional.of(StatusCode.UserPermissionLevelInsufficient);
     }
+
 }
