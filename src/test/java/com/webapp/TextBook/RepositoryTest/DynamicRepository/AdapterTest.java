@@ -166,7 +166,7 @@ public class AdapterTest {
 
             final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
 
-            final String STUDENT_USERNAME = "000000001";
+            final String STUDENT_USERNAME = "919000005";
 
             final String STUDENT_PASSWORD = "S000001@nwmissouri.edu";
 
