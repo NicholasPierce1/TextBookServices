@@ -1,13 +1,9 @@
 import * as CHECKIN_OUTHANDLER from "./../CheckInOutHandler.js";
 
 let testValue = 1;
-export function testValue(){
+export function testErrorMessage(){
 
-
-    if(++testValue %2 ===0){
         CHECKIN_OUTHANDLER.errorMessage();
-    }
-    
     
 }
 
@@ -19,5 +15,15 @@ export function testShowStatusMessageError(){
     }
     else{
         CHECKIN_OUTHANDLER.hideStatusMessageError();
+    }
+}
+
+export function testshowBagError(){
+
+    if(++testValue%2==0){
+        CHECKIN_OUTHANDLER.showBagError();
+    }
+    else{
+        CHECKIN_OUTHANDLER.hideBagError();
     }
 }
