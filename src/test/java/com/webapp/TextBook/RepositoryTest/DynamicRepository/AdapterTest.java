@@ -137,6 +137,30 @@ public class AdapterTest {
     @Test
     public void testSellBookForStudent(){
 
+        final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+
+        final String STUDENT_ID = "919000005";
+
+        final String STRIKE_BARCODE = "111111111111/";
+
+
+        try {
+            // invoke repository to SellBook
+            final StatusCode RESULTS =
+                    _bookCopyRepository.sellBookForStudent(USER, STUDENT_ID, STRIKE_BARCODE);
+
+            // prints resulting status code (should be ok) and if the list is present (should be present)
+            System.out.println(RESULTS.getContentMessage()); // should be OK
+
+
+
+
+            assert (true);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+            assert(false);
+        }
     }
 
 
