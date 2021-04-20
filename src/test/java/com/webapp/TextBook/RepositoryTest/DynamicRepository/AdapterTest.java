@@ -78,11 +78,11 @@ public class AdapterTest {
         final String TERM_CODE = "202120";
 
         try {
-            // invoke repository to garner all book copies for a given student and term
+            // invoke repository to checkOutBook
             final Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> RESULTS =
                     _bookCopyRepository.checkOutBookForStudent(USER,STRIKE_BARCODE ,STUDENT_ID, TERM_CODE);
 
-            // prints resulting status code (should be ok) and if the list is present (should be present)
+            // prints resulting status code (should be ok) and if the Book is present (should be present)
             System.out.println(RESULTS.getValue3()); // should be OK
             System.out.println("BookCopy is present: " + RESULTS.getValue0().isPresent());
             System.out.println("Student is present: " + RESULTS.getValue1().isPresent());
@@ -116,24 +116,15 @@ public class AdapterTest {
         final String TERM_CODE = "202120";
 
         try {
-            // invoke repository to garner all book copies for a given student and term
-            final Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> RESULTS =
-                    _bookCopyRepository.checkOutBookForStudent(USER, STUDENT_ID, TERM_CODE, STRIKE_BARCODE);
+            // invoke repository to checkInBook
+            final StatusCode RESULTS =
+                    _bookCopyRepository.checkInBookForStudent(USER, STUDENT_ID, TERM_CODE, STRIKE_BARCODE);
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
-            System.out.println(RESULTS.getValue3()); // should be OK
-            System.out.println("BookCopy is present: " + RESULTS.getValue0().isPresent());
-            System.out.println("Student is present: " + RESULTS.getValue1().isPresent());
-            System.out.println("Term is present: " + RESULTS.getValue2().isPresent());
+            System.out.println(RESULTS.getContentMessage()); // should be OK
 
 
-            // prints all results to verify that state of bookcopy (ORM) works as expected
-            if (RESULTS.getValue0().isPresent()) {
 
-                // print the number of results expected (current instance: 4/13 --> 4)
-                System.out.println(RESULTS.getValue0().get());
-
-            }
 
             assert (true);
         }
