@@ -137,7 +137,7 @@ public final class Adapter {
 
         // invokes bag repository to acquire a bag given a student id/ candidate key (919)
         final Pair<Optional<Bag>, StatusCode> optionalBagCodePair = this._bagRepository.getStudentBagWithStudentId(
-                returnValue.getValue1().orElseThrow().getId() // will never throw -- student created above
+                returnValue.getValue1().orElseThrow().getPidm() // will never throw -- student created above
         );
 
         // evaluates if status code is ok (else return in guard block)
@@ -151,7 +151,7 @@ public final class Adapter {
         // invokes book copy repository to acquire all checked out books for a given student id and term
         final Pair<Optional<List<BookCopy>>, StatusCode> optionalBookCopyListCodePair =
                 this._bookCopyRepository.getAllCheckedOutBooks(
-                        returnValue.getValue1().orElseThrow().getId(),
+                        returnValue.getValue1().orElseThrow().getPidm(),
                         returnValue.getValue3().orElseThrow().getTermCode()
                 ); // will never throw (always exist in code execution above)
 
