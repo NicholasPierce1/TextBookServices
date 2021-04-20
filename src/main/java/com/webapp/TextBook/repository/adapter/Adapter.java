@@ -252,7 +252,7 @@ public final class Adapter {
         final Pair<Optional<BookCopy>, StatusCode> optionalBookCopyCodePair =
                 this._bookCopyRepository.checkOutBook(
                         strikeBarcode,
-                        returnValue.getValue1().orElseThrow().getId(),
+                        returnValue.getValue1().orElseThrow().getPidm(),
                         returnValue.getValue2().orElseThrow().getTermCode()
                 ); // will never throw (always exist in code execution above)
 

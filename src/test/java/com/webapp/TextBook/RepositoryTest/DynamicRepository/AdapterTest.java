@@ -84,7 +84,7 @@ public class AdapterTest {
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
             System.out.println(RESULTS.getValue3()); // should be OK
-            System.out.println("BookCopy List is present: " + RESULTS.getValue0().isPresent());
+            System.out.println("BookCopy is present: " + RESULTS.getValue0().isPresent());
             System.out.println("Student is present: " + RESULTS.getValue1().isPresent());
             System.out.println("Term is present: " + RESULTS.getValue2().isPresent());
 
@@ -122,7 +122,7 @@ public class AdapterTest {
 
             // prints resulting status code (should be ok) and if the list is present (should be present)
             System.out.println(RESULTS.getValue3()); // should be OK
-            System.out.println("BookCopy List is present: " + RESULTS.getValue0().isPresent());
+            System.out.println("BookCopy is present: " + RESULTS.getValue0().isPresent());
             System.out.println("Student is present: " + RESULTS.getValue1().isPresent());
             System.out.println("Term is present: " + RESULTS.getValue2().isPresent());
 
