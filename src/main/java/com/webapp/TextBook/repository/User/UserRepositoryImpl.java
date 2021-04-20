@@ -69,8 +69,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
         // Try block to catch errors in the process of accessing the database.
         try{
-            System.out.println(username);
-            System.out.println(password);
+            
             // Create the EntityManager and writing the query to access a Bag record that matches the pidm
             EntityManager em = _entityManagerFactory.createEntityManager();
             String originalQuery = "SELECT tableName.* FROM tableName WHERE tableName.\"username\" = ? AND tableName.\"password\" = ?";
