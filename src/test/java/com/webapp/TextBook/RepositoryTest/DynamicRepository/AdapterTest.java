@@ -164,7 +164,7 @@ public class AdapterTest {
         try {
 
 
-            final User USER = new User("467767", "919000005", "admin", "admin", "admin", UserRole.Supervisor, "S000001@nwmissouri.edu");
+            final User USER = new User("467767", "919000005", "Peter", "Parker", "B", UserRole.Supervisor, "S000001@nwmissouri.edu");
 
             final String STUDENT_USERNAME = "919000005";
 
