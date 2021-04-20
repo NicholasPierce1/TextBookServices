@@ -1,4 +1,5 @@
 import * as SHARED from "./SharedHandler.js"; // ensures shared handler is imported
+import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
 
 /**
  * Create new map for li tags

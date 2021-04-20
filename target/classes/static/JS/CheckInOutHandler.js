@@ -4,8 +4,8 @@
  */
 
 
-var error_IDnumber = window.document.getElementById("error_studentID");
-var sessionMap = window.sessionStorage;
+let error_IDnumber = window.document.getElementById("error_studentID");
+let sessionMap = window.sessionStorage;
 let errorLabelTest;
 //Get Form from jsp view
 let form;
@@ -14,6 +14,9 @@ let form;
 import * as HOME from "./HomeHandler.js";
 import * as SHARED from "./SharedHandler.js";
 import * as TEST_NICK_DEMO from "./TestJavaScriptFiles/NickTestFileDemo.js";
+import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
+import * as TEST_SPYRIDON from "./TestJavaScriptFiles/SpyridonTestFile.js";
+import * as AJAX from "./CheckInCheckOutAjax.js";
 
 // establishes the window's onload functionality
 // initialize state (render and save login user info, set any non-locally scoped members
@@ -486,7 +489,7 @@ export function initiateApiFor_AllCheckedOutBooksForStudentAndTerm() {
     //Acquire user info from local session
 
     //call ajax handler
-    getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo);
+    AJAX.getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo);
 
 }
 
@@ -502,7 +505,7 @@ export function initiateApiFor_GetCheckedOutBookForStudentTerm() {
 
 
         //Get barcode from input
-        barcode = document.getElementById("barcode");
+        const barcode = document.getElementById("barcode");
 
         //Extract from local session map user info and student info
         DataStudentLocalStorage.getItem("Term");

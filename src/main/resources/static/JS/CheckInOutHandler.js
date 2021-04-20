@@ -15,6 +15,7 @@ import * as HOME from "./HomeHandler.js";
 import * as SHARED from "./SharedHandler.js";
 import * as TEST_NICK_DEMO from "./TestJavaScriptFiles/NickTestFileDemo.js";
 import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
+import * as TEST_SPYRIDON from "./TestJavaScriptFiles/SpyridonTestFile.js";
 import * as AJAX from "./CheckInCheckOutAjax.js";
 
 // establishes the window's onload functionality
