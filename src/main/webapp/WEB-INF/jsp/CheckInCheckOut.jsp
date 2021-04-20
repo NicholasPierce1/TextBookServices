@@ -33,7 +33,7 @@
 <input type="hidden" value="blah" id="blah2">
 
 <section>
-    <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-dark" id="CheckInOut">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src='/img/Northwestlogo.png' style="width: 80px; height: 50px;">
@@ -42,29 +42,33 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav pb-1 pt-1">
-                    <a class="nav-link active navbar-text" aria-current="page" href="#">Home</a>
+                <ul class="navbar-nav pb-1 pt-1" id="homeMenuUL">
+                    <li id="homeMenu">
+                        <a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/CheckInCheckOut">Home</a>
+                    </li>
                 </ul>
                 <div class="nav-item dropdown pb-1 pt-1">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Inventory
+                        Supervisor
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Add Books</a></li>
-                        <li><a class="dropdown-item" href="#">Change Book</a></li>
-                        <li><a class="dropdown-item" href="#">Query Book</a></li>
-                        <li><a class="dropdown-item" href="#">Query Course</a></li>
-                        <li><a class="dropdown-item" href="#">Course Message</a></li>
-                        <li><a class="dropdown-item" href="#">Maintenance</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="supervisorDropDownUl" name="ulInv">
+                        <li id="AddBooks"><a class="dropdown-item" targetEndpoint="/AddBooks">Add Books</a></li>
+                        <li id="ChangeBook"><a class="dropdown-item" targetEndpoint="/ChangeBook">Change Book</a></li>
+                        <li id="QueryBooks"><a class="dropdown-item" targetEndpoint="/QueryBooks">Query Book</a></li>
+                        <li id="QueryCourse"><a class="dropdown-item" targetEndpoint="/QueryCourse">Query Course</a></li>
+                        <li id="CourseMessage"><a class="dropdown-item" targetEndpoint="/CourseMessage">Course Message</a></li>
+                        <li id="Maintenance"><a class="dropdown-item" targetEndpoint="/Maintenance">Maintenance</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Patrons
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Check In/Out</a></li>
-                        <li><a class="dropdown-item" href="#">Patrons</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
+                        <li id="CheckInCheckOut"><a class="dropdown-item" targetEndpoint="/CheckInCheckOut">Check In/ Check Out</a></li>
+                        <li id="PatronSchedule"><a class="dropdown-item" targetEndpoint="/PatronSchedule">Patron Schedule</a></li>
+                        <li id="PatronPreviousBooks"><a class="dropdown-item" targetEndpoint="/PatronPreviousBooks">Patron Previous Books</a></li>
+                        <li id="PatronSoldBooks"><a class="dropdown-item" targetEndpoint="PatronSoldBooks">Patron Sold Books</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown pb-1 pt-1">

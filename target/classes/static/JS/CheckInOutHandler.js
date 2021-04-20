@@ -4,8 +4,8 @@
  */
 
 
-var error_IDnumber = window.document.getElementById("error_studentID");
-var sessionMap = window.sessionStorage;
+let error_IDnumber = window.document.getElementById("error_studentID");
+let sessionMap = window.sessionStorage;
 let errorLabelTest;
 //Get Form from jsp view
 let form;
@@ -14,6 +14,7 @@ let form;
 import * as HOME from "./HomeHandler.js";
 import * as SHARED from "./SharedHandler.js";
 import * as TEST_NICK_DEMO from "./TestJavaScriptFiles/NickTestFileDemo.js";
+import * as AJAX from "./CheckInCheckOutAjax.js";
 
 // establishes the window's onload functionality
 // initialize state (render and save login user info, set any non-locally scoped members
@@ -22,15 +23,14 @@ window.onload = (ev) =>{
 
     // invokes the home handler to initialize view state
     try{
-        // HOME.initializeSharedState();
+        HOME.initializeSharedState();
         
         // todo: spyridon, chase
         // set on clicks of the test button 
         const testButton = window.document.getElementById("testButton");
         console.log("running");
         testButton.onclick = TEST_NICK_DEMO.testStatusCodeErrorOnClick;
-        console.log(`${testButton.onclick}`);
-        
+
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);
@@ -487,7 +487,7 @@ export function initiateApiFor_AllCheckedOutBooksForStudentAndTerm() {
     //Acquire user info from local session
 
     //call ajax handler
-    getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo);
+    AJAX.getAllCheckedOutBooksForStudentAndTermAJAX(loginUserInfo, studentInfo);
 
 }
 
@@ -503,7 +503,7 @@ export function initiateApiFor_GetCheckedOutBookForStudentTerm() {
 
 
         //Get barcode from input
-        barcode = document.getElementById("barcode");
+        const barcode = document.getElementById("barcode");
 
         //Extract from local session map user info and student info
         DataStudentLocalStorage.getItem("Term");
