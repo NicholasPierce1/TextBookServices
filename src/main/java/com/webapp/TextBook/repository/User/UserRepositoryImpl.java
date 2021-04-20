@@ -73,7 +73,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
             System.out.println(password);
             // Create the EntityManager and writing the query to access a Bag record that matches the pidm
             EntityManager em = _entityManagerFactory.createEntityManager();
-            String originalQuery = "SELECT  tableName.* FROM tableName WHERE tableName.\"username\" = ? AND tableName.\"password\" = ?";
+            String originalQuery = "SELECT tableName.* FROM tableName WHERE tableName.\"username\" = ? AND tableName.\"password\" = ?";
 
             // Calling the query for the specific table specified in TABLE_NAME.
             Query getPartialUserQuery = em.createNativeQuery(QueryTableNameModifier.insertTableNameIntoQuery(originalQuery,TABLE_NAME));
