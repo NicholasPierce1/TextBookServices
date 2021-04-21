@@ -1,23 +1,25 @@
 package com.webapp.TextBook.viewModel.shared;
 
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
+import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
  * <h1>ApiViewModel</h1>
- *
- * @param <T>: A type reference of an ApiViewModel
  *
  * <p>
  *     Retains requirements and classification for Api ViewModels; important for manual constraint validators
  *     targeting API ViewModels for JSON sub-parseable creation.
  * </p>
  */
-public interface ApiViewModelCreation<T extends ApiVieweModel> {
+
+public abstract class ApiViewModelCreation implements ApiViewModel{
 
     /**
      * <p>Creates an instance of
@@ -33,8 +35,34 @@ public interface ApiViewModelCreation<T extends ApiVieweModel> {
      * @return an Optional (type param: A type reference of itself in class header) of the fully consturcted
      * view model. If the data source (JSONObject) retains null fields then an empty optional is given.
      */
-    public @NotNull Optional<T> createApiViewModelFromJson(
-            @NotNull JSONObject jsonObject,
-            @Nullable Supplier<T> initialInstantiation);
+    public static <T extends ApiViewModel> @NotNull Optional<T> createApiViewModelFromJson(
+            @NotNull final JSONObject jsonObject,
+            @NotNull final Supplier<T> initialInstantiation,
+            @NotNull final Consumer<Pair<T, JSONObject>> valueStateUpdater){
+
+        try{
+
+            // renders api view model generic (to be used in value state setting in sub-parsable)
+            final T apiViewModel = initialInstantiation.get();
+
+            // invokes consumer with given json object (JSON version of ApiViewModel's state)
+            // to set/update ApiViewModel
+            valueStateUpdater.accept(new Pair<T, JSONObject>(apiViewModel, jsonObject));
+
+            return Optional.of(apiViewModel);
+
+        }
+        catch(Exception ex){
+
+            // logs internal error for errors that occurred in consumer-json parsing
+            System.out.println("Internal Error (ApiViewModelCreation -- createApiViewModelFromJson):\n" +
+                    "Could not create or set the value state comprised in the JSON request body. Check stack trace to see which field/s" +
+                    "threw the error." + ex.getMessage());
+
+            return Optional.empty();
+        }
+    };
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.webapp.TextBook.validation.Shared;
 import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.lang.Nullable;
 
@@ -8,6 +9,10 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Sets up all relevant Error Binding logic that we will use for later validation.
+ * @param <T>
+ */
 public final class ErrorBinding <T> {
     private  String _fieldErrorName, _fieldErrorMessage;
     private T _errorData;
@@ -15,59 +20,87 @@ public final class ErrorBinding <T> {
     private final static String FIELD_ERROR_MESSAGE_KEY = "message";
     private final static String ERROR_DATA_KEY ="faultyData";
 
+    /**
+     * Basic Constructor
+     * @param fieldErrorName
+     * @param fieldErrorMessage
+     * @param errorData
+     */
+
     public  ErrorBinding(String fieldErrorName, String fieldErrorMessage, @Nullable T errorData){
         this._fieldErrorMessage = fieldErrorMessage;
         this._fieldErrorName = fieldErrorName;
         this._errorData = errorData;
     }
 
-    public Pair<Optional<JSONObject>, Boolean> toJsonString(){
+    /**
+     * Used to create JSONStirng
+     * @return A JSONObject as a JSON String
+     * @throws JSONException
+     */
+    public JSONObject toJsonString() throws JSONException{
 
-        //if name or error message is empty return empty and false
+        // if error name or message are not set then throw exception for invalid state in
+        // error binding creation
         if(_fieldErrorName == null || _fieldErrorMessage == null){
-            return new Pair<Optional<JSONObject>, Boolean>(Optional.empty(), false);
+            throw new RuntimeException("Internal Error: (ErrorBinding -- toJsonString)\n" +
+                    "ErrorBindings must have a field error name and its corresponding message.\n" +
+                    "Please refer to source code that created this binding in the stack trace to rectify.");
 
         }
         JSONObject errorBindingJsonObject = new JSONObject();
-        try { //Attempt to create error message. if successus retunr if not see catch
-            errorBindingJsonObject.put(FIELD_ERROR_NAME_KEY, _fieldErrorName);
-            errorBindingJsonObject.put(FIELD_ERROR_MESSAGE_KEY, _fieldErrorMessage);
-            errorBindingJsonObject.put(ERROR_DATA_KEY, _errorData);
-            return new Pair<Optional<JSONObject>, Boolean>(Optional.ofNullable(errorBindingJsonObject), true);
 
+        //Attempt to create error message. if successus retunr if not see catch
+        errorBindingJsonObject.put(FIELD_ERROR_NAME_KEY, _fieldErrorName);
+        errorBindingJsonObject.put(FIELD_ERROR_MESSAGE_KEY, _fieldErrorMessage);
+        errorBindingJsonObject.put(ERROR_DATA_KEY, _errorData); // error data can be null
 
-        }
-        catch (Exception e){ //something went wrong. Abort mission.
-            return new Pair<Optional<JSONObject>, Boolean>(Optional.empty(), false);
-        }
-
-
+        return errorBindingJsonObject;
 
     }
 
-
+    /**
+     * Used as a helper for Error binding, specifically, for dealing with JSON manipulation
+     */
     public static class ErrorBindingJsonHelper { //Helps create JSON objects from error binding
-
-        public static <T> @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding<T>> errors) throws ErrorBindingException, Exception{
-            ErrorBinding<T> faultyBinding = null;
+        /**
+         * Takes in a list of error bindings to make a JSON String
+         * @param errors - Error binding list
+         * @return JSON string
+         * @throws ErrorBindingException
+         * @throws Exception
+         */
+        public static @NotNull String CreateJsonStringFromErrorBindings(@NotNull List<ErrorBinding<?>> errors) throws ErrorBindingException, Exception{
+            ErrorBinding<?> faultyBinding = null;
             JSONArray jsnArr = new JSONArray();
             try{
 
-                //getting each ErrorBinding in the array
-                for (ErrorBinding<T> eb : errors){
+                // getting each ErrorBinding in the array
+                for (ErrorBinding<?> eb : errors){
+
                     //And adding it to the JSON array
                     faultyBinding = eb;
-                    Pair<Optional<JSONObject>, Boolean> boolCheck = eb.toJsonString();
-                    if(!boolCheck.getValue1() || boolCheck.getValue0().isEmpty()){ //Check if the boolean is false
-                        throw new ErrorBindingException(faultyBinding);
+
+                    // uses try-catch for JSONException exceptions that occur from JSON conversion
+                    // throws binding exception retaining the error binding that threw/ is invalid
+                    try{
+                        jsnArr.put(eb.toJsonString());
                     }
-                    jsnArr.put(boolCheck.getValue0().get().toString()); //Pulls out JSON object
+                    catch(JSONException ex){
+
+                        // logs json exception
+                        System.out.println( "Internal Error occured in ErrorBiding - CreateJsonStringFromErrorBindings:" + ex.getMessage());
+
+                        // wraps into ErrorBindingException and rethrows
+                        throw new ErrorBindingException(eb);
+                    }
 
                 }
                 return  jsnArr.toString();
             }
             catch(ErrorBindingException e){
-                System.out.println("error binding json helper layer: error in converting json into string counterpart");
+                System.out.println("Internal Error (ErrorBindingJsonHelper -- CreateJsonStringFromErrorBindings)\n" +
+                        "error in converting error bindings' JSON form into string counterpart");
                 throw e;
             }
 

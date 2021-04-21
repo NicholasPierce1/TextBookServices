@@ -6,13 +6,14 @@ import com.webapp.TextBook.repository.data_access.User;
 import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
+import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -35,26 +36,19 @@ public class HomeController {
     public String login(){ return "login"; }
 
     //login confirmation
-    @RequestMapping(value = "/loginConfirmed", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String loginConfirmation (
             @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
             BindingResult result,
-            ModelMap map)  {
-
+            ModelMap map) throws JSONException {
+        JSONObject data = new JSONObject();
         // handling all exceptions with try catch block
         try {
 
             // format validation/dealing with binding errors
-            final String failedValidationStatusMessage = "User input missing or invalid";
-            if (result.hasErrors()) {
-                //binding errors present, load in Status/Error messages and return to login
-
-                assert (result.getErrorCount() != 0);
-                ObjectError loginUserInfoError = result.getAllErrors().get(0);
-                map.addAttribute("Error", new JSONArray(loginUserInfoError.getDefaultMessage()));
-                map.addAttribute("StatusMessage", failedValidationStatusMessage);
-                map.addAttribute("User", null);
-
+            Pair<Boolean,JSONObject> validationResult = ValidationBindingHelper.validationBindingHandler(result,map);
+            if(!validationResult.getValue0()){
+                validationResult.getValue1().put("LoginUserInfo", null);
                 return "login";
             }
 
@@ -64,10 +58,12 @@ public class HomeController {
             //interpreting data
             if (user.getValue1() == StatusCode.OK) {
                 // User login was valid and will be further processed
+                data.put("LoginUserInfo", person);
+                data.put("StatusMessage", user.getValue1().getContentMessage());
+                data.put("GeneralError",null);
+                data.put("Errors", null);
 
-                map.addAttribute("Error", null);
-                map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
-                map.addAttribute("User", person);
+                map.addAttribute("Data", data);
 
                 //setting user session data
                 SharedSessionData.setSessionValueWithKey(SharedSessionData.USER_KEY, user.getValue0().orElseThrow());
@@ -83,9 +79,12 @@ public class HomeController {
             } else {
                 // User login was invalid for reason stated in status message
                 // return to login
-                map.addAttribute("Error", null);
-                map.addAttribute("StatusMessage", user.getValue1().getContentMessage());
-                map.addAttribute("User", null);
+                data.put("LoginUserInfo", null);
+                data.put("StatusMessage", user.getValue1().getContentMessage());
+                data.put("GeneralError",null);
+                data.put("Errors", null);
+
+                map.addAttribute("Data", data);
 
                 return "login";
             }
@@ -94,10 +93,13 @@ public class HomeController {
             //Catching Exceptions and printing StackTrace of the error
             //Loading in custom status message and returning to login page
             System.out.println(e.getStackTrace());
-            map.addAttribute("Error", null);
-            map.addAttribute("StatusMessage", "Internal error has occurred. " +
+            data.put("LoginUserInfo", null);
+            data.put("StatusMessage", "Internal error has occurred. " +
                     "If this continues please contact your IT support.");
-            map.addAttribute("User", null);
+            data.put("GeneralError",null);
+            data.put("Errors", null);
+
+            map.addAttribute("Data", data);
 
             return "login";
         }

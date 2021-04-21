@@ -10,24 +10,35 @@ import com.webapp.TextBook.validation.Shared.ErrorBindingException;
 import com.webapp.TextBook.validation.Shared.SharedValidationState;
 import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo;
 
+/**
+ * Handles validation for user log in
+ */
+
 public class LoginUserInfoValidatorImpl implements
         ConstraintValidator<LogInUserInfoValidationInterface, LoginUserInfo>,
         SharedValidationState {
 
 
     private boolean haveSuffix;
-
+    //Basic initialize method.
     @Override
     public void initialize(LogInUserInfoValidationInterface info){
             this.haveSuffix = info.haveSuffix();
 
     }
 
+    /**
+     * Checks various business rules. Each infraction is added to the error binding list
+     * Said error list is then checked to see if anything was added to it.
+     * @param user
+     * @param constraintContext
+     * @return if there are no errors added to the error binding list
+     */
     @Override
     public boolean isValid(LoginUserInfo user, ConstraintValidatorContext constraintContext){
 
 
-        ArrayList<ErrorBinding<String>> errorList = new ArrayList<ErrorBinding<String>>();
+        ArrayList<ErrorBinding<?>> errorList = new ArrayList<ErrorBinding<?>>();
 
         // holds if any inputs are null
         boolean userInputsNull = false;
@@ -37,7 +48,7 @@ public class LoginUserInfoValidatorImpl implements
             userInputsNull = true;
             errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_PASSWORD, "Password field is empty", null));
         }
-        else if(user.get_username() == null){
+         if(user.get_username() == null){
             userInputsNull = true;
             errorList.add(new ErrorBinding<String>(LoginUserInfo.NOMINAL_USERNAME, "Username field is empty", null));
         }
@@ -52,7 +63,8 @@ public class LoginUserInfoValidatorImpl implements
                 constraintContext.disableDefaultConstraintViolation();
 
                 constraintContext.buildConstraintViolationWithTemplate(
-                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
+                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList)
+                ).addConstraintViolation();
 
 
                 return false;
@@ -96,25 +108,36 @@ public class LoginUserInfoValidatorImpl implements
                             user.get_password().replaceFirst("@.*", "")
                     );
 
+
             }
-            if(errorList.isEmpty()){ //Error list is not empty
+            if(!errorList.isEmpty()){ //Error list is not empty
                 //if binding error list is not empty then set constraint validator’s message
                 // to the abstract method’s json creator helper.
                 constraintContext.disableDefaultConstraintViolation();
 
-                constraintContext.buildConstraintViolationWithTemplate(ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList));
+                constraintContext.buildConstraintViolationWithTemplate(
+                        ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(errorList)
+                ).addConstraintViolation();
 
             }
         }
         catch (ErrorBindingException e){
-            System.out.println("Error binding failed\n" + e.getStackTrace());
-            constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_JSON_ERROR_MESSAGE);
+            System.out.println("Internal Error in LoginUserInfoValidationImpl- isValid: \n" + e.getStackTrace());
+            constraintContext.disableDefaultConstraintViolation();
+            constraintContext.buildConstraintViolationWithTemplate(
+                    SharedValidationState.GENERIC_JSON_ERROR_MESSAGE)
+                    .addConstraintViolation();
+            return  false;
         }
         catch(Exception exception){
             // for when conversion of binding list fails upon
             // error event json generation
-            System.out.println("Something has gone wrong in LoginUserInfoVladion\n" + exception.getStackTrace());
-            constraintContext.buildConstraintViolationWithTemplate(SharedValidationState.GENERIC_ERROR_MESSAGE);
+            System.out.println("Internal Error in LoginUserInfoValidationImpl- isValid: \n" + exception.getStackTrace());
+            constraintContext.disableDefaultConstraintViolation();
+            constraintContext.buildConstraintViolationWithTemplate(
+                    SharedValidationState.GENERIC_ERROR_MESSAGE)
+                    .addConstraintViolation();
+            return  false;
         }
 
         //Check binding error list is empty and do some stuff
