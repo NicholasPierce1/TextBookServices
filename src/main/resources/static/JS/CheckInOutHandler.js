@@ -49,6 +49,10 @@ window.onload = (ev) =>{
         const testhandleErrorResponse = window.document.getElementById("testhandleErrorResponse");
         console.log("running testhandleErrorResponse");
         testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
+
+        const testShowBookCopyForAllCheckedOutBooks = window.document.getElementById("testShowBookCopyForAllCheckedOutBooks");
+        console.log("running testShowBookCopyForAllCheckedOutBooks");
+        testShowBookCopyForAllCheckedOutBooks.onclick = TEST_SPYRIDON.testshowBookCopyForAllCheckedOutBooks;
         
     }
     catch(ex){
@@ -242,9 +246,15 @@ export function handleErrorBindings() {
  */
 
 export function showBookCopyForAllCheckedOutBooks(bookCopyList) {
+    const statusMessageErrorlabel2 = window.document.getElementById("statusMessageErrorLabel");
     // call helper for each book copy
-    for (let i = 0; i < bookCopyList.length; i++) {
-        helper(bookCopyList[i])
+    for (let i=0; i < bookCopyList.length; i++) {
+        //Since we don't have the functionality of the function helper. 
+        // I will comment the helper and add something just to test the function.
+        // helper(bookCopyList[i])
+        statusMessageErrorLabel2.innerHTML = bookCopyList[i];
+        statusMessageErrorlabel2.visibility = "visible";
+        statusMessageErrorlabel2.color = "red";
     }
 
 
