@@ -46,9 +46,9 @@ window.onload = (ev) =>{
         console.log("running testShowBagError");
         testShowBagError.onclick = TEST_SPYRIDON.testshowBagError;
 
-        const testhandleErrorResponse = window.document.getElementById("testhandleErrorResponse");
-        console.log("running testhandleErrorResponse");
-        testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
+        // const testhandleErrorResponse = window.document.getElementById("testhandleErrorResponse");
+        // console.log("running testhandleErrorResponse");
+        // testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
 
         const testShowBookCopyForAllCheckedOutBooks = window.document.getElementById("testShowBookCopyForAllCheckedOutBooks");
         console.log("running testShowBookCopyForAllCheckedOutBooks");
@@ -246,7 +246,7 @@ export function handleErrorBindings() {
  */
 
 export function showBookCopyForAllCheckedOutBooks(bookCopyList) {
-    const statusMessageErrorlabel2 = window.document.getElementById("statusMessageErrorLabel");
+    const statusMessageErrorlabel2 = window.document.getElementById("statusMessageErrorLabel2");
     // call helper for each book copy
     for (let i=0; i < bookCopyList.length; i++) {
         //Since we don't have the functionality of the function helper. 

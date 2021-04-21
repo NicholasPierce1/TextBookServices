@@ -39,9 +39,11 @@ export function testhandleErrorResponse(){
 export function testshowBookCopyForAllCheckedOutBooks(){
     var bookCopy = ["Book1", "Book2", "Book3"];
 
-    CHECKIN_OUTHANDLER.showBookCopyForAllCheckedOutBooks(bookCopy);
+    if(++testValue%2===0){
+        CHECKIN_OUTHANDLER.showBookCopyForAllCheckedOutBooks(bookCopy);
+    }
 }
 
 export function testshowBookCopyForCheckedOutBook(){
-    
+
 }
