@@ -53,8 +53,8 @@
         System.out.println("general errors: " + generalErrors.equals("") + " -- " + generalErrors);
         System.out.println("are both set: " + (bindingErrors != null && !generalErrors.equals("")));
         System.out.println(bindingErrors);
-//        if(bindingErrors != null && !generalErrors.equals(""))
-//            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
+        if(bindingErrors != null && !generalErrors.equals(""))
+            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
 
         if(bindingErrors != null) {
 
@@ -92,7 +92,7 @@
             <div class="col-lg-ofset-7 px-5 pt-5">
                 <img src="/img/loginbackground.jpg" class="img-fluid" alt="">
                 <h4 class="text-center">Sign in to your account</h4>
-                <form action="${pageContext.request.contextPath}/home/" method="post">
+                <form action="${pageContext.request.contextPath}/home/testLoginHere/" method="post">
                     <div class="form-group">
                         <div class="col-lg-12 mx-lg-auto">
                             <%

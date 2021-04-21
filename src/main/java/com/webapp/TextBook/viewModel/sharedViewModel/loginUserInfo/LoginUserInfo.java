@@ -9,6 +9,7 @@ import com.webapp.TextBook.viewModel.shared.FormViewModel;
 import org.javatuples.Pair;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.util.MultiValueMap;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -161,6 +162,44 @@ public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel
                 this._password.equals(expected.get_password())
                 && this._username.equals(expected.get_username())
         );
+
+    }
+
+    /**
+     * <p>
+     *     From a form data capture Map, create a LoginUserInfo
+     * </p>
+     * @param formData: form data capture map.
+     *                Must hold key values that match the nominal key values (field names)
+     * @return a LoginUserInfo representing the corresponding state embedded within the form data capture
+     * @throws Exception if formData retains a key that is not a field name or formData is incomplete
+     * (field values remain unset).
+     */
+    public static @NotNull LoginUserInfo createWebFromForm(
+            @NotNull final MultiValueMap<String, Object> formData)throws Exception{
+
+        // creates initial login user info
+        final LoginUserInfo loginUserInfo = new LoginUserInfo();
+
+        // iterates over all form value pairs and set them according to their key value
+        for(String key : formData.keySet())
+            switch(key){
+                case LoginUserInfo.NOMINAL_USERNAME:
+                    loginUserInfo.set_username((String)formData.get(key).get(0));
+                    break;
+                case LoginUserInfo.NOMINAL_PASSWORD:
+                    loginUserInfo.set_password((String)formData.get(key).get(0));
+                    break;
+                default:
+                    throw new Exception("Key value: {" + key + "} does not match any of the field's names." +
+                            "Please revise.");
+            }
+
+        if(loginUserInfo.get_username() == null || loginUserInfo.get_password() == null)
+            throw new Exception("Form data capture is incomplete. Please make sure the form data retains" +
+                    "keys for all fields that comprise a LoginUserInfo.");
+
+        return loginUserInfo;
 
     }
 }

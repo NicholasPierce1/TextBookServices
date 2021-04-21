@@ -7,6 +7,7 @@ import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
+import com.webapp.TextBook.validation.ApiValidation.ApiValidationHandler.ApiValidationHandler;
 import org.javatuples.KeyValue;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,10 @@ import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo
 @RequestMapping(path = "/home/")
 public class HomeController {
 
+    // todo: remove after testing
+    @Autowired
+    private ApiValidationHandler _validator;
+
     @RequestMapping(value="/testLoginHere/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String testFormPost(
             @RequestBody(required = false) MultiValueMap<String, Object> dataReceived,
@@ -40,11 +45,26 @@ public class HomeController {
 
         System.out.println(dataReceived == null);
 
-        if(dataReceived != null)
-            for(String keyValue : dataReceived.keySet()) {
+        if(dataReceived != null) {
+            for (String keyValue : dataReceived.keySet()) {
                 System.out.println(keyValue + " : " + dataReceived.get(keyValue).get(0));
                 System.out.println(dataReceived.get(keyValue).get(0) instanceof String);
             }
+            try {
+                final LoginUserInfo loginUserInfo = LoginUserInfo.createWebFromForm(dataReceived);
+                System.out.println(loginUserInfo.get_password() + " : " + loginUserInfo.get_username());
+
+                final JSONObject jsonObject = new JSONObject();
+
+                System.out.println("validation working: " + ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                        this._validator.getApiBindingError(loginUserInfo),
+                        jsonObject
+                ));
+                System.out.println(jsonObject);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
 
         modelMap.addAttribute("data", new JSONObject());
 
