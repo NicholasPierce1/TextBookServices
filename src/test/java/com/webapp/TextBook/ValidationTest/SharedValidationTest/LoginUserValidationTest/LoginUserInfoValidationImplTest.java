@@ -27,7 +27,7 @@ public class LoginUserInfoValidationImplTest {
 
 
     /**
-     * more doc needed here: test for both inputs valid
+     * Tests to check if both inputs are valid. It will test with and without a suffix.
      */
     @Test
     public void testBothInputsValid(){
@@ -62,9 +62,7 @@ public class LoginUserInfoValidationImplTest {
 
     // test for username invalid
     /**
-     * <p>
-     *     todo: add here
-     * </p>
+     * Tests for an invalid username
      */
     @Test
     public void testInvalidUsername() throws Exception {
