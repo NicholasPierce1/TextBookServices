@@ -30,11 +30,16 @@ export function testshowBagError(){
     }
 }
 
-export function testhandleErrorResponse(){
+// export function testhandleErrorResponse(){
+//     var text = '{ "employees" : [' +
+//                 '{ "firstName":"John" , "lastName":"Doe" },' +
+//                 '{ "firstName":"Anna" , "lastName":"Smith" },' +
+//                 '{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+//     var jsonObject = JSON.parse(text);
 
-    CHECKIN_OUTHANDLER.handleErrorResponse(json);
+//     CHECKIN_OUTHANDLER.handleErrorResponse(text);
     
-}
+// }
 
 export function testshowBookCopyForAllCheckedOutBooks(){
     var bookCopy = ["Book1", "Book2", "Book3"];

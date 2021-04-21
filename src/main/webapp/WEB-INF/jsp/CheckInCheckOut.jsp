@@ -195,6 +195,7 @@
     <button id="testErrorMessage">test ErrorMessage</button>
     <button id="testStatusMessage">test ShowStatusMessageError</button>
     <button id="testShowBagError">test ShowBagError</button>
+    <button id="testhandleErrorResponse">test handleErrorResponse</button>
     <button id="testShowBookCopyForAllCheckedOutBooks">test ShowBookCopyForAllCheckedOutBooks</button>
 <!--
 
