@@ -3,8 +3,10 @@ import * as CHECKIN_OUTHANDLER from "./../CheckInOutHandler.js";
 let testValue = 1;
 export function testErrorMessage(){
 
+    if(++testValue%2===0){
         CHECKIN_OUTHANDLER.errorMessage();
-    
+    }
+          
 }
 
 export function testShowStatusMessageError(){
@@ -30,6 +32,10 @@ export function testshowBagError(){
 
 export function testhandleErrorResponse(){
 
-        CHECKIN_OUTHANDLER.handleErrorResponse(json);
+    CHECKIN_OUTHANDLER.handleErrorResponse(json);
     
+}
+
+export function testshowBookCopyForAllCheckedOutBooks(){
+    const 
 }

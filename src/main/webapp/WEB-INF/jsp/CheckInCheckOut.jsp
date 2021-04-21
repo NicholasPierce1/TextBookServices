@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css-bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/CSS/checkinoutCSS.css">
-    <script type="module" src="/js/CheckInOutHandler.js"></script>
+    <script type="module" src="JS/CheckInOutHandler.js"></script>
     <script type="application/javascript" src="/js/ViewModel/test.js"></script>
 
     <!--
@@ -126,8 +126,8 @@
                 
                     <div class="input-group mb-3">
                         <label class="input-group-text">919#</label>
-                        <input type="number" class="form-control" placeholder="ID">
-                        <label type="text" id = "error_studentID"></label>
+                        <input id="IDnumber" type="number" class="form-control" placeholder="ID">
+                        <label type="hidden" id = "error_studentID"></label>
                     </div>
                 </div>
                 

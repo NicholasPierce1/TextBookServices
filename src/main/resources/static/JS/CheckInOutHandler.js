@@ -21,7 +21,8 @@ import * as AJAX from "./CheckInCheckOutAjax.js";
 // establishes the window's onload functionality
 // initialize state (render and save login user info, set any non-locally scoped members
 window.onload = (ev) =>{
-    errorLabelTest = document.getElementById("testStatusCodeError");
+    //consterrorLabelTest = document.getElementById("testStatusCodeError");
+    
 
     // invokes the home handler to initialize view state
     try{
@@ -33,7 +34,6 @@ window.onload = (ev) =>{
         console.log("running");
         testButton.onclick = TEST_NICK_DEMO.testStatusCodeErrorOnClick;
 
-        /*
         const test_ErrorMessage = window.document.getElementById("testErrorMessage");
         console.log("running testErrorMessage");
         test_ErrorMessage.onclick = TEST_SPYRIDON.testErrorMessage;
@@ -49,7 +49,7 @@ window.onload = (ev) =>{
         const testhandleErrorResponse = window.document.getElementById("testhandleErrorResponse");
         console.log("running testhandleErrorResponse");
         testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
-        */
+        
     }
     catch(ex){
         console.log("failed to initialize home state:\n" + ex);
@@ -114,19 +114,27 @@ export function hideStatusCodeError() {
  */
 
 export function errorMessage(){
-    const error_IDnumber = window.document.getElementById("error_studentID");
-   if(document.getElementById("IDnumber").value==""){
-        error_IDnumber.innerHTML("Please enter the 919#");
-        error_IDnumber.style.visibility="visible";
-        error_IDnumber.style.color="red";
-        
 
+    const error_text = "Please enter the 919 number";
+    const input_IDnumber = window.document.getElementById("IDnumber");
+    const error_IDnumber = window.document.getElementById("error_studentID");
+
+    if (input_IDnumber.value==""){
+        error_IDnumber.innerHTML=error_text;
+        error_IDnumber.style.visibility= "visible";
+        error_IDnumber.style.color= "red";
+        
     }
+    // This is not necessary since the input does not accept anything
+    // else than number.
+    
+    /*
     else if(typeof(document.getElementById("IDnumber"))!=="number"){
         error_IDnumber.style.visibility="visible";
         error_IDnumber.style.color="red";
         error_IDnumber.innerHTML("Incorrect input type");
     }
+    */
 }
 
 /**
@@ -165,8 +173,9 @@ export function hideStatusMessageError() {
 
 export function showBagError() {
     //Get dom element for label of bag error.
-    const error_bag = window.document.getElementById("error_bag");
+    const error_bag = window.document.getElementById("error_bagnumber");
     error_bag.style.visibility = "visible";
+    error_bag.style.color="red"
     error_bag.innerHTML = "Not Verified";
 }
 
@@ -176,7 +185,7 @@ export function showBagError() {
 
 export function hideBagError() {
     //Get dom element for label of bag error.
-    const error_bag = window.document.getElementById("error_bag");
+    const error_bag = window.document.getElementById("error_bagnumber");
     error_bag.style.visibility = "hidden";
 }
  /**
