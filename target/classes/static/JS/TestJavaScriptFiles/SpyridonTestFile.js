@@ -49,6 +49,16 @@ export function testshowBagError(){
 //     }
 // }
 
-export function testshowBookCopyForCheckedOutBook(){
+export function testhandleErrorBindings(){
 
+    CHECKIN_OUTHANDLER.handleErrorBindings();
+}
+
+export function testshowBookCopyForCheckedOutBook(){
+    var text_sample = '{ "employees" : [' +
+                '{ "firstName":"John" , "lastName":"Doe" },' +
+                '{ "firstName":"Anna" , "lastName":"Smith" },' +
+                '{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+
+    CHECKIN_OUTHANDLER.showBookCopyForCheckedOutBook(text_sample);
 }

@@ -126,17 +126,19 @@
                 
                     <div class="input-group mb-3">
                         <label class="input-group-text">919#</label>
-                        <input id="IDnumber" type="number" class="form-control" placeholder="ID">
-                        <label type="hidden" id = "error_studentID"></label>
+                        <input id="IDnumber" type="number" class="form-control" placeholder="ID" value="">
+                        
                     </div>
+                    <label type="hidden" id = "error_studentID"></label>
                 </div>
                 
                 <div class="col-md-4 pt-2">
                     <div class="input-group mb-3">
                         <label class="input-group-text">Name</label>
                         <input type="text" class="form-control" placeholder="Name">
-                        <label type="hidden" id="error_name"></label>
+                        
                     </div>
+                    <label type="hidden" id="error_name"></label>
                 </div>
             </div>
             <div class="row gy-5">
@@ -144,15 +146,17 @@
                     <div class="input-group mb-3">
                         <label class="input-group-text">Barcode</label>
                         <input type="text" class="form-control" placeholder="Barcode">
-                        <label type="hidden" id="error_barcode"></label>
+                        
                     </div>
+                    <label type="hidden" id="error_barcode"></label>
                 </div>
                 <div class="col-md-4 pt-2">
                     <div class="input-group mb-3">
                         <label class="input-group-text">Bag#</label>
                         <input type="number" class="form-control" placeholder="Bag #">
-                        <label type="hidden" id="error_bagnumber"></label>
+                        
                     </div>
+                    <label type="hidden" id="error_bagnumber"></label>
                 </div>
             </div>
             <div class="row gy-5">
@@ -196,7 +200,9 @@
     <button id="testStatusMessage">test ShowStatusMessageError</button>
     <button id="testShowBagError">test ShowBagError</button>
     <button id="testhandleErrorResponse">test handleErrorResponse</button>
-    <button id="testShowBookCopyForAllCheckedOutBooks">test ShowBookCopyForAllCheckedOutBooks</button>
+    <button id="testshowBookCopyForCheckedOutBook">test showBookCopyForCheckedOutBook</button>
+    <button id="testhandleErrorBindings">test handleErrorBindings</button>
+    <%-- <button id="testShowBookCopyForAllCheckedOutBooks">test ShowBookCopyForAllCheckedOutBooks</button> --%>
 <!--
 
 - create new buttons for EACH test

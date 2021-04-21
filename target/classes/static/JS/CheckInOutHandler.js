@@ -53,6 +53,14 @@ window.onload = (ev) =>{
         // const testShowBookCopyForAllCheckedOutBooks = window.document.getElementById("testShowBookCopyForAllCheckedOutBooks");
         // console.log("running testShowBookCopyForAllCheckedOutBooks");
         // testShowBookCopyForAllCheckedOutBooks.onclick = TEST_SPYRIDON.testshowBookCopyForAllCheckedOutBooks;
+
+        const testShowBookCOpyFor_CheckedOutBook = window.document.getElementById("testshowBookCopyForCheckedOutBook");
+        console.log("running testshowBookCopyForCheckedOutBook");
+        testShowBookCOpyFor_CheckedOutBook.onclick =TEST_SPYRIDON.testshowBookCopyForCheckedOutBook;
+
+        const testhandleErrorBindings = window.document.getElementById("testhandleErrorBindings");
+        console.log("running testhandleErrorBindings");
+        testhandleErrorBindings.onclick = TEST_SPYRIDON.testhandleErrorBindings;
         
     }
     catch(ex){
@@ -229,14 +237,15 @@ export function handlerStatusMessageError(statusMessage) {
 }
 
 export function handleErrorBindings() {
-    const id_error_label = document.getElementById("error_studentID");
-    const studentID = document.getElementById("student_id_in");
+    const id_error_label = window.document.getElementById("error_studentID");
+    const studentID_input = window.document.getElementById("IDnumber");
 
-    const id_error_labelValue = id_error_label.value;
-    if (id_error_labelValue != null && studentID.innerHTML == "") {
-        studentID.innerHTML = "";
+
+    
+    if (id_error_label.innerHTML != null && studentID_input.value == "") {
+        studentID_input.value = '';
     }
-    return
+    return;
 }
 
 
