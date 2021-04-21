@@ -220,14 +220,11 @@ public class HomeApiController {
 
             Quartet<Optional<BookCopy>, Optional<Student>, Optional<Term>, StatusCode> checkOutBook =
                     adapter.checkOutBookForStudent(
+                            userValidation.getValue2().orElseThrow(),
                             studentBookInfo.getBarCode(),
                             studentInfo.getId(),
                             studentInfo.getTermCode());
 
-
-            if (checkOutBook == null) { // should never happen
-                throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
-            }
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
             outputData.put("bookCopy", checkOutBook.getValue0().orElseGet(() -> null));
@@ -328,14 +325,12 @@ public class HomeApiController {
 
             StatusCode checkInBook =
                     adapter.checkInBookForStudent(
+                            userValidation.getValue2().orElseThrow(),
                             studentBookInfo.getStudentInfo().getId(),
+                            studentBookInfo.getStudentInfo().getTermCode(),
                             studentBookInfo.getBarCode()
                             );
 
-
-            if (checkInBook == null) { // should never happen
-                throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
-            }
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
             outputData.put("barcode", studentBookInfo.getBarCode());
@@ -438,13 +433,9 @@ public class HomeApiController {
 
              StatusCode sellBook =
                     adapter.sellBookForStudent(
+                            userValidation.getValue2().orElseThrow(),
                             studentBookInfo.getStudentInfo().getId(),
                             studentBookInfo.getBarCode());
-
-
-            if (sellBook == null) { // should never happen
-                throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
-            }
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
             outputData.put("bookCopy", studentBookInfo.getBarCode());
@@ -471,10 +462,6 @@ public class HomeApiController {
             return new ResponseEntity<String>(outputData.toString(), headers,
                     HttpStatus.BAD_REQUEST);
         }
-
-
-
-
 
     }
 

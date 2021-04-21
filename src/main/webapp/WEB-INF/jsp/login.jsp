@@ -90,7 +90,7 @@
             <div class="col-lg-ofset-7 px-5 pt-5">
                 <img src="/img/loginbackground.jpg" class="img-fluid" alt="">
                 <h4 class="text-center">Sign in to your account</h4>
-                <form>
+                <form action="/home/testLogin/" method="get">
                     <div class="form-group">
                         <div class="col-lg-12 mx-lg-auto">
                             <%
@@ -180,7 +180,7 @@
                             %>
                         </div>
                         <div class="col-lg-12 mx-lg-auto">
-                            <button type="button" class="btn1 my-3 btn-lg">Login</button>
+                            <button type="submit" class="btn1 my-3 btn-lg">Login</button>
                         </div>
                     </div>
                     <div style="text-align:center">
