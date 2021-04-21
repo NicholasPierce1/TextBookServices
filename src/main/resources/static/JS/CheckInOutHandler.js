@@ -365,9 +365,9 @@ export function getBookCopyWhereBarcodeMatches(barcode) {
     //If no match then return null
 
     let sessionBarcodeList = new Map();
-    let bookCopyList = [window.sessionStorage.getItem('bookCopy')];
+    let bookCopyList = [sessionMap.getItem('bookCopy')];
     for (let i = 0; i < bookCopyList.length; i++) {
-        sessionBarcodeList.set(bookCopyList[i]);
+        sessionBarcodeList.set('Book Copy list:', bookCopyList[i]);
     }
     for(let i = 0; i < sessionBarcodeList.length; i++) {
         if (sessionBarcodeList[i] === barcode) {
@@ -381,7 +381,10 @@ export function getBookCopyWhereBarcodeMatches(barcode) {
 
 
 export function checkStudentInfoInputsAndState() {
-
+    let id = Number(sessionMap.getItem('id'));
+    let termCode = Number(sessionMap.getItem('termCode'));
+    let student = new SHARED.StudentInfo(id, termCode);
+    console.log(student);
 }
 
 
@@ -566,12 +569,12 @@ export function initiateApiFor_SellBookForStudent(barcode) {
 
     try {
         //Extract user and student info from local session
-        DataStudentLocalStorage.getItem("Term");
-        DataStudentLocalStorage.getItem("Year");
-        DataStudentLocalStorage.getItem("Student_id");
-        DataStudentLocalStorage.getItem("Student_name");
-        DataStudentLocalStorage.getItem("Barcode");
-        DataStudentLocalStorage.getItem("Bag_number");
+        sessionMap.getItem("Term");
+        sessionMap.getItem("Year");
+        sessionMap.getItem("Student_id");
+        sessionMap.getItem("Student_name");
+        sessionMap.getItem("Barcode");
+        sessionMap.getItem("Bag_number");
 
         //Create student book info
 
