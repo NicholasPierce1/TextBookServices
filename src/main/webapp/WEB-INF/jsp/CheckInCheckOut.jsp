@@ -189,12 +189,12 @@
     <table>
     </table>
 </section>
-
+<!--
     <button id="testButton">test show status code error</button>
     <button id="testErrorMessage">test ErrorMessage</button>
     <button id="testStatusMessage">test ShowStatusMessageError</button>
     <button id="testShowBagError">test ShowBagError</button>
-<!--
+
 
 - create new buttons for EACH test
 IF the test function needs data to run (ie: handleStatusErrorMessage(String) )

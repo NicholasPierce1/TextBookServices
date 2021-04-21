@@ -266,8 +266,15 @@ export function showBookCopyForCheckedOutBook(BookCopy) {
 
 
 
-export function removeTableRow(table) {
+export function removeTableRow() {
     const viewTable = document.getElementsByTagName('table');
+    let rows = viewTable.rows;
+    //Delete last row
+    for(let i = 1; i < rows.length; i++){
+        if(i === rows.length){
+            document.getElementById('table').deleteRow(i);
+        }
+    }
 
 }
 
@@ -285,7 +292,7 @@ export function deleteTableRowWhereBarcodeMatches(barcode) {
     const table = window.document.getElementsByTagName("table").rows;
     for (let i of table) {
         if (i === barcode) {
-            table.deleteRow(table[i]);
+            table.deleteRow(i);
         }
     }
 }
@@ -430,7 +437,7 @@ export function refreshViewWithJsonForAllCheckedOutBooks(jsonResponse) {
 }
 
 export function refreshViewWithJsonForCheckedOutBook(json) {
-    if (handleErrors() === false) {
+    if (handleErrorResponse(json) === false) {
         const book_copy = new SHARED.BookCopy();
         showBookCopyForAllCheckedOutBooks(book_copy);
     }

@@ -436,7 +436,7 @@ export class StudentInfo{
 
             const inputTag = window.document.createElement("input");
 
-            inputTag.setAttribute("Name", StudentInfo.student[i].username);
+            inputTag.setAttribute("Name", StudentInfo.student[i].name);
             inputTag.setAttribute("Type", StudentInfo.student[i].type);
 
             inputTagList[i] = inputTag;
@@ -457,6 +457,143 @@ export class StudentInfo{
             termCode: this.#TERM_CODE
         };
      }
+}
+
+export class StudentBookInfo{
+
+
+    /**
+     * Class Variables
+     * Names describe their values
+     */
+
+
+    #id;
+    #barCode;
+
+    static #ID = "id";
+    static #BARCODE = "barCode"
+
+    /**
+     * @student -> array
+     *
+     * creates an array of key : value pairs with
+     * name of field and type of field
+     */
+
+    static studentBook = [
+        {
+            name: StudentBookInfo.#ID,
+            type: "number"
+        },
+        {
+            name: StudentBookInfo.#BARCODE,
+            type: "number"
+        }
+    ];
+
+    /**
+     * Number of fields in the static array
+     */
+
+    static numberOfFields = 2;
+
+    StudentBookInfo(){}
+
+    /**
+     * @constructor
+     *  creates new student book info object
+     * @param {number} ID
+     *  ID for students (919#)
+     * @param {number} Barcode
+     *  Their barcode
+     *
+     */
+
+    constructor(ID, Barcode){
+        this.#id = ID;
+        this.#barCode = Barcode;
+    }
+
+    /**
+     * @method parseInput
+     *  takes JSON object and parses to string
+     *  throws error if an error occurred
+     * @param jsonObj
+     *  JSON object that was inputted
+     */
+    static parseJson(jsonObj){
+        try{
+
+            const jsonObject = JSON.parse(jsonObj);
+
+            return new StudentBookInfo(jsonObject.#id, jsonObject.#barCode);
+
+        }
+        catch{
+            throw("Error parsing json object");
+        }
+    }
+
+    /**
+     * @method getID
+     * @return
+     *  ID (919#)
+     *
+     */
+
+    getID(){
+        return this.#id;
+    }
+
+    /**
+     * @method getBarcode
+     * @return
+     *  Book Barcode
+     *
+     */
+
+    getBarcode(){
+        return this.#barCode;
+    }
+
+    /**
+     * @method getInputTagList
+     *
+     * Method for creating input element and setting the name and type fields
+     *
+     * @return new input tag list with student info
+     */
+
+    getInputTagList(){
+        console.log("Creating tag list");
+        const inputTagList = [];
+
+        for(let i = 0; i < StudentInfo.numberOfFields; i++){
+
+            const inputTag = window.document.createElement("input");
+
+            inputTag.setAttribute("Name", StudentBookInfo.studentBook[i].name);
+            inputTag.setAttribute("Type", StudentBookInfo.studentBook[i].type);
+
+            inputTagList[i] = inputTag;
+
+
+        }
+        console.log("Done! Creating tag list");
+        return inputTagList;
+    }
+
+    /**
+     * @function createJsonForm
+     * returns fields created in json form
+     */
+    createJsonForm(){
+        return {
+            id: this.#id,
+            termCode: this.#barCode
+        };
+    }
 }
 
 
