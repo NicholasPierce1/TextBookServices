@@ -12,6 +12,8 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -56,13 +58,12 @@ public class TestValidationBindingHelper {
         final JSONArray faultyConglomerateJsonArray = new JSONArray();
 
         final JSONArray faultyBindingArrayOne = new JSONArray(validator.getApiBindingError(invalid1).orElseThrow());
-
+        System.out.println(faultyBindingArrayOne);
         for(int i = 0; i < faultyBindingArrayOne.length(); i++)
             faultyConglomerateJsonArray.put(faultyBindingArrayOne.getJSONObject(i));
 
         jsonObjectOutputBadOne.put(errorsKey, faultyConglomerateJsonArray.toString());
-        jsonObjectOutputBadOne.put(generalErrorsKey, null);
-
+        jsonObjectOutputBadOne.put(generalErrorsKey, "");
         assert (!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(listToSend, jsonObjectInputBadOne));
         assert(jsonObjectInputBadOne.toString().equals(jsonObjectOutputBadOne.toString()));
         //and the second
@@ -77,10 +78,50 @@ public class TestValidationBindingHelper {
             faultyConglomerateJsonArray.put(faultyBindingArrayTwo.getJSONObject(i));
 
         jsonObjectOutputBadTwo.put(errorsKey, faultyConglomerateJsonArray.toString());
-        jsonObjectOutputBadTwo.put(generalErrorsKey, null);
+        jsonObjectOutputBadTwo.put(generalErrorsKey, "");
 
         assert (!ValidationBindingHelper.handlerApiValidationBindingsForJsonOutput(listToSend, jsonObjectInputBadTwo));
         assert(jsonObjectInputBadTwo.toString().equals(jsonObjectOutputBadTwo.toString()));
+
+    }
+
+    @Test
+    public void testApiHandlerForJsonValidation() throws Exception{
+
+        // denotes the string keys to be comprised in the json objects that are transformed
+        // from the validation binding helper
+        final String errorsKey = "Errors";
+        final String generalErrorsKey= "GeneralError";
+
+        // creates json array of expected error
+        final JSONArray expectedJsonArrayError = new JSONArray("[{\"fieldName\":\"id\",\"message\":\"Invalid 919 format\"},{\"fieldName\":\"termCode\",\"message\":\"Invalid term code format\"}]");
+
+        // creates the json object of the expected error
+        final JSONObject outputJsonObjectBad = new JSONObject();
+
+        outputJsonObjectBad.put(errorsKey, expectedJsonArrayError.toString());
+        outputJsonObjectBad.put(generalErrorsKey, "");
+
+        // holds the json object to be modified for both good and bad
+        JSONObject inputJsonObjectGood = new JSONObject();
+        JSONObject outputJsonObjectGood = new JSONObject();
+        JSONObject inputJsonObjectBad = new JSONObject();
+
+
+        // invokes the validation binder helper & asserts true is given (good case)
+        assert(ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                this.validator.getApiBindingError(valid1),
+                inputJsonObjectGood
+        ));
+        assert(inputJsonObjectGood.toString().equals(outputJsonObjectGood.toString()));
+
+
+        // invokes the validation binder helper & asserts true is given (bad case)
+        assert(!ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                this.validator.getApiBindingError(invalid1),
+                inputJsonObjectBad
+        ));
+        assert(inputJsonObjectBad.toString().equals(outputJsonObjectBad.toString()));
 
     }
 

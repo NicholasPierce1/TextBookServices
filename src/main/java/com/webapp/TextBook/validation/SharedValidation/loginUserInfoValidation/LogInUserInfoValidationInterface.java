@@ -20,9 +20,7 @@ public @interface LogInUserInfoValidationInterface {
     Class<? extends Payload>[] payload() default { };
 
 
-    boolean haveSuffix() default false;
-
-
+    boolean haveSuffix() default true;
 
 
 }

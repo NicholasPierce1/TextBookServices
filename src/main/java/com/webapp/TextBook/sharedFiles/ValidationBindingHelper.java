@@ -56,30 +56,35 @@ public class ValidationBindingHelper {
 
 
                 data.put("StatusMessage", failedValidationStatusMessage);
-
+                System.out.println(loginUserInfoError.getDefaultMessage());
                 // invoke helper to set error state
                 ValidationBindingHelper.handleErrorMessageType(loginUserInfoError.getDefaultMessage(), data);
 
-                map.addAttribute("Data", data);
+                map.addAttribute("data", data);
                 returnResult = false;
             }
             else{
+                ValidationBindingHelper.handleSuccessValidationErrorMessage(data);
                 returnResult = true;
             }
+
+            return new Pair<Boolean, JSONObject>(returnResult, data);
         }
         catch(IllegalArgumentException i){
-            System.out.println();
+            System.out.println("Internal Error Illegal Argument: (WebControllerValidationBindingHelper" +
+                    ":validationBindingHandler) - " +
+                    "");
             returnResult = false;
+            data.put(GENERAL_ERRORS_KEY, INTERNAL_VALIDATION_ERROR);
+            return new Pair<Boolean, JSONObject>(returnResult, data);
         }
         catch(Exception e){
             System.out.println("Internal Error: (WebControllerValidationBindingHelper" +
                     ":validationBindingHandler) - " +
                     "");
             returnResult = false;
-        }
-        finally {
             data.put(GENERAL_ERRORS_KEY, INTERNAL_VALIDATION_ERROR);
-            return new Pair<Boolean, JSONObject>(returnResult,data);
+            return new Pair<Boolean, JSONObject>(returnResult, data);
         }
     }
 
@@ -162,7 +167,6 @@ public class ValidationBindingHelper {
                     jsonArray.toString(),
                     jsonObject
             );
-
             return false;
         }
         catch(JSONException jsonException){
@@ -201,7 +205,7 @@ public class ValidationBindingHelper {
 
         // set errors state for output json object
         outputData.put(ERRORS_KEY, !IS_GENERIC ? errorMessage : null);
-        outputData.put(GENERAL_ERRORS_KEY, IS_GENERIC ? errorMessage : null);
+        outputData.put(GENERAL_ERRORS_KEY, IS_GENERIC ? errorMessage : "");
 
     }
 

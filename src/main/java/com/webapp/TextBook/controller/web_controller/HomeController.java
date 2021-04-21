@@ -7,16 +7,20 @@ import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
+import org.javatuples.KeyValue;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.*;
 
 
@@ -28,9 +32,31 @@ import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo
 @RequestMapping(path = "/home/")
 public class HomeController {
 
+    @RequestMapping(value="/testLoginHere/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String testFormPost(
+            @RequestBody(required = false) MultiValueMap<String, Object> dataReceived,
+            ModelMap modelMap
+            ){
 
-    @RequestMapping(value = {"/testLogin/{toReturn}", "/"}, method = RequestMethod.GET)
-    public String index(@PathVariable(required = false, name = "toReturn") Optional<String> toReturn, ModelMap modelMap){
+        System.out.println(dataReceived == null);
+
+        if(dataReceived != null)
+            for(String keyValue : dataReceived.keySet()) {
+                System.out.println(keyValue + " : " + dataReceived.get(keyValue).get(0));
+                System.out.println(dataReceived.get(keyValue).get(0) instanceof String);
+            }
+
+        modelMap.addAttribute("data", new JSONObject());
+
+
+        return "login";
+    }
+
+    @RequestMapping(value = "/testLogin/{toReturn}", method = RequestMethod.GET)
+    public String index(
+            @PathVariable(required = false, name = "toReturn") Optional<String> toReturn,
+            ModelMap modelMap){
+
         modelMap.addAttribute("test", "value test here");
 
         Integer toReturnNum = toReturn.isEmpty() ? null : Integer.parseInt(toReturn.get());
@@ -76,16 +102,19 @@ public class HomeController {
                 switch(toReturnNum){
                     case 1:
                         errorBindingArray.put(usernameErrorBinding);
-                        data.put("Errors", errorBindingArray);
+                        data.put("Errors", errorBindingArray.toString());
                         break;
                     case 2:
                         errorBindingArray.put(usernameErrorBinding);
                         errorBindingArray.put(passwordErrorBinding);
-                        data.put("Errors", errorBindingArray);
+                        data.put("Errors", errorBindingArray.toString());
                         break;
                     case 3:
                         System.out.print("3 called");
-                        data.put("GeneralErrors", generalErrorsValue);
+                        data.put("GeneralError", generalErrorsValue);
+                        break;
+                    case 4:
+                        break;
 
                 }
             }
@@ -106,24 +135,39 @@ public class HomeController {
 
     //login page
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String login(){ return "login"; }
+    public String login(ModelMap modelMap){
+
+        final JSONObject data = new JSONObject();
+        System.out.println("login get called");
+        modelMap.addAttribute("data", data);
+
+        return "login";
+
+    }
 
     //login confirmation
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST,
+    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String loginConfirmation (
-            @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
+            @RequestBody @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
             BindingResult result,
             ModelMap map) throws JSONException {
         JSONObject data = new JSONObject();
         // handling all exceptions with try catch block
         try {
+            System.out.println("login confirmed called");
 
             // format validation/dealing with binding errors
             Pair<Boolean,JSONObject> validationResult = ValidationBindingHelper.validationBindingHandler(result,map);
             if(!validationResult.getValue0()){
                 validationResult.getValue1().put("LoginUserInfo", null);
+                System.out.println("returning login view");
                 return "login";
             }
+
+            System.out.println("validation good");
+            if(true)
+                return "redirect:/home/testLogin/4";
 
             // checking user data validity with database
             Pair<Optional<User>, StatusCode> user = adapter.userLogin(person.get_username(), person.get_password());
@@ -136,7 +180,7 @@ public class HomeController {
                 data.put("GeneralError",null);
                 data.put("Errors", null);
 
-                map.addAttribute("Data", data);
+                map.addAttribute("data", data);
 
                 //setting user session data
                 SharedSessionData.setSessionValueWithKey(SharedSessionData.USER_KEY, user.getValue0().orElseThrow());
@@ -144,10 +188,10 @@ public class HomeController {
                 //checking user Role
                 if (user.getValue0().get().userRole == UserRole.Supervisor) {
                     // User Role is Supervisor and will continue as such
-                    return "supervisorDropdown";
+                    return "SupervisorDropDownMenu";
                 } else {
                     // User Role is Student Employee and will continue as such
-                    return "studentDropdown";
+                    return "StudentDropDownMenu";
                 }
             } else {
                 // User login was invalid for reason stated in status message
@@ -157,7 +201,7 @@ public class HomeController {
                 data.put("GeneralError",null);
                 data.put("Errors", null);
 
-                map.addAttribute("Data", data);
+                map.addAttribute("data", data);
 
                 return "login";
             }
@@ -165,14 +209,14 @@ public class HomeController {
         catch (Exception e){
             //Catching Exceptions and printing StackTrace of the error
             //Loading in custom status message and returning to login page
-            System.out.println(e.getStackTrace());
+            System.out.println(e.getMessage());
             data.put("LoginUserInfo", null);
             data.put("StatusMessage", "Internal error has occurred. " +
                     "If this continues please contact your IT support.");
             data.put("GeneralError",null);
             data.put("Errors", null);
 
-            map.addAttribute("Data", data);
+            map.addAttribute("data", data);
 
             return "login";
         }

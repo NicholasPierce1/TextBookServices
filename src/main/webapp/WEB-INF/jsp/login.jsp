@@ -23,7 +23,7 @@
         per nick: remove in production. Testing path variables incur errors from get requests
         relating to favico
     -->
-    <link rel="shortcut icon" href="#">
+    <link rel="icon"  href="data:,">
 </head>
 <body>
 
@@ -48,11 +48,13 @@
 
     // acquires errors (JSONArray) & general errors (String) -- note: may be null
     try {
-        generalErrors = data.isNull("GeneralErrors") ? "" : data.getString("GeneralErrors");
-        final JSONArray bindingErrors = data.isNull("Errors") ? null : data.getJSONArray("Errors");
-
-        if(bindingErrors != null && !generalErrors.equals(""))
-            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
+        generalErrors = data.isNull("GeneralError") ? "" : data.getString("GeneralError");
+        final JSONArray bindingErrors = data.isNull("Errors") ? null : new JSONArray(data.getString("Errors"));
+        System.out.println("general errors: " + generalErrors.equals("") + " -- " + generalErrors);
+        System.out.println("are both set: " + (bindingErrors != null && !generalErrors.equals("")));
+        System.out.println(bindingErrors);
+//        if(bindingErrors != null && !generalErrors.equals(""))
+//            throw new RuntimeException("Exception occurred in binding state -- general errors AND errors are set");
 
         if(bindingErrors != null) {
 
@@ -90,7 +92,7 @@
             <div class="col-lg-ofset-7 px-5 pt-5">
                 <img src="/img/loginbackground.jpg" class="img-fluid" alt="">
                 <h4 class="text-center">Sign in to your account</h4>
-                <form action="/home/testLogin/" method="get">
+                <form action="${pageContext.request.contextPath}/home/" method="post">
                     <div class="form-group">
                         <div class="col-lg-12 mx-lg-auto">
                             <%
@@ -99,22 +101,22 @@
                                 set form refresh state in input field if it is not null
                                  */
 
-                                String emailPlaceHolder = "Email";
-                                String emailErrorMessage = "";
-                                String emailHiddenValue = "hidden";
+                                String idPlaceHolder = "919";
+                                String idErrorMessage = "";
+                                String idHiddenValue = "hidden";
                                 try {
                                     // if error bindings retain the error binding for username then set place holder and message accordingly
                                     if (errorBindings.containsKey(loginUserInfoUsernameKey)) {
 
 
-                                        emailPlaceHolder =
+                                        idPlaceHolder =
                                                 errorBindings.get(loginUserInfoUsernameKey).isNull("faultyData") ?
-                                                        emailPlaceHolder :
+                                                        idPlaceHolder :
                                                         errorBindings.get(loginUserInfoUsernameKey).getString("faultyData");
 
-                                        emailErrorMessage = errorBindings.get(loginUserInfoUsernameKey).getString("message");
+                                        idErrorMessage = errorBindings.get(loginUserInfoUsernameKey).getString("message");
 
-                                        emailHiddenValue = "text";
+                                        idHiddenValue = "text";
                                     }
                                 }
                                 catch(Exception ex){
@@ -126,13 +128,14 @@
                                 }
 
                                 out.println(
-                                    "<input type=\"email\"" +
-                                            " placeholder=\"" + emailPlaceHolder + "\" name=\""
+                                    "<input id=\"usernameInput\" type=\"text\"" +
+                                            " placeholder=\"" + idPlaceHolder + "\" name=\""
                                             + loginUserInfoUsernameKey +
                                             "\" class=\"form-control my-4 p-2\">"
                             );
 
-                            out.println("<label type=\"" + emailHiddenValue + "\" id=\"emailErrorLabel\">" + emailErrorMessage + "</label>");
+                            out.println("<label" + " style=\"color: red\"" +
+                                    " type=\"" + idHiddenValue + "\" id=\"emailErrorLabel\">" + idErrorMessage + "</label>");
                             %>
                         </div>
                         <div class="col-lg-12 mx-lg-auto">
@@ -163,20 +166,21 @@
                                 }
                                 catch(Exception ex){
 
-                                    System.out.println("passwrod: internal error in rendering page: " + ex.getMessage());
+                                    System.out.println("password: internal error in rendering page: " + ex.getMessage());
 
                                     // sets general errors to constant
                                     generalErrors = generalErrorsDefault;
                                 }
 
-                                out.println(
-                                        "<input type=\"password\"" +
+                                out.println( // todo: change to password
+                                        "<input id=\"passwordInput\" type=\"text\"" +
                                                 " placeholder=\"" + passwordPlaceHolder + "\" name=\""
                                                 + loginUserInfoPasswordKey +
                                                 "\" class=\"form-control my-3 p-2\">"
                                 );
 
-                                out.println("<label type=\"" + passwordHiddenValue + "\" id=\"passwordErrorLabel\">" + passwordErrorMessage + "</label>");
+                                out.println("<label " + " style=\"color: red\"" +
+                                        " type=\"" + passwordHiddenValue + "\" id=\"passwordErrorLabel\">" + passwordErrorMessage + "</label>");
                             %>
                         </div>
                         <div class="col-lg-12 mx-lg-auto">
@@ -188,6 +192,35 @@
                         <p>Don't have an account?
                             <a href="#">Register</a>
                         </p>
+                    </div>
+                    <div class="col-lg-12 mx-lg-auto">
+                        <%
+                            // denotes keys within data (json object) to acquire the status message
+                            final String statusMessageKey = "StatusMessage";
+
+                            String statusMessage;
+                            try {
+                                statusMessage = data.isNull(statusMessageKey) ?
+                                "" :
+                                data.getString(statusMessageKey);
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                                statusMessage = "";
+                                generalErrors = generalErrorsDefault;
+                            }
+
+                            final boolean isInitial = statusMessage.equals("");
+
+                            // denotes the visibility argument
+                            final String visibility = isInitial ?
+                                    "hidden" :
+                                    "visible";
+
+                            out.println(
+                                    "<label style=\"visibility: " + visibility + "; color: red\"> " +
+                                    statusMessage +
+                                            "</label>");
+                        %>
                     </div>
                 </form>
             </div>

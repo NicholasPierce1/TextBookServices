@@ -164,7 +164,7 @@ export function setNavMappings(){
                 `${mappingsToGenerate[i]}${liList[j].id}`,
                 {
                     url: anchorTag.getAttribute("targetEndpoint"),
-                    methodType: "GET"
+                    methodType: "get"
                 }
             );
 
