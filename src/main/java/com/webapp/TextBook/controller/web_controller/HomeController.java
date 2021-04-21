@@ -113,7 +113,7 @@ public class HomeController {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String index(ModelMap modelMap){
         modelMap.addAttribute("test", "value test here");
-        System.out.println(adapter._bagRepository.getAll() == null);
+        // System.out.println(adapter._bagRepository.getAll() == null);
 
         return "index";
     }
