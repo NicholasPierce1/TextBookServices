@@ -50,9 +50,9 @@ window.onload = (ev) =>{
         // console.log("running testhandleErrorResponse");
         // testhandleErrorResponse.onclick = TEST_SPYRIDON.testhandleErrorResponse;
 
-        const testShowBookCopyForAllCheckedOutBooks = window.document.getElementById("testShowBookCopyForAllCheckedOutBooks");
-        console.log("running testShowBookCopyForAllCheckedOutBooks");
-        testShowBookCopyForAllCheckedOutBooks.onclick = TEST_SPYRIDON.testshowBookCopyForAllCheckedOutBooks;
+        // const testShowBookCopyForAllCheckedOutBooks = window.document.getElementById("testShowBookCopyForAllCheckedOutBooks");
+        // console.log("running testShowBookCopyForAllCheckedOutBooks");
+        // testShowBookCopyForAllCheckedOutBooks.onclick = TEST_SPYRIDON.testshowBookCopyForAllCheckedOutBooks;
         
     }
     catch(ex){
