@@ -590,13 +590,13 @@ public class BookCopy implements DataAccessConversion {
         bookCopy.put(NOMINAL_STRIKE_BARCODE,this.getStrikeBarcode());
         bookCopy.put(NOMINAL_PIDM,this.getPidm());
         bookCopy.put(NOMINAL_TERM_CODE,this.getTermCode());
-        bookCopy.put(NOMINAL_DATE_CHECKED_OUT,this.getDateCheckedOut());
+        bookCopy.put(NOMINAL_DATE_CHECKED_OUT,BookCopy.convertDateToDateString(this.getDateCheckedOut()));
         bookCopy.put(NOMINAL_DISPOSITION,this.getDisposition());
         bookCopy.put(NOMINAL_BOOK_SALE_PRICE,this.getBookSalePrice());
         bookCopy.put(NOMINAL_PREV_PIDM,this.getPrevPidm());
         bookCopy.put(NOMINAL_PREV_TERM_CODE,this.getPrevTermCode());
-        bookCopy.put(NOMINAL_PREV_DATE_CHECKED_IN,this.getPrevDateCheckedIn());
-        bookCopy.put(NOMINAL_ACTIVITY_DATE,this.getActivityDate());
+        bookCopy.put(NOMINAL_PREV_DATE_CHECKED_IN, BookCopy.convertDateToDateString(this.getPrevDateCheckedIn()));
+        bookCopy.put(NOMINAL_ACTIVITY_DATE, BookCopy.convertDateToDateString(this.getActivityDate()));
         bookCopy.put(NOMINAL_BILL_FLAG,this.getBillFlag());
 
         return bookCopy;

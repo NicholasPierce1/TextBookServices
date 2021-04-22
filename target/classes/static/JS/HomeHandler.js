@@ -158,9 +158,6 @@ export function setNavMappings(){
                     "the custom attribute (targetEndpoint) set. Please set it to where it hold the" +
                     "url of the nav item's endpoint.");
 
-            if(mappingsToGenerate[i] === "homeDropDownUL")
-                console.log(`${mappingsToGenerate[i]}${liList[j].id}`);
-
             // sets li mapping pair
             // key: ul's id + li's id
             liNavMapPair.set(
