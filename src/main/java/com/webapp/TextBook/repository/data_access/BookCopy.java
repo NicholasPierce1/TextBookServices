@@ -1,8 +1,12 @@
 package com.webapp.TextBook.repository.data_access;
 
+import com.sun.istack.Nullable;
 import com.webapp.TextBook.repository.DataAccessConversion;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +48,19 @@ public class BookCopy implements DataAccessConversion {
     public String bookCode;
 
     private static final String NOMINAL_BOOK_CODE = "bookCode";
-
+    private static final String NOMINAL_EDITION_YEAR = "editionYear";
+    private static final String NOMINAL_SEQ_NR = "seqNr";
+    private static final String NOMINAL_STRIKE_BARCODE = "strikeBarcode";
+    private static final String NOMINAL_PIDM = "pidm";
+    private static final String NOMINAL_TERM_CODE = "termCode";
+    private static final String NOMINAL_DATE_CHECKED_OUT = "dateCheckedOut";
+    private static final String NOMINAL_DISPOSITION = "disposition";
+    private static final String NOMINAL_BOOK_SALE_PRICE = "bookSalePrice";
+    private static final String NOMINAL_PREV_PIDM = "prevPidm";
+    private static final String NOMINAL_PREV_TERM_CODE = "prevTermCode";
+    private static final String NOMINAL_PREV_DATE_CHECKED_IN = "prevDateCheckedIn";
+    private static final String NOMINAL_ACTIVITY_DATE = "activityDate";
+    private static final String NOMINAL_BILL_FLAG = "billFlag";
     /**
      * <p>
      * String variable to hold the edition year.
@@ -565,6 +581,27 @@ public class BookCopy implements DataAccessConversion {
             this.billFlag = ((String) values[13]).charAt(0);
     }
 
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+        JSONObject bookCopy = new JSONObject();
+        bookCopy.put(NOMINAL_BOOK_CODE,this.getBookCode());
+        bookCopy.put(NOMINAL_EDITION_YEAR,this.getEditionYear());
+        bookCopy.put(NOMINAL_SEQ_NR,this.getSeqNr());
+        bookCopy.put(NOMINAL_STRIKE_BARCODE,this.getStrikeBarcode());
+        bookCopy.put(NOMINAL_PIDM,this.getPidm());
+        bookCopy.put(NOMINAL_TERM_CODE,this.getTermCode());
+        bookCopy.put(NOMINAL_DATE_CHECKED_OUT,this.getDateCheckedOut());
+        bookCopy.put(NOMINAL_DISPOSITION,this.getDisposition());
+        bookCopy.put(NOMINAL_BOOK_SALE_PRICE,this.getBookSalePrice());
+        bookCopy.put(NOMINAL_PREV_PIDM,this.getPrevPidm());
+        bookCopy.put(NOMINAL_PREV_TERM_CODE,this.getPrevTermCode());
+        bookCopy.put(NOMINAL_PREV_DATE_CHECKED_IN,this.getPrevDateCheckedIn());
+        bookCopy.put(NOMINAL_ACTIVITY_DATE,this.getActivityDate());
+        bookCopy.put(NOMINAL_BILL_FLAG,this.getBillFlag());
+
+        return bookCopy;
+    }
+
     // todo: add doc
     @Override
     public boolean equals(Object object) {
@@ -595,6 +632,20 @@ public class BookCopy implements DataAccessConversion {
                         this.getBillFlag() == book.getBillFlag();
     }
 
+    // todo: add doc
+    private static @Nullable String convertDateToDateString(@Nullable java.util.Date date){
+
+        if(date == null)
+            return null;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1); // 0 index so add one
+        return String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + "-" +
+                String.valueOf(calendar.get(Calendar.MONTH)) + "-" +
+                String.valueOf(calendar.get(Calendar.YEAR));
+    }
+
     @Override
     public String toString(){
         return
@@ -604,14 +655,16 @@ public class BookCopy implements DataAccessConversion {
                         "\nstrikeBarcode: " + this.getStrikeBarcode() +
                         "\npidm: " + this.getPidm() +
                         "\ntermCode: " + this.getTermCode() +
-                        "\ndateCheckedOut: " + this.getDateCheckedOut() +
+                        "\ndateCheckedOut: " + BookCopy.convertDateToDateString(this.getDateCheckedOut()) +
                         "\ndisposition: " + this.getDisposition() +
                         "\nbookSalePrice: " + this.getBookSalePrice() +
                         "\nprevPidm: " + this.getPrevPidm() +
                         "\nprevTermCode: " + this.getPrevTermCode() +
-                        "\nprevDateCheckedIn: " + this.getPrevDateCheckedIn() +
-                        "\nactivityDate: " + this.getActivityDate() +
+                        "\nprevDateCheckedIn: " + BookCopy.convertDateToDateString(this.getPrevDateCheckedIn()) +
+                        "\nactivityDate: " + BookCopy.convertDateToDateString(this.getActivityDate()) +
                         "\nbillFlag: " + this.getBillFlag();
-        }
+    }
+
+
 
 }
