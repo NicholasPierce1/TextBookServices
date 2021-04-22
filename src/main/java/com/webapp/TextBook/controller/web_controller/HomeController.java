@@ -576,7 +576,7 @@ public class HomeController {
             System.out.println("user removed --- redirecting");
 
             // redirect to login
-            return "redirect:/home/";
+            return "redirect:../"; // /home/ --> logout
 
         }
         catch(Exception ex){
