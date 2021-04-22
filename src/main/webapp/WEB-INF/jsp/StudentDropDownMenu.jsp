@@ -79,7 +79,7 @@
 
                 </div>
                 <div class="navbar-item justify-content-end">
-                    <button class="btn btn-logout-custom" type="button">Log Out</button>
+                    <button class="btn btn-logout-custom" type="button" id="logOutBtn">Log Out</button>
                 </div>
             </div>
         </nav>

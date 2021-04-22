@@ -13,10 +13,13 @@ window.onload = () => {
     console.log("running");
     setNavMappings();
 
-    console.log(getLiNavMapPairs());
-    console.log(getLoginUserInfo());
+    // console.log(getLiNavMapPairs());
+    // console.log(getLoginUserInfo());
 
     setOnClicksToNavItems();
+
+    setOnClickForLogout();
+
 }
 
 /**
@@ -286,9 +289,6 @@ function createManualForm(event){
     form.appendChild(userNameInputElement);
     form.appendChild(passwordInputElement);
 
-    for(let i = 0; i < form.getElementsByTagName("input").length; i++)
-        console.log(form.getElementsByTagName("input")[i].value);
-
     // appends to document body & sets visibility to invisible
     form.style.visibility = "invisible";
     window.document.body.appendChild(form);
@@ -369,9 +369,69 @@ function setOnClicksToNavItems() {
     }
 }
 
-// single function that invokes the nav mappings, nav item on clicks, and sets the login user info in the
-// session map
+// sets on click to logout button
+function setOnClickForLogout(){
+
+    // acquires the logout button
+    const logoutBtn = window.document.getElementById("logOutBtn");
+
+    // integrity check on existence of logout button
+    if(!logoutBtn)
+        throw new Error("Logout button does not exist or retain the id {logOutBtn}. Please revise");
+
+    // sets on click to logout functionality
+    logoutBtn.onclick = logoutUser;
+}
+
+// logouts user by creating a form retaining shared session state
+// submitting the form targeting the URI of the logout functionality/handler
+function logoutUser(event){
+
+    // denotes the URI for logout handler
+    const logoutURI = "/home/LogoutUser/";
+
+    // creates form object
+    const form = window.document.createElement("form");
+
+    // sets form state
+    form.method = "post";
+    form.action = logoutURI;
+
+    // sets form to login user info
+    const loginUserInfo = getLoginUserInfo();
+
+    if(!loginUserInfo.getPassword()|| !loginUserInfo.getUsername())
+        throw new Error("login user info does not retain apt state. Please revise JSON for LoginUserInfo");
+
+    // creates composite input elements to append to form
+    const userNameInputElement = window.document.createElement("input");
+    userNameInputElement.type = "text";
+    userNameInputElement.name = "_username";
+    userNameInputElement.value = loginUserInfo.getUsername();
+
+    const passwordInputElement = window.document.createElement("input");
+    passwordInputElement.type = "password";
+    passwordInputElement.name = "_password";
+    passwordInputElement.value = loginUserInfo.getPassword();
+
+    // appends input elements to form
+    form.appendChild(userNameInputElement);
+    form.appendChild(passwordInputElement);
+
+    // appends to document body & sets visibility to invisible
+    form.style.visibility = "invisible";
+    window.document.body.appendChild(form);
+
+    // submits the form
+    form.submit();
+
+}
+
+// single function that invokes the nav mappings,
+// set nav item on clicks, sets the login user info in the
+// session map, and sets the onclick for logout functionality
 export function initializeSharedState(){
     setNavMappings();
     setOnClicksToNavItems();
+    setOnClickForLogout();
 }

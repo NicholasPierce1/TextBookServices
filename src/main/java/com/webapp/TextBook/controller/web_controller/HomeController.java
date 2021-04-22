@@ -571,10 +571,12 @@ public class HomeController {
                 return "login";
             }
 
-
+            // remove session user to bar expiration session attacks
+            SharedSessionData.removeSessionValueWithKey(SharedSessionData.USER_KEY);
+            System.out.println("user removed --- redirecting");
 
             // redirect to login
-            return "redirect:/";
+            return "redirect:/home/";
 
         }
         catch(Exception ex){
