@@ -2,6 +2,8 @@ package com.webapp.TextBook.repository.data_access;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
 import com.webapp.TextBook.repository.data_access.Person;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -113,4 +115,8 @@ public class Student extends Person {
         return super.toString();
     }
 
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+        return super.createJsonObjectForm();
+    }
 }
