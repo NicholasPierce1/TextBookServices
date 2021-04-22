@@ -22,7 +22,7 @@ export function testShowStatusMessageError(){
 
 export function testshowBagError(){
 
-    if(++testValue%2==0){
+    if(++testValue%2===0){
         CHECKIN_OUTHANDLER.showBagError();
     }
     else{

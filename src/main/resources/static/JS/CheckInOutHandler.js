@@ -1,8 +1,8 @@
 /**
  * @author Spyridon Kaperonis
- * 
+ *
  */
-
+import {StudentInfo} from "./SharedHandler.js";
 
 
 let sessionMap = window.sessionStorage;
@@ -14,8 +14,6 @@ let form;
 import * as HOME from "./HomeHandler.js";
 import * as SHARED from "./SharedHandler.js";
 import * as TEST_NICK_DEMO from "./TestJavaScriptFiles/NickTestFileDemo.js";
-import * as TEST_Chase_DEMO from "./TestJavaScriptFiles/ChaseTestFile.js";
-import * as TEST_SPYRIDON from "./TestJavaScriptFiles/SpyridonTestFile.js";
 import * as AJAX from "./CheckInCheckOutAjax.js";
 
 // establishes the window's onload functionality
@@ -130,6 +128,14 @@ export function errorMessage(){
     const error_text = "Please enter the 919 number";
     const input_IDnumber = window.document.getElementById("IDnumber");
     const error_IDnumber = window.document.getElementById("error_studentID");
+<<<<<<< HEAD
+=======
+   if(document.getElementById("IDnumber").value===""){
+        error_IDnumber.innerHTML("Please enter the 919#");
+        error_IDnumber.style.visibility="visible";
+        error_IDnumber.style.color="red";
+        
+>>>>>>> b38f31d1bf94c3bd603853c137572dc533161043
 
     if (input_IDnumber.value==""){
         error_IDnumber.innerHTML=error_text;
@@ -205,21 +211,19 @@ export function hideBagError() {
  *  Functions that call the small functions
  */
 
-export function handleErrorResponse(json) {
+export function handleErrorResponse(gen_error) {
     //ask about the gen_error
     if (gen_error) {
         SHARED.printError();
         //return true;
-        if (true) {
-            return handlerStatusMessageError();
-        }
+        return handlerStatusMessageError();
     }
     hideStatusMessageError();
 
 
-    if (error) {
+    if (!gen_error) {
         const errorBindings = {errorN: ""};
-        for (let i = 0; i < error.length; i++) {
+        for (let i = 0; i < gen_error.length; i++) {
             errorBindings.errorN = error;
             helper(false);
         }
@@ -229,8 +233,8 @@ export function handleErrorResponse(json) {
 }
 
 export function handlerStatusMessageError(statusMessage) {
-    if (statusMessage == "OK" || null) {
-        showStatusMessageError();
+    if (statusMessage === "OK" || null) {
+        showStatusMessageError(statusMessage);
         return true;
     }
 
@@ -241,10 +245,16 @@ export function handleErrorBindings() {
     const studentID_input = window.document.getElementById("IDnumber");
 
 
+<<<<<<< HEAD
     // If the error label is not null && the input is empty
     //       refresh the input
     if (id_error_label.innerHTML != null && studentID_input.value == "") {
         studentID_input.value = '';
+=======
+    const id_error_labelValue = id_error_label.value;
+    if (id_error_labelValue != null && studentID.innerHTML === "") {
+        studentID.innerHTML = "";
+>>>>>>> b38f31d1bf94c3bd603853c137572dc533161043
     }
     return;
 }
@@ -252,7 +262,7 @@ export function handleErrorBindings() {
 
 /**
  * @purpose 
- * @param {*} bookCopyList 
+ * @param bookCopyList
  */
 
 export function showBookCopyForAllCheckedOutBooks(bookCopyList) {
@@ -279,7 +289,7 @@ export function showBookCopyForAllCheckedOutBooks(bookCopyList) {
 export function showBookCopyForCheckedOutBook(BookCopy) {
 
     //Parse book copy in JSON
-    book_obj = JSON.parse(BookCopy);
+    let book_obj = JSON.parse(BookCopy);
 
     //Get DOM element for table
     let table = document.getElementsByTagName("table");
@@ -287,7 +297,7 @@ export function showBookCopyForCheckedOutBook(BookCopy) {
     let row = thead.insertRow();
 
     for(let element of book_obj){
-        if(element.disposition == "O"){
+        if(element.disposition === "O"){
             let th = document.createElement("th");
             let text = document.createTextNode(element);
             th.appendChild(text);
@@ -299,8 +309,15 @@ export function showBookCopyForCheckedOutBook(BookCopy) {
 
 
 
-export function removeTableRow(table) {
+export function removeTableRow() {
     const viewTable = document.getElementsByTagName('table');
+    let rows = viewTable.rows;
+    //Delete last row
+    for(let i = 1; i < rows.length; i++){
+        if(i === rows.length){
+            document.getElementById('table').deleteRow(i);
+        }
+    }
 
 }
 
@@ -317,8 +334,8 @@ export function hideErrorBindings() {
 export function deleteTableRowWhereBarcodeMatches(barcode) {
     const table = window.document.getElementsByTagName("table").rows;
     for (let i of table) {
-        if (i == barcode) {
-            table.deleteRow(table[i]);
+        if (i === barcode) {
+            table.deleteRow(i);
         }
     }
 }
@@ -327,10 +344,10 @@ export function onFocusOutForBarcode() {
 
 
     //Get barcode input
-    var barcode = document.getElementById("barcode");
+    let barcode = document.getElementById("barcode");
 
     //If input is empty then return
-    if (barcode.innerHTML = "") {
+    if (barcode.innerHTML === "") {
         return;
     }
     //Call getTableRowFromBookCopy
@@ -346,10 +363,10 @@ export function onFocusOutForBarcode() {
 
 export function getBarcodeFromInput() {
     //Get barcode from input element
-    barcode = document.getElementById("barcode");
+    let barcode = document.getElementById("barcode");
 
     //if null or empty throw error
-    if (barcode.innerHTML = "" || !barcode) {
+    if (barcode.innerHTML === "" || !barcode) {
         throw 'Barcode input is null or empty';
     } else {
         return barcode;
@@ -366,17 +383,17 @@ export function getTableRowFromBookCopy(barcode) {
     }
 
     //Temporary variables
-    var temp_bookcode = 0;
-    var temp_seqnumber = 9;
-    var temp_year = 0;
+    let temp_bookcode = 0;
+    let temp_seqnumber = 9;
+    let temp_year = 0;
 
     //Get all tr in table and iterate
-    var rows = document.getElementsByTagName("table")[0].rows;
+    let rows = document.getElementsByTagName("table")[0].rows;
 
     //Iterate through the table and find a match for bookcode, sequence number, and year
     // If no match throw error
-    for (let i = 0; i < rows.length; i++) {
-        if (rows[i] == temp_bookcode && rows[i] == temp_seqnumber && rows[i] == temp_year) {
+    for(let i = 0; i < rows.length; i++) {
+        if (rows[i] === temp_bookcode && rows[i] === temp_seqnumber && rows[i] === temp_year) {
 
             return rows[i];
 
@@ -398,14 +415,13 @@ export function getBookCopyWhereBarcodeMatches(barcode) {
     //If no match then return null
 
     let sessionBarcodeList = new Map();
-    let bookCopyList = [window.sessionStorage.getItem('bookCopy')];
+    let bookCopyList = [sessionMap.getItem('bookCopy')];
     for (let i = 0; i < bookCopyList.length; i++) {
-        sessionBarcodeList.set(bookCopyList[i]);
+        sessionBarcodeList.set('Book Copy list:', bookCopyList[i]);
     }
-    for (let i = 0; i < sessionBarcodeList.length; i++) {
-        if (sessionBarcodeList[i] == barcode) {
-            let match = sessionBarcodeList.get(barcode);
-            return match;
+    for(let i = 0; i < sessionBarcodeList.length; i++) {
+        if (sessionBarcodeList[i] === barcode) {
+            return sessionBarcodeList.get(barcode);
         } else {
             return null;
         }
@@ -415,35 +431,10 @@ export function getBookCopyWhereBarcodeMatches(barcode) {
 
 
 export function checkStudentInfoInputsAndState() {
-    /*
-
-    //Check if inputs for student info are empty and show general error message.
-
-    //If any inputs stored in student info are different from new inputs then reset the student
-    // info object in the map.
-
-
-    //If map does not retain the key then skip this.
-
- var xhttp = new XMLHttpRequest();
- xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            if(input.length != 0 && input != null && !StudentInfo.has(input)){
-                StudentInfo.set(input);
-                console.log(this.status);
-            }
-            else{
-                console.log("An Error Occurred");
-            }
-       }
-       else{
-        console.log(`An Error Occurred, State: ${this.readystate} and status: ${this.status}`);
-    }
-    };
-    xhttp.open("GET", "studentInfo", true);
-    xhttp.send();
-    }
-    }*/
+    let id = Number(sessionMap.getItem('id'));
+    let termCode = Number(sessionMap.getItem('termCode'));
+    let student = new SHARED.StudentInfo(id, termCode);
+    console.log(student);
 }
 
 
@@ -479,8 +470,8 @@ export function refreshViewWithJsonForAllCheckedOutBooks(jsonResponse) {
 
     }
     // Use book copy from SharedHandler
-    bookCopy = {};
-    var bookCopySessionMap = window.sessionStorage;
+    let bookCopy = {};
+    let bookCopySessionMap = window.sessionStorage;
     //Call helper to create book copy rows.
     helper();
     // Store book copy list and bag in session map
@@ -489,14 +480,14 @@ export function refreshViewWithJsonForAllCheckedOutBooks(jsonResponse) {
 }
 
 export function refreshViewWithJsonForCheckedOutBook(json) {
-    if (handleErrors() == false) {
-        const book_copy = new BookCopy();
+    if (handleErrorResponse(json) === false) {
+        const book_copy = new SHARED.BookCopy();
         showBookCopyForAllCheckedOutBooks(book_copy);
     }
 }
 
 export function refreshViewWithJsonForCheckedInBook(json) {
-    if (handlerStatusMessageError() == false) {
+    if (handlerStatusMessageError() === false) {
         return
     }
     helper();  //Call helper to remove table row where the barcode mathces
@@ -504,7 +495,7 @@ export function refreshViewWithJsonForCheckedInBook(json) {
 }
 
 export function refreshViewWithJsonForSellBook(json) {
-    if (handlerError == false) {
+    if (handleErrorResponse() === false) {
         return;
     } else {
         //extract barcode
@@ -526,12 +517,12 @@ export function initiateApiFor_AllCheckedOutBooksForStudentAndTerm() {
 
 
     //Set student info in local session map
-    DataStudentLocalStorage.setItem('Term', term);
-    DataStudentLocalStorage.setItem('Year', year);
-    DataStudentLocalStorage.setItem('Student_id', stu_id);
-    DataStudentLocalStorage.setItem('Student_name', student_name);
-    DataStudentLocalStorage.setItem('Barcode', barcode);
-    DataStudentLocalStorage.setItem('Bag_number', bag_num);
+    sessionMap.setItem('Term', term);
+    sessionMap.setItem('Year', year);
+    sessionMap.setItem('Student_id', stu_id);
+    sessionMap.setItem('Student_name', student_name);
+    sessionMap.setItem('Barcode', barcode);
+    sessionMap.setItem('Bag_number', bag_num);
 
 
     //Acquire user info from local session
@@ -556,12 +547,12 @@ export function initiateApiFor_GetCheckedOutBookForStudentTerm() {
         const barcode = document.getElementById("barcode");
 
         //Extract from local session map user info and student info
-        DataStudentLocalStorage.getItem("Term");
-        DataStudentLocalStorage.getItem("Year");
-        DataStudentLocalStorage.getItem("Student_id");
-        DataStudentLocalStorage.getItem("Student_name");
-        DataStudentLocalStorage.getItem("Barcode");
-        DataStudentLocalStorage.getItem("Bag_number");
+        sessionMap.getItem("Term");
+        sessionMap.getItem("Year");
+        sessionMap.getItem("Student_id");
+        sessionMap.getItem("Student_name");
+        sessionMap.getItem("Barcode");
+        sessionMap.getItem("Bag_number");
 
 
         //Create Student book info
@@ -570,8 +561,8 @@ export function initiateApiFor_GetCheckedOutBookForStudentTerm() {
     }
         //if errors display general error message
     catch (err) {
-        error_barcode = document.getElementById("error_barcode");
-        error_barcode.innerHTML = "Error occured";
+        let error_barcode = document.getElementById("error_barcode");
+        error_barcode.innerHTML = "Error occurred";
 
     }
 
@@ -591,15 +582,15 @@ export function initiateApiFor_CheckInBookForStudentAndTerm() {
 
 
         //Get barcode from input
-        barcode = document.getElementById("barcode");
+        let barcode = document.getElementById("barcode");
 
         //Extract from local session map user info and student info
-        DataStudentLocalStorage.getItem("Term");
-        DataStudentLocalStorage.getItem("Year");
-        DataStudentLocalStorage.getItem("Student_id");
-        DataStudentLocalStorage.getItem("Student_name");
-        DataStudentLocalStorage.getItem("Barcode");
-        DataStudentLocalStorage.getItem("Bag_number");
+        sessionMap.getItem("Term");
+        sessionMap.getItem("Year");
+        sessionMap.getItem("Student_id");
+        sessionMap.getItem("Student_name");
+        sessionMap.getItem("Barcode");
+        sessionMap.getItem("Bag_number");
 
 
         //Create Student book info
@@ -608,8 +599,8 @@ export function initiateApiFor_CheckInBookForStudentAndTerm() {
     }
         //if errors display general error message
     catch (err) {
-        error_barcode = document.getElementById("error_barcode");
-        error_barcode.innerHTML = "Error occured";
+        let error_barcode = document.getElementById("error_barcode");
+        error_barcode.innerHTML = "Error occurred";
 
     }
 
@@ -628,12 +619,12 @@ export function initiateApiFor_SellBookForStudent(barcode) {
 
     try {
         //Extract user and student info from local session
-        DataStudentLocalStorage.getItem("Term");
-        DataStudentLocalStorage.getItem("Year");
-        DataStudentLocalStorage.getItem("Student_id");
-        DataStudentLocalStorage.getItem("Student_name");
-        DataStudentLocalStorage.getItem("Barcode");
-        DataStudentLocalStorage.getItem("Bag_number");
+        sessionMap.getItem("Term");
+        sessionMap.getItem("Year");
+        sessionMap.getItem("Student_id");
+        sessionMap.getItem("Student_name");
+        sessionMap.getItem("Barcode");
+        sessionMap.getItem("Bag_number");
 
         //Create student book info
 
@@ -657,7 +648,7 @@ export function initiateApiFor_SellBookForStudent(barcode) {
 export function onClickHandlerFor_SellBook() {
 
     //Check Student info inputs and state
-    studentID = document.getElementById("student_id_in");
+    let studentID = document.getElementById("student_id_in");
 
     //Get parent tr and get the bookcode, sequence number, and year.
 

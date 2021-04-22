@@ -1,1 +1,17 @@
+com\webapp\TextBook\repository\Repository.class
+com\webapp\TextBook\repository\DataAccessConversion.class
+com\webapp\TextBook\validation\FormVallidation\wewe.class
 META-INF\spring-configuration-metadata.json
+com\webapp\TextBook\viewModel\apiViewModel\StudentInfo.class
+com\webapp\TextBook\viewModel\shared\ApiViewModel.class
+com\webapp\TextBook\sharedFiles\ValidationBindingHelper.class
+com\webapp\TextBook\sharedFiles\StatusCode.class
+com\webapp\TextBook\repository\shared_respository_helper\DataAccessConversionHelper.class
+com\webapp\TextBook\repository\User\UserRepositoryImpl.class
+com\webapp\TextBook\validation\ApiValidation\dummyApiValidation.class
+com\webapp\TextBook\repository\User\UserRepositoryCustom.class
+com\webapp\TextBook\validation\ApiValidation\StudentInfoValidation\StudentInfoValidationImpl.class
+com\webapp\TextBook\repository\DataAccessConversionException.class
+com\webapp\TextBook\validation\Shared\SharedValidationState.class
+com\webapp\TextBook\viewModel\shared\ApiViewModelCreation.class
+com\webapp\TextBook\validation\ApiValidation\StudentInfoValidation\StudentInfoValidationInterface.class

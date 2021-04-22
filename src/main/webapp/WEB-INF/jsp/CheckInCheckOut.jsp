@@ -194,16 +194,20 @@
     <table>
     </table>
 </section>
-
+<!--
     <button id="testButton">test show status code error</button>
     <button id="testErrorMessage">test ErrorMessage</button>
     <button id="testStatusMessage">test ShowStatusMessageError</button>
     <button id="testShowBagError">test ShowBagError</button>
+<<<<<<< HEAD
     <button id="testhandleErrorResponse">test handleErrorResponse</button>
     <button id="testshowBookCopyForCheckedOutBook">test showBookCopyForCheckedOutBook</button>
     <button id="testhandleErrorBindings">test handleErrorBindings</button>
     <%-- <button id="testShowBookCopyForAllCheckedOutBooks">test ShowBookCopyForAllCheckedOutBooks</button> --%>
 <!--
+=======
+
+>>>>>>> b38f31d1bf94c3bd603853c137572dc533161043
 
 - create new buttons for EACH test
 IF the test function needs data to run (ie: handleStatusErrorMessage(String) )
