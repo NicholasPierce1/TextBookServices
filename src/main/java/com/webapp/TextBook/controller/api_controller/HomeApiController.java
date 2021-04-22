@@ -13,6 +13,7 @@ import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -117,8 +118,19 @@ public class HomeApiController {
                 throw new RuntimeException("adapter return null -- check logs on inputs for internal nested errors");
             }
 
+            // creates a json array that will hold all the json objects representing a
+            // book copy Data Access
+            final JSONArray jsonArray = new JSONArray();
+
+            final List<BookCopy> bookCopyList = allCheckedOutBooks.getValue0().orElseGet(() -> null);
+
+            if(bookCopyList != null)
+                for (final BookCopy bookCopy : bookCopyList)
+                    jsonArray.put(bookCopy.createJsonObjectForm());
+
+
             // invokes clobber, or mask behavior in Map types, on overlapping key values
-            outputData.put("books", allCheckedOutBooks.getValue0().orElseGet(() -> null));
+            outputData.put("books", bookCopyList == null ? null : jsonArray);
             outputData.put("student", allCheckedOutBooks.getValue1().orElseGet(() -> null));
             outputData.put("bag", allCheckedOutBooks.getValue2().orElseGet(() -> null));
             outputData.put("term", allCheckedOutBooks.getValue3().orElseGet(() -> null));
@@ -227,7 +239,16 @@ public class HomeApiController {
 
 
             // invokes clobber, or mask behavior in Map types, on overlapping key values
-            outputData.put("bookCopy", checkOutBook.getValue0().orElseGet(() -> null));
+            outputData.put("bookCopy", checkOutBook.getValue0().map(
+                    (bookCopy) -> {
+                        try {
+                            return bookCopy.createJsonObjectForm(); // will not ever happen
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                            return null;
+                        }
+                    }
+            ).orElseGet(() -> null));
             outputData.put("statusMessage", checkOutBook.getValue3().getContentMessage());
 
             return new ResponseEntity<String>(
