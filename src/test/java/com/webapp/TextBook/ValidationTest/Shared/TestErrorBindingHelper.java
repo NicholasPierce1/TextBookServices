@@ -6,24 +6,19 @@ import org.springframework.boot.configurationprocessor.json.JSONArray;
 
 import java.util.ArrayList;
 
+/**
+ * Tests error JSON String conversion helper method.
+ */
 public class TestErrorBindingHelper{
     @Test
+    /**
+     * Tests to make sure that, for a given list of Error bindings,
+     * the strings generated are expected and correct.
+     */
     public void testJsonStringConverter() throws Exception{
         String msg = "test";
         String title  = "title";
-//            final String errorBindingJsonString = ErrorBinding.ErrorBindingJsonHelper.CreateJsonStringFromErrorBindings(
-//                    Arrays.asList(
-//                            new ErrorBinding<String>(
-//                                    "TEST", test,"String"
-//                            ),
-//                            new ErrorBinding<Integer>(
-//                                    "TEST", test,(Integer)123
-//                            ),
-//                            new ErrorBinding<Double>(
-//                                    "TEST", test,(Double) 4.4
-//                            )
-//                    )
-//            );
+
         ArrayList<ErrorBinding<?>> ebList = new ArrayList<>();
         ebList.add(new ErrorBinding<String>(title,msg,"String"));
         ebList.add(new ErrorBinding<Double>(title,msg,(Double)4.4));

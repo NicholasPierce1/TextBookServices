@@ -28,25 +28,7 @@ public class StudentInfoValidationImplTest {
      * Going to test the isValid method for Student Info.
      * We will use four cases
      */
-//    @Test
-//    public void testIsValid(){
-//        StudentInfoValidationImpl infoValidation = new StudentInfoValidationImpl();
-//
-//        //1 CASE ONE: Invalid term code
-//         StudentInfo badTerm = new StudentInfo("919545753", "190060");
-//        // assert !infoValidation.isValid(badTerm, ) ;
-//         //CASE TWO: Invalid 919
-//        StudentInfo badId = new StudentInfo("123456789", "201810");
-//     //   assert !infoValidation.isValid(badId, ) ;
-//
-//        //CASE THREE: Both are invalid
-//        StudentInfo bothInvalid = new StudentInfo("123456123", "6666666");
-//       // assert !infoValidation.isValid((bothInvalid,);
-//        //CASE FOUR: Both Valid
-//        StudentInfo good = new StudentInfo("919545753", "202020");
-//        //assert infoValidation.isValid(good,);
-//
-//    }
+
 
     /**
      * Tests for valid input
@@ -76,7 +58,7 @@ public class StudentInfoValidationImplTest {
 
     /**
      * Test for invalid input: Bad ID
-     * Tests that there is an error and that such error has the expected langauge
+     * Tests that there is an error and that such error has the expected language
      */
     @Test
     public void testInvalidId() throws  Exception{
@@ -105,7 +87,10 @@ public class StudentInfoValidationImplTest {
         assert(errorBindingJsonString.equals(invalidStudnetInfoResult.get()));
     }
 
-
+    /**
+     * Tests for an invalid term
+     * @throws Exception
+     */
     @Test
     public void testInvalidTerm() throws  Exception{
         //10 to start term code
@@ -133,6 +118,10 @@ public class StudentInfoValidationImplTest {
         assert(errorBindingJsonString.equals(invalidStudnetInfoResult.get()));
     }
 
+    /**
+     * Test case for when all both inputs are invalid
+     * @throws Exception
+     */
     @Test
     public void testInvalidBoth() throws  Exception{
         //10 to start term code
