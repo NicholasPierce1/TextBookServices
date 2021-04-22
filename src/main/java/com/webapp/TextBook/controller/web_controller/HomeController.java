@@ -199,7 +199,7 @@ public class HomeController {
             //interpreting data
             if (user.getValue1() == StatusCode.OK) {
                 // User login was valid and will be further processed
-                data.put("LoginUserInfo", loginUserInfo);
+                data.put("LoginUserInfo", loginUserInfo.createJsonObjectForm());
                 data.put("StatusMessage", user.getValue1().getContentMessage());
                 data.put("GeneralError",null);
                 data.put("Errors", null);
@@ -311,7 +311,7 @@ public class HomeController {
             }
 
             // set success state
-            data.put("LoginUserInfo", loginUserInfo);
+            data.put("LoginUserInfo", loginUserInfo.createJsonObjectForm());
             data.put("StatusMessage", null);
             data.put("GeneralError",null);
             data.put("Errors", null);
@@ -345,7 +345,6 @@ public class HomeController {
 
         // creates status message string & its possible values
         final String generalError = "An error occurred internally. Please contact IT Support.";
-        final String permissionsError = "Permissions to access resource not granted.";
 
         // holds return info
         final JSONObject data = new JSONObject();
@@ -388,7 +387,7 @@ public class HomeController {
             }
 
             // set success state
-            data.put("LoginUserInfo", loginUserInfo);
+            data.put("LoginUserInfo", loginUserInfo.createJsonObjectForm());
             data.put("StatusMessage", null);
             data.put("GeneralError",null);
             data.put("Errors", null);

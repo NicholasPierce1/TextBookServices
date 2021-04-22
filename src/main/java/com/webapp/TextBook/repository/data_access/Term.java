@@ -1,6 +1,10 @@
 package com.webapp.TextBook.repository.data_access;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,6 +43,8 @@ public class Term implements DataAccessConversion {
      */
     public String termCode;
 
+    private static final String NOMINAL_TERM_CODE = "termCode";
+
     /**
      * <p>
      * the name representation of the term code
@@ -46,6 +52,8 @@ public class Term implements DataAccessConversion {
      * </p>
      */
     public String termDescription;
+
+    private static final String NOMINAL_TERM_DESCRIPTION = "termDescription";
 
     /**
      * <p>
@@ -172,5 +180,17 @@ public class Term implements DataAccessConversion {
         return "TermCode: " + this.getTermCode() +
                 "\nTermDescription: " + this.getTermDescription();
 
+    }
+
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+
+        // create a new json object, and use the nominal keys to place the instance/field in
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(Term.NOMINAL_TERM_CODE, this.getTermCode());
+        jsonObject.put(Term.NOMINAL_TERM_DESCRIPTION, this.getTermDescription());
+
+        return jsonObject;
     }
 }

@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -30,6 +33,8 @@ public abstract class Person implements DataAccessConversion {
      */
     public String pidm;
 
+    private static final String NOMINAL_PIDM = "pidm";
+
     /**
      * <p>
      * String variable to hold a person's 919 number.
@@ -38,6 +43,8 @@ public abstract class Person implements DataAccessConversion {
      * </p>
      */
     public String id;
+
+    private static final String NOMINAL_ID = "id";
 
     /**
      * <p>
@@ -48,6 +55,8 @@ public abstract class Person implements DataAccessConversion {
      */
     public String firstName;
 
+    private static final String NOMINAL_FIRST_NAME = "firstName";
+
     /**
      * <p>
      * String variable to hold the last name of a person.
@@ -57,6 +66,8 @@ public abstract class Person implements DataAccessConversion {
      */
     public String lastName;
 
+    private static final String NOMINAL_LAST_NAME = "lastName";
+
     /**
      * <p>
      * String variable to hold the middle name of a person.
@@ -65,6 +76,8 @@ public abstract class Person implements DataAccessConversion {
      * </p>
      */
     public String middleName;
+
+    private static final String NOMINAL_MIDDLE_NAME = "middleName";
 
     /**
      * <p>
@@ -259,5 +272,20 @@ public abstract class Person implements DataAccessConversion {
                         "\nlastname: " + this.getLastName() +
                         "\nfirstname: " + this.getFirstName() +
                         "\nmiddlename: " + this.getMiddleName();
+    }
+
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+
+        // create a new json object, and use the nominal keys to place the instance/field in
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(Person.NOMINAL_PIDM, this.getPidm());
+        jsonObject.put(Person.NOMINAL_ID, this.getId());
+        jsonObject.put(Person.NOMINAL_FIRST_NAME, this.getFirstName());
+        jsonObject.put(Person.NOMINAL_LAST_NAME, this.getLastName());
+        jsonObject.put(Person.NOMINAL_MIDDLE_NAME, this.getMiddleName());
+
+        return jsonObject;
     }
 }
