@@ -35,7 +35,6 @@ import com.webapp.TextBook.viewModel.sharedViewModel.loginUserInfo.LoginUserInfo
 @RequestMapping(path = "/home/")
 public class HomeController {
 
-    // todo: remove after testing
     @Autowired
     private ApiValidationHandler _validator;
 
@@ -173,6 +172,8 @@ public class HomeController {
     public String loginConfirmation (
             @RequestBody MultiValueMap<String, Object> multiValueMap,
             ModelMap map) throws JSONException {
+
+
         JSONObject data = new JSONObject();
         // handling all exceptions with try catch block
         try {
@@ -247,9 +248,9 @@ public class HomeController {
     }
 
     // todo: doc
-    @RequestMapping(value = "/SupervisorDropDownMenu", method = RequestMethod.GET, consumes =
+    @RequestMapping(value = "/SupervisorDropDownMenu", method = RequestMethod.POST, consumes =
     MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String getSupervisorHomeMenu(ModelMap modelMap, MultiValueMap<String, Object> multiValueMap) throws JSONException {
+    public String getSupervisorHomeMenu(ModelMap modelMap, @RequestBody MultiValueMap<String, Object> multiValueMap) throws JSONException {
 
         // creates status message string & its possible values
         final String generalError = "An error occurred internally. Please contact IT Support.";
@@ -339,9 +340,9 @@ public class HomeController {
     }
 
     // todo: doc
-    @RequestMapping(value = "/StudentDropDownMenu", method = RequestMethod.GET, consumes =
+    @RequestMapping(value = "/StudentDropDownMenu", method = RequestMethod.POST, consumes =
             MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String getStudentHomeMenu(ModelMap modelMap, MultiValueMap<String, Object> multiValueMap) throws JSONException {
+    public String getStudentHomeMenu(ModelMap modelMap, @RequestBody MultiValueMap<String, Object> multiValueMap) throws JSONException {
 
         // creates status message string & its possible values
         final String generalError = "An error occurred internally. Please contact IT Support.";

@@ -65,9 +65,9 @@ function get_list_items(){
 */
 const studentNavMappings = ["homeDropDownUL", "patronDropDownUl", "patronDropDownCheckInCheckOutUl", "patronDropDownHomeUl"];
 
-const supervisorNavMappings = ["homeDropDownUL", studentNavMappings[0], "supervisorDropDownUl", "supervisorDropDownHomeUl"];
+const supervisorNavMappings = ["homeDropDownUL", studentNavMappings[1], "supervisorDropDownUl", "supervisorDropDownHomeUl"];
 
-const checkInOutNavMappings = ["homeDropDownUL", "homeMenuUL", supervisorNavMappings[0], supervisorNavMappings[1]]
+const checkInOutNavMappings = ["homeDropDownUL", "homeMenuUL", supervisorNavMappings[1], supervisorNavMappings[2]]
 
 /**
  * @onload
@@ -164,7 +164,7 @@ export function setNavMappings(){
                 `${mappingsToGenerate[i]}${liList[j].id}`,
                 {
                     url: anchorTag.getAttribute("targetEndpoint"),
-                    methodType: "get"
+                    methodType: "post"
                 }
             );
 
@@ -307,7 +307,7 @@ function createManualForm(event){
 function submitManualForm(event){
 
     try {
-        console.log(createManualForm(event));//.submit();
+        createManualForm(event).submit();
     }
     catch (e) {
         console.log("internal error (home handler -- submit manual form)");
