@@ -241,7 +241,8 @@ export function handleErrorBindings() {
     const studentID_input = window.document.getElementById("IDnumber");
 
 
-    
+    // If the error label is not null && the input is empty
+    //       refresh the input
     if (id_error_label.innerHTML != null && studentID_input.value == "") {
         studentID_input.value = '';
     }
