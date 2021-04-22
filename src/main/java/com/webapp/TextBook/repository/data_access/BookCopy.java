@@ -1,8 +1,10 @@
 package com.webapp.TextBook.repository.data_access;
 
+import com.sun.istack.Nullable;
 import com.webapp.TextBook.repository.DataAccessConversion;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -595,6 +597,20 @@ public class BookCopy implements DataAccessConversion {
                         this.getBillFlag() == book.getBillFlag();
     }
 
+    // todo: add doc
+    private static @Nullable String convertDateToDateString(@Nullable java.util.Date date){
+
+        if(date == null)
+            return null;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1); // 0 index so add one
+        return String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + "-" +
+                String.valueOf(calendar.get(Calendar.MONTH)) + "-" +
+                String.valueOf(calendar.get(Calendar.YEAR));
+    }
+
     @Override
     public String toString(){
         return
@@ -604,13 +620,13 @@ public class BookCopy implements DataAccessConversion {
                         "\nstrikeBarcode: " + this.getStrikeBarcode() +
                         "\npidm: " + this.getPidm() +
                         "\ntermCode: " + this.getTermCode() +
-                        "\ndateCheckedOut: " + this.getDateCheckedOut() +
+                        "\ndateCheckedOut: " + BookCopy.convertDateToDateString(this.getDateCheckedOut()) +
                         "\ndisposition: " + this.getDisposition() +
                         "\nbookSalePrice: " + this.getBookSalePrice() +
                         "\nprevPidm: " + this.getPrevPidm() +
                         "\nprevTermCode: " + this.getPrevTermCode() +
-                        "\nprevDateCheckedIn: " + this.getPrevDateCheckedIn() +
-                        "\nactivityDate: " + this.getActivityDate() +
+                        "\nprevDateCheckedIn: " + BookCopy.convertDateToDateString(this.getPrevDateCheckedIn()) +
+                        "\nactivityDate: " + BookCopy.convertDateToDateString(this.getActivityDate()) +
                         "\nbillFlag: " + this.getBillFlag();
         }
 
