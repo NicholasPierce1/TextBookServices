@@ -524,4 +524,72 @@ public class HomeController {
         return "SupervisorDropDownMenu";
     }
 
+    @RequestMapping(value = "/LogoutUser", method = RequestMethod.POST, consumes =
+            MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String logoutUser(ModelMap modelMap, @RequestBody MultiValueMap<String, Object> multiValueMap) throws JSONException {
+
+        // creates status message string & its possible values
+        final String generalError = "An error occurred internally. Please contact IT Support.";
+
+        // holds return info
+        final JSONObject data = new JSONObject();
+
+        try {
+
+            // create session user
+            final LoginUserInfo loginUserInfo = LoginUserInfo.createWebFromForm(multiValueMap);
+
+            // validate session user
+            if(!ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                    this._validator.getApiBindingError(loginUserInfo),
+                    data
+            )){
+
+                // append data to model map
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+
+            // verify session user against session state
+            final Triplet<Boolean, String, Optional<User>> sessionResult =
+                    VerifySessionUser.isSessionUserValid(loginUserInfo);
+
+            if(!sessionResult.getValue0()){
+
+                // set error state
+                data.put("LoginUserInfo", null);
+                data.put("StatusMessage", sessionResult.getValue1());
+                data.put("GeneralError",null);
+                data.put("Errors", null);
+
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+
+
+            // redirect to login
+            return "redirect:/";
+
+        }
+        catch(Exception ex){
+
+
+            // sets error state
+            data.put("LoginUserInfo", null);
+            data.put("StatusMessage", generalError);
+            data.put("GeneralError",null);
+            data.put("Errors", null);
+
+            modelMap.addAttribute("data", data);
+
+            // return login view
+            return "login";
+        }
+    }
 }
