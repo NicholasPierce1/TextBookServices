@@ -104,6 +104,7 @@ public class ValidationBindingHelper {
            return true;
         }
 
+        jsonObject.put("StatusMessage", failedValidationStatusMessage);
         ValidationBindingHelper.handleErrorMessageType(apiValidationResult.get(), jsonObject);
         return false;
     }

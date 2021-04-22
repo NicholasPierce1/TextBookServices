@@ -6,6 +6,6 @@ package com.webapp.TextBook.viewModel.shared;
  * <p>Place holder for shared-polymorphic grouping for all API View Models -- Form View Models excluded</p>
  *
  */
-public interface ApiViewModel {
+public interface ApiViewModel extends CreateJsonForm{
 
 }

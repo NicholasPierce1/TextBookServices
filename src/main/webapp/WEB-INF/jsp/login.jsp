@@ -1,8 +1,14 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%@ page import="org.springframework.boot.configurationprocessor.json.JSONObject" %>
 <%@ page import="org.springframework.boot.configurationprocessor.json.JSONArray" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="org.springframework.boot.configurationprocessor.json.JSONException" %><%--
+<%@ page import="org.springframework.boot.configurationprocessor.json.JSONException" %>
+<%--
   Created by IntelliJ IDEA.
   User: Spyridon
   Date: 3/9/2021
@@ -92,7 +98,7 @@
             <div class="col-lg-ofset-7 px-5 pt-5">
                 <img src="/img/loginbackground.jpg" class="img-fluid" alt="">
                 <h4 class="text-center">Sign in to your account</h4>
-                <form action="${pageContext.request.contextPath}/home/testLoginHere/" method="post">
+                <form:form action="${pageContext.request.contextPath}/home/" method="post" modelAttribute="LoginUserInfo">
                     <div class="form-group">
                         <div class="col-lg-12 mx-lg-auto">
                             <%
@@ -172,7 +178,7 @@
                                     generalErrors = generalErrorsDefault;
                                 }
 
-                                out.println( // todo: change to password
+                                out.println(
                                         "<input id=\"passwordInput\" type=\"text\"" +
                                                 " placeholder=\"" + passwordPlaceHolder + "\" name=\""
                                                 + loginUserInfoPasswordKey +
@@ -222,7 +228,7 @@
                                             "</label>");
                         %>
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
     </div>

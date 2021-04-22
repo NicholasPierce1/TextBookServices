@@ -21,10 +21,10 @@
     <script type="module" src = "/js/HomeHandler.js"></script>
 
     <!--
-per nick: remove in production. Testing path variables incur errors from get requests
-relating to favico
--->
-    <link rel="shortcut icon" href="#">
+        per nick: remove in production. Testing path variables incur errors from get requests
+        relating to favico
+    -->
+    <link rel="icon"  href="data:,">
 
 </head>
 
@@ -51,8 +51,17 @@ relating to favico
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav pb-1 pt-1", id="supervisorDropDownHomeUl">
-                    <li id="supervisorDropDownHome"><a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/SupervisorDropDownMenu">Home</a></li>
+                    <li id="supervisorDropDownHome"><a class="nav-link active navbar-text" aria-current="page" targetEndpoint="/home/SupervisorDropDownMenu/">Home</a></li>
                 </ul>
+                <div class="nav-item dropdown pb-1 pt-1" id="homeDropDownDiv">
+                    <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdowns
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="homeDropDownUL">
+                        <li id="homeDropDownSupervisor"><a class="dropdown-item" targetEndpoint="/home/StudentDropDownMenu/">Student</a></li>
+                        <li id="homeDropDownStudent"><a class="dropdown-item" targetEndpoint="/home/SupervisorDropDownMenu/">Supervisor</a></li>
+                    </ul>
+                </div>
                 <div class="nav-item dropdown pb-1 pt-1" id="supervisorDropDownDiv">
                     <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
@@ -71,7 +80,7 @@ relating to favico
                         Patrons
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="patronDropDownUl">
-                        <li id="CheckInCheckOut"><a class="dropdown-item" targetEndpoint="/CheckInCheckOut">Check In/ Check Out</a></li>
+                        <li id="CheckInCheckOut"><a class="dropdown-item" targetEndpoint="/inventory/">Check In/ Check Out</a></li>
                         <li id="PatronSchedule"><a class="dropdown-item" targetEndpoint="/PatronSchedule">Patron Schedule</a></li>
                         <li id="PatronPreviousBooks"><a class="dropdown-item" targetEndpoint="/PatronPreviousBooks">Patron Previous Books</a></li>
                         <li id="PatronSoldBooks"><a class="dropdown-item" targetEndpoint="/PatronSoldBooks">Patron Sold Books</a></li>

@@ -5,6 +5,7 @@ import com.webapp.TextBook.validation.Shared.ErrorBinding;
 import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,8 @@ import java.util.List;
 /**
  * Class tests Error Binding
  */
-public class TestErrorBinding <T>{
+@SpringBootTest
+public class TestErrorBinding {
 
     private final static String FIELD_ERROR_NAME_KEY = "fieldName";
     private final static String FIELD_ERROR_MESSAGE_KEY = "message";
@@ -24,14 +26,14 @@ public class TestErrorBinding <T>{
         //PRE TEST: Create three error bindings
         //Testing string
 
-        assert (assertTrue("String test", (T) "My String", false));
-        ErrorBinding intTest = new ErrorBinding("Int test", "Int", 22);
+        assert (assertTrue("String test", "My String", false));
+        ErrorBinding<Integer> intTest = new ErrorBinding<Integer>("Int test", "Int", 22);
         //Testing int
         Integer i = 22;
-        assert(assertTrue("Int test", (T) i, false));
+        assert(assertTrue("Int test",  i, false));
         //Testing double
         Double d = 4.4;
-        assert(assertTrue("Double Test", (T)d, false));
+        assert(assertTrue("Double Test", d, false));
         //Testing bad result
         assert(assertTrue(null, null, true));
 
@@ -40,11 +42,11 @@ public class TestErrorBinding <T>{
 /**
  * Helper method to speed up testing
  */
-    private boolean assertTrue(String msg, @Nullable T errorData, boolean shouldFail) throws Exception {
+    private <T> boolean assertTrue(String msg, @Nullable T errorData, boolean shouldFail) throws Exception {
         String test = "test";
         try{
             //Create test objects
-            ErrorBinding errBinding = new ErrorBinding(test, msg, errorData);
+            ErrorBinding<T> errBinding = new ErrorBinding<T>(test, msg, errorData);
             //Creating the JSON for test
             JSONObject expected = new JSONObject();
             expected.put(FIELD_ERROR_NAME_KEY, test);

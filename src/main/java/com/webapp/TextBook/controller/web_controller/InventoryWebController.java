@@ -47,20 +47,20 @@ public class InventoryWebController {
             data.put("GeneralError",null);
             data.put("Errors", null);
 
-            map.addAttribute("Data", data);
+            map.addAttribute("data", data);
 
 
-            return "CheckBookCopy";
+            return "CheckInCheckOut";
         }
         else{
             //User is now invalid and must return to login
 
-            data.put("LoginUserInfo", userValidation.getValue2());
+            data.put("LoginUserInfo", null);
             data.put("StatusMessage", userValidation.getValue1());
             data.put("GeneralError",null);
             data.put("Errors", null);
 
-            map.addAttribute("Data", data);
+            map.addAttribute("data", data);
             
             return "login";
         }

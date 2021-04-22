@@ -43,6 +43,8 @@ public class BookCopy implements DataAccessConversion {
      */
     public String bookCode;
 
+    private static final String NOMINAL_BOOK_CODE = "bookCode";
+
     /**
      * <p>
      * String variable to hold the edition year.
@@ -578,14 +580,14 @@ public class BookCopy implements DataAccessConversion {
 
         return
                 this.getBookCode().equals(book.getBookCode()) &&
-                        this.getEditionYear() ==  book.getEditionYear() &&
+                        this.getEditionYear().equals(book.getEditionYear()) &&
                         this.getSeqNr() ==  book.getSeqNr() &&
                         this.getStrikeBarcode().equals(book.getStrikeBarcode()) &&
                         this.getPidm().equals(book.getPidm()) &&
                         this.getTermCode().equals(book.getTermCode()) &&
                         this.getDateCheckedOut().equals(book.getDateCheckedOut()) &&
                         this.getDisposition() == book.getDisposition() &&
-                        this.getBookSalePrice() == book.getBookSalePrice() &&
+                        this.getBookSalePrice().equals(book.getBookSalePrice()) &&
                         this.getPrevPidm() == book.getPrevPidm() &&
                         this.getPrevTermCode().equals(book.getPrevTermCode()) &&
                         this.getPrevDateCheckedIn().equals(book.getPrevDateCheckedIn()) &&

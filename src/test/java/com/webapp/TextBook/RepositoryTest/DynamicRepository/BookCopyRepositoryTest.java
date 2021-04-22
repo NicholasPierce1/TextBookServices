@@ -58,7 +58,7 @@ public class BookCopyRepositoryTest {
                 System.out.println(RESULTS.getValue0().get().size());
 
                 for (final BookCopy bookCopy : RESULTS.getValue0().get())
-                    System.out.println(bookCopy);
+                    System.out.println(bookCopy + "\n");
             }
 
             assert(true);

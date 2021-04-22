@@ -92,6 +92,8 @@ public class TestValidationBindingHelper {
         // from the validation binding helper
         final String errorsKey = "Errors";
         final String generalErrorsKey= "GeneralError";
+        final String statusMessageErrorKey = "StatusMessage";
+        final String statusMessageErrorValue = "Input missing or invalid";
 
         // creates json array of expected error
         final JSONArray expectedJsonArrayError = new JSONArray("[{\"fieldName\":\"id\",\"message\":\"Invalid 919 format\"},{\"fieldName\":\"termCode\",\"message\":\"Invalid term code format\"}]");
@@ -99,6 +101,7 @@ public class TestValidationBindingHelper {
         // creates the json object of the expected error
         final JSONObject outputJsonObjectBad = new JSONObject();
 
+        outputJsonObjectBad.put(statusMessageErrorKey, statusMessageErrorValue);
         outputJsonObjectBad.put(errorsKey, expectedJsonArrayError.toString());
         outputJsonObjectBad.put(generalErrorsKey, "");
 
@@ -121,6 +124,7 @@ public class TestValidationBindingHelper {
                 this.validator.getApiBindingError(invalid1),
                 inputJsonObjectBad
         ));
+
         assert(inputJsonObjectBad.toString().equals(outputJsonObjectBad.toString()));
 
     }

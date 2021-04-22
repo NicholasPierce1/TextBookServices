@@ -7,9 +7,11 @@ import com.webapp.TextBook.repository.data_access.UserRole;
 import com.webapp.TextBook.sharedFiles.SharedSessionData;
 import com.webapp.TextBook.sharedFiles.StatusCode;
 import com.webapp.TextBook.sharedFiles.ValidationBindingHelper;
+import com.webapp.TextBook.sharedFiles.VerifySessionUser;
 import com.webapp.TextBook.validation.ApiValidation.ApiValidationHandler.ApiValidationHandler;
 import org.javatuples.KeyValue;
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -165,37 +167,39 @@ public class HomeController {
 
     }
 
-    //login confirmation
+    // login confirmation
     @RequestMapping(value = "/", method = RequestMethod.POST,
     consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String loginConfirmation (
-            @RequestBody @Valid @ModelAttribute("LoginUserInfo") LoginUserInfo person,
-            BindingResult result,
+            @RequestBody MultiValueMap<String, Object> multiValueMap,
             ModelMap map) throws JSONException {
         JSONObject data = new JSONObject();
         // handling all exceptions with try catch block
         try {
-            System.out.println("login confirmed called");
 
-            // format validation/dealing with binding errors
-            Pair<Boolean,JSONObject> validationResult = ValidationBindingHelper.validationBindingHandler(result,map);
-            if(!validationResult.getValue0()){
-                validationResult.getValue1().put("LoginUserInfo", null);
-                System.out.println("returning login view");
+            // tries to create a login user info from the raw, form data capture
+            final LoginUserInfo loginUserInfo = LoginUserInfo.createWebFromForm(multiValueMap);
+            System.out.println(loginUserInfo.get_password() + " : " + loginUserInfo.get_username());
+
+            final JSONObject validationResult = new JSONObject();
+
+            // validates login user info and renders login page if the result is awry
+            if(!ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                    this._validator.getApiBindingError(loginUserInfo),
+                    validationResult
+            )){
+                map.addAttribute("data", validationResult);
+
                 return "login";
             }
 
-            System.out.println("validation good");
-            if(true)
-                return "redirect:/home/testLogin/4";
-
             // checking user data validity with database
-            Pair<Optional<User>, StatusCode> user = adapter.userLogin(person.get_username(), person.get_password());
+            Pair<Optional<User>, StatusCode> user = adapter.userLogin(loginUserInfo.get_username(), loginUserInfo.get_password());
 
             //interpreting data
             if (user.getValue1() == StatusCode.OK) {
                 // User login was valid and will be further processed
-                data.put("LoginUserInfo", person);
+                data.put("LoginUserInfo", loginUserInfo);
                 data.put("StatusMessage", user.getValue1().getContentMessage());
                 data.put("GeneralError",null);
                 data.put("Errors", null);
@@ -242,6 +246,174 @@ public class HomeController {
         }
     }
 
+    // todo: doc
+    @RequestMapping(value = "/SupervisorDropDownMenu", method = RequestMethod.GET, consumes =
+    MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String getSupervisorHomeMenu(ModelMap modelMap, MultiValueMap<String, Object> multiValueMap) throws JSONException {
+
+        // creates status message string & its possible values
+        final String generalError = "An error occurred internally. Please contact IT Support.";
+        final String permissionsError = "Permissions to access resource not granted.";
+
+        // holds return info
+        final JSONObject data = new JSONObject();
+
+        try {
+
+            // create session user
+            final LoginUserInfo loginUserInfo = LoginUserInfo.createWebFromForm(multiValueMap);
+
+            // validate session user
+            if(!ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                    this._validator.getApiBindingError(loginUserInfo),
+                    data
+            )){
+
+                // append data to model map
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+
+            // verify session user against session state
+            final Triplet<Boolean, String, Optional<User>> sessionResult =
+                    VerifySessionUser.isSessionUserValid(loginUserInfo);
+
+            if(!sessionResult.getValue0()){
+
+                // set error state
+                data.put("LoginUserInfo", null);
+                data.put("StatusMessage", sessionResult.getValue1());
+                data.put("GeneralError",null);
+                data.put("Errors", null);
+
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+            // verify user role is supervisor
+            if(sessionResult.getValue2().orElseThrow().getUserRole() != UserRole.Supervisor){
+
+                // sets error state
+                data.put("LoginUserInfo", null);
+                data.put("StatusMessage", permissionsError);
+                data.put("GeneralError",null);
+                data.put("Errors", null);
+
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+            // set success state
+            data.put("LoginUserInfo", loginUserInfo);
+            data.put("StatusMessage", null);
+            data.put("GeneralError",null);
+            data.put("Errors", null);
+
+            modelMap.addAttribute("data", data);
+
+            // return supervisor menu
+            return "SupervisorDropDownMenu";
+
+        }
+        catch(Exception ex){
+
+
+            // sets error state
+            data.put("LoginUserInfo", null);
+            data.put("StatusMessage", generalError);
+            data.put("GeneralError",null);
+            data.put("Errors", null);
+
+            modelMap.addAttribute("data", data);
+
+            // return login view
+            return "login";
+        }
+    }
+
+    // todo: doc
+    @RequestMapping(value = "/StudentDropDownMenu", method = RequestMethod.GET, consumes =
+            MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String getStudentHomeMenu(ModelMap modelMap, MultiValueMap<String, Object> multiValueMap) throws JSONException {
+
+        // creates status message string & its possible values
+        final String generalError = "An error occurred internally. Please contact IT Support.";
+        final String permissionsError = "Permissions to access resource not granted.";
+
+        // holds return info
+        final JSONObject data = new JSONObject();
+
+        try {
+
+            // create session user
+            final LoginUserInfo loginUserInfo = LoginUserInfo.createWebFromForm(multiValueMap);
+
+            // validate session user
+            if(!ValidationBindingHelper.handleApiValidationBindingForJsonOutput(
+                    this._validator.getApiBindingError(loginUserInfo),
+                    data
+            )){
+
+                // append data to model map
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+
+            // verify session user against session state
+            final Triplet<Boolean, String, Optional<User>> sessionResult =
+                    VerifySessionUser.isSessionUserValid(loginUserInfo);
+
+            if(!sessionResult.getValue0()){
+
+                // set error state
+                data.put("LoginUserInfo", null);
+                data.put("StatusMessage", sessionResult.getValue1());
+                data.put("GeneralError",null);
+                data.put("Errors", null);
+
+                modelMap.addAttribute("data", data);
+
+                // return login view
+                return "login";
+            }
+
+            // set success state
+            data.put("LoginUserInfo", loginUserInfo);
+            data.put("StatusMessage", null);
+            data.put("GeneralError",null);
+            data.put("Errors", null);
+
+            modelMap.addAttribute("data", data);
+
+            // return supervisor menu
+            return "StudentDropDownMenu";
+
+        }
+        catch(Exception ex){
+
+
+            // sets error state
+            data.put("LoginUserInfo", null);
+            data.put("StatusMessage", generalError);
+            data.put("GeneralError",null);
+            data.put("Errors", null);
+
+            modelMap.addAttribute("data", data);
+
+            // return login view
+            return "login";
+        }
+    }
 
     @RequestMapping(value = "/testCheckInOut", method = RequestMethod.GET)
     public String testCheckInOut(ModelMap modelMap){

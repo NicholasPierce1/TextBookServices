@@ -1,5 +1,8 @@
 package com.webapp.TextBook.repository;
 
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,5 +21,8 @@ public interface DataAccessConversion {
      * @param values: Generic object holding the DBO information of specified java class
      */
     public abstract void updateDataAccessObject(@NotNull final Object[] values);
+
+    //todo: add doc
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException;
 
 }

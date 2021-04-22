@@ -185,4 +185,17 @@ public final class StudentBookInfo extends ApiViewModelCreation{
                 );
 
     }
+
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+
+        // create a new json object, and use the nominal keys to place the instance/field in
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(StudentBookInfo.NOMINAL_STUDENT_INFO, this.getStudentInfo());
+        jsonObject.put(StudentBookInfo.NOMINAL_BARCODE, this.getBarCode());
+
+        return jsonObject;
+
+    }
 }

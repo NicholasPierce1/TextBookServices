@@ -202,4 +202,17 @@ public class LoginUserInfo extends ApiViewModelCreation implements FormViewModel
         return loginUserInfo;
 
     }
+
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException{
+
+        // create a new json object, and use the nominal keys to place the instance/field in
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(LoginUserInfo.NOMINAL_USERNAME, this.get_username());
+        jsonObject.put(LoginUserInfo.NOMINAL_PASSWORD, this.get_password());
+
+        return jsonObject;
+
+    }
 }

@@ -63,11 +63,11 @@ function get_list_items(){
 /*
 * Create maps for student and supervisor menus
 */
-const studentNavMappings = ["patronDropDownUl", "patronDropDownCheckInCheckOutUl", "patronDropDownHomeUl"];
+const studentNavMappings = ["homeDropDownUL", "patronDropDownUl", "patronDropDownCheckInCheckOutUl", "patronDropDownHomeUl"];
 
-const supervisorNavMappings = [studentNavMappings[0], "supervisorDropDownUl", "supervisorDropDownHomeUl"];
+const supervisorNavMappings = ["homeDropDownUL", studentNavMappings[0], "supervisorDropDownUl", "supervisorDropDownHomeUl"];
 
-const checkInOutNavMappings = ["homeMenuUL", supervisorNavMappings[0], supervisorNavMappings[1]]
+const checkInOutNavMappings = ["homeDropDownUL", "homeMenuUL", supervisorNavMappings[0], supervisorNavMappings[1]]
 
 /**
  * @onload
@@ -157,6 +157,9 @@ export function setNavMappings(){
                 throw new Error("Anchor tag, which is within an applicable nav item, does not have" +
                     "the custom attribute (targetEndpoint) set. Please set it to where it hold the" +
                     "url of the nav item's endpoint.");
+
+            if(mappingsToGenerate[i] === "homeDropDownUL")
+                console.log(`${mappingsToGenerate[i]}${liList[j].id}`);
 
             // sets li mapping pair
             // key: ul's id + li's id
@@ -354,17 +357,14 @@ function setOnClicksToNavItems() {
         const ulToGenerateMappings = window.document.getElementById(mappingsToGenerate[i]);
 
         const liList = ulToGenerateMappings.getElementsByTagName("li");
-        console.log(liList);
 
         if (liList.length === 0)
             throw new Error(`UL list with id {${ulToGenerateMappings.id}} is empty`);
 
         for (let j = 0; j < liList.length; j++) {
-            console.log(liList[j]);
             // given: retains an anchor tag
             const anchorTag = liList[j].getElementsByTagName("a")[0];
-            console.log(anchorTag);
-            console.log(anchorTag === null);
+
             // sets on click
             anchorTag.onclick = submitManualForm;
 
