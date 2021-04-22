@@ -44,6 +44,7 @@ public class User extends Person {
      */
     public UserRole userRole;
 
+
     /**
      * <p>
      * holds the password of the logged in user
@@ -52,6 +53,7 @@ public class User extends Person {
      *</p>
      */
     public String password;
+    private static final String NOMINAL_PASSWORD = "password";
 
     /**
      * <p>
@@ -222,5 +224,15 @@ public class User extends Person {
         return super.toString() +
                 "\npassword: " + this.getPassword() +
                 "\nuser role: " + this.getUserRole();
+    }
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+
+        // create a new json object, and use the nominal keys to place the instance/field in
+        final JSONObject jsonObject = super.createJsonObjectForm();
+        jsonObject.put(NOMINAL_PASSWORD,this.getPassword());
+
+
+        return jsonObject;
     }
 }
