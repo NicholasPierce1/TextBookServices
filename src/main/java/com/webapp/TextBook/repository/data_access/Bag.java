@@ -1,6 +1,9 @@
 package com.webapp.TextBook.repository.data_access;
 
 import com.webapp.TextBook.repository.DataAccessConversion;
+import com.webapp.TextBook.viewModel.apiViewModel.StudentInfo;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +42,8 @@ public class Bag implements DataAccessConversion {
      */
     public int pidm;
 
+    private static final String NOMINAL_PIDM = "pidm";
+
     /**
      * <p>
      * the number associated to the student for the current
@@ -47,6 +52,8 @@ public class Bag implements DataAccessConversion {
      * </p>
      */
     public Double bagNumber;
+
+    private static final String NOMINAL_BAG_NUMBER = "bagNumber";
 
     /**
      * <p>
@@ -176,4 +183,17 @@ public class Bag implements DataAccessConversion {
                 "pidm: " + this.getPidm() +
                         "\nbagNumber: " + this.getBagNumber();
     }
+
+    @Override
+    public @NotNull JSONObject createJsonObjectForm() throws JSONException {
+
+        // create a new json object, and use the nominal keys to place the instance/field in
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(Bag.NOMINAL_PIDM, this.getPidm());
+        jsonObject.put(Bag.NOMINAL_BAG_NUMBER, this.getBagNumber());
+
+        return jsonObject;
+    }
 }
+
